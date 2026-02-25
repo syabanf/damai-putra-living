@@ -64,6 +64,7 @@ import TicketSubmitted from './pages/TicketSubmitted';
 import TicketDetail from './pages/TicketDetail';
 import Notifications from './pages/Notifications';
 import Profile from './pages/Profile';
+import __Layout from './Layout.jsx';
 
 
 export const PAGES = {
@@ -89,4 +90,5 @@ export const PAGES = {
 export const pagesConfig = {
     mainPage: "Splash",
     Pages: PAGES,
+    Layout: __Layout,
 };
