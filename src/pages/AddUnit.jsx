@@ -6,7 +6,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   ArrowLeft, Building2, Upload, FileText, User, Home as HomeIcon,
-  Check, AlertCircle, ChevronDown, X
+  Check, AlertCircle, ChevronDown, X, KeyRound, CalendarRange, Phone, Mail
 } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
