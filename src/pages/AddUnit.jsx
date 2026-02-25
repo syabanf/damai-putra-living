@@ -233,8 +233,8 @@ export default function AddUnit() {
               className="space-y-5"
             >
               <div className="text-center mb-6">
-                <div className="w-16 h-16 bg-purple-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                  <User className="w-8 h-8 text-purple-600" />
+                <div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4" style={{ background: 'linear-gradient(135deg, #8A8076, #6e6560)' }}>
+                  <User className="w-8 h-8 text-white" />
                 </div>
                 <h2 className="text-lg font-bold text-slate-800">Ownership Details</h2>
                 <p className="text-slate-500 text-sm mt-1">Confirm your ownership status</p>
