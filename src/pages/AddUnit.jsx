@@ -352,11 +352,11 @@ export default function AddUnit() {
                   </label>
                 )}
 
-                <div className="bg-blue-50 rounded-xl p-4">
-                  <p className="text-blue-800 text-sm">
+                <div className="bg-white/70 backdrop-blur-sm border border-white/80 rounded-xl p-4">
+                  <p className="text-slate-700 text-sm">
                     <strong>Accepted documents:</strong>
                   </p>
-                  <ul className="text-blue-700 text-sm mt-2 space-y-1">
+                  <ul className="text-slate-500 text-sm mt-2 space-y-1">
                     <li>• Certificate of ownership</li>
                     <li>• Rental agreement</li>
                     <li>• Unit purchase receipt</li>
