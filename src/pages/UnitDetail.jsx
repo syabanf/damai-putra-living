@@ -6,7 +6,8 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 import { 
   ArrowLeft, Building2, User, FileText, Calendar, CheckCircle,
-  Clock, XCircle, AlertCircle, Ticket, ChevronRight, RefreshCw, Video
+  Clock, XCircle, AlertCircle, Ticket, ChevronRight, RefreshCw, Video,
+  Home, KeyRound
 } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import StatusBadge from '@/components/ui/StatusBadge';
@@ -62,6 +63,7 @@ export default function UnitDetail() {
     );
   }
 
+  const isOwner = unit.ownership_status === 'owner';
   const headerGradient = unit.status === 'approved' ? 'linear-gradient(135deg, #059669, #047857)'
     : unit.status === 'rejected' ? 'linear-gradient(135deg, #dc2626, #b91c1c)'
     : 'linear-gradient(135deg, #d97706, #b45309)';
@@ -81,10 +83,15 @@ export default function UnitDetail() {
         </div>
         <div className="flex items-center gap-4">
           <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center">
-            <Building2 className="w-8 h-8 text-white" />
+            {isOwner ? <Home className="w-8 h-8 text-white" /> : <KeyRound className="w-8 h-8 text-white" />}
           </div>
           <div>
-            <h2 className="text-2xl font-bold text-white">{unit.unit_number}</h2>
+            <div className="flex items-center gap-2 mb-1">
+              <h2 className="text-2xl font-bold text-white">{unit.unit_number}</h2>
+              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-white/20 border border-white/30 text-white/90 uppercase tracking-wide">
+                {isOwner ? 'Owner' : 'Tenant'}
+              </span>
+            </div>
             <p className="text-white/75">{unit.property_name}</p>
             {unit.tower && <p className="text-white/55 text-sm">Tower {unit.tower}</p>}
           </div>
@@ -134,12 +141,20 @@ export default function UnitDetail() {
         <GlassCard className="overflow-hidden">
           <div className="p-4 border-b border-white/60">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ backgroundColor: '#f5f3f1' }}>
-                <User className="w-5 h-5" style={{ color: '#8A8076' }} />
+              <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${isOwner ? 'bg-amber-100' : 'bg-blue-100'}`}>
+                {isOwner ? <Home className="w-5 h-5 text-amber-600" /> : <KeyRound className="w-5 h-5 text-blue-600" />}
               </div>
               <div>
                 <p className="text-xs text-slate-400">Ownership Status</p>
-                <p className="font-semibold text-slate-800 capitalize">{unit.ownership_status}</p>
+                <div className="flex items-center gap-2 mt-0.5">
+                  <p className="font-semibold text-slate-800 capitalize">{unit.ownership_status}</p>
+                  <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${isOwner ? 'bg-amber-100 text-amber-700' : 'bg-blue-100 text-blue-700'}`}>
+                    {isOwner ? '🏠 Property Owner' : '🔑 Renter / Tenant'}
+                  </span>
+                </div>
+                {!isOwner && (
+                  <p className="text-xs text-slate-400 mt-0.5">Limited management access applies</p>
+                )}
               </div>
             </div>
           </div>
