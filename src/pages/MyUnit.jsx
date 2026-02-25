@@ -6,7 +6,7 @@ import { useQuery } from '@tanstack/react-query';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Building2, Plus, ChevronRight, Clock, CheckCircle, XCircle,
-  AlertCircle, RefreshCw
+  AlertCircle, RefreshCw, Home, KeyRound
 } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import BottomNav from '@/components/navigation/BottomNav';
@@ -48,6 +48,16 @@ export default function MyUnit() {
       <div className="px-5 pt-14 pb-8 rounded-b-3xl" style={{ background: 'linear-gradient(150deg, #8A8076 0%, #6e6560 45%, #3d3733 100%)' }}>
         <h1 className="text-2xl font-bold text-white">My Unit</h1>
         <p className="text-white/50 text-sm mt-1">Manage your registered units</p>
+        <div className="flex gap-3 mt-4">
+          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-400/20 border border-amber-400/30">
+            <Home className="w-3.5 h-3.5 text-amber-300" />
+            <span className="text-amber-200 text-xs font-semibold">Owner</span>
+          </div>
+          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-blue-400/20 border border-blue-400/30">
+            <KeyRound className="w-3.5 h-3.5 text-blue-300" />
+            <span className="text-blue-200 text-xs font-semibold">Tenant</span>
+          </div>
+        </div>
       </div>
 
       <div className="px-4 py-5">
@@ -87,23 +97,27 @@ export default function MyUnit() {
             <AnimatePresence>
               {userUnits.map((unit, index) => (
                 <motion.div key={unit.id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: index * 0.1 }}>
-                  <GlassCard className={`p-5 ${statusBorderColor(unit.status)}`}
+                  <GlassCard className={`p-5 ${statusBorderColor(unit.status)} ${unit.ownership_status === 'owner' ? 'border-l-4 border-l-amber-400/70' : 'border-l-4 border-l-blue-400/70'}`}
                     onClick={() => navigate(createPageUrl('UnitDetail') + `?id=${unit.id}`)}>
                     <div className="flex items-start justify-between">
                       <div className="flex items-start gap-4">
                         <div className="w-14 h-14 rounded-xl flex items-center justify-center shadow-md"
-                          style={{ background: 'linear-gradient(135deg, #8A8076, #6e6560)' }}>
-                          <Building2 className="w-7 h-7 text-white" />
+                          style={{ background: unit.ownership_status === 'owner' ? 'linear-gradient(135deg, #d97706, #b45309)' : 'linear-gradient(135deg, #2563eb, #1d4ed8)' }}>
+                          {unit.ownership_status === 'owner' ? <Home className="w-7 h-7 text-white" /> : <KeyRound className="w-7 h-7 text-white" />}
                         </div>
                         <div>
-                          <h3 className="font-bold text-slate-800 text-lg">{unit.unit_number}</h3>
+                          <div className="flex items-center gap-2">
+                            <h3 className="font-bold text-slate-800 text-lg">{unit.unit_number}</h3>
+                            <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${unit.ownership_status === 'owner' ? 'bg-amber-100 text-amber-700' : 'bg-blue-100 text-blue-700'}`}>
+                              {unit.ownership_status === 'owner' ? 'OWNER' : 'TENANT'}
+                            </span>
+                          </div>
                           <p className="text-slate-500 text-sm mt-0.5">{unit.property_name}</p>
                           {unit.tower && <p className="text-slate-400 text-xs mt-1">Tower {unit.tower}</p>}
                         </div>
                       </div>
                       <div className="flex flex-col items-end gap-2">
                         <StatusBadge status={unit.status} />
-                        <span className="text-xs text-slate-400 capitalize">{unit.ownership_status}</span>
                       </div>
                     </div>
 
