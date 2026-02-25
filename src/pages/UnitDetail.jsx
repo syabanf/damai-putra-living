@@ -33,6 +33,12 @@ export default function UnitDetail() {
     enabled: !!unitId,
   });
 
+  const { data: tickets = [] } = useQuery({
+    queryKey: ['tickets', unitId],
+    queryFn: () => base44.entities.Ticket.filter({ unit_id: unitId }),
+    enabled: !!unitId,
+  });
+
   const updateStatusMutation = useMutation({
     mutationFn: ({ status, note }) => base44.entities.Unit.update(unitId, { status, rejection_note: note || null }),
     onSuccess: () => {
