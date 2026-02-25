@@ -89,7 +89,7 @@ export default function Notifications() {
               variant="ghost"
               size="sm"
               onClick={markAllAsRead}
-              className="text-teal-600"
+              className="" style={{ color: '#8A8076' }}
             >
               <Check className="w-4 h-4 mr-1" />
               Mark all read
@@ -141,8 +141,9 @@ export default function Notifications() {
                     transition={{ delay: index * 0.05 }}
                     onClick={() => handleNotificationClick(notification)}
                     className={`bg-white rounded-xl p-4 cursor-pointer transition-all hover:shadow-md ${
-                      !notification.read ? 'border-l-4 border-teal-500' : ''
+                    !notification.read ? 'border-l-4' : ''
                     }`}
+                    style={!notification.read ? { borderLeftColor: '#8A8076' } : {}}
                   >
                     <div className="flex items-start gap-3">
                       <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${config.color}`}>
@@ -169,7 +170,7 @@ export default function Notifications() {
                         </p>
                       </div>
                       {!notification.read && (
-                        <div className="w-2 h-2 bg-teal-500 rounded-full flex-shrink-0 mt-2" />
+                        <div className="w-2 h-2 rounded-full flex-shrink-0 mt-2" style={{ backgroundColor: '#8A8076' }} />
                       )}
                     </div>
                   </motion.div>
