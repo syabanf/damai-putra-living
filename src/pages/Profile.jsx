@@ -51,7 +51,7 @@ export default function Profile() {
   return (
     <div className="min-h-screen bg-slate-50 pb-24">
       {/* Header */}
-      <div className="bg-gradient-to-br from-teal-600 to-teal-700 px-6 pt-12 pb-20 rounded-b-3xl">
+      <div className="px-6 pt-12 pb-20 rounded-b-3xl" style={{ background: 'linear-gradient(135deg, #8A8076, #6e6560)' }}>
         <h1 className="text-2xl font-bold text-white mb-8">Profile</h1>
         
         <div className="flex items-center gap-4">
@@ -109,7 +109,7 @@ export default function Profile() {
             </div>
             <div className="flex items-center gap-2">
               {item.count !== undefined && (
-                <span className="px-2 py-0.5 bg-teal-100 text-teal-700 text-xs font-medium rounded-full">
+                <span className="px-2 py-0.5 text-xs font-medium rounded-full" style={{ backgroundColor: '#f5f3f1', color: '#8A8076' }}>
                   {item.count}
                 </span>
               )}
