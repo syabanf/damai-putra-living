@@ -53,6 +53,11 @@ import Register from './pages/Register';
 import Verification from './pages/Verification';
 import RegistrationSuccess from './pages/RegistrationSuccess';
 import ForgotPassword from './pages/ForgotPassword';
+import Home from './pages/Home';
+import MyUnit from './pages/MyUnit';
+import AddUnit from './pages/AddUnit';
+import UnitSubmitted from './pages/UnitSubmitted';
+import UnitDetail from './pages/UnitDetail';
 
 
 export const PAGES = {
@@ -62,6 +67,11 @@ export const PAGES = {
     "Verification": Verification,
     "RegistrationSuccess": RegistrationSuccess,
     "ForgotPassword": ForgotPassword,
+    "Home": Home,
+    "MyUnit": MyUnit,
+    "AddUnit": AddUnit,
+    "UnitSubmitted": UnitSubmitted,
+    "UnitDetail": UnitDetail,
 }
 
 export const pagesConfig = {
