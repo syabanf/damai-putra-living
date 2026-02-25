@@ -192,6 +192,104 @@ export default function UnitDetail() {
           )}
         </GlassCard>
 
+        {/* Tenant-only section */}
+        {!isOwner && unit.status === 'approved' && (
+          <div className="space-y-4">
+            {/* Renting Period */}
+            <div>
+              <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-3 px-1">Rental Info</p>
+              <GlassCard className="overflow-hidden border-l-4 border-l-blue-400/70">
+                <div className="p-4 border-b border-white/60">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-blue-100 flex items-center justify-center">
+                      <CalendarRange className="w-5 h-5 text-blue-600" />
+                    </div>
+                    <div>
+                      <p className="text-xs text-slate-400">Renting Period</p>
+                      {unit.rent_start_date && unit.rent_end_date ? (
+                        <>
+                          <p className="font-semibold text-slate-800">
+                            {new Date(unit.rent_start_date).toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' })}
+                            {' → '}
+                            {new Date(unit.rent_end_date).toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' })}
+                          </p>
+                          {(() => {
+                            const daysLeft = Math.ceil((new Date(unit.rent_end_date) - new Date()) / (1000 * 60 * 60 * 24));
+                            const color = daysLeft <= 30 ? 'text-red-500' : daysLeft <= 90 ? 'text-amber-500' : 'text-emerald-600';
+                            return <p className={`text-xs font-semibold mt-0.5 ${color}`}>{daysLeft > 0 ? `${daysLeft} days remaining` : 'Lease expired'}</p>;
+                          })()}
+                        </>
+                      ) : (
+                        <p className="font-semibold text-slate-400">Not set</p>
+                      )}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Rent Payment */}
+                <div className="p-4 border-b border-white/60">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${
+                        unit.rent_payment_status === 'paid' ? 'bg-emerald-100' :
+                        unit.rent_payment_status === 'overdue' ? 'bg-red-100' : 'bg-amber-100'
+                      }`}>
+                        <CreditCard className={`w-5 h-5 ${
+                          unit.rent_payment_status === 'paid' ? 'text-emerald-600' :
+                          unit.rent_payment_status === 'overdue' ? 'text-red-600' : 'text-amber-600'
+                        }`} />
+                      </div>
+                      <div>
+                        <p className="text-xs text-slate-400">Monthly Rent</p>
+                        <p className="font-semibold text-slate-800">
+                          {unit.monthly_rent ? `Rp ${unit.monthly_rent.toLocaleString('id-ID')}` : 'Not set'}
+                        </p>
+                      </div>
+                    </div>
+                    <span className={`text-xs font-bold px-3 py-1 rounded-full ${
+                      unit.rent_payment_status === 'paid' ? 'bg-emerald-100 text-emerald-700' :
+                      unit.rent_payment_status === 'overdue' ? 'bg-red-100 text-red-700' :
+                      'bg-amber-100 text-amber-700'
+                    }`}>
+                      {unit.rent_payment_status === 'paid' ? '✓ Paid' :
+                       unit.rent_payment_status === 'overdue' ? '⚠ Overdue' : 'Due'}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Owner Contact */}
+                <div className="p-4">
+                  <p className="text-xs text-slate-400 mb-3">Owner Contact</p>
+                  {unit.owner_name || unit.owner_phone || unit.owner_email ? (
+                    <div className="space-y-2">
+                      {unit.owner_name && (
+                        <div className="flex items-center gap-2 text-sm text-slate-700">
+                          <User className="w-4 h-4 text-slate-400 flex-shrink-0" />
+                          <span className="font-medium">{unit.owner_name}</span>
+                        </div>
+                      )}
+                      {unit.owner_phone && (
+                        <a href={`tel:${unit.owner_phone}`} className="flex items-center gap-2 text-sm text-blue-600 active:opacity-70">
+                          <Phone className="w-4 h-4 flex-shrink-0" />
+                          <span className="font-medium">{unit.owner_phone}</span>
+                        </a>
+                      )}
+                      {unit.owner_email && (
+                        <a href={`mailto:${unit.owner_email}`} className="flex items-center gap-2 text-sm text-blue-600 active:opacity-70">
+                          <Mail className="w-4 h-4 flex-shrink-0" />
+                          <span className="font-medium">{unit.owner_email}</span>
+                        </a>
+                      )}
+                    </div>
+                  ) : (
+                    <p className="text-slate-400 text-sm">No owner contact info available</p>
+                  )}
+                </div>
+              </GlassCard>
+            </div>
+          </div>
+        )}
+
         {/* Action Button */}
         {unit.status === 'approved' && (
           <button onClick={() => navigate(createPageUrl('Tickets'))}
