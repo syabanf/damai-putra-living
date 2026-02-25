@@ -234,6 +234,44 @@ export default function UnitDetail() {
         </div>
       )}
 
+      {/* Surveillance */}
+      {unit.status === 'approved' && (
+        <div className="px-6 mt-6">
+          <h2 className="text-sm font-bold text-slate-700 uppercase tracking-wider mb-3">Unit Surveillance</h2>
+          <div className="bg-slate-900 rounded-2xl p-4 border border-slate-800">
+            <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse" />
+                <span className="text-xs text-red-400 font-semibold uppercase tracking-wider">Live</span>
+              </div>
+              <span className="text-xs text-slate-500">Unit {unit.unit_number}</span>
+            </div>
+            <div className="grid grid-cols-2 gap-2 mb-3">
+              {[
+                { label: 'Front Door', status: 'online' },
+                { label: 'Corridor', status: 'online' },
+              ].map((cam, i) => (
+                <div key={i} className="bg-slate-800 rounded-xl p-3 flex items-center gap-2">
+                  <div className="w-7 h-7 rounded-lg bg-emerald-900 flex items-center justify-center flex-shrink-0">
+                    <Video className="w-4 h-4 text-emerald-400" />
+                  </div>
+                  <div className="min-w-0">
+                    <p className="text-xs font-medium text-white truncate">{cam.label}</p>
+                    <p className="text-xs text-emerald-500">{cam.status}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="flex items-center justify-between pt-2 border-t border-slate-800">
+              <p className="text-xs text-slate-500">2 cameras active</p>
+              <button className="text-xs font-medium text-slate-300 flex items-center gap-1">
+                Request Footage <ChevronRight className="w-3 h-3" />
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Admin Simulation Panel */}
       <div className="px-6 mt-8">
         <div className="bg-slate-800 rounded-2xl p-5">
