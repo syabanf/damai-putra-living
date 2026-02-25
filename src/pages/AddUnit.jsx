@@ -42,7 +42,14 @@ export default function AddUnit() {
     unit_number: '',
     ownership_status: '',
     document_url: '',
-    agree_terms: false
+    agree_terms: false,
+    // Tenant-specific fields
+    rent_start_date: '',
+    rent_end_date: '',
+    monthly_rent: '',
+    owner_name: '',
+    owner_phone: '',
+    owner_email: '',
   });
 
   useEffect(() => {
