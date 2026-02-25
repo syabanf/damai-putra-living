@@ -240,7 +240,7 @@ export default function CreateTicket() {
                 <button
                   key={cat.id}
                   onClick={() => handleCategorySelect(cat.id)}
-                  className="w-full p-4 rounded-2xl border border-slate-200 hover:border-stone-400 hover:bg-stone-50 flex items-center gap-4 transition-all text-left group"
+                  className="w-full p-4 rounded-2xl border border-white/80 bg-white/70 backdrop-blur-xl shadow-sm hover:bg-white/90 flex items-center gap-4 transition-all text-left group"
                 >
                   <div className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
                     style={{ backgroundColor: `${cat.color}18` }}>
