@@ -9,7 +9,8 @@ export default function TicketSubmitted() {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-white flex flex-col items-center justify-center px-6">
+    <div className="min-h-screen flex flex-col items-center justify-center px-6"
+      style={{ background: 'linear-gradient(160deg, #f5f3f0 0%, #ece8e3 50%, #e8e2db 100%)' }}>
       <motion.div
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
