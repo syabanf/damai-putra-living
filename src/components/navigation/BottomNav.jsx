@@ -23,7 +23,7 @@ export default function BottomNav({ currentPage }) {
               to={createPageUrl(item.page)}
               className={cn(
                 "flex flex-col items-center gap-1 px-4 py-2 rounded-xl transition-all",
-                isActive ? "text-teal-600" : "text-slate-400 hover:text-slate-600"
+                isActive ? "" : "text-slate-400 hover:text-slate-600"
               )}
             >
               <item.icon className={cn("w-5 h-5", isActive && "stroke-[2.5]")} />
