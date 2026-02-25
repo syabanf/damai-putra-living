@@ -430,7 +430,7 @@ export default function AddUnit() {
                 </p>
               </div>
 
-              <div className="bg-slate-50 rounded-xl p-4 mb-6 space-y-3">
+              <div className="bg-stone-50/80 rounded-xl p-4 mb-6 space-y-3 border border-stone-100">
                 <div className="flex justify-between">
                   <span className="text-slate-500 text-sm">Property</span>
                   <span className="text-slate-800 text-sm font-medium">{formData.property_name}</span>
