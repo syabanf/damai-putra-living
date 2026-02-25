@@ -6,7 +6,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 import { 
   ArrowLeft, Building2, User, FileText, Calendar, CheckCircle,
-  Clock, XCircle, AlertCircle, Ticket, ChevronRight, RefreshCw
+  Clock, XCircle, AlertCircle, Ticket, ChevronRight, RefreshCw, Video
 } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import StatusBadge from '@/components/ui/StatusBadge';
