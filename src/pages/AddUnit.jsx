@@ -384,7 +384,7 @@ export default function AddUnit() {
       </div>
 
       {/* Bottom Actions */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-100 p-6">
+      <div className="fixed bottom-0 left-0 right-0 p-6" style={{ background: 'rgba(245,243,240,0.9)', backdropFilter: 'blur(16px)', borderTop: '1px solid rgba(255,255,255,0.6)' }}>
         <Button
           onClick={handleNext}
           disabled={loading}
