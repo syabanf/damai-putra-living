@@ -8,7 +8,7 @@ import {
   Building2, Bell, ChevronRight, FileCheck, Wrench, Truck, 
   Calendar, Users, Shield, Plus, AlertCircle, CreditCard,
   CheckCircle2, Clock, XCircle, HardHat, Package, PartyPopper,
-  Megaphone, ArrowRight, Gift, Star, User, Home as HomeIcon, Cctv, Video
+  Megaphone, ArrowRight, Gift, Star, User, Home as HomeIcon, Video
 } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import BottomNav from '@/components/navigation/BottomNav';
