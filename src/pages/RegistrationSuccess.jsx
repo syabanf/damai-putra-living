@@ -55,20 +55,20 @@ export default function RegistrationSuccess() {
           <h3 className="font-semibold text-slate-800 mb-2">What's Next?</h3>
           <ul className="space-y-2 text-sm text-slate-600">
             <li className="flex items-start gap-2">
-              <div className="w-5 h-5 rounded-full bg-teal-100 flex items-center justify-center mt-0.5 flex-shrink-0">
-                <span className="text-teal-600 text-xs font-bold">1</span>
+              <div className="w-5 h-5 rounded-full flex items-center justify-center mt-0.5 flex-shrink-0" style={{ backgroundColor: '#f5f3f1' }}>
+                <span className="text-xs font-bold" style={{ color: '#8A8076' }}>1</span>
               </div>
               <span>Register your unit in "My Unit" section</span>
             </li>
             <li className="flex items-start gap-2">
-              <div className="w-5 h-5 rounded-full bg-teal-100 flex items-center justify-center mt-0.5 flex-shrink-0">
-                <span className="text-teal-600 text-xs font-bold">2</span>
+              <div className="w-5 h-5 rounded-full flex items-center justify-center mt-0.5 flex-shrink-0" style={{ backgroundColor: '#f5f3f1' }}>
+                <span className="text-xs font-bold" style={{ color: '#8A8076' }}>2</span>
               </div>
               <span>Wait for management approval</span>
             </li>
             <li className="flex items-start gap-2">
-              <div className="w-5 h-5 rounded-full bg-teal-100 flex items-center justify-center mt-0.5 flex-shrink-0">
-                <span className="text-teal-600 text-xs font-bold">3</span>
+              <div className="w-5 h-5 rounded-full flex items-center justify-center mt-0.5 flex-shrink-0" style={{ backgroundColor: '#f5f3f1' }}>
+                <span className="text-xs font-bold" style={{ color: '#8A8076' }}>3</span>
               </div>
               <span>Access digital permits & services</span>
             </li>
