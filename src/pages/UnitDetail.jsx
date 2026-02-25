@@ -351,6 +351,49 @@ export default function UnitDetail() {
           </div>
         )}
 
+        {/* Tickets List */}
+        {unit.status === 'approved' && (
+          <div>
+            <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-3 px-1">Tickets & Permits</p>
+            <GlassCard className="overflow-hidden">
+              {tickets.length === 0 ? (
+                <div className="p-6 text-center">
+                  <Ticket className="w-8 h-8 text-slate-300 mx-auto mb-2" />
+                  <p className="text-slate-400 text-sm">No tickets yet</p>
+                </div>
+              ) : (
+                <div className="divide-y divide-white/60">
+                  {tickets.map((ticket) => (
+                    <button
+                      key={ticket.id}
+                      onClick={() => navigate(createPageUrl('TicketDetail') + `?id=${ticket.id}`)}
+                      className="w-full p-4 flex items-center justify-between hover:bg-white/40 active:bg-white/60 transition-colors text-left"
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ backgroundColor: '#f5f3f1' }}>
+                          <Ticket className="w-4 h-4" style={{ color: '#8A8076' }} />
+                        </div>
+                        <div>
+                          <p className="text-sm font-semibold text-slate-800 capitalize">
+                            {ticket.permit_type?.replace(/_/g, ' ') || ticket.category?.replace(/_/g, ' ')}
+                          </p>
+                          <p className="text-xs text-slate-400">
+                            {ticket.reference_number || new Date(ticket.created_date).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <StatusBadge status={ticket.status} />
+                        <ChevronRight className="w-4 h-4 text-slate-300" />
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              )}
+            </GlassCard>
+          </div>
+        )}
+
         {/* Admin Simulation Panel */}
         <div className="rounded-2xl overflow-hidden border border-slate-700 bg-slate-800/90 backdrop-blur-xl">
           <div className="px-4 py-3 border-b border-slate-700">
