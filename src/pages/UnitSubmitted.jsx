@@ -81,7 +81,8 @@ export default function UnitSubmitted() {
 
         <Button
           onClick={() => navigate(createPageUrl('MyUnit'))}
-          className="w-full h-14 bg-gradient-to-r from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 text-white rounded-2xl font-semibold text-base shadow-lg shadow-teal-200/50 mt-4"
+          className="w-full h-14 text-white rounded-2xl font-semibold text-base mt-4"
+          style={{ background: 'linear-gradient(135deg, #8A8076, #6e6560)', boxShadow: '0 8px 24px rgba(138,128,118,0.35)' }}
         >
           View My Units
           <ArrowRight className="w-5 h-5 ml-2" />

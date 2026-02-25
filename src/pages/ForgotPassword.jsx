@@ -69,7 +69,8 @@ export default function ForgotPassword() {
         >
           <Button
             onClick={() => navigate(createPageUrl('Login'))}
-            className="w-full h-14 bg-gradient-to-r from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 text-white rounded-2xl font-semibold text-base shadow-lg shadow-teal-200/50"
+            className="w-full h-14 text-white rounded-2xl font-semibold text-base"
+            style={{ background: 'linear-gradient(135deg, #8A8076, #6e6560)', boxShadow: '0 8px 24px rgba(138,128,118,0.35)' }}
           >
             Back to Login
           </Button>
@@ -154,7 +155,7 @@ export default function ForgotPassword() {
 
         <p className="text-center text-slate-500 mt-8">
           Remember your password?{' '}
-          <Link to={createPageUrl('Login')} className="text-teal-600 font-semibold">
+          <Link to={createPageUrl('Login')} className="font-semibold" style={{ color: '#8A8076' }}>
             Sign In
           </Link>
         </p>
