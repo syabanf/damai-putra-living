@@ -10,8 +10,6 @@ import {
   Home, KeyRound, CreditCard, Phone, Mail, CalendarRange
 } from 'lucide-react';
 import { Button } from "@/components/ui/button";
-import StatusBadge from '@/components/ui/StatusBadge';
-
 const GlassCard = ({ children, className = '' }) => (
   <div className={`bg-white/70 backdrop-blur-xl rounded-2xl border border-white/80 shadow-sm shadow-slate-200/60 ${className}`}>
     {children}
