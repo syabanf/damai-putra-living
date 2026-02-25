@@ -38,7 +38,7 @@ export default function Onboarding() {
     if (currentSlide < slides.length - 1) {
       setCurrentSlide(currentSlide + 1);
     } else {
-      navigate(createPageUrl('Register'));
+      base44.auth.redirectToLogin(createPageUrl('Home'));
     }
   };
 
