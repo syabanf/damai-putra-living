@@ -465,7 +465,7 @@ export default function CreateTicket() {
                 {uploadedFiles.length > 0 && (
                   <div className="space-y-2">
                     {uploadedFiles.map((file, index) => (
-                      <div key={index} className="p-3 bg-stone-50 border border-stone-200 rounded-xl flex items-center justify-between">
+                      <div key={index} className="p-3 bg-white/70 border border-white/80 backdrop-blur-sm rounded-xl flex items-center justify-between">
                         <div className="flex items-center gap-3">
                           <FileText className="w-4 h-4 flex-shrink-0" style={{ color: '#8A8076' }} />
                           <span className="text-sm text-slate-700 truncate max-w-[180px]">{file.name}</span>
