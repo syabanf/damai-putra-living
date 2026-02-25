@@ -231,7 +231,7 @@ export default function CreateTicket() {
                   onClick={() => handlePermitTypeSelect(type.id)}
                   className={`w-full p-4 rounded-xl border-2 flex items-center gap-4 transition-all ${
                     formData.permit_type === type.id
-                      ? 'border-teal-500 bg-teal-50'
+                      ? 'border-stone-400 bg-stone-50'
                       : 'border-slate-200 hover:border-slate-300'
                   }`}
                 >
@@ -247,7 +247,7 @@ export default function CreateTicket() {
                     <p className="text-sm text-slate-500">{type.description}</p>
                   </div>
                   {formData.permit_type === type.id && (
-                    <Check className="w-5 h-5 text-teal-500" />
+                    <Check className="w-5 h-5" style={{ color: '#8A8076' }} />
                   )}
                 </button>
               ))}
@@ -478,7 +478,8 @@ export default function CreateTicket() {
               }
             }}
             disabled={loading}
-            className="w-full h-14 bg-gradient-to-r from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 text-white rounded-2xl font-semibold text-base shadow-lg shadow-teal-200/50"
+            className="w-full h-14 text-white rounded-2xl font-semibold text-base"
+            style={{ background: 'linear-gradient(135deg, #8A8076, #6e6560)', boxShadow: '0 8px 24px rgba(138,128,118,0.35)' }}
           >
             {loading ? (
               <motion.div
