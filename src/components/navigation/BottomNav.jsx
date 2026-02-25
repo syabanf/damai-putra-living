@@ -25,6 +25,7 @@ export default function BottomNav({ currentPage }) {
                 "flex flex-col items-center gap-1 px-4 py-2 rounded-xl transition-all",
                 isActive ? "" : "text-slate-400 hover:text-slate-600"
               )}
+              style={isActive ? { color: '#8A8076' } : {}}
             >
               <item.icon className={cn("w-5 h-5", isActive && "stroke-[2.5]")} />
               <span className="text-[10px] font-medium">{item.label}</span>
