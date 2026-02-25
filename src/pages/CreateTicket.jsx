@@ -301,7 +301,7 @@ export default function CreateTicket() {
 
               {/* Unit Info Block */}
               {approvedUnit && (
-                <div className="rounded-2xl border border-stone-200 bg-stone-50 p-4">
+                <div className="rounded-2xl border border-white/80 bg-white/70 backdrop-blur-xl shadow-sm p-4">
                   <div className="flex items-center gap-2 mb-3">
                     <Building2 className="w-4 h-4" style={{ color: '#8A8076' }} />
                     <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: '#8A8076' }}>Unit Information</p>
