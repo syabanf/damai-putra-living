@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import { motion } from 'framer-motion';
+import { base44 } from '@/api/base44Client';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -69,7 +70,7 @@ export default function ForgotPassword() {
           className="w-full mt-10"
         >
           <Button
-            onClick={() => navigate(createPageUrl('Login'))}
+            onClick={() => base44.auth.redirectToLogin(createPageUrl('Home'))}
             className="w-full h-14 text-white rounded-2xl font-semibold text-base"
             style={{ background: 'linear-gradient(135deg, #8A8076, #6e6560)', boxShadow: '0 8px 24px rgba(138,128,118,0.35)' }}
           >
@@ -156,9 +157,9 @@ export default function ForgotPassword() {
 
         <p className="text-center text-slate-500 mt-8">
           Remember your password?{' '}
-          <Link to={createPageUrl('Login')} className="font-semibold" style={{ color: '#8A8076' }}>
+          <button onClick={() => base44.auth.redirectToLogin(createPageUrl('Home'))} className="font-semibold" style={{ color: '#8A8076' }}>
             Sign In
-          </Link>
+          </button>
         </p>
       </div>
     </div>

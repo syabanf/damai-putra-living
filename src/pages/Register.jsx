@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import { motion } from 'framer-motion';
+import { base44 } from '@/api/base44Client';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -197,7 +198,7 @@ export default function Register() {
 
         <p className="text-center text-slate-500 mt-8 pb-8">
           Already have an account?{' '}
-          <Link to={createPageUrl('Login')} className="font-semibold" style={{ color: BRAND }}>Sign In</Link>
+          <button onClick={() => base44.auth.redirectToLogin(createPageUrl('Home'))} className="font-semibold" style={{ color: BRAND }}>Sign In</button>
         </p>
       </div>
     </div>

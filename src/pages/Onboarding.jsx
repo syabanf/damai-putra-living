@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import { motion, AnimatePresence } from 'framer-motion';
+import { base44 } from '@/api/base44Client';
 import { Button } from "@/components/ui/button";
 import { Building2, Shield, FileCheck, ArrowRight, ChevronRight } from 'lucide-react';
 
@@ -42,7 +43,7 @@ export default function Onboarding() {
   };
 
   const handleSkip = () => {
-    navigate(createPageUrl('Login'));
+    base44.auth.redirectToLogin(createPageUrl('Home'));
   };
 
   return (
