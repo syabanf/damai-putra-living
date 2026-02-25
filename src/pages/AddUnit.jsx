@@ -123,37 +123,35 @@ export default function AddUnit() {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen pb-28" style={{ background: 'linear-gradient(160deg, #f5f3f0 0%, #ece8e3 50%, #e8e2db 100%)' }}>
       {/* Header */}
-      <div className="px-6 pt-6 pb-4 flex items-center gap-4 border-b border-slate-100">
-        <button
-          onClick={() => step > 1 ? setStep(step - 1) : navigate(-1)}
-          className="w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center"
-        >
-          <ArrowLeft className="w-5 h-5 text-slate-600" />
-        </button>
-        <div>
-          <h1 className="text-lg font-bold text-slate-800">Register Unit</h1>
-          <p className="text-sm text-slate-500">Step {step} of 3</p>
+      <div className="px-5 pt-6 pb-5 rounded-b-3xl" style={{ background: 'linear-gradient(150deg, #8A8076 0%, #6e6560 45%, #3d3733 100%)' }}>
+        <div className="flex items-center gap-4 mb-4">
+          <button
+            onClick={() => step > 1 ? setStep(step - 1) : navigate(-1)}
+            className="w-10 h-10 rounded-xl bg-white/20 backdrop-blur-sm border border-white/20 flex items-center justify-center"
+          >
+            <ArrowLeft className="w-5 h-5 text-white" />
+          </button>
+          <div>
+            <h1 className="text-lg font-bold text-white">Register Unit</h1>
+            <p className="text-sm text-white/50">Step {step} of 3</p>
+          </div>
         </div>
-      </div>
-
-      {/* Progress */}
-      <div className="px-6 py-4">
+        {/* Progress */}
         <div className="flex gap-2">
           {[1, 2, 3].map((s) => (
             <div
               key={s}
-              className={`flex-1 h-1.5 rounded-full transition-colors ${
-                s <= step ? 'bg-teal-500' : 'bg-slate-200'
-              }`}
+              className="flex-1 h-1.5 rounded-full transition-all duration-500"
+              style={{ backgroundColor: s <= step ? '#fff' : 'rgba(255,255,255,0.2)' }}
             />
           ))}
         </div>
       </div>
 
       {/* Form */}
-      <div className="px-6">
+      <div className="px-5 pt-5">
         <AnimatePresence mode="wait">
           {step === 1 && (
             <motion.div
