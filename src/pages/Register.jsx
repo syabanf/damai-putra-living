@@ -50,7 +50,7 @@ export default function Register() {
     if (!validateForm()) return;
     setLoading(true);
     await new Promise(resolve => setTimeout(resolve, 1500));
-    navigate(createPageUrl('Verification') + `?type=${registerType}&contact=${registerType === 'email' ? formData.email : formData.phone}`);
+    base44.auth.redirectToLogin(createPageUrl('Home'));
   };
 
   const passwordStrength = () => {
