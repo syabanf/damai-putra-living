@@ -418,7 +418,7 @@ export default function AddUnit() {
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 50 }}
-              className="bg-white rounded-2xl p-6 w-full max-w-md"
+              className="rounded-2xl p-6 w-full max-w-md border border-white/80" style={{ background: 'rgba(255,255,255,0.85)', backdropFilter: 'blur(24px)' }}
             >
               <div className="text-center mb-6">
                 <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4" style={{ backgroundColor: '#f5f3f1' }}>
