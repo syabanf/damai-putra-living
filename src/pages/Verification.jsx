@@ -102,7 +102,8 @@ export default function Verification() {
         <motion.div
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
-          className="w-20 h-20 bg-gradient-to-br from-teal-500 to-teal-600 rounded-2xl flex items-center justify-center mb-8 shadow-lg shadow-teal-200/50"
+          className="w-20 h-20 rounded-2xl flex items-center justify-center mb-8"
+          style={{ background: 'linear-gradient(135deg, #8A8076, #6e6560)', boxShadow: '0 12px 32px rgba(138,128,118,0.35)' }}
         >
           {type === 'email' ? (
             <Mail className="w-10 h-10 text-white" />
@@ -138,7 +139,7 @@ export default function Verification() {
                 error
                   ? 'border-red-300 bg-red-50'
                   : digit
-                    ? 'border-teal-500 bg-teal-50'
+                    ? 'border-stone-500 bg-stone-50'
                     : 'border-slate-200 bg-slate-50 focus:border-teal-500'
               }`}
             />
@@ -162,7 +163,8 @@ export default function Verification() {
         <Button
           onClick={handleVerify}
           disabled={loading || otp.some(d => !d)}
-          className="w-full h-14 bg-gradient-to-r from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 text-white rounded-2xl font-semibold text-base shadow-lg shadow-teal-200/50 disabled:opacity-50"
+          className="w-full h-14 text-white rounded-2xl font-semibold text-base disabled:opacity-50"
+          style={{ background: 'linear-gradient(135deg, #8A8076, #6e6560)', boxShadow: '0 8px 24px rgba(138,128,118,0.35)' }}
         >
           {loading ? (
             <motion.div
@@ -183,7 +185,7 @@ export default function Verification() {
           ) : (
             <button
               onClick={handleResend}
-              className="flex items-center gap-2 text-teal-600 font-medium"
+              className="flex items-center gap-2 font-medium" style={{ color: '#8A8076' }}
             >
               <RefreshCw className="w-4 h-4" />
               Resend Code
