@@ -130,6 +130,7 @@ export default function AddUnit() {
     
     await createUnitMutation.mutateAsync({
       ...formData,
+      monthly_rent: formData.monthly_rent ? Number(formData.monthly_rent) : undefined,
       status: 'pending',
       user_email: user?.email,
       user_name: user?.full_name
