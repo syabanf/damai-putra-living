@@ -89,6 +89,9 @@ export default function AddUnit() {
     setLoading(false);
   };
 
+  const isTenant = formData.ownership_status === 'tenant';
+  const totalSteps = isTenant ? 4 : 3;
+
   const validateStep = () => {
     const newErrors = {};
     
@@ -100,7 +103,11 @@ export default function AddUnit() {
       if (!formData.unit_number) newErrors.unit_number = 'Please enter unit number';
     } else if (step === 2) {
       if (!formData.ownership_status) newErrors.ownership_status = 'Please select ownership status';
-    } else if (step === 3) {
+    } else if (step === 3 && isTenant) {
+      if (!formData.rent_start_date) newErrors.rent_start_date = 'Please enter lease start date';
+      if (!formData.rent_end_date) newErrors.rent_end_date = 'Please enter lease end date';
+      if (!formData.monthly_rent) newErrors.monthly_rent = 'Please enter monthly rent';
+    } else if ((step === 3 && !isTenant) || (step === 4 && isTenant)) {
       if (!formData.agree_terms) newErrors.agree_terms = 'Please agree to the terms';
     }
 
@@ -111,7 +118,7 @@ export default function AddUnit() {
   const handleNext = () => {
     if (!validateStep()) return;
     
-    if (step < 3) {
+    if (step < totalSteps) {
       setStep(step + 1);
     } else {
       setShowConfirmation(true);
