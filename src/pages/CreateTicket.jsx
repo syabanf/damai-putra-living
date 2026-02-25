@@ -479,7 +479,7 @@ export default function CreateTicket() {
                 )}
 
                 <label className="block cursor-pointer">
-                  <div className="p-5 border-2 border-dashed border-stone-200 rounded-xl text-center hover:border-stone-400 hover:bg-stone-50 transition-colors">
+                  <div className="p-5 border-2 border-dashed border-stone-300/70 rounded-xl text-center hover:border-stone-400 hover:bg-white/50 bg-white/30 backdrop-blur-sm transition-colors">
                     {loading ? (
                       <motion.div animate={{ rotate: 360 }} transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
                         className="w-6 h-6 border-2 border-stone-300 border-t-stone-600 rounded-full mx-auto mb-2" />
