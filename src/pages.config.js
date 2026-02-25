@@ -47,8 +47,24 @@
  *
  * The mainPage value must match a key in the PAGES object exactly.
  */
+import Splash from './pages/Splash';
+import Onboarding from './pages/Onboarding';
+import Register from './pages/Register';
+import Verification from './pages/Verification';
+import RegistrationSuccess from './pages/RegistrationSuccess';
+import ForgotPassword from './pages/ForgotPassword';
 
-export const pagesConfig = {
-	Pages: {}
+
+export const PAGES = {
+    "Splash": Splash,
+    "Onboarding": Onboarding,
+    "Register": Register,
+    "Verification": Verification,
+    "RegistrationSuccess": RegistrationSuccess,
+    "ForgotPassword": ForgotPassword,
 }
 
+export const pagesConfig = {
+    mainPage: "Splash",
+    Pages: PAGES,
+};
