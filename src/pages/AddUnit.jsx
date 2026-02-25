@@ -149,12 +149,12 @@ export default function AddUnit() {
           </button>
           <div>
             <h1 className="text-lg font-bold text-white">Register Unit</h1>
-            <p className="text-sm text-white/50">Step {step} of 3</p>
+            <p className="text-sm text-white/50">Step {step} of {totalSteps}</p>
           </div>
         </div>
         {/* Progress */}
         <div className="flex gap-2">
-          {[1, 2, 3].map((s) => (
+          {Array.from({ length: totalSteps }, (_, i) => i + 1).map((s) => (
             <div
               key={s}
               className="flex-1 h-1.5 rounded-full transition-all duration-500"
