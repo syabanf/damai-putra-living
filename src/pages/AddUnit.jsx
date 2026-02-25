@@ -250,7 +250,7 @@ export default function AddUnit() {
                   onClick={() => setFormData({ ...formData, ownership_status: 'owner' })}
                   className={`w-full p-4 rounded-xl border-2 flex items-center gap-4 transition-all ${
                     formData.ownership_status === 'owner'
-                      ? 'border-teal-500 bg-teal-50'
+                      ? 'border-stone-400 bg-stone-50'
                       : 'border-slate-200 hover:border-slate-300'
                   }`}
                 >
@@ -266,7 +266,7 @@ export default function AddUnit() {
                     <p className="text-sm text-slate-500">I own this unit</p>
                   </div>
                   {formData.ownership_status === 'owner' && (
-                    <Check className="w-5 h-5 text-teal-500" />
+                    <Check className="w-5 h-5" style={{ color: '#8A8076' }} />
                   )}
                 </button>
 
@@ -275,7 +275,7 @@ export default function AddUnit() {
                   onClick={() => setFormData({ ...formData, ownership_status: 'tenant' })}
                   className={`w-full p-4 rounded-xl border-2 flex items-center gap-4 transition-all ${
                     formData.ownership_status === 'tenant'
-                      ? 'border-teal-500 bg-teal-50'
+                      ? 'border-stone-400 bg-stone-50'
                       : 'border-slate-200 hover:border-slate-300'
                   }`}
                 >
@@ -291,7 +291,7 @@ export default function AddUnit() {
                     <p className="text-sm text-slate-500">I am renting this unit</p>
                   </div>
                   {formData.ownership_status === 'tenant' && (
-                    <Check className="w-5 h-5 text-teal-500" />
+                    <Check className="w-5 h-5" style={{ color: '#8A8076' }} />
                   )}
                 </button>
                 
