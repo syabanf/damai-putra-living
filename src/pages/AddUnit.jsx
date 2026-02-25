@@ -504,7 +504,7 @@ export default function AddUnit() {
               transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
               className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full"
             />
-          ) : step === 3 ? (
+          ) : step === totalSteps ? (
             'Submit Registration'
           ) : (
             'Continue'
