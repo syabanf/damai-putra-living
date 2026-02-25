@@ -56,7 +56,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-slate-50 pb-24">
       {/* Header */}
-      <div className="bg-gradient-to-br from-teal-600 via-teal-700 to-slate-800 px-6 pt-12 pb-8 rounded-b-3xl">
+      <div className="px-6 pt-12 pb-8 rounded-b-3xl" style={{ background: 'linear-gradient(135deg, #8A8076 0%, #6e6560 50%, #3d3733 100%)' }}>
         <div className="flex justify-between items-start mb-6">
           <div>
             <p className="text-teal-100 text-sm">Welcome back,</p>
