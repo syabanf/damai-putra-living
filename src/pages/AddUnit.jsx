@@ -312,9 +312,100 @@ export default function AddUnit() {
             </motion.div>
           )}
 
-          {step === 3 && (
+          {step === 3 && isTenant && (
             <motion.div
-              key="step3"
+              key="step3-tenant"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              className="space-y-5"
+            >
+              <div className="text-center mb-6">
+                <div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4" style={{ background: 'linear-gradient(135deg, #2563eb, #1d4ed8)' }}>
+                  <KeyRound className="w-8 h-8 text-white" />
+                </div>
+                <h2 className="text-lg font-bold text-slate-800">Rental Details</h2>
+                <p className="text-slate-500 text-sm mt-1">Enter your lease and owner information</p>
+              </div>
+
+              <div className="bg-blue-50/80 border border-blue-100 rounded-xl p-4 flex items-start gap-3">
+                <CalendarRange className="w-4 h-4 text-blue-500 mt-0.5 flex-shrink-0" />
+                <p className="text-blue-700 text-sm">Fill in your rental period and monthly cost so we can track your lease and payment status.</p>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div className="space-y-2">
+                  <Label className="text-slate-700 font-medium text-sm">Lease Start</Label>
+                  <Input
+                    type="date"
+                    value={formData.rent_start_date}
+                    onChange={(e) => setFormData({ ...formData, rent_start_date: e.target.value })}
+                    className={`h-12 rounded-xl ${errors.rent_start_date ? 'border-red-300' : ''}`}
+                  />
+                  {errors.rent_start_date && <p className="text-red-500 text-xs">{errors.rent_start_date}</p>}
+                </div>
+                <div className="space-y-2">
+                  <Label className="text-slate-700 font-medium text-sm">Lease End</Label>
+                  <Input
+                    type="date"
+                    value={formData.rent_end_date}
+                    onChange={(e) => setFormData({ ...formData, rent_end_date: e.target.value })}
+                    className={`h-12 rounded-xl ${errors.rent_end_date ? 'border-red-300' : ''}`}
+                  />
+                  {errors.rent_end_date && <p className="text-red-500 text-xs">{errors.rent_end_date}</p>}
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label className="text-slate-700 font-medium">Monthly Rent (IDR)</Label>
+                <Input
+                  type="number"
+                  placeholder="e.g., 5000000"
+                  value={formData.monthly_rent}
+                  onChange={(e) => setFormData({ ...formData, monthly_rent: e.target.value })}
+                  className={`h-12 rounded-xl ${errors.monthly_rent ? 'border-red-300' : ''}`}
+                />
+                {errors.monthly_rent && <p className="text-red-500 text-xs">{errors.monthly_rent}</p>}
+              </div>
+
+              <div className="pt-2 border-t border-stone-200">
+                <p className="text-slate-600 text-sm font-medium mb-3">Owner Contact (optional)</p>
+                <div className="space-y-3">
+                  <div className="relative">
+                    <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+                    <Input
+                      placeholder="Owner name"
+                      value={formData.owner_name}
+                      onChange={(e) => setFormData({ ...formData, owner_name: e.target.value })}
+                      className="h-12 rounded-xl pl-9"
+                    />
+                  </div>
+                  <div className="relative">
+                    <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+                    <Input
+                      placeholder="Owner phone"
+                      value={formData.owner_phone}
+                      onChange={(e) => setFormData({ ...formData, owner_phone: e.target.value })}
+                      className="h-12 rounded-xl pl-9"
+                    />
+                  </div>
+                  <div className="relative">
+                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+                    <Input
+                      placeholder="Owner email"
+                      value={formData.owner_email}
+                      onChange={(e) => setFormData({ ...formData, owner_email: e.target.value })}
+                      className="h-12 rounded-xl pl-9"
+                    />
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          )}
+
+          {((step === 3 && !isTenant) || (step === 4 && isTenant)) && (
+            <motion.div
+              key="step-docs"
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -20 }}
@@ -325,7 +416,7 @@ export default function AddUnit() {
                   <FileText className="w-8 h-8 text-white" />
                 </div>
                 <h2 className="text-lg font-bold text-slate-800">Supporting Document</h2>
-                <p className="text-slate-500 text-sm mt-1">Upload proof of ownership (optional)</p>
+                <p className="text-slate-500 text-sm mt-1">{isTenant ? 'Upload your rental agreement (optional)' : 'Upload proof of ownership (optional)'}</p>
               </div>
 
               <div className="space-y-4">
