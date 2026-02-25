@@ -15,7 +15,7 @@ export default function Splash() {
   }, [navigate]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-teal-600 via-teal-700 to-slate-800 flex flex-col items-center justify-center px-8">
+    <div className="min-h-screen flex flex-col items-center justify-center px-8" style={{background: 'linear-gradient(135deg, #8A8076 0%, #5a524e 60%, #3d3733 100%)'}}>
       <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -39,7 +39,7 @@ export default function Splash() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5, duration: 0.5 }}
-          className="text-teal-100 text-sm mt-2 tracking-widest uppercase"
+          className="text-stone-200 text-sm mt-2 tracking-widest uppercase"
         >
           Property Management
         </motion.p>
