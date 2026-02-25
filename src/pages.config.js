@@ -58,6 +58,12 @@ import MyUnit from './pages/MyUnit';
 import AddUnit from './pages/AddUnit';
 import UnitSubmitted from './pages/UnitSubmitted';
 import UnitDetail from './pages/UnitDetail';
+import Tickets from './pages/Tickets';
+import CreateTicket from './pages/CreateTicket';
+import TicketSubmitted from './pages/TicketSubmitted';
+import TicketDetail from './pages/TicketDetail';
+import Notifications from './pages/Notifications';
+import Profile from './pages/Profile';
 
 
 export const PAGES = {
@@ -72,6 +78,12 @@ export const PAGES = {
     "AddUnit": AddUnit,
     "UnitSubmitted": UnitSubmitted,
     "UnitDetail": UnitDetail,
+    "Tickets": Tickets,
+    "CreateTicket": CreateTicket,
+    "TicketSubmitted": TicketSubmitted,
+    "TicketDetail": TicketDetail,
+    "Notifications": Notifications,
+    "Profile": Profile,
 }
 
 export const pagesConfig = {
