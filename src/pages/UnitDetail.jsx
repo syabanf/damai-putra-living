@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import { base44 } from '@/api/base44Client';
@@ -10,6 +10,12 @@ import {
 } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import StatusBadge from '@/components/ui/StatusBadge';
+
+const GlassCard = ({ children, className = '' }) => (
+  <div className={`bg-white/70 backdrop-blur-xl rounded-2xl border border-white/80 shadow-sm shadow-slate-200/60 ${className}`}>
+    {children}
+  </div>
+);
 
 export default function UnitDetail() {
   const navigate = useNavigate();
@@ -26,13 +32,8 @@ export default function UnitDetail() {
     enabled: !!unitId,
   });
 
-  // Admin simulation - update status
   const updateStatusMutation = useMutation({
-    mutationFn: ({ status, note }) => 
-      base44.entities.Unit.update(unitId, { 
-        status, 
-        rejection_note: note || null 
-      }),
+    mutationFn: ({ status, note }) => base44.entities.Unit.update(unitId, { status, rejection_note: note || null }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['unit', unitId] });
       queryClient.invalidateQueries({ queryKey: ['units'] });
@@ -41,273 +42,220 @@ export default function UnitDetail() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-slate-50 flex items-center justify-center">
-        <div className="w-8 h-8 border-4 border-teal-500 border-t-transparent rounded-full animate-spin" />
+      <div className="min-h-screen flex items-center justify-center" style={{ background: 'linear-gradient(160deg, #f5f3f0 0%, #ece8e3 100%)' }}>
+        <motion.div animate={{ rotate: 360 }} transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+          className="w-8 h-8 border-[3px] rounded-full"
+          style={{ borderColor: '#8A8076', borderTopColor: 'transparent' }} />
       </div>
     );
   }
 
   if (!unit) {
     return (
-      <div className="min-h-screen bg-slate-50 flex items-center justify-center p-6">
+      <div className="min-h-screen flex items-center justify-center p-6" style={{ background: 'linear-gradient(160deg, #f5f3f0 0%, #ece8e3 100%)' }}>
         <div className="text-center">
           <AlertCircle className="w-12 h-12 text-slate-400 mx-auto mb-4" />
           <p className="text-slate-600">Unit not found</p>
-          <Button
-            variant="outline"
-            onClick={() => navigate(createPageUrl('MyUnit'))}
-            className="mt-4"
-          >
-            Back to My Unit
-          </Button>
+          <Button variant="outline" onClick={() => navigate(createPageUrl('MyUnit'))} className="mt-4">Back to My Unit</Button>
         </div>
       </div>
     );
   }
 
-  const getStatusColor = () => {
-    switch (unit.status) {
-      case 'approved': return 'from-emerald-500 to-emerald-600';
-      case 'rejected': return 'from-red-500 to-red-600';
-      default: return 'from-amber-500 to-amber-600';
-    }
-  };
+  const headerGradient = unit.status === 'approved' ? 'linear-gradient(135deg, #059669, #047857)'
+    : unit.status === 'rejected' ? 'linear-gradient(135deg, #dc2626, #b91c1c)'
+    : 'linear-gradient(135deg, #d97706, #b45309)';
 
-  const getStatusIcon = () => {
-    switch (unit.status) {
-      case 'approved': return CheckCircle;
-      case 'rejected': return XCircle;
-      default: return Clock;
-    }
-  };
-
-  const StatusIcon = getStatusIcon();
+  const StatusIcon = unit.status === 'approved' ? CheckCircle : unit.status === 'rejected' ? XCircle : Clock;
 
   return (
-    <div className="min-h-screen bg-slate-50 pb-8">
+    <div className="min-h-screen pb-8" style={{ background: 'linear-gradient(160deg, #f5f3f0 0%, #ece8e3 50%, #e8e2db 100%)' }}>
       {/* Header */}
-      <div className={`bg-gradient-to-br ${getStatusColor()} px-6 pt-6 pb-16 rounded-b-3xl`}>
+      <div className="px-5 pt-6 pb-16 rounded-b-3xl" style={{ background: headerGradient }}>
         <div className="flex items-center gap-4 mb-8">
-          <button
-            onClick={() => navigate(-1)}
-            className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center"
-          >
+          <button onClick={() => navigate(-1)}
+            className="w-10 h-10 rounded-xl bg-white/20 backdrop-blur-sm border border-white/20 flex items-center justify-center">
             <ArrowLeft className="w-5 h-5 text-white" />
           </button>
           <h1 className="text-lg font-bold text-white">Unit Details</h1>
         </div>
-
         <div className="flex items-center gap-4">
-          <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center">
+          <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center">
             <Building2 className="w-8 h-8 text-white" />
           </div>
           <div>
             <h2 className="text-2xl font-bold text-white">{unit.unit_number}</h2>
-            <p className="text-white/80">{unit.property_name}</p>
-            {unit.tower && <p className="text-white/60 text-sm">Tower {unit.tower}</p>}
+            <p className="text-white/75">{unit.property_name}</p>
+            {unit.tower && <p className="text-white/55 text-sm">Tower {unit.tower}</p>}
           </div>
         </div>
       </div>
 
-      {/* Status Card */}
-      <div className="px-6 -mt-8">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="bg-white rounded-2xl p-5 shadow-lg"
-        >
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-3">
-              <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${
-                unit.status === 'approved' ? 'bg-emerald-100' :
-                unit.status === 'rejected' ? 'bg-red-100' : 'bg-amber-100'
-              }`}>
-                <StatusIcon className={`w-6 h-6 ${
-                  unit.status === 'approved' ? 'text-emerald-600' :
-                  unit.status === 'rejected' ? 'text-red-600' : 'text-amber-600'
-                }`} />
-              </div>
-              <div>
-                <p className="text-sm text-slate-500">Status</p>
-                <p className="font-bold text-slate-800 capitalize">{unit.status}</p>
-              </div>
-            </div>
-            <StatusBadge status={unit.status} />
-          </div>
+      <div className="px-4 -mt-8 space-y-4">
 
-          {unit.status === 'rejected' && unit.rejection_note && (
-            <div className="bg-red-50 border border-red-100 rounded-xl p-4">
-              <p className="text-red-800 text-sm font-medium mb-1">Rejection Reason:</p>
-              <p className="text-red-700 text-sm">{unit.rejection_note}</p>
-            </div>
-          )}
-
-          {unit.status === 'pending' && (
-            <div className="bg-amber-50 border border-amber-100 rounded-xl p-4">
-              <p className="text-amber-700 text-sm">
-                Your registration is being reviewed. You'll be notified once approved.
-              </p>
-            </div>
-          )}
-        </motion.div>
-      </div>
-
-      {/* Info Cards */}
-      <div className="px-6 mt-6 space-y-4">
-        <div className="bg-white rounded-xl p-4">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-slate-100 rounded-lg flex items-center justify-center">
-              <User className="w-5 h-5 text-slate-600" />
-            </div>
-            <div>
-              <p className="text-sm text-slate-500">Ownership Status</p>
-              <p className="font-semibold text-slate-800 capitalize">{unit.ownership_status}</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="bg-white rounded-xl p-4">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-slate-100 rounded-lg flex items-center justify-center">
-              <Calendar className="w-5 h-5 text-slate-600" />
-            </div>
-            <div>
-              <p className="text-sm text-slate-500">Registered On</p>
-              <p className="font-semibold text-slate-800">
-                {new Date(unit.created_date).toLocaleDateString('en-US', {
-                  year: 'numeric',
-                  month: 'long',
-                  day: 'numeric'
-                })}
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {unit.document_url && (
-          <div className="bg-white rounded-xl p-4">
-            <div className="flex items-center justify-between">
+        {/* Status Card */}
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
+          <GlassCard className="p-5 shadow-lg shadow-slate-200/60">
+            <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-slate-100 rounded-lg flex items-center justify-center">
-                  <FileText className="w-5 h-5 text-slate-600" />
+                <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${
+                  unit.status === 'approved' ? 'bg-emerald-100' :
+                  unit.status === 'rejected' ? 'bg-red-100' : 'bg-amber-100'
+                }`}>
+                  <StatusIcon className={`w-6 h-6 ${
+                    unit.status === 'approved' ? 'text-emerald-600' :
+                    unit.status === 'rejected' ? 'text-red-600' : 'text-amber-600'
+                  }`} />
                 </div>
                 <div>
-                  <p className="text-sm text-slate-500">Supporting Document</p>
-                  <p className="font-semibold text-slate-800">Uploaded</p>
+                  <p className="text-xs text-slate-400">Status</p>
+                  <p className="font-bold text-slate-800 capitalize">{unit.status}</p>
                 </div>
               </div>
-              <a
-                href={unit.document_url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-teal-600 text-sm font-medium"
-              >
-                View
-              </a>
+              <StatusBadge status={unit.status} />
+            </div>
+
+            {unit.status === 'rejected' && unit.rejection_note && (
+              <div className="bg-red-50/80 border border-red-100 rounded-xl p-4">
+                <p className="text-red-800 text-sm font-medium mb-1">Rejection Reason:</p>
+                <p className="text-red-700 text-sm">{unit.rejection_note}</p>
+              </div>
+            )}
+
+            {unit.status === 'pending' && (
+              <div className="bg-amber-50/80 border border-amber-100 rounded-xl p-4">
+                <p className="text-amber-700 text-sm">Your registration is being reviewed. You'll be notified once approved.</p>
+              </div>
+            )}
+          </GlassCard>
+        </motion.div>
+
+        {/* Info Cards */}
+        <GlassCard className="overflow-hidden">
+          <div className="p-4 border-b border-white/60">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ backgroundColor: '#f5f3f1' }}>
+                <User className="w-5 h-5" style={{ color: '#8A8076' }} />
+              </div>
+              <div>
+                <p className="text-xs text-slate-400">Ownership Status</p>
+                <p className="font-semibold text-slate-800 capitalize">{unit.ownership_status}</p>
+              </div>
+            </div>
+          </div>
+          <div className={`p-4 ${unit.document_url ? 'border-b border-white/60' : ''}`}>
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ backgroundColor: '#f5f3f1' }}>
+                <Calendar className="w-5 h-5" style={{ color: '#8A8076' }} />
+              </div>
+              <div>
+                <p className="text-xs text-slate-400">Registered On</p>
+                <p className="font-semibold text-slate-800">
+                  {new Date(unit.created_date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+                </p>
+              </div>
+            </div>
+          </div>
+          {unit.document_url && (
+            <div className="p-4">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ backgroundColor: '#f5f3f1' }}>
+                    <FileText className="w-5 h-5" style={{ color: '#8A8076' }} />
+                  </div>
+                  <div>
+                    <p className="text-xs text-slate-400">Supporting Document</p>
+                    <p className="font-semibold text-slate-800">Uploaded</p>
+                  </div>
+                </div>
+                <a href={unit.document_url} target="_blank" rel="noopener noreferrer"
+                  className="text-xs font-semibold px-3 py-1.5 rounded-xl" style={{ color: '#8A8076', backgroundColor: '#f5f3f1' }}>
+                  View
+                </a>
+              </div>
+            </div>
+          )}
+        </GlassCard>
+
+        {/* Action Button */}
+        {unit.status === 'approved' && (
+          <button onClick={() => navigate(createPageUrl('Tickets'))}
+            className="w-full h-14 rounded-2xl text-white font-semibold flex items-center justify-center gap-2 shadow-lg active:scale-[0.98] transition-transform"
+            style={{ background: 'linear-gradient(135deg, #8A8076, #6e6560)', boxShadow: '0 4px 20px rgba(138,128,118,0.35)' }}>
+            <Ticket className="w-5 h-5" /> Create Support Ticket
+          </button>
+        )}
+
+        {unit.status === 'rejected' && (
+          <button onClick={() => navigate(createPageUrl('AddUnit') + `?resubmit=${unit.id}`)}
+            className="w-full h-14 rounded-2xl text-white font-semibold flex items-center justify-center gap-2 active:scale-[0.98] transition-transform"
+            style={{ background: 'linear-gradient(135deg, #8A8076, #6e6560)', boxShadow: '0 4px 20px rgba(138,128,118,0.35)' }}>
+            <RefreshCw className="w-5 h-5" /> Resubmit Application
+          </button>
+        )}
+
+        {/* Surveillance */}
+        {unit.status === 'approved' && (
+          <div>
+            <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-3 px-1">Unit Surveillance</p>
+            <div className="rounded-2xl p-4 border border-white/10" style={{ background: 'linear-gradient(145deg, #1e2330, #111827)' }}>
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center gap-2">
+                  <div className="w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse" />
+                  <span className="text-[10px] text-red-400 font-bold uppercase tracking-wider">Live</span>
+                </div>
+                <span className="text-[10px] text-slate-500">Unit {unit.unit_number}</span>
+              </div>
+              <div className="grid grid-cols-2 gap-2 mb-3">
+                {[{ label: 'Front Door', status: 'online' }, { label: 'Corridor', status: 'online' }].map((cam, i) => (
+                  <div key={i} className="rounded-xl p-3 flex items-center gap-2.5 border border-white/5" style={{ background: 'rgba(255,255,255,0.05)' }}>
+                    <div className="w-8 h-8 rounded-lg bg-emerald-500/15 flex items-center justify-center flex-shrink-0">
+                      <Video className="w-4 h-4 text-emerald-400" />
+                    </div>
+                    <div className="min-w-0">
+                      <p className="text-xs font-semibold text-white/80 truncate">{cam.label}</p>
+                      <div className="flex items-center gap-1 mt-0.5">
+                        <div className="w-1 h-1 rounded-full bg-emerald-400" />
+                        <p className="text-[10px] text-emerald-400">{cam.status}</p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div className="flex items-center justify-between pt-2.5 border-t border-white/5">
+                <p className="text-[10px] text-slate-500">2 cameras active</p>
+                <button className="text-[10px] font-semibold text-slate-400 flex items-center gap-1 hover:text-white transition-colors">
+                  Request Footage <ChevronRight className="w-3 h-3" />
+                </button>
+              </div>
             </div>
           </div>
         )}
-      </div>
 
-      {/* Actions */}
-      {unit.status === 'approved' && (
-        <div className="px-6 mt-6">
-          <Button
-            onClick={() => navigate(createPageUrl('Tickets'))}
-            className="w-full h-14 bg-gradient-to-r from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 text-white rounded-2xl font-semibold shadow-lg shadow-teal-200/50"
-          >
-            <Ticket className="w-5 h-5 mr-2" />
-            Create Support Ticket
-          </Button>
-        </div>
-      )}
-
-      {unit.status === 'rejected' && (
-        <div className="px-6 mt-6">
-          <Button
-            onClick={() => navigate(createPageUrl('AddUnit') + `?resubmit=${unit.id}`)}
-            className="w-full h-14 bg-gradient-to-r from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 text-white rounded-2xl font-semibold shadow-lg shadow-teal-200/50"
-          >
-            <RefreshCw className="w-5 h-5 mr-2" />
-            Resubmit Application
-          </Button>
-        </div>
-      )}
-
-      {/* Surveillance */}
-      {unit.status === 'approved' && (
-        <div className="px-6 mt-6">
-          <h2 className="text-sm font-bold text-slate-700 uppercase tracking-wider mb-3">Unit Surveillance</h2>
-          <div className="bg-slate-900 rounded-2xl p-4 border border-slate-800">
-            <div className="flex items-center justify-between mb-3">
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse" />
-                <span className="text-xs text-red-400 font-semibold uppercase tracking-wider">Live</span>
-              </div>
-              <span className="text-xs text-slate-500">Unit {unit.unit_number}</span>
-            </div>
-            <div className="grid grid-cols-2 gap-2 mb-3">
-              {[
-                { label: 'Front Door', status: 'online' },
-                { label: 'Corridor', status: 'online' },
-              ].map((cam, i) => (
-                <div key={i} className="bg-slate-800 rounded-xl p-3 flex items-center gap-2">
-                  <div className="w-7 h-7 rounded-lg bg-emerald-900 flex items-center justify-center flex-shrink-0">
-                    <Video className="w-4 h-4 text-emerald-400" />
-                  </div>
-                  <div className="min-w-0">
-                    <p className="text-xs font-medium text-white truncate">{cam.label}</p>
-                    <p className="text-xs text-emerald-500">{cam.status}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <div className="flex items-center justify-between pt-2 border-t border-slate-800">
-              <p className="text-xs text-slate-500">2 cameras active</p>
-              <button className="text-xs font-medium text-slate-300 flex items-center gap-1">
-                Request Footage <ChevronRight className="w-3 h-3" />
-              </button>
-            </div>
+        {/* Admin Simulation Panel */}
+        <div className="rounded-2xl overflow-hidden border border-slate-700 bg-slate-800/90 backdrop-blur-xl">
+          <div className="px-4 py-3 border-b border-slate-700">
+            <p className="text-slate-400 text-xs uppercase tracking-wider">🔧 Admin Simulation (Demo Only)</p>
           </div>
-        </div>
-      )}
-
-      {/* Admin Simulation Panel */}
-      <div className="px-6 mt-8">
-        <div className="bg-slate-800 rounded-2xl p-5">
-          <p className="text-slate-400 text-xs uppercase tracking-wider mb-4">
-            🔧 Admin Simulation (Demo Only)
-          </p>
-          <div className="flex gap-2">
-            <Button
-              size="sm"
-              variant="outline"
+          <div className="p-4 flex gap-2">
+            <Button size="sm" variant="outline"
               onClick={() => updateStatusMutation.mutate({ status: 'approved' })}
-              className="flex-1 bg-emerald-500/20 border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30"
-            >
+              className="flex-1 bg-emerald-500/20 border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30">
               Approve
             </Button>
-            <Button
-              size="sm"
-              variant="outline"
-              onClick={() => updateStatusMutation.mutate({ 
-                status: 'rejected', 
-                note: 'Document unclear. Please upload a clearer copy.' 
-              })}
-              className="flex-1 bg-red-500/20 border-red-500/30 text-red-400 hover:bg-red-500/30"
-            >
+            <Button size="sm" variant="outline"
+              onClick={() => updateStatusMutation.mutate({ status: 'rejected', note: 'Document unclear. Please upload a clearer copy.' })}
+              className="flex-1 bg-red-500/20 border-red-500/30 text-red-400 hover:bg-red-500/30">
               Reject
             </Button>
-            <Button
-              size="sm"
-              variant="outline"
+            <Button size="sm" variant="outline"
               onClick={() => updateStatusMutation.mutate({ status: 'pending' })}
-              className="flex-1 bg-amber-500/20 border-amber-500/30 text-amber-400 hover:bg-amber-500/30"
-            >
+              className="flex-1 bg-amber-500/20 border-amber-500/30 text-amber-400 hover:bg-amber-500/30">
               Reset
             </Button>
           </div>
         </div>
+
       </div>
     </div>
   );
