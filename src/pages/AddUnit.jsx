@@ -338,7 +338,7 @@ export default function AddUnit() {
                   </div>
                 ) : (
                   <label className="block cursor-pointer">
-                    <div className="p-8 border-2 border-dashed border-stone-200 rounded-xl text-center hover:border-stone-400 hover:bg-stone-50/50 transition-colors">
+                    <div className="p-8 border-2 border-dashed border-stone-300/70 rounded-xl text-center hover:border-stone-400 hover:bg-white/50 bg-white/30 backdrop-blur-sm transition-colors">
                       <Upload className="w-10 h-10 text-slate-400 mx-auto mb-3" />
                       <p className="text-slate-600 font-medium">Upload Document</p>
                       <p className="text-slate-400 text-sm mt-1">PDF, JPG, PNG up to 10MB</p>
