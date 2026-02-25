@@ -246,14 +246,14 @@ export default function AddUnit() {
                 <button
                   type="button"
                   onClick={() => setFormData({ ...formData, ownership_status: 'owner' })}
-                  className={`w-full p-4 rounded-xl border-2 flex items-center gap-4 transition-all ${
+                  className={`w-full p-4 rounded-xl border-2 flex items-center gap-4 transition-all backdrop-blur-xl ${
                     formData.ownership_status === 'owner'
-                      ? 'border-stone-400 bg-stone-50'
-                      : 'border-slate-200 hover:border-slate-300'
+                      ? 'border-amber-400 bg-amber-50/80'
+                      : 'border-white/80 bg-white/70 hover:bg-white/90'
                   }`}
                 >
                   <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${
-                    formData.ownership_status === 'owner' ? 'bg-teal-500' : 'bg-slate-100'
+                    formData.ownership_status === 'owner' ? 'bg-amber-500' : 'bg-slate-100'
                   }`}>
                     <HomeIcon className={`w-6 h-6 ${
                       formData.ownership_status === 'owner' ? 'text-white' : 'text-slate-500'
