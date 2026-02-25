@@ -270,8 +270,8 @@ export default function CreateTicket() {
                   <button
                     key={type.id}
                     onClick={() => handlePermitTypeSelect(type.id)}
-                    className="w-full rounded-2xl border-2 transition-all text-left overflow-hidden"
-                    style={{ borderColor: selected ? '#8A8076' : '#e2e8f0', backgroundColor: selected ? '#f7f6f5' : '#fff' }}
+                    className="w-full rounded-2xl border-2 transition-all text-left overflow-hidden backdrop-blur-xl"
+                    style={{ borderColor: selected ? '#8A8076' : 'rgba(255,255,255,0.8)', backgroundColor: selected ? 'rgba(138,128,118,0.08)' : 'rgba(255,255,255,0.7)' }}
                   >
                     <div className="p-4 flex items-center gap-4">
                       <div className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0"
