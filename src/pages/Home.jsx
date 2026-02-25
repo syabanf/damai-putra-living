@@ -155,7 +155,7 @@ export default function Home() {
       <div className="px-6 mt-6">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-lg font-bold text-slate-800">Recent Activity</h2>
-          <Link to={createPageUrl('Tickets')} className="text-teal-600 text-sm font-medium">
+          <Link to={createPageUrl('Tickets')} className="text-sm font-medium" style={{ color: '#8A8076' }}>
             See All
           </Link>
         </div>
@@ -205,8 +205,8 @@ export default function Home() {
       <div className="px-6 mt-6">
         <div className="bg-gradient-to-r from-slate-800 to-slate-900 rounded-2xl p-5">
           <div className="flex items-start gap-4">
-            <div className="w-10 h-10 bg-teal-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
-              <Shield className="w-5 h-5 text-teal-400" />
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style={{ backgroundColor: 'rgba(138,128,118,0.2)' }}>
+              <Shield className="w-5 h-5" style={{ color: '#c8bfb6' }} />
             </div>
             <div>
               <h3 className="text-white font-semibold">Security First</h3>
