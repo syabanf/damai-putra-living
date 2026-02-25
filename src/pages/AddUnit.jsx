@@ -316,9 +316,9 @@ export default function AddUnit() {
 
               <div className="space-y-4">
                 {uploadedFile ? (
-                  <div className="p-4 bg-slate-50 rounded-xl border border-slate-200 flex items-center justify-between">
+                  <div className="p-4 bg-white/70 rounded-xl border border-white/80 backdrop-blur-sm flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-teal-100 rounded-lg flex items-center justify-center">
+                      <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#f5f3f1' }}>
                         <FileText className="w-5 h-5 text-teal-600" />
                       </div>
                       <div>
