@@ -340,7 +340,7 @@ export default function AddUnit() {
                   </div>
                 ) : (
                   <label className="block cursor-pointer">
-                    <div className="p-8 border-2 border-dashed border-slate-200 rounded-xl text-center hover:border-teal-400 hover:bg-teal-50/50 transition-colors">
+                    <div className="p-8 border-2 border-dashed border-stone-200 rounded-xl text-center hover:border-stone-400 hover:bg-stone-50/50 transition-colors">
                       <Upload className="w-10 h-10 text-slate-400 mx-auto mb-3" />
                       <p className="text-slate-600 font-medium">Upload Document</p>
                       <p className="text-slate-400 text-sm mt-1">PDF, JPG, PNG up to 10MB</p>
@@ -374,8 +374,8 @@ export default function AddUnit() {
                   />
                   <label htmlFor="terms" className="text-sm text-slate-600 leading-relaxed">
                     I confirm that the information provided is accurate and I agree to the{' '}
-                    <span className="text-teal-600 font-medium">Terms of Service</span> and{' '}
-                    <span className="text-teal-600 font-medium">Privacy Policy</span>
+                    <span className="font-medium" style={{ color: '#8A8076' }}>Terms of Service</span> and{' '}
+                    <span className="font-medium" style={{ color: '#8A8076' }}>Privacy Policy</span>
                   </label>
                 </div>
                 {errors.agree_terms && <p className="text-red-500 text-xs">{errors.agree_terms}</p>}
@@ -423,8 +423,8 @@ export default function AddUnit() {
               className="bg-white rounded-2xl p-6 w-full max-w-md"
             >
               <div className="text-center mb-6">
-                <div className="w-16 h-16 bg-teal-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <AlertCircle className="w-8 h-8 text-teal-600" />
+                <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4" style={{ backgroundColor: '#f5f3f1' }}>
+                  <AlertCircle className="w-8 h-8" style={{ color: '#8A8076' }} />
                 </div>
                 <h3 className="text-lg font-bold text-slate-800">Confirm Submission</h3>
                 <p className="text-slate-500 text-sm mt-2">
@@ -464,7 +464,8 @@ export default function AddUnit() {
                 <Button
                   onClick={handleSubmit}
                   disabled={loading}
-                  className="flex-1 h-12 bg-teal-600 hover:bg-teal-700 rounded-xl"
+                  className="flex-1 h-12 rounded-xl text-white"
+                  style={{ backgroundColor: '#8A8076' }}
                 >
                   {loading ? 'Submitting...' : 'Confirm'}
                 </Button>
