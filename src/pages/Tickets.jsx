@@ -86,7 +86,8 @@ export default function Tickets() {
             </p>
             <Button
               onClick={() => navigate(createPageUrl('MyUnit'))}
-              className="bg-gradient-to-r from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 text-white rounded-xl h-12 px-6 shadow-lg shadow-teal-200/50"
+              className="text-white rounded-xl h-12 px-6"
+              style={{ background: 'linear-gradient(135deg, #8A8076, #6e6560)', boxShadow: '0 4px 16px rgba(138,128,118,0.3)' }}
             >
               Register Your Unit
             </Button>
@@ -109,7 +110,8 @@ export default function Tickets() {
           </div>
           <Button
             onClick={() => navigate(createPageUrl('CreateTicket'))}
-            className="h-10 px-4 bg-teal-600 hover:bg-teal-700 rounded-xl"
+            className="h-10 px-4 text-white rounded-xl"
+            style={{ backgroundColor: '#8A8076' }}
           >
             <Plus className="w-4 h-4 mr-1" />
             New
@@ -177,7 +179,8 @@ export default function Tickets() {
             {activeTab === 'all' && (
               <Button
                 onClick={() => navigate(createPageUrl('CreateTicket'))}
-                className="mt-4 bg-teal-600 hover:bg-teal-700"
+                className="mt-4 text-white"
+              style={{ backgroundColor: '#8A8076' }}
               >
                 <Plus className="w-4 h-4 mr-2" />
                 Create Ticket
