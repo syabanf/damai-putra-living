@@ -178,54 +178,55 @@ export default function CreateTicket() {
   const currentProgress = formData.category === 'permit' ? step : (step === 3 ? 2 : 1);
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen pb-8" style={{ background: 'linear-gradient(160deg, #f5f3f0 0%, #ece8e3 50%, #e8e2db 100%)' }}>
       {/* Header */}
-      <div className="px-5 pt-6 pb-4 flex items-center gap-4 border-b border-slate-100">
-        <button
-          onClick={() => {
-            if (showReview) setShowReview(false);
-            else if (step > 1) setStep(step - 1);
-            else navigate(-1);
-          }}
-          className="w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center flex-shrink-0"
-        >
-          <ArrowLeft className="w-5 h-5 text-slate-600" />
-        </button>
-        <div className="flex-1 min-w-0">
-          <h1 className="text-base font-bold text-slate-800">
-            {showReview ? 'Review & Submit' : 
-             step === 1 ? 'New Request' : 
-             step === 2 ? 'Select Permit Type' : 
-             'Application Details'}
-          </h1>
-          <p className="text-xs text-slate-400 mt-0.5">
-            {approvedUnit ? `Unit ${approvedUnit.unit_number} · ${approvedUnit.property_name}` : 'Permit Application'}
+      <div className="px-5 pt-6 pb-5 rounded-b-3xl" style={{ background: 'linear-gradient(150deg, #8A8076 0%, #6e6560 45%, #3d3733 100%)' }}>
+        <div className="flex items-center gap-4 mb-4">
+          <button
+            onClick={() => {
+              if (showReview) setShowReview(false);
+              else if (step > 1) setStep(step - 1);
+              else navigate(-1);
+            }}
+            className="w-10 h-10 rounded-xl bg-white/20 backdrop-blur-sm border border-white/20 flex items-center justify-center flex-shrink-0"
+          >
+            <ArrowLeft className="w-5 h-5 text-white" />
+          </button>
+          <div className="flex-1 min-w-0">
+            <h1 className="text-base font-bold text-white">
+              {showReview ? 'Review & Submit' : 
+               step === 1 ? 'New Request' : 
+               step === 2 ? 'Select Permit Type' : 
+               'Application Details'}
+            </h1>
+            <p className="text-xs text-white/50 mt-0.5">
+              {approvedUnit ? `Unit ${approvedUnit.unit_number} · ${approvedUnit.property_name}` : 'Permit Application'}
+            </p>
+          </div>
+          <div className="flex items-center gap-1 px-2.5 py-1 rounded-lg border border-white/20 bg-white/15">
+            <Shield className="w-3 h-3 text-white/80" />
+            <span className="text-xs font-medium text-white/80">Official</span>
+          </div>
+        </div>
+
+        {/* Progress Bar */}
+        <div>
+          <div className="flex gap-1.5">
+            {Array.from({ length: progressSteps }).map((_, i) => (
+              <div
+                key={i}
+                className="flex-1 h-1 rounded-full transition-all duration-500"
+                style={{ backgroundColor: i < currentProgress ? '#fff' : 'rgba(255,255,255,0.2)' }}
+              />
+            ))}
+          </div>
+          <p className="text-xs text-white/40 mt-1.5">
+            Step {currentProgress} of {progressSteps}
           </p>
         </div>
-        {/* Official badge */}
-        <div className="flex items-center gap-1 px-2 py-1 rounded-lg border border-stone-200 bg-stone-50">
-          <Shield className="w-3 h-3" style={{ color: '#8A8076' }} />
-          <span className="text-xs font-medium" style={{ color: '#8A8076' }}>Official</span>
-        </div>
       </div>
 
-      {/* Progress Bar */}
-      <div className="px-5 pt-4 pb-2">
-        <div className="flex gap-1.5">
-          {Array.from({ length: progressSteps }).map((_, i) => (
-            <div
-              key={i}
-              className="flex-1 h-1 rounded-full transition-all duration-500"
-              style={{ backgroundColor: i < currentProgress ? '#8A8076' : '#e2e8f0' }}
-            />
-          ))}
-        </div>
-        <p className="text-xs text-slate-400 mt-1.5">
-          Step {currentProgress} of {progressSteps}
-        </p>
-      </div>
-
-      <div className="px-5 pb-6">
+      <div className="px-5 pb-6 pt-4">
         <AnimatePresence mode="wait">
 
           {/* Step 1: Category */}
