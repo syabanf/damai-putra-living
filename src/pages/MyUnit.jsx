@@ -99,7 +99,8 @@ export default function MyUnit() {
             </p>
             <Button
               onClick={() => navigate(createPageUrl('AddUnit'))}
-              className="bg-gradient-to-r from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 text-white rounded-xl h-12 px-6 shadow-lg shadow-teal-200/50"
+              className="text-white rounded-xl h-12 px-6"
+              style={{ background: 'linear-gradient(135deg, #8A8076, #6e6560)', boxShadow: '0 4px 16px rgba(138,128,118,0.3)' }}
             >
               <Plus className="w-5 h-5 mr-2" />
               Register Unit
@@ -188,7 +189,7 @@ export default function MyUnit() {
             <Button
               onClick={() => navigate(createPageUrl('AddUnit'))}
               variant="outline"
-              className="w-full h-14 rounded-xl border-2 border-dashed border-slate-200 hover:border-teal-300 hover:bg-teal-50 text-slate-600"
+              className="w-full h-14 rounded-xl border-2 border-dashed border-stone-200 hover:border-stone-400 hover:bg-stone-50 text-slate-600"
             >
               <Plus className="w-5 h-5 mr-2" />
               Add Another Unit
