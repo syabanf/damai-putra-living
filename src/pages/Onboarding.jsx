@@ -10,19 +10,22 @@ const slides = [
     icon: Building2,
     title: "Manage Your Unit",
     description: "Register and manage your property unit with ease. Track ownership status and unit details all in one place.",
-    color: "from-teal-500 to-teal-600"
+    bg: "#8A8076",
+    shadow: "rgba(138,128,118,0.35)"
   },
   {
     icon: Shield,
     title: "Secure & Trusted",
     description: "Your data is protected with enterprise-grade security. Verified units ensure a trusted community.",
-    color: "from-blue-500 to-blue-600"
+    bg: "#6e6560",
+    shadow: "rgba(110,101,96,0.35)"
   },
   {
     icon: FileCheck,
     title: "Digital Permits",
     description: "Submit renovation, moving, and event permits digitally. Track approvals in real-time.",
-    color: "from-emerald-500 to-emerald-600"
+    bg: "#5a524e",
+    shadow: "rgba(90,82,78,0.35)"
   }
 ];
 
@@ -63,7 +66,13 @@ export default function Onboarding() {
             transition={{ duration: 0.3 }}
             className="flex flex-col items-center text-center"
           >
-            <div className={`w-32 h-32 rounded-3xl bg-gradient-to-br ${slides[currentSlide].color} flex items-center justify-center mb-12 shadow-lg shadow-teal-200/50`}>
+            <div
+              className="w-32 h-32 rounded-3xl flex items-center justify-center mb-12"
+              style={{
+                backgroundColor: slides[currentSlide].bg,
+                boxShadow: `0 20px 40px ${slides[currentSlide].shadow}`
+              }}
+            >
               {React.createElement(slides[currentSlide].icon, { className: "w-16 h-16 text-white" })}
             </div>
 
@@ -85,15 +94,17 @@ export default function Onboarding() {
               key={index}
               onClick={() => setCurrentSlide(index)}
               className={`h-2 rounded-full transition-all duration-300 ${
-                index === currentSlide ? 'w-8 bg-teal-600' : 'w-2 bg-slate-200'
+                index === currentSlide ? 'w-8' : 'w-2 bg-slate-200'
               }`}
+              style={index === currentSlide ? { backgroundColor: '#8A8076' } : {}}
             />
           ))}
         </div>
 
         <Button
           onClick={handleNext}
-          className="w-full h-14 bg-gradient-to-r from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 text-white rounded-2xl font-semibold text-base shadow-lg shadow-teal-200/50"
+          className="w-full h-14 text-white rounded-2xl font-semibold text-base"
+          style={{ background: 'linear-gradient(135deg, #8A8076, #6e6560)', boxShadow: '0 8px 24px rgba(138,128,118,0.35)' }}
         >
           {currentSlide === slides.length - 1 ? (
             <>Get Started <ArrowRight className="w-5 h-5 ml-2" /></>
