@@ -47,44 +47,44 @@
  *
  * The mainPage value must match a key in the PAGES object exactly.
  */
-import Splash from './pages/Splash';
-import Onboarding from './pages/Onboarding';
-import Register from './pages/Register';
-import Verification from './pages/Verification';
-import RegistrationSuccess from './pages/RegistrationSuccess';
+import AddUnit from './pages/AddUnit';
+import CreateTicket from './pages/CreateTicket';
 import ForgotPassword from './pages/ForgotPassword';
 import Home from './pages/Home';
 import MyUnit from './pages/MyUnit';
-import AddUnit from './pages/AddUnit';
-import UnitSubmitted from './pages/UnitSubmitted';
-import UnitDetail from './pages/UnitDetail';
-import Tickets from './pages/Tickets';
-import CreateTicket from './pages/CreateTicket';
-import TicketSubmitted from './pages/TicketSubmitted';
-import TicketDetail from './pages/TicketDetail';
 import Notifications from './pages/Notifications';
+import Onboarding from './pages/Onboarding';
 import Profile from './pages/Profile';
+import Register from './pages/Register';
+import RegistrationSuccess from './pages/RegistrationSuccess';
+import Splash from './pages/Splash';
+import TicketDetail from './pages/TicketDetail';
+import TicketSubmitted from './pages/TicketSubmitted';
+import Tickets from './pages/Tickets';
+import UnitDetail from './pages/UnitDetail';
+import UnitSubmitted from './pages/UnitSubmitted';
+import Verification from './pages/Verification';
 import __Layout from './Layout.jsx';
 
 
 export const PAGES = {
-    "Splash": Splash,
-    "Onboarding": Onboarding,
-    "Register": Register,
-    "Verification": Verification,
-    "RegistrationSuccess": RegistrationSuccess,
+    "AddUnit": AddUnit,
+    "CreateTicket": CreateTicket,
     "ForgotPassword": ForgotPassword,
     "Home": Home,
     "MyUnit": MyUnit,
-    "AddUnit": AddUnit,
-    "UnitSubmitted": UnitSubmitted,
-    "UnitDetail": UnitDetail,
-    "Tickets": Tickets,
-    "CreateTicket": CreateTicket,
-    "TicketSubmitted": TicketSubmitted,
-    "TicketDetail": TicketDetail,
     "Notifications": Notifications,
+    "Onboarding": Onboarding,
     "Profile": Profile,
+    "Register": Register,
+    "RegistrationSuccess": RegistrationSuccess,
+    "Splash": Splash,
+    "TicketDetail": TicketDetail,
+    "TicketSubmitted": TicketSubmitted,
+    "Tickets": Tickets,
+    "UnitDetail": UnitDetail,
+    "UnitSubmitted": UnitSubmitted,
+    "Verification": Verification,
 }
 
 export const pagesConfig = {
