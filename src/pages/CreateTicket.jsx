@@ -596,7 +596,7 @@ export default function CreateTicket() {
 
       {/* Bottom Actions */}
       {step === 3 && (
-        <div className="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-sm border-t border-slate-100 p-5">
+        <div className="fixed bottom-0 left-0 right-0 p-5" style={{ background: 'rgba(245,243,240,0.9)', backdropFilter: 'blur(16px)', borderTop: '1px solid rgba(255,255,255,0.6)' }}>
           <div className="max-w-md mx-auto">
             <Button
               onClick={() => showReview ? handleSubmit() : setShowReview(true)}
