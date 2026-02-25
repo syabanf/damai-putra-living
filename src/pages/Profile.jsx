@@ -5,27 +5,24 @@ import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 import { 
-  User, Mail, Phone, Building2, Settings, HelpCircle, 
+  User, Mail, Building2, HelpCircle, 
   FileText, LogOut, ChevronRight, Shield, Bell, Globe
 } from 'lucide-react';
 import { Button } from "@/components/ui/button";
-import { Switch } from "@/components/ui/switch";
 import BottomNav from '@/components/navigation/BottomNav';
+
+const GlassCard = ({ children, className = '' }) => (
+  <div className={`bg-white/70 backdrop-blur-xl rounded-2xl border border-white/80 shadow-sm shadow-slate-200/60 ${className}`}>
+    {children}
+  </div>
+);
 
 export default function Profile() {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const loadUser = async () => {
-      try {
-        const currentUser = await base44.auth.me();
-        setUser(currentUser);
-      } catch (e) {
-        // Not logged in
-      }
-    };
-    loadUser();
+    base44.auth.me().then(setUser).catch(() => {});
   }, []);
 
   const { data: units = [] } = useQuery({
@@ -49,92 +46,82 @@ export default function Profile() {
   ];
 
   return (
-    <div className="min-h-screen bg-slate-50 pb-24">
+    <div className="min-h-screen pb-28" style={{ background: 'linear-gradient(160deg, #f5f3f0 0%, #ece8e3 50%, #e8e2db 100%)' }}>
       {/* Header */}
-      <div className="px-6 pt-12 pb-20 rounded-b-3xl" style={{ background: 'linear-gradient(135deg, #8A8076, #6e6560)' }}>
-        <h1 className="text-2xl font-bold text-white mb-8">Profile</h1>
-        
-        <div className="flex items-center gap-4">
-          <div className="w-20 h-20 bg-white/20 rounded-2xl flex items-center justify-center">
+      <div className="relative overflow-hidden px-5 pt-14 pb-24 rounded-b-[2.5rem]"
+        style={{ background: 'linear-gradient(150deg, #8A8076 0%, #6e6560 45%, #3d3733 100%)' }}>
+        <div className="absolute -top-10 -right-10 w-48 h-48 rounded-full opacity-10 bg-white" />
+        <h1 className="text-2xl font-bold text-white mb-8 relative">Profile</h1>
+        <div className="flex items-center gap-4 relative">
+          <div className="w-20 h-20 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center ring-2 ring-white/30">
             <User className="w-10 h-10 text-white" />
           </div>
           <div>
             <h2 className="text-xl font-bold text-white">{user?.full_name || 'User'}</h2>
-            <p className="text-teal-100 flex items-center gap-2 mt-1">
-              <Mail className="w-4 h-4" />
+            <p className="text-white/60 flex items-center gap-2 mt-1 text-sm">
+              <Mail className="w-3.5 h-3.5" />
               {user?.email || 'user@example.com'}
             </p>
           </div>
         </div>
       </div>
 
-      {/* Stats */}
-      <div className="px-6 -mt-10">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="bg-white rounded-2xl p-5 shadow-lg grid grid-cols-3 gap-4"
-        >
-          <div className="text-center">
-            <p className="text-2xl font-bold text-slate-800">{approvedUnits.length}</p>
-            <p className="text-xs text-slate-500 mt-1">Units</p>
-          </div>
-          <div className="text-center border-x border-slate-100">
-            <p className="text-2xl font-bold text-slate-800">0</p>
-            <p className="text-xs text-slate-500 mt-1">Active Permits</p>
-          </div>
-          <div className="text-center">
-            <p className="text-2xl font-bold text-slate-800">0</p>
-            <p className="text-xs text-slate-500 mt-1">Pending</p>
-          </div>
+      {/* Stats Card – pulled up over header */}
+      <div className="px-4 -mt-12">
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
+          <GlassCard className="p-5 grid grid-cols-3 gap-4 shadow-lg shadow-slate-200/80">
+            <div className="text-center">
+              <p className="text-2xl font-bold text-slate-800">{approvedUnits.length}</p>
+              <p className="text-xs text-slate-500 mt-1">Units</p>
+            </div>
+            <div className="text-center border-x border-slate-100/80">
+              <p className="text-2xl font-bold text-slate-800">0</p>
+              <p className="text-xs text-slate-500 mt-1">Active Permits</p>
+            </div>
+            <div className="text-center">
+              <p className="text-2xl font-bold text-slate-800">0</p>
+              <p className="text-xs text-slate-500 mt-1">Pending</p>
+            </div>
+          </GlassCard>
         </motion.div>
       </div>
 
       {/* Menu */}
-      <div className="px-6 mt-6 space-y-3">
-        {menuItems.map((item, index) => (
-          <motion.button
-            key={item.label}
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: index * 0.05 }}
-            onClick={item.action}
-            className="w-full bg-white rounded-xl p-4 flex items-center justify-between hover:shadow-md transition-shadow"
-          >
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-slate-100 rounded-lg flex items-center justify-center">
-                <item.icon className="w-5 h-5 text-slate-600" />
+      <div className="px-4 mt-5">
+        <GlassCard className="overflow-hidden">
+          {menuItems.map((item, index) => (
+            <motion.button key={item.label}
+              initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: index * 0.04 }}
+              onClick={item.action}
+              className={`w-full p-4 flex items-center justify-between hover:bg-white/60 transition-colors active:bg-white/80 ${index < menuItems.length - 1 ? 'border-b border-white/60' : ''}`}>
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: '#f5f3f118' }}>
+                  <item.icon className="w-5 h-5" style={{ color: '#8A8076' }} />
+                </div>
+                <span className="font-medium text-slate-700">{item.label}</span>
               </div>
-              <span className="font-medium text-slate-800">{item.label}</span>
-            </div>
-            <div className="flex items-center gap-2">
-              {item.count !== undefined && (
-                <span className="px-2 py-0.5 text-xs font-medium rounded-full" style={{ backgroundColor: '#f5f3f1', color: '#8A8076' }}>
-                  {item.count}
-                </span>
-              )}
-              {item.value && (
-                <span className="text-sm text-slate-500">{item.value}</span>
-              )}
-              <ChevronRight className="w-5 h-5 text-slate-400" />
-            </div>
-          </motion.button>
-        ))}
+              <div className="flex items-center gap-2">
+                {item.count !== undefined && (
+                  <span className="px-2 py-0.5 text-xs font-semibold rounded-full" style={{ backgroundColor: '#f5f3f1', color: '#8A8076' }}>
+                    {item.count}
+                  </span>
+                )}
+                {item.value && <span className="text-sm text-slate-400">{item.value}</span>}
+                <ChevronRight className="w-4 h-4 text-slate-300" />
+              </div>
+            </motion.button>
+          ))}
+        </GlassCard>
       </div>
 
       {/* Logout */}
-      <div className="px-6 mt-8">
-        <Button
-          variant="outline"
-          onClick={handleLogout}
-          className="w-full h-14 rounded-xl border-red-200 text-red-600 hover:bg-red-50"
-        >
-          <LogOut className="w-5 h-5 mr-2" />
-          Sign Out
-        </Button>
+      <div className="px-4 mt-5">
+        <button onClick={handleLogout}
+          className="w-full h-14 rounded-2xl border border-red-200/80 bg-red-50/60 backdrop-blur-sm text-red-600 font-semibold flex items-center justify-center gap-2 hover:bg-red-100/60 transition-colors">
+          <LogOut className="w-5 h-5" /> Sign Out
+        </button>
       </div>
 
-      {/* Version */}
       <div className="text-center mt-8">
         <p className="text-slate-400 text-xs">Damai Putra Apps v1.0.0</p>
       </div>
