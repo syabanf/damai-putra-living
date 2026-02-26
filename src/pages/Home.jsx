@@ -256,7 +256,7 @@ export default function Home() {
           {EVENTS.map((ev, i) => (
             <motion.div key={ev.id} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.06 }}
               className="flex-shrink-0 w-48">
-              <Card onClick={() => navigate(createPageUrl('Events'))}>
+              <Card onClick={() => navigate(createPageUrl(`EventDetail?id=${ev.id}`))}>
                 <div className="relative h-28">
                   <img src={ev.img} alt={ev.title} className="w-full h-full object-cover" />
                   <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.55), transparent)' }} />
