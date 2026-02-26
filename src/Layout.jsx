@@ -1,11 +1,30 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
+import BottomNav from '@/components/navigation/BottomNav';
 
-export default function Layout({ children }) {
+// Pages that should NOT show BottomNav
+const NO_NAV_PAGES = ['Splash', 'Onboarding', 'Register', 'Verification', 'ForgotPassword', 'RegistrationSuccess', 'UnitSubmitted', 'TicketSubmitted'];
+
+// Map route path to page name for BottomNav active state
+const PAGE_NAME_MAP = {
+  '/home': 'Home',
+  '/property-listing': 'PropertyListing',
+  '/tickets': 'Tickets',
+  '/notifications': 'Notifications',
+  '/profile': 'Profile',
+  '/explore': 'Explore',
+  '/my-unit': 'MyUnit',
+  '/rewards': 'Rewards',
+  '/events': 'Events',
+};
+
+export default function Layout({ children, currentPageName }) {
+  const hideNav = NO_NAV_PAGES.includes(currentPageName);
+
   return (
     <div className="min-h-screen bg-stone-100">
       <style>{`
         :root {
-          /* Damai Putra Living Brand Colors */
           --brand:        #8A7F73;
           --brand-dark:   #6e6560;
           --brand-darker: #5a524e;
@@ -43,10 +62,28 @@ export default function Layout({ children }) {
             background: linear-gradient(135deg, #8A7F73 0%, #2E2E2E 100%);
           }
         }
+
+        /* Global hover & transition enhancements */
+        button, a, [role="button"] {
+          transition: transform 0.15s ease, opacity 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+        }
+        button:active:not(:disabled), a:active, [role="button"]:active {
+          transform: scale(0.97);
+        }
+        
+        /* Smooth page content transitions */
+        .page-enter {
+          animation: pageSlideIn 0.25s ease-out forwards;
+        }
+        @keyframes pageSlideIn {
+          from { opacity: 0; transform: translateY(8px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
       `}</style>
       
-      <div className="max-w-md mx-auto min-h-screen shadow-2xl relative" style={{ background: 'linear-gradient(160deg, #f0ede9 0%, #e8e4df 100%)' }}>
+      <div className="max-w-md mx-auto min-h-screen shadow-2xl relative page-enter" style={{ background: 'linear-gradient(160deg, #f0ede9 0%, #e8e4df 100%)' }}>
         {children}
+        {!hideNav && <BottomNav currentPage={currentPageName} />}
       </div>
     </div>
   );
