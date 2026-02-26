@@ -496,7 +496,7 @@ export default function AddUnit() {
           onClick={handleNext}
           disabled={loading}
           className="w-full h-14 text-white rounded-2xl font-semibold text-base"
-          style={{ background: 'linear-gradient(135deg, #8A8076, #6e6560)', boxShadow: '0 8px 24px rgba(138,128,118,0.35)' }}
+          style={{ background: 'linear-gradient(135deg, #1FB6D5, #169ab5)', boxShadow: '0 8px 24px rgba(31,182,213,0.35)' }}
         >
           {loading ? (
             <motion.div
