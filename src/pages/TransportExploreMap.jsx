@@ -71,6 +71,8 @@ export default function TransportExploreMap() {
   const navigate = useNavigate();
   const [mode, setMode] = useState('transport');
   const [selectedItem, setSelectedItem] = useState(null);
+  const [showList, setShowList] = useState(false);
+  const [filterType, setFilterType] = useState('all');
   
   const urlParams = new URLSearchParams(window.location.search);
   const initialMode = urlParams.get('mode') || 'transport';
@@ -81,6 +83,11 @@ export default function TransportExploreMap() {
 
   const data = mode === 'transport' ? TRANSPORT_STATIONS : DESTINATION_PINS;
   const title = mode === 'transport' ? 'Transport Stations' : 'Explore Destinations';
+  
+  const filteredData = useMemo(() => {
+    if (filterType === 'all') return data;
+    return data.filter(item => item.type === filterType);
+  }, [data, filterType]);
 
   return (
     <div className="min-h-screen pb-24" style={{ background: 'linear-gradient(160deg, #F5F4F2 0%, #edecea 55%, #e7e5e2 100%)' }}>
