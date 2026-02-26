@@ -202,7 +202,7 @@ export default function Home() {
                 initial={{ opacity: 0, scale: 0.85 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: i * 0.035 }}
                 onClick={() => f.page ? navigate(createPageUrl(f.page)) : null}
                 className="flex flex-col items-center gap-2 py-3 px-1 rounded-2xl active:scale-95 transition-transform"
-                style={{ background: f.bg }}>
+                style={{ background: 'rgba(255,255,255,0.72)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.85)', boxShadow: '0 2px 8px rgba(138,127,115,0.08)' }}>
                 <Icon className="w-6 h-6" style={{ color: f.color }} />
                 <span className="text-[10px] font-semibold text-center leading-tight text-slate-600">{f.label}</span>
               </motion.button>
@@ -213,7 +213,7 @@ export default function Home() {
 
       {/* ── 3. PROMO / CTA ── */}
       <div className="mt-6 mx-4">
-        <div className="rounded-2xl overflow-hidden relative" style={{ background: 'linear-gradient(135deg, #8A7F73 0%, #2E2E2E 100%)' }}>
+        <div className="rounded-2xl overflow-hidden relative" style={{ background: 'linear-gradient(135deg, #8A7F73 0%, #2E2E2E 100%)', boxShadow: '0 4px 20px rgba(90,82,78,0.3)' }}>
           <div className="absolute -right-8 -top-8 w-32 h-32 rounded-full bg-white/10" />
           <div className="absolute -left-4 -bottom-6 w-24 h-24 rounded-full bg-white/5" />
           <div className="relative px-5 py-5">
