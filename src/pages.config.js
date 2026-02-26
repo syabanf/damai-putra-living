@@ -61,6 +61,9 @@ import Tickets from './pages/Tickets';
 import UnitDetail from './pages/UnitDetail';
 import UnitSubmitted from './pages/UnitSubmitted';
 import Verification from './pages/Verification';
+import Home from './pages/Home';
+import CreateTicket from './pages/CreateTicket';
+import TicketDetail from './pages/TicketDetail';
 import __Layout from './Layout.jsx';
 
 
@@ -79,6 +82,9 @@ export const PAGES = {
     "UnitDetail": UnitDetail,
     "UnitSubmitted": UnitSubmitted,
     "Verification": Verification,
+    "Home": Home,
+    "CreateTicket": CreateTicket,
+    "TicketDetail": TicketDetail,
 }
 
 export const pagesConfig = {
