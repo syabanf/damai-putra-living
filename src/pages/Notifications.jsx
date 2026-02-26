@@ -59,23 +59,27 @@ export default function Notifications() {
   const unreadCount = notifications.filter(n => !n.read).length;
 
   return (
-    <div className="min-h-screen pb-8" style={{ background: 'linear-gradient(160deg, #f0ede9 0%, #e8e4df 50%, #e2ddd8 100%)' }}>
+    <div className="min-h-screen pb-28" style={{ background: 'linear-gradient(160deg, #f0ede9 0%, #e8e4df 55%, #e2ddd8 100%)' }}>
       {/* Header */}
-      <div className="px-5 pt-14 pb-6 rounded-b-3xl" style={{ background: 'linear-gradient(150deg, #8A8076 0%, #6e6560 45%, #3d3733 100%)' }}>
-        <div className="flex items-center justify-between">
+      <div className="px-5 pt-14 pb-6 rounded-b-[2rem]" style={{ background: 'linear-gradient(150deg, #8A8076 0%, #6e6560 45%, #3d3733 100%)' }}>
+        <div className="absolute -top-8 -right-8 w-40 h-40 rounded-full opacity-10 bg-white pointer-events-none" />
+        <div className="flex items-center justify-between relative">
           <div className="flex items-center gap-3">
             <button onClick={() => navigate(-1)}
-              className="w-10 h-10 rounded-xl bg-white/15 backdrop-blur-sm border border-white/20 flex items-center justify-center">
+              className="w-10 h-10 rounded-2xl flex items-center justify-center transition-all active:scale-90"
+              style={{ background: 'rgba(255,255,255,0.15)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.25)' }}>
               <ArrowLeft className="w-5 h-5 text-white" />
             </button>
             <div>
+              <p className="text-white/50 text-[10px] font-semibold uppercase tracking-widest">Damai Putra Living</p>
               <h1 className="text-lg font-bold text-white">Notifications</h1>
               {unreadCount > 0 && <p className="text-white/55 text-xs">{unreadCount} unread</p>}
             </div>
           </div>
           {unreadCount > 0 && (
             <button onClick={markAllAsRead}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/15 backdrop-blur-sm border border-white/20 text-white text-xs font-semibold">
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-white text-xs font-semibold transition-all active:scale-90"
+              style={{ background: 'rgba(255,255,255,0.15)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.25)' }}>
               <Check className="w-3.5 h-3.5" /> Mark all read
             </button>
           )}
