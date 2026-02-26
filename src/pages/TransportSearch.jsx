@@ -29,24 +29,22 @@ export default function TransportSearch() {
   return (
     <div className="min-h-screen pb-24" style={{ background: 'linear-gradient(160deg, #F5F4F2 0%, #edecea 55%, #e7e5e2 100%)' }}>
       {/* Header */}
-      <div className="px-5 pt-12 pb-5 flex items-center gap-3 sticky top-0 z-20" style={{ background: 'rgba(255,255,255,0.82)', backdropFilter: 'blur(28px)', WebkitBackdropFilter: 'blur(28px)', borderBottom: '1px solid rgba(255,255,255,0.75)', boxShadow: '0 2px 8px rgba(90,80,70,0.10)' }}>
-        <button onClick={() => navigate(-1)} className="w-9 h-9 rounded-xl flex items-center justify-center transition-all" style={{ background: 'rgba(255,255,255,0.72)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.85)' }}>
-          <ArrowLeft className="w-4 h-4 text-slate-600" />
-        </button>
-        <h1 className="font-bold text-xl text-slate-800">Find Transport</h1>
-      </div>
-
-      {/* Map Button */}
-      <div className="mx-4 mt-5">
-        <button
+      <div className="px-5 pt-12 pb-5 flex items-center justify-between sticky top-0 z-20" style={{ background: 'rgba(255,255,255,0.82)', backdropFilter: 'blur(28px)', WebkitBackdropFilter: 'blur(28px)', borderBottom: '1px solid rgba(255,255,255,0.75)', boxShadow: '0 2px 8px rgba(90,80,70,0.10)' }}>
+         <div className="flex items-center gap-3">
+           <button onClick={() => navigate(-1)} className="w-9 h-9 rounded-xl flex items-center justify-center transition-all" style={{ background: 'rgba(255,255,255,0.72)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.85)' }}>
+             <ArrowLeft className="w-4 h-4 text-slate-600" />
+           </button>
+           <h1 className="font-bold text-lg text-slate-800">Find Transport</h1>
+         </div>
+         <button
           onClick={() => navigate(createPageUrl('TransportExploreMap?mode=transport'))}
-          className="w-full py-3 rounded-2xl font-bold text-white flex items-center justify-center gap-2 transition-all active:scale-95"
-          style={{ background: 'linear-gradient(135deg, #1FB6D5 0%, #0F9BB8 100%)', boxShadow: '0 4px 20px rgba(31,182,213,0.3)' }}
+          className="w-8 h-8 rounded-lg flex items-center justify-center transition-all active:scale-90"
+          style={{ background: 'linear-gradient(135deg, #1FB6D5 0%, #0F9BB8 100%)', boxShadow: '0 2px 6px rgba(31,182,213,0.2)' }}
+          title="View on Map"
         >
-          <Map className="w-5 h-5" />
-          View Map
+          <Map className="w-3.5 h-3.5 text-white" />
         </button>
-      </div>
+       </div>
 
       {/* Transport Type Selector */}
       <div className="mt-6 px-4">
