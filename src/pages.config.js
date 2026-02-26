@@ -70,6 +70,9 @@ import Explore from './pages/Explore';
 import ExploreDetail from './pages/ExploreDetail';
 import TenantList from './pages/TenantList';
 import TenantDetail from './pages/TenantDetail';
+import Events from './pages/Events';
+import EventDetail from './pages/EventDetail';
+import EventsCalendar from './pages/EventsCalendar';
 import __Layout from './Layout.jsx';
 
 
@@ -97,6 +100,9 @@ export const PAGES = {
     "ExploreDetail": ExploreDetail,
     "TenantList": TenantList,
     "TenantDetail": TenantDetail,
+    "Events": Events,
+    "EventDetail": EventDetail,
+    "EventsCalendar": EventsCalendar,
 }
 
 export const pagesConfig = {
