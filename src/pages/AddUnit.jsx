@@ -658,7 +658,7 @@ export default function AddUnit() {
       </div>
 
       {/* Bottom Actions */}
-      <div className="sticky z-20 p-6" style={{ bottom: 'calc(6rem + env(safe-area-inset-bottom))', background: 'rgba(255,255,255,0.88)', backdropFilter: 'blur(20px)', borderTop: '1px solid rgba(255,255,255,0.9)' }}>
+      <div className="sticky z-20 p-6" style={{ bottom: 'calc(6rem + env(safe-area-inset-bottom))', background: 'rgba(142,132,120,0.9)', backdropFilter: 'blur(20px)', borderTop: '1px solid rgba(142,132,120,0.7)' }}>
         <Button
           onClick={handleNext}
           disabled={loading}

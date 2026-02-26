@@ -227,7 +227,7 @@ export default function CreateTicket() {
       </div>
 
       {/* Sticky Bottom Actions */}
-      <div className="fixed bottom-0 left-0 right-0 px-4 z-20" style={{ bottom: 'calc(6rem + env(safe-area-inset-bottom))', background: 'rgba(255,255,255,0.88)', backdropFilter: 'blur(20px)', borderTop: '1px solid rgba(255,255,255,0.9)', paddingTop: '1.5rem', paddingBottom: '1.5rem' }}>
+      <div className="fixed bottom-0 left-0 right-0 px-4 z-20" style={{ bottom: 'calc(6rem + env(safe-area-inset-bottom))', background: 'rgba(142,132,120,0.9)', backdropFilter: 'blur(20px)', borderTop: '1px solid rgba(142,132,120,0.7)', paddingTop: '1.5rem', paddingBottom: '1.5rem' }}>
         <Button
           onClick={handleNext}
           disabled={loading}
