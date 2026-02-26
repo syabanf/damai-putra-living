@@ -160,12 +160,64 @@ export default function TransportExploreMap() {
         </motion.button>
       </div>
 
-      {/* Info Card */}
-      <div className="mx-4 mt-6 rounded-2xl p-4" style={{ background: 'rgba(255,255,255,0.75)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.85)' }}>
-        <p className="text-xs text-slate-500">
-          {mode === 'transport' ? 'Click on any marker to view station details' : 'Click on any marker to view destination details'}
-        </p>
+      {/* Legend */}
+      <div className="mx-4 mt-4 rounded-2xl p-4" style={{ background: 'rgba(255,255,255,0.75)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.85)' }}>
+       <h3 className="text-xs font-bold text-slate-800 mb-3">Map Legend</h3>
+       <div className="grid grid-cols-2 gap-2">
+         {LEGEND_ITEMS[mode].map(item => (
+           <div key={item.type} className="flex items-center gap-2 text-xs">
+             <div className="w-4 h-4 rounded-full" style={{ background: item.color }}></div>
+             <span className="text-slate-600">{item.label}</span>
+           </div>
+         ))}
+       </div>
       </div>
-    </div>
-  );
-}
+
+      {/* Selected Item Details */}
+      {selectedItem && (
+       <motion.div
+         initial={{ opacity: 0, y: 20 }}
+         animate={{ opacity: 1, y: 0 }}
+         className="mx-4 mt-4 rounded-2xl p-4 mb-6"
+         style={{ background: 'rgba(255,255,255,0.85)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.9)' }}
+       >
+         <div className="flex justify-between items-start mb-3">
+           <div>
+             <h3 className="font-bold text-slate-800">{selectedItem.name}</h3>
+             <p className="text-xs text-slate-500 mt-0.5">
+               {selectedItem.category || (selectedItem.type === 'hub' ? 'Major Hub' : 'Bus Stop')}
+             </p>
+           </div>
+           <button onClick={() => setSelectedItem(null)} className="text-slate-400 hover:text-slate-600">
+             ✕
+           </button>
+         </div>
+
+         {mode === 'transport' ? (
+           <div className="space-y-2">
+             <div className="flex items-center gap-2 text-sm">
+               <Bus className="w-4 h-4 text-slate-400" />
+               <span className="text-slate-700"><strong>{selectedItem.routes}</strong> routes available</span>
+             </div>
+             <div className="flex items-center gap-2 text-sm">
+               <Clock className="w-4 h-4 text-slate-400" />
+               <span className="text-slate-700">{selectedItem.status}</span>
+             </div>
+           </div>
+         ) : (
+           <div className="space-y-2">
+             <div className="flex items-center gap-2 text-sm">
+               <MapPin className="w-4 h-4 text-slate-400" />
+               <span className="text-slate-700">{selectedItem.category}</span>
+             </div>
+             <div className="flex items-center gap-2 text-sm">
+               <span className="text-amber-500">★</span>
+               <span className="text-slate-700"><strong>{selectedItem.rating}</strong> rating</span>
+             </div>
+           </div>
+         )}
+       </motion.div>
+      )}
+      </div>
+      );
+      }
