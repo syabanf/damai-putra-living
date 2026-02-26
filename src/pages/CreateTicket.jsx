@@ -119,9 +119,16 @@ const PERMIT_TYPES = [
 
 function generateRefNumber(permitType) {
   const typeCode = {
-    renovation: 'RNV', moving_in: 'MVI', moving_out: 'MVO',
-    event: 'EVT', contractor_access: 'CTR'
-  }[permitType] || 'GEN';
+    izin_kegiatan: 'IZIN-05',
+    renovasi_minor: 'IZIN-03',
+    renovasi_mayor: 'IZIN-04',
+    pembangunan_kavling: 'IZIN-02',
+    galian: 'IZIN-19',
+    pindah_masuk: 'IZIN-15',
+    pindah_keluar: 'IZIN-16',
+    pencairan_deposit: 'IZIN-11',
+    akses_kontraktor: 'IZIN-15',
+  }[permitType] || 'IZIN';
   const year = new Date().getFullYear();
   const seq = Math.floor(Math.random() * 9000) + 1000;
   return `DP/${typeCode}/${year}/${seq}`;
