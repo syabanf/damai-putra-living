@@ -1,6 +1,5 @@
 import React from 'react';
 import { F, Input, Textarea, Select, Section } from './FormField';
-import { SelectUI } from '@/components/ui/select';
 
 const ROLES = [
   { value: 'owner', label: 'Unit Owner (Pemilik Unit)' },
@@ -38,15 +37,7 @@ export default function StepApplicant({ form, set, approvedUnits }) {
       {/* B. Unit */}
       <Section title="B. Property / Unit">
         <F label="Select Unit" required>
-          <SelectUI
-            value={form.unit_id}
-            onValueChange={v => set('unit_id', v)}
-            placeholder="Select your registered unit..."
-          >
-            {approvedUnits.map(u => (
-              <option key={u.id} value={u.id}>{u.unit_number} – {u.property_name}{u.tower ? ` Tower ${u.tower}` : ''}</option>
-            ))}
-          </SelectUI>
+          <Select value={form.unit_id} onChange={v => set('unit_id', v)} options={approvedUnits.map(u => ({ value: u.id, label: `${u.unit_number} – ${u.property_name}${u.tower ? ` Tower ${u.tower}` : ''}` }))} placeholder="Select your registered unit..." />
         </F>
       </Section>
     </div>
