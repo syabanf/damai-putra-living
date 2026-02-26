@@ -51,9 +51,14 @@ export default function Explore() {
             <p className="text-white/50 text-[10px] font-semibold uppercase tracking-widest">Damai Putra Living</p>
             <h1 className="font-bold text-2xl text-white">Explore</h1>
           </div>
-          <div className="w-10 h-10 rounded-2xl flex items-center justify-center" style={{ background: 'rgba(255,255,255,0.15)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.25)' }}>
-            <Compass className="w-5 h-5 text-white" />
-          </div>
+          <button
+           onClick={() => navigate(createPageUrl('TransportExploreMap?mode=explore'))}
+           className="w-10 h-10 rounded-2xl flex items-center justify-center transition-all active:scale-95"
+           style={{ background: 'linear-gradient(135deg, #1FB6D5 0%, #0F9BB8 100%)', boxShadow: '0 2px 8px rgba(31,182,213,0.2)' }}
+           title="View on Map"
+          >
+            <Map className="w-5 h-5 text-white" />
+          </button>
         </div>
         <div className="relative rounded-xl flex items-center gap-2 px-3" style={{ background: 'rgba(255,255,255,0.15)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.2)' }}>
           <Search className="w-4 h-4 text-white/60 flex-shrink-0" />
@@ -61,18 +66,6 @@ export default function Explore() {
             className="flex-1 h-10 bg-transparent text-sm text-white placeholder-white/50 border-0 outline-none" />
           {search && <button onClick={() => setSearch('')}><X className="w-4 h-4 text-white/60" /></button>}
         </div>
-      </div>
-
-      {/* Map Button */}
-      <div className="mx-4 mt-4">
-        <button
-          onClick={() => navigate(createPageUrl('TransportExploreMap?mode=explore'))}
-          className="w-full py-3 rounded-2xl font-bold text-white flex items-center justify-center gap-2 transition-all active:scale-95"
-          style={{ background: 'linear-gradient(135deg, #1FB6D5 0%, #0F9BB8 100%)', boxShadow: '0 4px 20px rgba(31,182,213,0.3)' }}
-        >
-          <Map className="w-5 h-5" />
-          View Map
-        </button>
       </div>
 
       {/* Category chips */}
