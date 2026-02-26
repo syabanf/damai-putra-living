@@ -17,18 +17,19 @@ export default function BottomNav({ currentPage }) {
     <div className="fixed bottom-0 left-0 right-0 z-50 px-4 pb-5 pt-1">
       <div className="max-w-md mx-auto">
         <div className="flex justify-around items-center px-2 py-2 rounded-2xl border border-white/70 shadow-xl shadow-slate-300/30"
-          style={{ background: 'rgba(255,255,255,0.88)', backdropFilter: 'blur(20px)' }}>
+          style={{ background: 'rgba(255,255,255,0.92)', backdropFilter: 'blur(24px)' }}>
           {navItems.map((item) => {
             const isActive = currentPage === item.page || currentPage === item.label;
             return (
               <Link
                 key={item.page}
                 to={createPageUrl(item.page)}
-                className="flex flex-col items-center gap-1 px-3 py-2 rounded-xl transition-all active:scale-90"
+                className="flex flex-col items-center gap-1 px-3 py-2 rounded-xl transition-all active:scale-90 hover:opacity-80"
+                style={{ transition: 'transform 0.15s ease, opacity 0.15s ease' }}
               >
                 <div className={cn(
                   "w-9 h-9 rounded-xl flex items-center justify-center transition-all",
-                  isActive ? "shadow-sm" : ""
+                  isActive ? "shadow-sm" : "hover:bg-slate-50"
                 )}
                   style={isActive ? { backgroundColor: '#1F86C718' } : {}}>
                   <item.icon
