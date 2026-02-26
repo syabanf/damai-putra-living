@@ -58,6 +58,8 @@ const QUICK_FEATURES = [
   { icon: Phone,           label: 'Hotline',    color: '#ef4444', bg: '#fef2f2', page: 'HelpCenter' },
   { icon: CalendarDays,    label: 'Events',     color: '#f59e0b', bg: '#fffbeb', page: 'Events' },
   { icon: UtensilsCrossed, label: 'Culinary',   color: '#f97316', bg: '#fff7ed', page: 'Culinary' },
+  { icon: Newspaper,       label: 'News',       color: '#8b5cf6', bg: '#faf5ff', page: 'News' },
+  { icon: Bus,             label: 'Transport',  color: '#06b6d4', bg: '#ecf9fb', page: 'Events' },
   { icon: MapPin,          label: 'Explore',    color: '#8E8478', bg: '#f5f3f0', page: 'Explore' },
   { icon: Sparkles,        label: 'Rewards',    color: '#1FB6D5', bg: '#e6f8fb', page: 'Rewards' },
 ];
