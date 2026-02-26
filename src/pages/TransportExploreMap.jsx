@@ -109,7 +109,7 @@ export default function TransportExploreMap() {
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             attribution='&copy; OpenStreetMap contributors'
           />
-          {data.map(item => (
+          {filteredData.map(item => (
            <Marker 
              key={item.id} 
              position={[item.lat, item.lng]} 
