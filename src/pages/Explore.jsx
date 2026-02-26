@@ -5,6 +5,8 @@ import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
 import { Search, X, MapPin, Compass } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import L from 'leaflet';
 
 const CATEGORIES = [
   { value: 'all', label: 'All' },
