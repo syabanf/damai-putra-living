@@ -75,6 +75,10 @@ import EventDetail from './pages/EventDetail';
 import EventsCalendar from './pages/EventsCalendar';
 import HelpCenter from './pages/HelpCenter';
 import PrivacySecurity from './pages/PrivacySecurity';
+import Rewards from './pages/Rewards';
+import RewardDetail from './pages/RewardDetail';
+import RewardReceipt from './pages/RewardReceipt';
+import MyClaims from './pages/MyClaims';
 import __Layout from './Layout.jsx';
 
 
@@ -107,6 +111,10 @@ export const PAGES = {
     "EventsCalendar": EventsCalendar,
     "HelpCenter": HelpCenter,
     "PrivacySecurity": PrivacySecurity,
+    "Rewards": Rewards,
+    "RewardDetail": RewardDetail,
+    "RewardReceipt": RewardReceipt,
+    "MyClaims": MyClaims,
 }
 
 export const pagesConfig = {
