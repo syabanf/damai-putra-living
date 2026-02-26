@@ -54,7 +54,7 @@ export default function HelpCenter() {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen pb-10" style={{ background: PAGE_BG }}>
+    <div className="min-h-screen pb-10" style={{ background: 'linear-gradient(160deg, #F5F4F2 0%, #edecea 55%, #e7e5e2 100%)' }}>
       <GlassHeader className="pt-12 pb-5">
         <div className="flex items-center gap-3">
           <button onClick={() => navigate(-1)} className="w-9 h-9 rounded-xl flex items-center justify-center border border-white/70" style={{ background: 'rgba(255,255,255,0.6)' }}>
