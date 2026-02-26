@@ -8,7 +8,7 @@ function Toggle({ value, onChange }) {
   return (
     <button onClick={() => onChange(!value)}
       className="w-11 h-6 rounded-full transition-all flex-shrink-0 relative"
-      style={{ background: value ? '#1F86C7' : 'rgba(0,0,0,0.12)' }}>
+      style={{ background: value ? '#1FB6D5' : 'rgba(0,0,0,0.12)' }}>
       <span className={`absolute top-0.5 w-5 h-5 bg-white rounded-full shadow transition-all ${value ? 'left-[22px]' : 'left-0.5'}`} />
     </button>
   );
