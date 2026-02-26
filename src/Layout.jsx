@@ -11,13 +11,13 @@ export default function Layout({ children, currentPageName }) {
     <div className="min-h-screen bg-stone-200">
       <style>{`
         :root {
-          --brand:        #8A7F73;
-          --brand-dark:   #6e6560;
-          --brand-darker: #5a524e;
-          --brand-light:  #a5a09a;
-          --action:       #1F86C7;
-          --action-dark:  #1669a0;
-          --action-light: #e8f4fb;
+          --brand:        #8E8478;
+          --brand-dark:   #0F3D4C;
+          --brand-darker: #0a2d38;
+          --brand-light:  #b0aba5;
+          --action:       #1FB6D5;
+          --action-dark:  #169ab5;
+          --action-light: #e6f8fb;
         }
 
         /* Custom scrollbar */
