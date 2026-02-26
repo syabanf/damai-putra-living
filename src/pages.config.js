@@ -83,6 +83,7 @@ import Culinary from './pages/Culinary';
 import News from './pages/News';
 import NewsDetail from './pages/NewsDetail';
 import DealsPromoDetail from './pages/DealsPromoDetail';
+import CulinaryDetail from './pages/CulinaryDetail';
 import __Layout from './Layout.jsx';
 
 
@@ -123,6 +124,7 @@ export const PAGES = {
     "News": News,
     "NewsDetail": NewsDetail,
     "DealsPromoDetail": DealsPromoDetail,
+    "CulinaryDetail": CulinaryDetail,
 }
 
 export const pagesConfig = {
