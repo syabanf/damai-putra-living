@@ -217,7 +217,7 @@ export default function Home() {
           <div className="absolute -left-4 -bottom-6 w-24 h-24 rounded-full bg-white/5" />
           <div className="relative px-5 py-5">
             <p className="text-white/70 text-xs font-semibold uppercase tracking-widest mb-1">Exclusive Membership</p>
-            <h3 className="text-white font-bold text-lg leading-snug mb-2">Join Sedayu One and get access to various rewards and benefits!</h3>
+            <h3 className="text-white font-bold text-lg leading-snug mb-2">Join Damai Putra Living and get access to various rewards and benefits!</h3>
             <button className="mt-1 px-5 py-2.5 bg-white rounded-xl text-sm font-bold flex items-center gap-2" style={{ color: '#5a524e' }}>
               Register Now <ArrowRight className="w-4 h-4" />
             </button>
