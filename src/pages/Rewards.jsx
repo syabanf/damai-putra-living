@@ -133,7 +133,7 @@ export default function Rewards() {
                     <Star className="w-3 h-3 text-amber-400 fill-amber-400" />
                     <span className="text-xs font-bold text-slate-700">{reward.points_required?.toLocaleString()}</span>
                   </div>
-                  <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${myPoints >= reward.points_required ? 'bg-[#e8f4fb] text-[#1F86C7]' : 'bg-slate-100 text-slate-400'}`}>
+                  <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${myPoints >= reward.points_required ? 'bg-[#e6f8fb] text-[#1FB6D5]' : 'bg-slate-100 text-slate-400'}`}>
                     {myPoints >= reward.points_required ? 'Claim' : 'Not enough'}
                   </span>
                 </div>
