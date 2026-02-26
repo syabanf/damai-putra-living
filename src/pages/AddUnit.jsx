@@ -40,6 +40,7 @@ export default function AddUnit() {
     property_name: '',
     tower: '',
     unit_number: '',
+    unit_type: '',
     ownership_status: '',
     document_url: '',
     agree_terms: false,
@@ -101,6 +102,7 @@ export default function AddUnit() {
         newErrors.tower = 'Please select a tower';
       }
       if (!formData.unit_number) newErrors.unit_number = 'Please enter unit number';
+      if (!formData.unit_type) newErrors.unit_type = 'Please select unit type';
     } else if (step === 2) {
       if (!formData.ownership_status) newErrors.ownership_status = 'Please select ownership status';
     } else if (step === 3 && isTenant) {
@@ -236,7 +238,26 @@ export default function AddUnit() {
                 />
                 {errors.unit_number && <p className="text-red-500 text-xs">{errors.unit_number}</p>}
               </div>
-            </motion.div>
+
+              <div className="space-y-2">
+                <Label className="text-slate-700 font-medium">Unit Type</Label>
+                <Select
+                  value={formData.unit_type}
+                  onValueChange={(value) => setFormData({ ...formData, unit_type: value })}
+                >
+                  <SelectTrigger className={`h-14 rounded-xl ${errors.unit_type ? 'border-red-300' : ''}`}>
+                    <SelectValue placeholder="Select unit type" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="apartment">Apartment</SelectItem>
+                    <SelectItem value="house">House</SelectItem>
+                    <SelectItem value="kavling">Kavling</SelectItem>
+                    <SelectItem value="commercial">Commercial</SelectItem>
+                  </SelectContent>
+                </Select>
+                {errors.unit_type && <p className="text-red-500 text-xs">{errors.unit_type}</p>}
+              </div>
+              </motion.div>
           )}
 
           {step === 2 && (
@@ -551,6 +572,10 @@ export default function AddUnit() {
                 <div className="flex justify-between">
                   <span className="text-slate-500 text-sm">Unit Number</span>
                   <span className="text-slate-800 text-sm font-medium">{formData.unit_number}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-slate-500 text-sm">Unit Type</span>
+                  <span className="text-slate-800 text-sm font-medium capitalize">{formData.unit_type}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-slate-500 text-sm">Status</span>

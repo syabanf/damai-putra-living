@@ -42,6 +42,11 @@ const UnitCard = ({ unit, onClick }) => {
           <div>
             <div className="flex items-center gap-2">
               <h3 className="font-bold text-slate-800 text-lg">{unit.unit_number}</h3>
+              {unit.unit_type && (
+                <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full" style={{ background: 'rgba(138,127,115,0.1)', color: '#8A8076' }}>
+                  {unit.unit_type}
+                </span>
+              )}
             </div>
             <p className="text-slate-500 text-sm mt-0.5">{unit.property_name}</p>
             {unit.tower && <p className="text-slate-400 text-xs mt-1">Tower {unit.tower}</p>}
