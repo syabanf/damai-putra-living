@@ -302,8 +302,8 @@ export default function UnitDetail() {
         {unit.status === 'approved' && (
           <button onClick={() => navigate(createPageUrl('Tickets'))}
             className="w-full h-14 rounded-2xl text-white font-semibold flex items-center justify-center gap-2 shadow-lg active:scale-[0.98] transition-transform"
-            style={{ background: 'linear-gradient(135deg, #8A8076, #6e6560)', boxShadow: '0 4px 20px rgba(138,128,118,0.35)' }}>
-            <Ticket className="w-5 h-5" /> Create Support Ticket
+            style={{ background: 'linear-gradient(135deg, #1FB6D5, #169ab5)', boxShadow: '0 4px 20px rgba(31,182,213,0.35)' }}>
+             <Ticket className="w-5 h-5" /> Create Support Ticket
           </button>
         )}
 
