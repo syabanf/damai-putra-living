@@ -15,7 +15,8 @@ import BottomNav from '@/components/navigation/BottomNav';
 const Card = ({ children, className = '', onClick }) => (
   <div
     onClick={onClick}
-    className={`bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden ${onClick ? 'cursor-pointer active:scale-[0.98] transition-transform' : ''} ${className}`}
+    className={`rounded-2xl overflow-hidden ${onClick ? 'cursor-pointer active:scale-[0.98] transition-transform' : ''} ${className}`}
+    style={{ background: 'rgba(255,255,255,0.75)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.85)', boxShadow: '0 2px 12px rgba(138,127,115,0.08)' }}
   >
     {children}
   </div>
@@ -59,7 +60,7 @@ const QUICK_FEATURES = [
   { icon: CalendarDays,    label: 'Events',     color: '#f59e0b', bg: '#fffbeb', page: 'Events' },
   { icon: UtensilsCrossed, label: 'Culinary',   color: '#f97316', bg: '#fff7ed', page: null },
   { icon: MapPin,          label: 'Explore',    color: '#8b5cf6', bg: '#f5f3ff', page: 'Explore' },
-  { icon: Sparkles,        label: 'Rewards',    color: '#0891b2', bg: '#ecfeff', page: null },
+  { icon: Sparkles,        label: 'Rewards',    color: '#0891b2', bg: '#ecfeff', page: 'Rewards' },
 ];
 
 const LANGUAGES = [
@@ -118,7 +119,7 @@ export default function Home() {
   const currentLang = LANGUAGES.find(l => l.code === lang);
 
   return (
-    <div className="min-h-screen pb-24" style={{ background: '#F4F5F7' }}>
+    <div className="min-h-screen pb-24" style={{ background: 'linear-gradient(160deg, #f0ede9 0%, #e8e4df 50%, #e2ddd8 100%)' }}>
 
       {/* ── 1. HERO BANNER ── */}
       <div className="relative h-64 overflow-hidden">
