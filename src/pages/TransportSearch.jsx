@@ -36,21 +36,16 @@ export default function TransportSearch() {
         <h1 className="font-bold text-xl text-slate-800">Find Transport</h1>
       </div>
 
-      {/* Map Section */}
-      <div className="mx-4 mt-5 rounded-2xl overflow-hidden h-56" style={{ boxShadow: '0 4px 20px rgba(31,182,213,0.2)' }}>
-        <MapContainer center={[3.1200, 101.5600]} zoom={12} style={{ height: '100%', width: '100%' }}>
-          <TileLayer
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            attribution='&copy; OpenStreetMap contributors'
-          />
-          {TRANSPORT_STATIONS.map(station => (
-            <Marker key={station.id} position={[station.lat, station.lng]} icon={MapIcon(station.type === 'hub' ? '#1FB6D5' : '#8E8478')}>
-              <Popup>
-                <div className="text-sm font-semibold">{station.name}</div>
-              </Popup>
-            </Marker>
-          ))}
-        </MapContainer>
+      {/* Map Button */}
+      <div className="mx-4 mt-5">
+        <button
+          onClick={() => navigate(createPageUrl('TransportExploreMap?mode=transport'))}
+          className="w-full py-3 rounded-2xl font-bold text-white flex items-center justify-center gap-2 transition-all active:scale-95"
+          style={{ background: 'linear-gradient(135deg, #1FB6D5 0%, #0F9BB8 100%)', boxShadow: '0 4px 20px rgba(31,182,213,0.3)' }}
+        >
+          <Map className="w-5 h-5" />
+          View Map
+        </button>
       </div>
 
       {/* Transport Type Selector */}
