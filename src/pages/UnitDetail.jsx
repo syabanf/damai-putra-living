@@ -57,7 +57,7 @@ export default function UnitDetail() {
 
   if (!unit) {
     return (
-      <div className="min-h-screen flex items-center justify-center p-6" style={{ background: 'linear-gradient(160deg, #f5f3f0 0%, #ece8e3 100%)' }}>
+      <div className="min-h-screen flex items-center justify-center p-6" style={{ background: 'linear-gradient(160deg, #F5F4F2 0%, #edecea 100%)' }}>
         <div className="text-center">
           <AlertCircle className="w-12 h-12 text-slate-400 mx-auto mb-4" />
           <p className="text-slate-600">Unit not found</p>
