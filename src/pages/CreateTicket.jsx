@@ -513,6 +513,39 @@ export default function CreateTicket() {
                 </div>
               )}
 
+              {/* Moving Info */}
+              {needsMovingInfo && (
+                <div className="space-y-4">
+                  <div className="flex items-center gap-2 pt-1">
+                    <Truck className="w-4 h-4 text-slate-500" />
+                    <p className="text-sm font-semibold text-slate-700">Informasi Kendaraan & Jasa Pindah</p>
+                  </div>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="space-y-1.5">
+                      <Label className="text-xs text-slate-500 font-medium">Jenis Kendaraan</Label>
+                      <Input placeholder="Truk, Pick-up, dll"
+                        value={formData.vehicle_type}
+                        onChange={(e) => setFormData({ ...formData, vehicle_type: e.target.value })}
+                        className="h-11 rounded-xl text-sm" />
+                    </div>
+                    <div className="space-y-1.5">
+                      <Label className="text-xs text-slate-500 font-medium">Plat Nomor</Label>
+                      <Input placeholder="B 1234 ABC"
+                        value={formData.vehicle_plate}
+                        onChange={(e) => setFormData({ ...formData, vehicle_plate: e.target.value })}
+                        className="h-11 rounded-xl text-sm" />
+                    </div>
+                  </div>
+                  <div className="space-y-1.5">
+                    <Label className="text-xs text-slate-500 font-medium">Jasa Pindahan (opsional)</Label>
+                    <Input placeholder="Nama perusahaan jasa pindahan"
+                      value={formData.moving_company}
+                      onChange={(e) => setFormData({ ...formData, moving_company: e.target.value })}
+                      className="h-11 rounded-xl text-sm" />
+                  </div>
+                </div>
+              )}
+
               {/* Supporting Documents */}
               <div className="space-y-3">
                 <div className="flex items-center gap-2">
