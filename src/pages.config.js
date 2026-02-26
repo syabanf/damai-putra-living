@@ -50,7 +50,6 @@
 import AddUnit from './pages/AddUnit';
 import CreateTicket from './pages/CreateTicket';
 import ForgotPassword from './pages/ForgotPassword';
-import Home from './pages/Home';
 import MyUnit from './pages/MyUnit';
 import Notifications from './pages/Notifications';
 import Onboarding from './pages/Onboarding';
@@ -71,7 +70,6 @@ export const PAGES = {
     "AddUnit": AddUnit,
     "CreateTicket": CreateTicket,
     "ForgotPassword": ForgotPassword,
-    "Home": Home,
     "MyUnit": MyUnit,
     "Notifications": Notifications,
     "Onboarding": Onboarding,
