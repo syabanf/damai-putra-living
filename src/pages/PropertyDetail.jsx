@@ -71,7 +71,7 @@ export default function PropertyDetail() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col pb-28" style={{ background: 'linear-gradient(160deg, #f0ede9 0%, #e8e4df 50%, #e2ddd8 100%)' }}>
+    <div className="min-h-screen flex flex-col pb-28" style={{ background: 'linear-gradient(160deg, #F5F4F2 0%, #edecea 55%, #e7e5e2 100%)' }}>
 
       {/* Hero Gallery */}
       <div className="relative w-full aspect-video bg-slate-200 overflow-hidden">
@@ -157,8 +157,7 @@ export default function PropertyDetail() {
           </div>
         </div>
 
-        {/* Divider */}
-        <div className="border-t border-slate-100" />
+
 
         {/* Information */}
         <div className="rounded-2xl p-4" style={{ background: 'rgba(255,255,255,0.75)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.85)', boxShadow: '0 2px 12px rgba(138,127,115,0.08)' }}>
@@ -183,13 +182,12 @@ export default function PropertyDetail() {
         {/* Facilities */}
         {property.facilities?.length > 0 && (
           <>
-            <div className="border-t border-slate-100" />
-            <div>
+            <div className="rounded-2xl p-4" style={{ background: 'rgba(255,255,255,0.75)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.85)', boxShadow: '0 2px 12px rgba(138,127,115,0.08)' }}>
               <h2 className="font-bold text-slate-800 text-base mb-3">Facilities</h2>
               <div className="grid grid-cols-2 gap-2">
                 {property.facilities.map((f, i) => (
                   <div key={i} className="flex items-center gap-2 px-3 py-2.5 rounded-xl" style={{ background: 'rgba(31,182,213,0.1)', border: '1px solid rgba(31,182,213,0.2)' }}>
-                        <Zap className="w-4 h-4 flex-shrink-0" style={{ color: '#1FB6D5' }} />
+                    <Zap className="w-4 h-4 flex-shrink-0" style={{ color: '#1FB6D5' }} />
                     <span className="text-sm text-slate-700 font-medium">{f}</span>
                   </div>
                 ))}
@@ -200,15 +198,12 @@ export default function PropertyDetail() {
 
         {/* Price */}
         {property.price_start && (
-          <>
-            <div className="border-t border-slate-100" />
-            <div>
-              <p className="text-xs text-slate-400 uppercase tracking-wider mb-1">Start From</p>
-              <p className="text-3xl font-bold text-slate-800 leading-tight">
-                IDR {formatPrice(property.price_start)}
-              </p>
-            </div>
-          </>
+          <div className="rounded-2xl p-4" style={{ background: 'rgba(31,182,213,0.15)', backdropFilter: 'blur(12px)', border: '1px solid rgba(31,182,213,0.3)', boxShadow: '0 2px 12px rgba(31,182,213,0.08)' }}>
+            <p className="text-xs text-slate-500 uppercase tracking-wider mb-1">Start From</p>
+            <p className="text-3xl font-bold text-slate-800 leading-tight">
+              IDR {formatPrice(property.price_start)}
+            </p>
+          </div>
         )}
       </div>
 
