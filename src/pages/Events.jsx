@@ -2,7 +2,9 @@ import React, { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import { base44 } from '@/api/base44Client';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { usePullToRefresh } from '@/components/hooks/usePullToRefresh';
+import PullToRefreshIndicator from '@/components/ui/PullToRefreshIndicator';
 import { Calendar, CalendarDays, Search, X } from 'lucide-react';
 import { motion } from 'framer-motion';
 
@@ -36,8 +38,13 @@ function formatDateRange(start, end) {
 
 export default function Events() {
   const navigate = useNavigate();
+  const qc = useQueryClient();
   const [search, setSearch] = useState('');
   const [activeCategory, setActiveCategory] = useState('all');
+
+  const { isRefreshing, containerRef } = usePullToRefresh(() =>
+    qc.invalidateQueries({ queryKey: ['events'] })
+  );
 
   const { data: events = [], isLoading } = useQuery({
     queryKey: ['events'],
@@ -59,7 +66,8 @@ export default function Events() {
   }, [events, activeCategory, search]);
 
   return (
-    <div className="min-h-screen pb-28" style={{ background: 'linear-gradient(160deg, #F5F4F2 0%, #edecea 55%, #e7e5e2 100%)' }}>
+    <div ref={containerRef} className="min-h-screen pb-28 overflow-y-auto" style={{ background: 'linear-gradient(160deg, #F5F4F2 0%, #edecea 55%, #e7e5e2 100%)' }}>
+      <PullToRefreshIndicator isRefreshing={isRefreshing} />
       {/* Header */}
       <div className="px-5 pt-14 pb-5 rounded-b-[2rem] relative overflow-hidden" style={{ background: 'linear-gradient(150deg, #1a5068 0%, #0F3D4C 55%, #0a2d38 100%)' }}>
         <div className="absolute -top-8 -right-8 w-40 h-40 rounded-full opacity-10 bg-white pointer-events-none" />
