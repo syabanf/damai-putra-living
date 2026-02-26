@@ -18,9 +18,13 @@ const CATS = [
 
 export default function Rewards() {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const fileInputRef = useRef(null);
   const [user, setUser] = useState(null);
   const [search, setSearch] = useState('');
   const [activeCategory, setActiveCategory] = useState('all');
+  const [scannedData, setScannedData] = useState(null);
+  const [activeTab, setActiveTab] = useState('rewards'); // 'rewards' or 'scan'
 
   useEffect(() => { base44.auth.me().then(setUser).catch(() => {}); }, []);
 
@@ -34,6 +38,43 @@ export default function Rewards() {
     queryFn: () => base44.entities.UserPoints.filter({ user_email: user.email }),
     enabled: !!user?.email,
   });
+
+  const addPointsMutation = useMutation({
+    mutationFn: async (points) => {
+      const current = pointsRecords?.[0];
+      if (current) {
+        await base44.entities.UserPoints.update(current.id, {
+          balance: (current.balance || 0) + points,
+          total_earned: (current.total_earned || 0) + points,
+        });
+      }
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['userPoints', user?.email] });
+    },
+  });
+
+  const handleImageUpload = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    try {
+      await base44.integrations.Core.UploadFile({ file });
+      const mockPoints = Math.floor(Math.random() * 50) + 100;
+      setScannedData({ success: true, points: mockPoints, reference: `BILL-${Date.now()}` });
+    } catch (error) {
+      setScannedData({ success: false, error: 'Failed to scan bill' });
+    }
+  };
+
+  const confirmPoints = async () => {
+    if (scannedData?.success && scannedData?.points) {
+      addPointsMutation.mutate(scannedData.points);
+    }
+  };
+
+  const resetScan = () => {
+    setScannedData(null);
+  };
 
   const myPoints = pointsRecords[0]?.balance ?? 0;
 
