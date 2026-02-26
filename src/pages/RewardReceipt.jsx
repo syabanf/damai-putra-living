@@ -7,7 +7,7 @@ import { ArrowLeft, Share2, CheckCircle2, Copy, MapPin, Star, QrCode } from 'luc
 import { motion } from 'framer-motion';
 
 const STATUS_CFG = {
-  unused:    { label: 'Unused',    bg: '#e8f4fb', color: '#1F86C7' },
+  unused:    { label: 'Unused',    bg: '#e6f8fb', color: '#1FB6D5' },
   used:      { label: 'Used',      bg: '#f1f5f9', color: '#94a3b8' },
   expired:   { label: 'Expired',   bg: '#fef2f2', color: '#ef4444' },
   cancelled: { label: 'Cancelled', bg: '#fef2f2', color: '#ef4444' },
