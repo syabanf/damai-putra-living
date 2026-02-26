@@ -29,15 +29,15 @@ export default function BottomNav({ currentPage }) {
                   "w-9 h-9 rounded-xl flex items-center justify-center transition-all",
                   isActive ? "shadow-sm" : ""
                 )}
-                  style={isActive ? { backgroundColor: '#8A807618' } : {}}>
+                  style={isActive ? { backgroundColor: '#1F86C718' } : {}}>
                   <item.icon
                     className={cn("w-5 h-5 transition-all", isActive ? "stroke-[2.5]" : "stroke-[1.5] text-slate-400")}
-                    style={isActive ? { color: '#8A8076' } : {}}
+                    style={isActive ? { color: '#1F86C7' } : {}}
                   />
                 </div>
                 <span
                   className={cn("text-[9px] font-semibold tracking-wide", isActive ? "" : "text-slate-400")}
-                  style={isActive ? { color: '#8A8076' } : {}}>
+                  style={isActive ? { color: '#1F86C7' } : {}}>
                   {item.label}
                 </span>
               </Link>
