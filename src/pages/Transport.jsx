@@ -225,7 +225,7 @@ export default function Transport() {
 
         {/* Selected Route Details */}
         {selectedRoute && (
-          <div className="rounded-2xl p-4" style={{ background: 'rgba(255,255,255,0.75)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.85)', boxShadow: '0 2px 12px rgba(138,127,115,0.08)' }}>
+          <div className="rounded-2xl p-4" style={{ background: 'rgba(255,255,255,0.72)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.85)', boxShadow: '0 4px 16px rgba(138,127,115,0.12)' }}>
             <div className="flex items-center gap-2 mb-3">
               <div className="w-4 h-4 rounded-full" style={{ background: selectedRoute.color }} />
               <h4 className="font-bold text-slate-800">{selectedRoute.name} Stops</h4>
