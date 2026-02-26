@@ -49,7 +49,7 @@ export default function PrivacySecurity() {
         <p className="text-xs font-bold uppercase tracking-widest mb-2 px-1" style={{ color: '#8A7F73' }}>Security</p>
         <GlassCard className="overflow-hidden divide-y" style={{ '--tw-divide-opacity': 1 }}>
           {[
-            { icon: Lock, iconBg: '#e8f4fb', iconColor: '#1F86C7', label: 'Biometric Login', desc: 'Use fingerprint or face ID', toggle: true, value: biometric, onChange: setBiometric },
+            { icon: Lock, iconBg: '#e6f8fb', iconColor: '#1FB6D5', label: 'Biometric Login', desc: 'Use fingerprint or face ID', toggle: true, value: biometric, onChange: setBiometric },
             { icon: Lock, iconBg: '#fffbeb', iconColor: '#d97706', label: 'Change Password', desc: 'Update your account password' },
             { icon: Shield, iconBg: '#ecfdf5', iconColor: '#10b981', label: 'Two-Factor Authentication', desc: 'Add an extra layer of protection' },
           ].map((item, idx) => (
