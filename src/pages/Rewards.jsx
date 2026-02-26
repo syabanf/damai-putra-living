@@ -3,9 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
-import { ArrowLeft, Gift, Star, Search, X } from 'lucide-react';
+import { Gift, Star } from 'lucide-react';
 import { motion } from 'framer-motion';
 import BottomNav from '@/components/navigation/BottomNav';
+import { PAGE_BG, GlassHeader, GlassCard, Chip, SearchBar } from '@/components/ui/DesignSystem';
 
 const CATS = [
   { value: 'all', label: 'All' },
@@ -49,25 +50,23 @@ export default function Rewards() {
   }, [rewards, activeCategory, search]);
 
   return (
-    <div className="min-h-screen pb-28" style={{ background: '#F4F5F7' }}>
-      {/* Header */}
-      <div className="px-5 pt-12 pb-4 bg-white shadow-sm">
+    <div className="min-h-screen pb-28" style={{ background: PAGE_BG }}>
+      <GlassHeader className="pt-12 pb-4">
         <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-3">
-            <button onClick={() => navigate(-1)} className="w-9 h-9 rounded-xl flex items-center justify-center border border-slate-200 bg-slate-50">
-              <ArrowLeft className="w-4 h-4 text-slate-600" />
-            </button>
-            <h1 className="font-bold text-xl text-slate-800">Rewards</h1>
+          <div>
+            <p className="text-xs font-bold uppercase tracking-widest" style={{ color: '#8A7F73' }}>Damai Putra</p>
+            <h1 className="font-bold text-2xl text-slate-800">Rewards</h1>
           </div>
           <button onClick={() => navigate(createPageUrl('MyClaims'))}
-            className="text-xs font-semibold px-3 py-1.5 rounded-xl border border-slate-200 text-slate-600 bg-slate-50">
+            className="text-xs font-semibold px-3 py-1.5 rounded-xl border border-white/70 shadow-sm"
+            style={{ background: 'rgba(255,255,255,0.65)', color: '#8A7F73' }}>
             My Claims
           </button>
         </div>
 
         {/* Points Banner */}
         <div className="rounded-2xl p-4 flex items-center justify-between mb-4"
-          style={{ background: 'linear-gradient(135deg, #8A7F73, #5a524e)' }}>
+          style={{ background: 'linear-gradient(135deg, #8A7F73, #5a524e)', boxShadow: '0 4px 16px rgba(90,82,78,0.35)' }}>
           <div>
             <p className="text-white/70 text-xs font-semibold">Your Points</p>
             <div className="flex items-center gap-1.5 mt-0.5">
@@ -75,29 +74,17 @@ export default function Rewards() {
               <p className="text-white font-bold text-2xl">{myPoints.toLocaleString()}</p>
             </div>
           </div>
-          <Gift className="w-10 h-10 text-white/30" />
+          <Gift className="w-10 h-10 text-white/20" />
         </div>
 
-        {/* Search */}
-        <div className="relative">
-          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-          <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search rewards..."
-            className="w-full h-11 pl-10 pr-10 rounded-xl bg-slate-100 text-sm text-slate-700 placeholder-slate-400 border-0 outline-none focus:ring-2 focus:ring-[#1F86C7]/20" />
-          {search && <button onClick={() => setSearch('')} className="absolute right-3 top-1/2 -translate-y-1/2"><X className="w-4 h-4 text-slate-400" /></button>}
-        </div>
-      </div>
+        <SearchBar value={search} onChange={e => setSearch(e.target.value)} onClear={() => setSearch('')} placeholder="Search rewards..." />
+      </GlassHeader>
 
       {/* Categories */}
-      <div className="bg-white border-b border-slate-100">
+      <div style={{ background: 'rgba(255,255,255,0.55)', backdropFilter: 'blur(12px)', borderBottom: '1px solid rgba(255,255,255,0.7)' }}>
         <div className="px-5 py-3 overflow-x-auto hide-scrollbar">
           <div className="flex gap-2 w-max">
-            {CATS.map(c => (
-              <button key={c.value} onClick={() => setActiveCategory(c.value)}
-                className="px-4 py-1.5 rounded-full text-sm font-semibold whitespace-nowrap transition-all"
-                style={activeCategory === c.value ? { background: '#1F86C7', color: '#fff' } : { background: '#f1f5f9', color: '#64748b' }}>
-                {c.label}
-              </button>
-            ))}
+            {CATS.map(c => <Chip key={c.value} label={c.label} active={activeCategory === c.value} onClick={() => setActiveCategory(c.value)} />)}
           </div>
         </div>
       </div>
@@ -106,11 +93,10 @@ export default function Rewards() {
       <div className="px-4 py-5 grid grid-cols-2 gap-3">
         {isLoading ? (
           Array.from({ length: 4 }).map((_, i) => (
-            <div key={i} className="bg-white rounded-2xl overflow-hidden animate-pulse">
-              <div className="w-full h-32 bg-slate-200" />
+            <div key={i} className="rounded-2xl overflow-hidden animate-pulse" style={{ background: 'rgba(255,255,255,0.5)' }}>
+              <div className="w-full h-32 bg-slate-200/50" />
               <div className="p-3 space-y-2">
-                <div className="h-3.5 bg-slate-200 rounded w-3/4" />
-                <div className="h-3 bg-slate-200 rounded w-1/2" />
+                <div className="h-3.5 bg-slate-200/50 rounded w-3/4" />
               </div>
             </div>
           ))
@@ -124,9 +110,10 @@ export default function Rewards() {
             <motion.div key={reward.id}
               initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.04 }}
               onClick={() => navigate(createPageUrl('RewardDetail') + `?id=${reward.id}`)}
-              className="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-100 cursor-pointer active:scale-95 transition-transform">
+              className="rounded-2xl overflow-hidden cursor-pointer active:scale-95 transition-transform"
+              style={{ background: 'rgba(255,255,255,0.75)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.85)', boxShadow: '0 2px 12px rgba(138,127,115,0.1)' }}>
               <div className="h-32 overflow-hidden">
-                <img src={reward.image_url || 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400&q=80'}
+                <img src={reward.image_url || 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400'}
                   alt={reward.title} className="w-full h-full object-cover" />
               </div>
               <div className="p-3">
