@@ -4,171 +4,85 @@ import { createPageUrl } from '@/utils';
 import { base44 } from '@/api/base44Client';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  ArrowLeft, FileCheck, MessageSquare, Wrench, 
-  Truck, Calendar, Users, Check, Upload, X, FileText, 
+import {
+  ArrowLeft, FileCheck, MessageSquare, Wrench,
+  Truck, Calendar, Users, Check, Upload, X, FileText,
   Clock, User, Building2, AlertCircle, ChevronRight, Shield,
-  HardHat, Package, PartyPopper, Info
+  HardHat, Package, PartyPopper, Info, Phone, CreditCard, Hash
 } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 
+// ── Constants ─────────────────────────────────────────────────
 const CATEGORIES = [
-  { 
-    id: 'permit', label: 'Digital Permit Application', 
-    icon: FileCheck, color: '#8A8076', 
-    description: 'Official permit for activities in the property'
-  },
-  { 
-    id: 'complaint', label: 'Lodge a Complaint', 
-    icon: MessageSquare, color: '#dc2626',
-    description: 'Report an issue to building management'
-  },
-  { 
-    id: 'general_service', label: 'General Service Request', 
-    icon: Wrench, color: '#7c3aed',
-    description: 'Request maintenance or general assistance'
-  },
+  { id: 'permit',          label: 'Permohonan Izin',      icon: FileCheck,     color: '#8A8076', description: 'Ajukan izin resmi kegiatan, renovasi, pindah, dll.' },
+  { id: 'complaint',       label: 'Pengaduan / Keluhan',  icon: MessageSquare, color: '#dc2626', description: 'Laporkan masalah kepada manajemen gedung' },
+  { id: 'general_service', label: 'Permintaan Layanan',   icon: Wrench,        color: '#7c3aed', description: 'Permintaan pemeliharaan atau bantuan umum' },
 ];
 
 const PERMIT_TYPES = [
-  {
-    id: 'izin_kegiatan',
-    label: 'Izin Kegiatan',
-    code: 'IZIN-05',
-    icon: PartyPopper,
-    description: 'Surat Permohonan Izin Kegiatan di area properti',
-    requires: ['visitor_details', 'num_workers'],
-    docs: 'KTP pemohon, proposal kegiatan'
-  },
-  {
-    id: 'renovasi_minor',
-    label: 'Izin Renovasi Minor',
-    code: 'IZIN-03',
-    icon: HardHat,
-    description: 'Surat Permohonan Ijin Kerja Renovasi Minor',
-    requires: ['work_scope', 'visitor_details', 'contractor_company', 'num_workers'],
-    docs: 'KTP pemohon, gambar kerja, surat pernyataan tetangga'
-  },
-  {
-    id: 'renovasi_mayor',
-    label: 'Izin Renovasi Mayor',
-    code: 'IZIN-04',
-    icon: HardHat,
-    description: 'Surat Permohonan Ijin Kerja Renovasi Mayor',
-    requires: ['work_scope', 'visitor_details', 'contractor_company', 'num_workers'],
-    docs: 'KTP, IMB, gambar kerja, surat pernyataan tetangga, deposit'
-  },
-  {
-    id: 'pembangunan_kavling',
-    label: 'Izin Pembangunan Kavling',
-    code: 'IZIN-02',
-    icon: HardHat,
-    description: 'Ketentuan Izin Pembangunan Kavling',
-    requires: ['work_scope', 'visitor_details', 'contractor_company', 'num_workers'],
-    docs: 'KTP, IMB, gambar rencana bangun, surat pernyataan tetangga'
-  },
-  {
-    id: 'galian',
-    label: 'Izin Galian',
-    code: 'IZIN-19',
-    icon: HardHat,
-    description: 'Berita Acara Pemeriksaan Galian',
-    requires: ['work_scope', 'visitor_details', 'contractor_company', 'num_workers'],
-    docs: 'KTP, gambar rencana galian, surat izin kontraktor'
-  },
-  {
-    id: 'pindah_masuk',
-    label: 'Izin Pindah Masuk',
-    code: 'IZIN-15',
-    icon: Package,
-    description: 'Form Bantuan Keamanan Untuk Masuk',
-    requires: ['visitor_details', 'moving_info'],
-    docs: 'KTP pemohon, plat nomor kendaraan'
-  },
-  {
-    id: 'pindah_keluar',
-    label: 'Izin Pindah Keluar',
-    code: 'IZIN-16',
-    icon: Truck,
-    description: 'Form Bantuan Keamanan Untuk Keluar',
-    requires: ['visitor_details', 'moving_info'],
-    docs: 'KTP pemohon, plat nomor kendaraan'
-  },
-  {
-    id: 'pencairan_deposit',
-    label: 'Pencairan Deposit',
-    code: 'IZIN-11',
-    icon: Users,
-    description: 'Surat Permohonan Pencairan Deposit Renovasi',
-    requires: [],
-    docs: 'Bukti pembayaran deposit, berita acara pemeriksaan'
-  },
-  {
-    id: 'akses_kontraktor',
-    label: 'Akses Kontraktor / Vendor',
-    code: 'IZIN-15',
-    icon: Users,
-    description: 'Form Bantuan Keamanan untuk akses kontraktor/vendor',
-    requires: ['visitor_details', 'contractor_company', 'num_workers'],
-    docs: 'KTP kontraktor, surat tugas perusahaan, plat nomor'
-  },
+  { id: 'izin_kegiatan',       label: 'Izin Kegiatan',            code: 'IZIN-05', icon: PartyPopper, description: 'Surat Permohonan Izin Kegiatan di area properti',       requires: ['visitor_details', 'num_workers'],                                      docs: 'KTP pemohon, proposal kegiatan',                             deposit: false },
+  { id: 'renovasi_minor',      label: 'Izin Renovasi Minor',      code: 'IZIN-03', icon: HardHat,     description: 'Surat Permohonan Ijin Kerja Renovasi Minor',           requires: ['work_scope', 'visitor_details', 'contractor_company', 'num_workers'],   docs: 'KTP pemohon, gambar kerja, surat pernyataan tetangga',        deposit: false },
+  { id: 'renovasi_mayor',      label: 'Izin Renovasi Mayor',      code: 'IZIN-04', icon: HardHat,     description: 'Surat Permohonan Ijin Kerja Renovasi Mayor',           requires: ['work_scope', 'visitor_details', 'contractor_company', 'num_workers'],   docs: 'KTP, IMB, gambar kerja, surat pernyataan tetangga, deposit',  deposit: true  },
+  { id: 'pembangunan_kavling', label: 'Izin Pembangunan Kavling', code: 'IZIN-02', icon: HardHat,     description: 'Ketentuan Izin Pembangunan Kavling',                    requires: ['work_scope', 'visitor_details', 'contractor_company', 'num_workers'],   docs: 'KTP, IMB, gambar rencana bangun, surat pernyataan tetangga',  deposit: true  },
+  { id: 'galian',              label: 'Izin Galian',              code: 'IZIN-19', icon: HardHat,     description: 'Berita Acara Pemeriksaan Galian',                       requires: ['work_scope', 'visitor_details', 'contractor_company', 'num_workers'],   docs: 'KTP, gambar rencana galian, surat izin kontraktor',           deposit: false },
+  { id: 'pindah_masuk',        label: 'Izin Pindah Masuk',        code: 'IZIN-15', icon: Package,     description: 'Form Bantuan Keamanan Untuk Masuk',                     requires: ['visitor_details', 'moving_info'],                                      docs: 'KTP pemohon, plat nomor kendaraan',                           deposit: false },
+  { id: 'pindah_keluar',       label: 'Izin Pindah Keluar',       code: 'IZIN-16', icon: Truck,       description: 'Form Bantuan Keamanan Untuk Keluar',                    requires: ['visitor_details', 'moving_info'],                                      docs: 'KTP pemohon, plat nomor kendaraan',                           deposit: false },
+  { id: 'pencairan_deposit',   label: 'Pencairan Deposit',        code: 'IZIN-11', icon: CreditCard,  description: 'Surat Permohonan Pencairan Deposit Renovasi',            requires: [],                                                                      docs: 'Bukti pembayaran deposit, berita acara pemeriksaan',          deposit: false },
+  { id: 'akses_kontraktor',    label: 'Akses Kontraktor / Vendor',code: 'IZIN-15', icon: Users,       description: 'Form Bantuan Keamanan untuk akses kontraktor/vendor',   requires: ['visitor_details', 'contractor_company', 'num_workers'],                docs: 'KTP kontraktor, surat tugas perusahaan, plat nomor',          deposit: false },
 ];
 
 function generateRefNumber(permitType) {
-  const typeCode = {
-    izin_kegiatan: 'IZIN-05',
-    renovasi_minor: 'IZIN-03',
-    renovasi_mayor: 'IZIN-04',
-    pembangunan_kavling: 'IZIN-02',
-    galian: 'IZIN-19',
-    pindah_masuk: 'IZIN-15',
-    pindah_keluar: 'IZIN-16',
-    pencairan_deposit: 'IZIN-11',
-    akses_kontraktor: 'IZIN-15',
-  }[permitType] || 'IZIN';
+  const codeMap = {
+    izin_kegiatan: 'IZIN-05', renovasi_minor: 'IZIN-03', renovasi_mayor: 'IZIN-04',
+    pembangunan_kavling: 'IZIN-02', galian: 'IZIN-19', pindah_masuk: 'IZIN-15',
+    pindah_keluar: 'IZIN-16', pencairan_deposit: 'IZIN-11', akses_kontraktor: 'IZIN-15',
+  };
+  const code = codeMap[permitType] || 'IZIN';
   const year = new Date().getFullYear();
-  const seq = Math.floor(Math.random() * 9000) + 1000;
-  return `DP/${typeCode}/${year}/${seq}`;
+  const seq  = Math.floor(Math.random() * 9000) + 1000;
+  return `DP/${code}/${year}/${seq}`;
 }
 
+const INITIAL_FORM = {
+  category: '', permit_type: '',
+  // applicant extra
+  applicant_role: '', applicant_nik: '', applicant_phone: '',
+  // activity
+  activity_date: '', activity_end_date: '', activity_time: '', activity_end_time: '',
+  description: '', work_scope: '', work_type: '', affected_area: '',
+  uses_heavy_equipment: false, noise_potential: false,
+  contractor_company: '', num_workers: '',
+  // visitor/representative
+  visitor_name: '', visitor_phone: '', visitor_id: '',
+  // moving
+  vehicle_type: '', vehicle_plate: '', moving_company: '',
+  // deposit
+  deposit_required: '', deposit_payment_date: '', deposit_payment_proof_url: '',
+  document_urls: [],
+};
+
+// ── Component ─────────────────────────────────────────────────
 export default function CreateTicket() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const urlParams = new URLSearchParams(window.location.search);
   const preselectedType = urlParams.get('type');
-  
+
   const [user, setUser] = useState(null);
   const [step, setStep] = useState(preselectedType ? 2 : 1);
   const [loading, setLoading] = useState(false);
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const [showReview, setShowReview] = useState(false);
-  
   const [formData, setFormData] = useState({
+    ...INITIAL_FORM,
     category: preselectedType ? 'permit' : '',
     permit_type: preselectedType || '',
-    activity_date: '',
-    activity_end_date: '',
-    activity_time: '',
-    activity_end_time: '',
-    description: '',
-    work_scope: '',
-    contractor_company: '',
-    num_workers: '',
-    visitor_name: '',
-    visitor_phone: '',
-    visitor_id: '',
-    vehicle_type: '',
-    vehicle_plate: '',
-    moving_company: '',
-    document_urls: []
   });
 
-  useEffect(() => {
-    base44.auth.me().then(setUser).catch(() => {});
-  }, []);
+  useEffect(() => { base44.auth.me().then(setUser).catch(() => {}); }, []);
 
   const { data: units = [] } = useQuery({
     queryKey: ['units'],
@@ -184,6 +98,8 @@ export default function CreateTicket() {
       navigate(createPageUrl('TicketSubmitted'));
     },
   });
+
+  const set = (field, val) => setFormData(prev => ({ ...prev, [field]: val }));
 
   const handleFileUpload = async (e) => {
     const files = Array.from(e.target.files);
@@ -226,46 +142,37 @@ export default function CreateTicket() {
       user_name: user?.full_name,
       status: 'open',
       workflow_stage: 'submitted',
-      vehicle_type: formData.vehicle_type || undefined,
-      vehicle_plate: formData.vehicle_plate || undefined,
-      moving_company: formData.moving_company || undefined,
     });
   };
 
-  const selectedPermitType = PERMIT_TYPES.find(t => t.id === formData.permit_type);
-  const needsVisitorInfo = selectedPermitType?.requires?.includes('visitor_details');
-  const needsWorkScope = selectedPermitType?.requires?.includes('work_scope');
-  const needsContractorCompany = selectedPermitType?.requires?.includes('contractor_company');
-  const needsNumWorkers = selectedPermitType?.requires?.includes('num_workers');
-  const needsMovingInfo = selectedPermitType?.requires?.includes('moving_info');
+  const selectedPermitType   = PERMIT_TYPES.find(t => t.id === formData.permit_type);
+  const needsVisitorInfo     = selectedPermitType?.requires?.includes('visitor_details');
+  const needsWorkScope       = selectedPermitType?.requires?.includes('work_scope');
+  const needsContractorCo    = selectedPermitType?.requires?.includes('contractor_company');
+  const needsNumWorkers      = selectedPermitType?.requires?.includes('num_workers');
+  const needsMovingInfo      = selectedPermitType?.requires?.includes('moving_info');
+  const needsDeposit         = selectedPermitType?.deposit;
 
-  const progressSteps = formData.category === 'permit' ? 3 : 2;
+  const progressSteps  = formData.category === 'permit' ? 3 : 2;
   const currentProgress = formData.category === 'permit' ? step : (step === 3 ? 2 : 1);
 
   return (
     <div className="min-h-screen pb-8" style={{ background: 'linear-gradient(160deg, #f5f3f0 0%, #ece8e3 50%, #e8e2db 100%)' }}>
-      {/* Header */}
+
+      {/* ── Header ── */}
       <div className="px-5 pt-6 pb-5 rounded-b-3xl" style={{ background: 'linear-gradient(150deg, #8A8076 0%, #6e6560 45%, #3d3733 100%)' }}>
         <div className="flex items-center gap-4 mb-4">
           <button
-            onClick={() => {
-              if (showReview) setShowReview(false);
-              else if (step > 1) setStep(step - 1);
-              else navigate(-1);
-            }}
-            className="w-10 h-10 rounded-xl bg-white/20 backdrop-blur-sm border border-white/20 flex items-center justify-center flex-shrink-0"
-          >
+            onClick={() => { if (showReview) setShowReview(false); else if (step > 1) setStep(step - 1); else navigate(-1); }}
+            className="w-10 h-10 rounded-xl bg-white/20 backdrop-blur-sm border border-white/20 flex items-center justify-center flex-shrink-0">
             <ArrowLeft className="w-5 h-5 text-white" />
           </button>
           <div className="flex-1 min-w-0">
             <h1 className="text-base font-bold text-white">
-              {showReview ? 'Review & Submit' : 
-               step === 1 ? 'New Request' : 
-               step === 2 ? 'Pilih Jenis Izin' : 
-               'Application Details'}
+              {showReview ? 'Review & Submit' : step === 1 ? 'Permohonan Baru' : step === 2 ? 'Pilih Jenis Izin' : 'Detail Permohonan'}
             </h1>
             <p className="text-xs text-white/50 mt-0.5">
-              {approvedUnit ? `Unit ${approvedUnit.unit_number} · ${approvedUnit.property_name}` : 'Permit Application'}
+              {approvedUnit ? `Unit ${approvedUnit.unit_number} · ${approvedUnit.property_name}` : 'Damai Putra Group'}
             </p>
           </div>
           <div className="flex items-center gap-1 px-2.5 py-1 rounded-lg border border-white/20 bg-white/15">
@@ -273,42 +180,31 @@ export default function CreateTicket() {
             <span className="text-xs font-medium text-white/80">Official</span>
           </div>
         </div>
-
-        {/* Progress Bar */}
         <div>
           <div className="flex gap-1.5">
             {Array.from({ length: progressSteps }).map((_, i) => (
-              <div
-                key={i}
-                className="flex-1 h-1 rounded-full transition-all duration-500"
-                style={{ backgroundColor: i < currentProgress ? '#fff' : 'rgba(255,255,255,0.2)' }}
-              />
+              <div key={i} className="flex-1 h-1 rounded-full transition-all duration-500"
+                style={{ backgroundColor: i < currentProgress ? '#fff' : 'rgba(255,255,255,0.2)' }} />
             ))}
           </div>
-          <p className="text-xs text-white/40 mt-1.5">
-            Step {currentProgress} of {progressSteps}
-          </p>
+          <p className="text-xs text-white/40 mt-1.5">Langkah {currentProgress} dari {progressSteps}</p>
         </div>
       </div>
 
       <div className="px-5 pb-6 pt-4">
         <AnimatePresence mode="wait">
 
-          {/* Step 1: Category */}
+          {/* ── Step 1: Category ── */}
           {step === 1 && (
             <motion.div key="step1" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-3 pt-2">
               <div className="mb-5">
-                <h2 className="text-lg font-bold text-slate-800">What do you need?</h2>
-                <p className="text-slate-500 text-sm mt-1">Select the type of request you'd like to submit to building management.</p>
+                <h2 className="text-lg font-bold text-slate-800">Apa yang Anda butuhkan?</h2>
+                <p className="text-slate-500 text-sm mt-1">Pilih jenis permohonan yang ingin diajukan.</p>
               </div>
               {CATEGORIES.map((cat) => (
-                <button
-                  key={cat.id}
-                  onClick={() => handleCategorySelect(cat.id)}
-                  className="w-full p-4 rounded-2xl border border-white/80 bg-white/70 backdrop-blur-xl shadow-sm hover:bg-white/90 flex items-center gap-4 transition-all text-left group"
-                >
-                  <div className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
-                    style={{ backgroundColor: `${cat.color}18` }}>
+                <button key={cat.id} onClick={() => handleCategorySelect(cat.id)}
+                  className="w-full p-4 rounded-2xl border border-white/80 bg-white/70 backdrop-blur-xl shadow-sm hover:bg-white/90 flex items-center gap-4 transition-all text-left group">
+                  <div className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0" style={{ backgroundColor: `${cat.color}18` }}>
                     <cat.icon className="w-6 h-6" style={{ color: cat.color }} />
                   </div>
                   <div className="flex-1 min-w-0">
@@ -321,38 +217,34 @@ export default function CreateTicket() {
             </motion.div>
           )}
 
-          {/* Step 2: Permit Type */}
+          {/* ── Step 2: Permit Type ── */}
           {step === 2 && formData.category === 'permit' && (
             <motion.div key="step2" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-3 pt-2">
               <div className="mb-5">
                 <h2 className="text-lg font-bold text-slate-800">Jenis Izin</h2>
                 <p className="text-slate-500 text-sm mt-1">Pilih jenis izin yang sesuai dengan kegiatan Anda.</p>
               </div>
-
               {PERMIT_TYPES.map((type) => {
                 const selected = formData.permit_type === type.id;
                 return (
-                  <button
-                    key={type.id}
-                    onClick={() => handlePermitTypeSelect(type.id)}
+                  <button key={type.id} onClick={() => handlePermitTypeSelect(type.id)}
                     className="w-full rounded-2xl border-2 transition-all text-left overflow-hidden backdrop-blur-xl"
-                    style={{ borderColor: selected ? '#8A8076' : 'rgba(255,255,255,0.8)', backgroundColor: selected ? 'rgba(138,128,118,0.08)' : 'rgba(255,255,255,0.7)' }}
-                  >
+                    style={{ borderColor: selected ? '#8A8076' : 'rgba(255,255,255,0.8)', backgroundColor: selected ? 'rgba(138,128,118,0.08)' : 'rgba(255,255,255,0.7)' }}>
                     <div className="p-4 flex items-center gap-4">
                       <div className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0"
                         style={{ backgroundColor: selected ? '#8A8076' : '#f1f5f9' }}>
                         <type.icon className="w-5 h-5" style={{ color: selected ? '#fff' : '#64748b' }} />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-2 flex-wrap">
                           <p className="font-semibold text-slate-800 text-sm">{type.label}</p>
                           <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-md bg-stone-100 text-stone-500">{type.code}</span>
+                          {type.deposit && <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-md bg-amber-100 text-amber-600">Deposit</span>}
                         </div>
                         <p className="text-xs text-slate-500 mt-0.5">{type.description}</p>
                       </div>
                       {selected && <Check className="w-5 h-5 flex-shrink-0" style={{ color: '#8A8076' }} />}
                     </div>
-                    {/* Required docs hint */}
                     <div className="px-4 pb-3 flex items-start gap-2">
                       <Info className="w-3 h-3 text-slate-400 mt-0.5 flex-shrink-0" />
                       <p className="text-xs text-slate-400">{type.docs}</p>
@@ -363,20 +255,47 @@ export default function CreateTicket() {
             </motion.div>
           )}
 
-          {/* Step 3: Details Form */}
+          {/* ── Step 3: Details ── */}
           {step === 3 && !showReview && (
             <motion.div key="step3" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-5 pt-2 pb-36">
 
-              {/* Unit Info Block */}
-              {approvedUnit && (
-                <div className="rounded-2xl border border-white/80 bg-white/70 backdrop-blur-xl shadow-sm p-4">
-                  <div className="flex items-center gap-2 mb-3">
-                    <Building2 className="w-4 h-4" style={{ color: '#8A8076' }} />
-                    <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: '#8A8076' }}>Unit Information</p>
+              {/* A. Applicant Info */}
+              <Section title="A. Data Pemohon" icon={User}>
+                <div className="space-y-3">
+                  <Field label="Nama Lengkap" required>
+                    <Input value={user?.full_name || ''} readOnly className="h-11 rounded-xl text-sm bg-stone-50" />
+                  </Field>
+                  <div className="grid grid-cols-2 gap-3">
+                    <Field label="Email">
+                      <Input value={user?.email || ''} readOnly className="h-11 rounded-xl text-sm bg-stone-50" />
+                    </Field>
+                    <Field label="Status Pemohon" required>
+                      <select value={formData.applicant_role} onChange={(e) => set('applicant_role', e.target.value)}
+                        className="h-11 w-full rounded-xl border border-input bg-white px-3 text-sm text-slate-700">
+                        <option value="">Pilih...</option>
+                        <option value="owner">Pemilik Unit</option>
+                        <option value="tenant">Tenant</option>
+                        <option value="authorized">Kuasa</option>
+                      </select>
+                    </Field>
                   </div>
+                  <div className="grid grid-cols-2 gap-3">
+                    <Field label="NIK / No. Identitas">
+                      <Input placeholder="16 digit NIK" value={formData.applicant_nik} onChange={(e) => set('applicant_nik', e.target.value)} className="h-11 rounded-xl text-sm" />
+                    </Field>
+                    <Field label="No. Telepon">
+                      <Input type="tel" placeholder="08xxxxxxxxxx" value={formData.applicant_phone} onChange={(e) => set('applicant_phone', e.target.value)} className="h-11 rounded-xl text-sm" />
+                    </Field>
+                  </div>
+                </div>
+              </Section>
+
+              {/* B. Unit Info */}
+              {approvedUnit && (
+                <Section title="B. Informasi Unit" icon={Building2}>
                   <div className="grid grid-cols-3 gap-3">
                     <div>
-                      <p className="text-xs text-slate-400">Unit No.</p>
+                      <p className="text-xs text-slate-400">No. Unit</p>
                       <p className="font-semibold text-slate-800 text-sm">{approvedUnit.unit_number}</p>
                     </div>
                     {approvedUnit.tower && (
@@ -386,185 +305,162 @@ export default function CreateTicket() {
                       </div>
                     )}
                     <div>
-                      <p className="text-xs text-slate-400">Property</p>
+                      <p className="text-xs text-slate-400">Properti</p>
                       <p className="font-semibold text-slate-800 text-sm truncate">{approvedUnit.property_name}</p>
                     </div>
+                    <div>
+                      <p className="text-xs text-slate-400">Status</p>
+                      <p className="font-semibold text-slate-800 text-sm capitalize">{approvedUnit.ownership_status}</p>
+                    </div>
                   </div>
-                </div>
+                </Section>
               )}
 
-              {/* Activity Schedule */}
-              <div>
-                <div className="flex items-center gap-2 mb-3">
-                  <Calendar className="w-4 h-4 text-slate-500" />
-                  <p className="text-sm font-semibold text-slate-700">Activity Schedule</p>
-                </div>
+              {/* D. Activity Schedule */}
+              <Section title="D. Jadwal Kegiatan" icon={Calendar}>
                 <div className="grid grid-cols-2 gap-3">
-                  <div className="space-y-1.5">
-                    <Label className="text-xs text-slate-500 font-medium">Start Date <span className="text-red-400">*</span></Label>
-                    <Input type="date" value={formData.activity_date}
-                      onChange={(e) => setFormData({ ...formData, activity_date: e.target.value })}
-                      className="h-11 rounded-xl text-sm" />
-                  </div>
-                  <div className="space-y-1.5">
-                    <Label className="text-xs text-slate-500 font-medium">End Date</Label>
-                    <Input type="date" value={formData.activity_end_date}
-                      onChange={(e) => setFormData({ ...formData, activity_end_date: e.target.value })}
-                      className="h-11 rounded-xl text-sm" />
-                  </div>
-                  <div className="space-y-1.5">
-                    <Label className="text-xs text-slate-500 font-medium">Start Time</Label>
-                    <Input type="time" value={formData.activity_time}
-                      onChange={(e) => setFormData({ ...formData, activity_time: e.target.value })}
-                      className="h-11 rounded-xl text-sm" />
-                  </div>
-                  <div className="space-y-1.5">
-                    <Label className="text-xs text-slate-500 font-medium">End Time</Label>
-                    <Input type="time" value={formData.activity_end_time}
-                      onChange={(e) => setFormData({ ...formData, activity_end_time: e.target.value })}
-                      className="h-11 rounded-xl text-sm" />
-                  </div>
+                  <Field label="Tanggal Mulai" required>
+                    <Input type="date" value={formData.activity_date} onChange={(e) => set('activity_date', e.target.value)} className="h-11 rounded-xl text-sm" />
+                  </Field>
+                  <Field label="Tanggal Selesai">
+                    <Input type="date" value={formData.activity_end_date} onChange={(e) => set('activity_end_date', e.target.value)} className="h-11 rounded-xl text-sm" />
+                  </Field>
+                  <Field label="Jam Mulai">
+                    <Input type="time" value={formData.activity_time} onChange={(e) => set('activity_time', e.target.value)} className="h-11 rounded-xl text-sm" />
+                  </Field>
+                  <Field label="Jam Selesai">
+                    <Input type="time" value={formData.activity_end_time} onChange={(e) => set('activity_end_time', e.target.value)} className="h-11 rounded-xl text-sm" />
+                  </Field>
                 </div>
-              </div>
+                <Field label="Tujuan / Deskripsi Kegiatan" required>
+                  <Textarea placeholder="Jelaskan secara rinci kegiatan yang akan dilakukan..." value={formData.description}
+                    onChange={(e) => set('description', e.target.value)} className="min-h-[90px] rounded-xl resize-none text-sm" />
+                </Field>
+              </Section>
 
-              {/* Description */}
-              <div className="space-y-1.5">
-                <Label className="text-xs text-slate-500 font-medium">Purpose / Description <span className="text-red-400">*</span></Label>
-                <Textarea
-                  placeholder="Provide a clear and detailed description of the activity being requested..."
-                  value={formData.description}
-                  onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                  className="min-h-[90px] rounded-xl resize-none text-sm"
-                />
-              </div>
-
-              {/* Work Scope for renovation */}
+              {/* E. Renovation / Construction Details */}
               {needsWorkScope && (
-                <div className="space-y-1.5">
-                  <Label className="text-xs text-slate-500 font-medium">Scope of Work</Label>
-                  <Textarea
-                    placeholder="Describe in detail the renovation or construction work to be carried out..."
-                    value={formData.work_scope}
-                    onChange={(e) => setFormData({ ...formData, work_scope: e.target.value })}
-                    className="min-h-[80px] rounded-xl resize-none text-sm"
-                  />
-                </div>
+                <Section title="E. Detail Pekerjaan" icon={HardHat}>
+                  <Field label="Ruang Lingkup Pekerjaan" required>
+                    <Textarea placeholder="Jelaskan detail pekerjaan renovasi/pembangunan yang akan dilakukan..." value={formData.work_scope}
+                      onChange={(e) => set('work_scope', e.target.value)} className="min-h-[80px] rounded-xl resize-none text-sm" />
+                  </Field>
+                  <div className="grid grid-cols-2 gap-3">
+                    <Field label="Jenis Pekerjaan">
+                      <select value={formData.work_type} onChange={(e) => set('work_type', e.target.value)}
+                        className="h-11 w-full rounded-xl border border-input bg-white px-3 text-sm text-slate-700">
+                        <option value="">Pilih...</option>
+                        <option value="struktural">Struktural</option>
+                        <option value="non_struktural">Non-Struktural</option>
+                        <option value="mep">MEP (Mekanikal/Elektrikal/Plumbing)</option>
+                        <option value="fasad">Fasad / Eksterior</option>
+                        <option value="interior">Interior</option>
+                      </select>
+                    </Field>
+                    <Field label="Area Terdampak">
+                      <Input placeholder="cth. Dapur, Kamar Tidur" value={formData.affected_area}
+                        onChange={(e) => set('affected_area', e.target.value)} className="h-11 rounded-xl text-sm" />
+                    </Field>
+                  </div>
+                  <div className="flex gap-4">
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <input type="checkbox" checked={formData.uses_heavy_equipment} onChange={(e) => set('uses_heavy_equipment', e.target.checked)}
+                        className="w-4 h-4 accent-stone-600" />
+                      <span className="text-xs text-slate-600">Alat Berat</span>
+                    </label>
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <input type="checkbox" checked={formData.noise_potential} onChange={(e) => set('noise_potential', e.target.checked)}
+                        className="w-4 h-4 accent-stone-600" />
+                      <span className="text-xs text-slate-600">Potensi Kebisingan</span>
+                    </label>
+                  </div>
+                </Section>
               )}
 
-              {/* Number of Workers */}
+              {/* Workers */}
               {needsNumWorkers && (
-                <div className="space-y-1.5">
-                  <Label className="text-xs text-slate-500 font-medium">Number of Workers / Guests</Label>
-                  <Input
-                    type="number" min="1"
-                    placeholder="e.g. 3"
-                    value={formData.num_workers}
-                    onChange={(e) => setFormData({ ...formData, num_workers: e.target.value })}
-                    className="h-11 rounded-xl text-sm"
-                  />
-                </div>
+                <Field label="Jumlah Pekerja / Tamu">
+                  <Input type="number" min="1" placeholder="cth. 3" value={formData.num_workers}
+                    onChange={(e) => set('num_workers', e.target.value)} className="h-11 rounded-xl text-sm" />
+                </Field>
               )}
 
-              {/* Contractor / Visitor Details */}
+              {/* Contractor / Visitor */}
               {needsVisitorInfo && (
-                <div className="space-y-4">
-                  <div className="flex items-center gap-2 pt-1">
-                    <User className="w-4 h-4 text-slate-500" />
-                    <p className="text-sm font-semibold text-slate-700">
-                      {formData.permit_type === 'contractor_access' || formData.permit_type === 'renovation' ? 'Contractor Details' : 'Representative Details'}
-                    </p>
-                  </div>
-
-                  {needsContractorCompany && (
-                    <div className="space-y-1.5">
-                      <Label className="text-xs text-slate-500 font-medium">Company / Organization Name</Label>
-                      <Input
-                        placeholder="PT. Contractor Indonesia"
-                        value={formData.contractor_company}
-                        onChange={(e) => setFormData({ ...formData, contractor_company: e.target.value })}
-                        className="h-11 rounded-xl text-sm"
-                      />
-                    </div>
+                <Section title={needsContractorCo ? 'Data Kontraktor / Vendor' : 'Data Perwakilan'} icon={User}>
+                  {needsContractorCo && (
+                    <Field label="Nama Perusahaan / Organisasi">
+                      <Input placeholder="PT. Kontraktor Indonesia" value={formData.contractor_company}
+                        onChange={(e) => set('contractor_company', e.target.value)} className="h-11 rounded-xl text-sm" />
+                    </Field>
                   )}
-
-                  <div className="space-y-1.5">
-                    <Label className="text-xs text-slate-500 font-medium">Full Name <span className="text-red-400">*</span></Label>
-                    <Input
-                      placeholder="As per ID / KTP"
-                      value={formData.visitor_name}
-                      onChange={(e) => setFormData({ ...formData, visitor_name: e.target.value })}
-                      className="h-11 rounded-xl text-sm"
-                    />
-                  </div>
-
+                  <Field label="Nama Lengkap" required>
+                    <Input placeholder="Sesuai KTP" value={formData.visitor_name}
+                      onChange={(e) => set('visitor_name', e.target.value)} className="h-11 rounded-xl text-sm" />
+                  </Field>
                   <div className="grid grid-cols-2 gap-3">
-                    <div className="space-y-1.5">
-                      <Label className="text-xs text-slate-500 font-medium">Phone Number</Label>
-                      <Input type="tel" placeholder="08xxxxxxxxxx"
-                        value={formData.visitor_phone}
-                        onChange={(e) => setFormData({ ...formData, visitor_phone: e.target.value })}
-                        className="h-11 rounded-xl text-sm" />
-                    </div>
-                    <div className="space-y-1.5">
-                      <Label className="text-xs text-slate-500 font-medium">ID / KTP Number</Label>
-                      <Input placeholder="16-digit number"
-                        value={formData.visitor_id}
-                        onChange={(e) => setFormData({ ...formData, visitor_id: e.target.value })}
-                        className="h-11 rounded-xl text-sm" />
-                    </div>
+                    <Field label="No. Telepon">
+                      <Input type="tel" placeholder="08xxxxxxxxxx" value={formData.visitor_phone}
+                        onChange={(e) => set('visitor_phone', e.target.value)} className="h-11 rounded-xl text-sm" />
+                    </Field>
+                    <Field label="No. KTP">
+                      <Input placeholder="16 digit" value={formData.visitor_id}
+                        onChange={(e) => set('visitor_id', e.target.value)} className="h-11 rounded-xl text-sm" />
+                    </Field>
                   </div>
-                </div>
+                </Section>
               )}
 
-              {/* Moving Info */}
+              {/* H. Security / Moving Info */}
               {needsMovingInfo && (
-                <div className="space-y-4">
-                  <div className="flex items-center gap-2 pt-1">
-                    <Truck className="w-4 h-4 text-slate-500" />
-                    <p className="text-sm font-semibold text-slate-700">Informasi Kendaraan & Jasa Pindah</p>
-                  </div>
+                <Section title="H. Informasi Kendaraan & Pindahan" icon={Truck}>
                   <div className="grid grid-cols-2 gap-3">
-                    <div className="space-y-1.5">
-                      <Label className="text-xs text-slate-500 font-medium">Jenis Kendaraan</Label>
-                      <Input placeholder="Truk, Pick-up, dll"
-                        value={formData.vehicle_type}
-                        onChange={(e) => setFormData({ ...formData, vehicle_type: e.target.value })}
-                        className="h-11 rounded-xl text-sm" />
-                    </div>
-                    <div className="space-y-1.5">
-                      <Label className="text-xs text-slate-500 font-medium">Plat Nomor</Label>
-                      <Input placeholder="B 1234 ABC"
-                        value={formData.vehicle_plate}
-                        onChange={(e) => setFormData({ ...formData, vehicle_plate: e.target.value })}
-                        className="h-11 rounded-xl text-sm" />
-                    </div>
+                    <Field label="Jenis Kendaraan">
+                      <Input placeholder="Truk, Pick-up, dll" value={formData.vehicle_type}
+                        onChange={(e) => set('vehicle_type', e.target.value)} className="h-11 rounded-xl text-sm" />
+                    </Field>
+                    <Field label="Plat Nomor">
+                      <Input placeholder="B 1234 ABC" value={formData.vehicle_plate}
+                        onChange={(e) => set('vehicle_plate', e.target.value)} className="h-11 rounded-xl text-sm" />
+                    </Field>
                   </div>
-                  <div className="space-y-1.5">
-                    <Label className="text-xs text-slate-500 font-medium">Jasa Pindahan (opsional)</Label>
-                    <Input placeholder="Nama perusahaan jasa pindahan"
-                      value={formData.moving_company}
-                      onChange={(e) => setFormData({ ...formData, moving_company: e.target.value })}
-                      className="h-11 rounded-xl text-sm" />
-                  </div>
-                </div>
+                  <Field label="Nama Jasa Pindahan (opsional)">
+                    <Input placeholder="Nama perusahaan jasa pindahan" value={formData.moving_company}
+                      onChange={(e) => set('moving_company', e.target.value)} className="h-11 rounded-xl text-sm" />
+                  </Field>
+                </Section>
               )}
 
-              {/* Supporting Documents */}
-              <div className="space-y-3">
-                <div className="flex items-center gap-2">
-                  <FileText className="w-4 h-4 text-slate-500" />
-                  <p className="text-sm font-semibold text-slate-700">Supporting Documents</p>
-                </div>
-
-                {selectedPermitType?.docs && (
-                  <div className="flex items-start gap-2 p-3 bg-amber-50 border border-amber-100 rounded-xl">
+              {/* F. Deposit */}
+              {needsDeposit && (
+                <Section title="F. Informasi Deposit" icon={CreditCard}>
+                  <div className="flex items-start gap-2 p-3 bg-amber-50 border border-amber-100 rounded-xl mb-3">
                     <AlertCircle className="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" />
-                    <p className="text-xs text-amber-700">Required: {selectedPermitType.docs}</p>
+                    <p className="text-xs text-amber-700">Deposit diperlukan sebagai jaminan kerusakan fasilitas umum. Deposit akan dikembalikan setelah pemeriksaan.</p>
+                  </div>
+                  <div className="grid grid-cols-2 gap-3">
+                    <Field label="Jumlah Deposit (IDR)">
+                      <Input type="number" placeholder="5000000" value={formData.deposit_required}
+                        onChange={(e) => set('deposit_required', e.target.value)} className="h-11 rounded-xl text-sm" />
+                    </Field>
+                    <Field label="Tanggal Pembayaran">
+                      <Input type="date" value={formData.deposit_payment_date}
+                        onChange={(e) => set('deposit_payment_date', e.target.value)} className="h-11 rounded-xl text-sm" />
+                    </Field>
+                  </div>
+                </Section>
+              )}
+
+              {/* G. Documents */}
+              <Section title="G. Dokumen Pendukung" icon={FileText}>
+                {selectedPermitType?.docs && (
+                  <div className="flex items-start gap-2 p-3 bg-amber-50 border border-amber-100 rounded-xl mb-3">
+                    <AlertCircle className="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" />
+                    <p className="text-xs text-amber-700">Wajib: {selectedPermitType.docs}</p>
                   </div>
                 )}
-
                 {uploadedFiles.length > 0 && (
-                  <div className="space-y-2">
+                  <div className="space-y-2 mb-3">
                     {uploadedFiles.map((file, index) => (
                       <div key={index} className="p-3 bg-white/70 border border-white/80 backdrop-blur-sm rounded-xl flex items-center justify-between">
                         <div className="flex items-center gap-3">
@@ -578,7 +474,6 @@ export default function CreateTicket() {
                     ))}
                   </div>
                 )}
-
                 <label className="block cursor-pointer">
                   <div className="p-5 border-2 border-dashed border-stone-300/70 rounded-xl text-center hover:border-stone-400 hover:bg-white/50 bg-white/30 backdrop-blur-sm transition-colors">
                     {loading ? (
@@ -587,136 +482,156 @@ export default function CreateTicket() {
                     ) : (
                       <Upload className="w-7 h-7 text-slate-400 mx-auto mb-2" />
                     )}
-                    <p className="text-slate-600 text-sm font-medium">{loading ? 'Uploading...' : 'Upload Documents'}</p>
-                    <p className="text-slate-400 text-xs mt-1">PDF, JPG, PNG (max 10MB each)</p>
+                    <p className="text-slate-600 text-sm font-medium">{loading ? 'Mengunggah...' : 'Unggah Dokumen'}</p>
+                    <p className="text-slate-400 text-xs mt-1">PDF, JPG, PNG (maks. 10MB)</p>
                   </div>
                   <input type="file" className="hidden" multiple accept=".pdf,.jpg,.jpeg,.png" onChange={handleFileUpload} disabled={loading} />
                 </label>
-              </div>
+              </Section>
             </motion.div>
           )}
 
-          {/* Review */}
+          {/* ── Review ── */}
           {showReview && (
             <motion.div key="review" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-4 pt-2 pb-36">
-              {/* Header notice */}
               <div className="rounded-2xl p-4 text-white" style={{ background: 'linear-gradient(135deg, #8A8076, #5a524e)' }}>
                 <div className="flex items-center gap-3 mb-3">
                   <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center">
                     <Shield className="w-5 h-5 text-white" />
                   </div>
                   <div>
-                    <p className="font-bold text-sm">Official Permit Application</p>
-                    <p className="text-white/70 text-xs">Review before submitting to Building Management</p>
+                    <p className="font-bold text-sm">Permohonan Izin Resmi</p>
+                    <p className="text-white/70 text-xs">Periksa sebelum submit ke Manajemen Gedung</p>
                   </div>
                 </div>
                 <div className="bg-white/10 rounded-xl p-3 flex items-center justify-between">
-                  <span className="text-white/80 text-xs">Reference will be issued upon submission</span>
+                  <span className="text-white/80 text-xs">Nomor referensi akan diterbitkan setelah submit</span>
                   <span className="font-mono text-xs text-white/60">AUTO-GENERATED</span>
                 </div>
               </div>
 
-              {/* Applicant */}
-              <div className="bg-white border border-slate-100 rounded-2xl overflow-hidden">
-                <div className="px-4 py-3 border-b border-slate-100" style={{ backgroundColor: '#f7f6f5' }}>
-                  <p className="text-xs font-bold uppercase tracking-wider" style={{ color: '#8A8076' }}>Applicant</p>
-                </div>
-                <div className="p-4 space-y-2">
-                  <Row label="Name" value={user?.full_name || '—'} />
-                  <Row label="Email" value={user?.email || '—'} />
-                  <Row label="Unit" value={`${approvedUnit?.unit_number}${approvedUnit?.tower ? ' · Tower ' + approvedUnit?.tower : ''}`} />
-                  <Row label="Property" value={approvedUnit?.property_name} />
-                </div>
-              </div>
+              <ReviewCard title="Data Pemohon">
+                <Row label="Nama" value={user?.full_name} />
+                <Row label="Email" value={user?.email} />
+                {formData.applicant_role && <Row label="Status" value={{ owner: 'Pemilik Unit', tenant: 'Tenant', authorized: 'Kuasa' }[formData.applicant_role]} />}
+                {formData.applicant_nik && <Row label="NIK" value={formData.applicant_nik} />}
+                {formData.applicant_phone && <Row label="Telepon" value={formData.applicant_phone} />}
+              </ReviewCard>
 
-              {/* Permit Details */}
-              <div className="bg-white border border-slate-100 rounded-2xl overflow-hidden">
-                <div className="px-4 py-3 border-b border-slate-100" style={{ backgroundColor: '#f7f6f5' }}>
-                  <p className="text-xs font-bold uppercase tracking-wider" style={{ color: '#8A8076' }}>Permit Details</p>
-                </div>
-                <div className="p-4 space-y-2">
-                  <Row label="Kategori" value="Permohonan Izin Digital" />
-                  {formData.permit_type && <Row label="Jenis Izin" value={`[${selectedPermitType?.code}] ${selectedPermitType?.label}`} />}
-                  {formData.activity_date && <Row label="Start Date" value={new Date(formData.activity_date + 'T00:00:00').toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' })} />}
-                  {formData.activity_end_date && <Row label="End Date" value={new Date(formData.activity_end_date + 'T00:00:00').toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' })} />}
-                  {formData.activity_time && <Row label="Time" value={`${formData.activity_time}${formData.activity_end_time ? ' – ' + formData.activity_end_time : ''}`} />}
-                  {formData.num_workers && <Row label="No. of Workers / Guests" value={formData.num_workers} />}
-                </div>
-              </div>
+              <ReviewCard title="Informasi Unit">
+                <Row label="Unit" value={`${approvedUnit?.unit_number}${approvedUnit?.tower ? ' · Tower ' + approvedUnit.tower : ''}`} />
+                <Row label="Properti" value={approvedUnit?.property_name} />
+                <Row label="Status" value={approvedUnit?.ownership_status} />
+              </ReviewCard>
+
+              <ReviewCard title="Detail Izin">
+                <Row label="Jenis Izin" value={`[${selectedPermitType?.code}] ${selectedPermitType?.label}`} />
+                {formData.activity_date && <Row label="Tanggal Mulai" value={new Date(formData.activity_date + 'T00:00:00').toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })} />}
+                {formData.activity_end_date && <Row label="Tanggal Selesai" value={new Date(formData.activity_end_date + 'T00:00:00').toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })} />}
+                {formData.activity_time && <Row label="Jam" value={`${formData.activity_time}${formData.activity_end_time ? ' – ' + formData.activity_end_time : ''}`} />}
+                {formData.num_workers && <Row label="Jml. Pekerja/Tamu" value={formData.num_workers} />}
+              </ReviewCard>
 
               {formData.description && (
-                <div className="bg-white border border-slate-100 rounded-2xl overflow-hidden">
-                  <div className="px-4 py-3 border-b border-slate-100" style={{ backgroundColor: '#f7f6f5' }}>
-                    <p className="text-xs font-bold uppercase tracking-wider" style={{ color: '#8A8076' }}>Description</p>
-                  </div>
-                  <div className="p-4">
-                    <p className="text-sm text-slate-700 leading-relaxed">{formData.description}</p>
-                  </div>
-                </div>
+                <ReviewCard title="Deskripsi">
+                  <p className="text-sm text-slate-700 leading-relaxed">{formData.description}</p>
+                </ReviewCard>
               )}
 
-              {formData.visitor_name && (
-                <div className="bg-white border border-slate-100 rounded-2xl overflow-hidden">
-                  <div className="px-4 py-3 border-b border-slate-100" style={{ backgroundColor: '#f7f6f5' }}>
-                    <p className="text-xs font-bold uppercase tracking-wider" style={{ color: '#8A8076' }}>
-                      {needsContractorCompany ? 'Contractor' : 'Representative'}
-                    </p>
-                  </div>
-                  <div className="p-4 space-y-2">
-                    {formData.contractor_company && <Row label="Company" value={formData.contractor_company} />}
-                    <Row label="Name" value={formData.visitor_name} />
-                    {formData.visitor_phone && <Row label="Phone" value={formData.visitor_phone} />}
-                    {formData.visitor_id && <Row label="ID Number" value={formData.visitor_id} />}
-                  </div>
-                </div>
+              {(formData.visitor_name || formData.contractor_company) && (
+                <ReviewCard title={needsContractorCo ? 'Data Kontraktor' : 'Data Perwakilan'}>
+                  {formData.contractor_company && <Row label="Perusahaan" value={formData.contractor_company} />}
+                  {formData.visitor_name && <Row label="Nama" value={formData.visitor_name} />}
+                  {formData.visitor_phone && <Row label="Telepon" value={formData.visitor_phone} />}
+                  {formData.visitor_id && <Row label="No. KTP" value={formData.visitor_id} />}
+                </ReviewCard>
+              )}
+
+              {needsMovingInfo && (formData.vehicle_type || formData.vehicle_plate) && (
+                <ReviewCard title="Kendaraan & Pindahan">
+                  {formData.vehicle_type && <Row label="Kendaraan" value={formData.vehicle_type} />}
+                  {formData.vehicle_plate && <Row label="Plat" value={formData.vehicle_plate} />}
+                  {formData.moving_company && <Row label="Jasa Pindah" value={formData.moving_company} />}
+                </ReviewCard>
               )}
 
               {uploadedFiles.length > 0 && (
-                <div className="bg-white border border-slate-100 rounded-2xl overflow-hidden">
-                  <div className="px-4 py-3 border-b border-slate-100" style={{ backgroundColor: '#f7f6f5' }}>
-                    <p className="text-xs font-bold uppercase tracking-wider" style={{ color: '#8A8076' }}>Documents ({uploadedFiles.length})</p>
-                  </div>
-                  <div className="p-4 space-y-2">
-                    {uploadedFiles.map((file, i) => (
-                      <div key={i} className="flex items-center gap-3">
-                        <FileText className="w-4 h-4" style={{ color: '#8A8076' }} />
-                        <p className="text-sm text-slate-700">{file.name}</p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
+                <ReviewCard title={`Dokumen (${uploadedFiles.length})`}>
+                  {uploadedFiles.map((file, i) => (
+                    <div key={i} className="flex items-center gap-3">
+                      <FileText className="w-4 h-4" style={{ color: '#8A8076' }} />
+                      <p className="text-sm text-slate-700">{file.name}</p>
+                    </div>
+                  ))}
+                </ReviewCard>
               )}
 
               <p className="text-xs text-slate-400 text-center leading-relaxed px-4">
-                By submitting, you confirm all information is accurate and agree to abide by the property's rules and regulations.
+                Dengan submit, Anda menyatakan bahwa seluruh informasi benar dan setuju mematuhi peraturan properti Damai Putra Group.
               </p>
             </motion.div>
           )}
         </AnimatePresence>
       </div>
 
-      {/* Bottom Actions */}
+      {/* ── Bottom CTA ── */}
       {step === 3 && (
-        <div className="fixed bottom-0 left-0 right-0 p-5" style={{ background: 'rgba(245,243,240,0.9)', backdropFilter: 'blur(16px)', borderTop: '1px solid rgba(255,255,255,0.6)' }}>
+        <div className="fixed bottom-0 left-0 right-0 p-5" style={{ background: 'rgba(245,243,240,0.92)', backdropFilter: 'blur(16px)', borderTop: '1px solid rgba(255,255,255,0.6)' }}>
           <div className="max-w-md mx-auto">
             <Button
               onClick={() => showReview ? handleSubmit() : setShowReview(true)}
               disabled={loading || !formData.activity_date || !formData.description}
-              className="w-full h-13 text-white rounded-2xl font-semibold text-sm"
-              style={{ background: 'linear-gradient(135deg, #8A8076, #6e6560)', boxShadow: '0 8px 24px rgba(138,128,118,0.35)', height: '52px' }}
-            >
+              className="w-full text-white rounded-2xl font-semibold text-sm"
+              style={{ background: 'linear-gradient(135deg, #8A8076, #6e6560)', boxShadow: '0 8px 24px rgba(138,128,118,0.35)', height: '52px' }}>
               {loading ? (
                 <motion.div animate={{ rotate: 360 }} transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
                   className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full" />
               ) : showReview ? (
-                <span className="flex items-center gap-2"><Shield className="w-4 h-4" /> Submit Official Application</span>
+                <span className="flex items-center gap-2"><Shield className="w-4 h-4" /> Submit Permohonan Resmi</span>
               ) : (
-                <span className="flex items-center gap-2">Review Application <ChevronRight className="w-4 h-4" /></span>
+                <span className="flex items-center gap-2">Review Permohonan <ChevronRight className="w-4 h-4" /></span>
               )}
             </Button>
           </div>
         </div>
       )}
+    </div>
+  );
+}
+
+// ── Helpers ───────────────────────────────────────────────────
+function Section({ title, icon: Icon, children }) {
+  return (
+    <div>
+      <div className="flex items-center gap-2 mb-3">
+        <Icon className="w-4 h-4 text-slate-500" />
+        <p className="text-sm font-semibold text-slate-700">{title}</p>
+      </div>
+      <div className="rounded-2xl border border-white/80 bg-white/70 backdrop-blur-xl shadow-sm p-4 space-y-3">
+        {children}
+      </div>
+    </div>
+  );
+}
+
+function Field({ label, required, children }) {
+  return (
+    <div className="space-y-1.5">
+      <Label className="text-xs text-slate-500 font-medium">
+        {label}{required && <span className="text-red-400 ml-0.5">*</span>}
+      </Label>
+      {children}
+    </div>
+  );
+}
+
+function ReviewCard({ title, children }) {
+  return (
+    <div className="bg-white border border-slate-100 rounded-2xl overflow-hidden">
+      <div className="px-4 py-3 border-b border-slate-100" style={{ backgroundColor: '#f7f6f5' }}>
+        <p className="text-xs font-bold uppercase tracking-wider" style={{ color: '#8A8076' }}>{title}</p>
+      </div>
+      <div className="p-4 space-y-2">{children}</div>
     </div>
   );
 }
