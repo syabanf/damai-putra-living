@@ -86,6 +86,7 @@ import DealsPromoDetail from './pages/DealsPromoDetail';
 import CulinaryDetail from './pages/CulinaryDetail';
 import Transport from './pages/Transport';
 import TransportSearch from './pages/TransportSearch';
+import TransportResult from './pages/TransportResult';
 import __Layout from './Layout.jsx';
 
 
@@ -129,6 +130,7 @@ export const PAGES = {
     "CulinaryDetail": CulinaryDetail,
     "Transport": Transport,
     "TransportSearch": TransportSearch,
+    "TransportResult": TransportResult,
 }
 
 export const pagesConfig = {
