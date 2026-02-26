@@ -48,7 +48,9 @@
  * The mainPage value must match a key in the PAGES object exactly.
  */
 import AddUnit from './pages/AddUnit';
+import CreateTicket from './pages/CreateTicket';
 import ForgotPassword from './pages/ForgotPassword';
+import Home from './pages/Home';
 import MyUnit from './pages/MyUnit';
 import Notifications from './pages/Notifications';
 import Onboarding from './pages/Onboarding';
@@ -56,20 +58,22 @@ import Profile from './pages/Profile';
 import Register from './pages/Register';
 import RegistrationSuccess from './pages/RegistrationSuccess';
 import Splash from './pages/Splash';
+import TicketDetail from './pages/TicketDetail';
 import TicketSubmitted from './pages/TicketSubmitted';
 import Tickets from './pages/Tickets';
 import UnitDetail from './pages/UnitDetail';
 import UnitSubmitted from './pages/UnitSubmitted';
 import Verification from './pages/Verification';
-import Home from './pages/Home';
-import CreateTicket from './pages/CreateTicket';
-import TicketDetail from './pages/TicketDetail';
+import PropertyListing from './pages/PropertyListing';
+import PropertyDetail from './pages/PropertyDetail';
 import __Layout from './Layout.jsx';
 
 
 export const PAGES = {
     "AddUnit": AddUnit,
+    "CreateTicket": CreateTicket,
     "ForgotPassword": ForgotPassword,
+    "Home": Home,
     "MyUnit": MyUnit,
     "Notifications": Notifications,
     "Onboarding": Onboarding,
@@ -77,14 +81,14 @@ export const PAGES = {
     "Register": Register,
     "RegistrationSuccess": RegistrationSuccess,
     "Splash": Splash,
+    "TicketDetail": TicketDetail,
     "TicketSubmitted": TicketSubmitted,
     "Tickets": Tickets,
     "UnitDetail": UnitDetail,
     "UnitSubmitted": UnitSubmitted,
     "Verification": Verification,
-    "Home": Home,
-    "CreateTicket": CreateTicket,
-    "TicketDetail": TicketDetail,
+    "PropertyListing": PropertyListing,
+    "PropertyDetail": PropertyDetail,
 }
 
 export const pagesConfig = {
