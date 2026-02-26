@@ -52,16 +52,21 @@ export default function TransportSearch() {
         <h1 className="font-bold text-xl text-slate-800">Find Transport</h1>
       </div>
 
-      {/* Hero Section */}
-      <div className="mx-4 mt-5 rounded-2xl overflow-hidden relative h-40" style={{ background: 'linear-gradient(135deg, #1FB6D5 0%, #0F9BB8 100%)', boxShadow: '0 4px 20px rgba(31,182,213,0.3)' }}>
-        <div className="absolute inset-0 opacity-20">
-          <div className="absolute top-2 right-8 w-32 h-32 rounded-full bg-white/10" />
-          <div className="absolute -bottom-4 -left-8 w-40 h-40 rounded-full bg-white/5" />
-        </div>
-        <div className="relative px-5 py-6 flex flex-col justify-center h-full">
-          <h2 className="text-white font-bold text-lg leading-snug">To buy a ticket,<br />to watch the schedule</h2>
-          <p className="text-white/70 text-xs mt-2">Book your journey in minutes</p>
-        </div>
+      {/* Map Section */}
+      <div className="mx-4 mt-5 rounded-2xl overflow-hidden h-56" style={{ boxShadow: '0 4px 20px rgba(31,182,213,0.2)' }}>
+        <MapContainer center={[3.1200, 101.5600]} zoom={12} style={{ height: '100%', width: '100%' }}>
+          <TileLayer
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            attribution='&copy; OpenStreetMap contributors'
+          />
+          {TRANSPORT_STATIONS.map(station => (
+            <Marker key={station.id} position={[station.lat, station.lng]} icon={MapIcon(station.type === 'hub' ? '#1FB6D5' : '#8E8478')}>
+              <Popup>
+                <div className="text-sm font-semibold">{station.name}</div>
+              </Popup>
+            </Marker>
+          ))}
+        </MapContainer>
       </div>
 
       {/* Transport Type Selector */}
