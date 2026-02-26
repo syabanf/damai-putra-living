@@ -76,7 +76,7 @@ export default function TicketDetail() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ background: 'linear-gradient(160deg, #f5f3f0 0%, #ece8e3 100%)' }}>
+      <div className="min-h-screen flex items-center justify-center" style={{ background: '#F4F5F7' }}>
         <div className="w-8 h-8 border-2 border-stone-400 border-t-transparent rounded-full animate-spin" />
       </div>
     );
@@ -84,7 +84,7 @@ export default function TicketDetail() {
 
   if (!ticket) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center px-5" style={{ background: 'linear-gradient(160deg, #f5f3f0 0%, #ece8e3 100%)' }}>
+      <div className="min-h-screen flex flex-col items-center justify-center px-5" style={{ background: '#F4F5F7' }}>
         <AlertCircle className="w-12 h-12 text-slate-300 mb-3" />
         <p className="text-slate-500 font-medium">Permit not found</p>
         <Button onClick={() => navigate(createPageUrl('Tickets'))} className="mt-4" variant="outline">Back to Permits</Button>
@@ -102,9 +102,9 @@ export default function TicketDetail() {
   const currency = (n) => n ? `IDR ${Number(n).toLocaleString('id-ID')}` : null;
 
   return (
-    <div className="min-h-screen pb-10" style={{ background: 'linear-gradient(160deg, #f5f3f0 0%, #ece8e3 100%)' }}>
+    <div className="min-h-screen pb-10" style={{ background: '#F4F5F7' }}>
       {/* Header */}
-      <div className="px-5 pt-14 pb-5 rounded-b-3xl" style={{ background: 'linear-gradient(150deg, #8A8076 0%, #6e6560 45%, #3d3733 100%)' }}>
+      <div className="px-5 pt-14 pb-5 rounded-b-3xl" style={{ background: 'linear-gradient(150deg, #8A7F73 0%, #6e6560 45%, #2E2E2E 100%)' }}>
         <div className="flex items-start gap-3">
           <button onClick={() => navigate(createPageUrl('Tickets'))}
             className="w-9 h-9 bg-white/15 rounded-xl flex items-center justify-center border border-white/20 flex-shrink-0 mt-0.5">

@@ -136,9 +136,9 @@ export default function CreateTicket() {
   const back = () => step > 1 ? setStep(s => s - 1) : navigate(-1);
 
   return (
-    <div className="min-h-screen pb-10" style={{ background: 'linear-gradient(160deg, #f5f3f0 0%, #ece8e3 100%)' }}>
+    <div className="min-h-screen pb-10" style={{ background: '#F4F5F7' }}>
       {/* Header */}
-      <div className="px-5 pt-14 pb-5 rounded-b-3xl" style={{ background: 'linear-gradient(150deg, #8A8076 0%, #6e6560 45%, #3d3733 100%)' }}>
+      <div className="px-5 pt-14 pb-5 rounded-b-3xl" style={{ background: 'linear-gradient(150deg, #8A7F73 0%, #6e6560 45%, #2E2E2E 100%)' }}>
         <div className="flex items-center gap-3 mb-4">
           <button onClick={back}
             className="w-9 h-9 bg-white/15 rounded-xl flex items-center justify-center border border-white/20 flex-shrink-0">
@@ -186,7 +186,7 @@ export default function CreateTicket() {
                 <StepApplicant form={form} set={set} approvedUnits={approvedUnits} />
                 <Button onClick={next} disabled={!canProceed()}
                   className="w-full py-3 text-white rounded-2xl font-semibold"
-                  style={{ background: 'linear-gradient(135deg, #8A8076, #5a524e)' }}>
+                  style={{ background: '#1F86C7' }}>
                   Continue <ChevronRight className="w-5 h-5 ml-1" />
                 </Button>
               </div>
@@ -203,7 +203,7 @@ export default function CreateTicket() {
                 />
                 <Button onClick={next} disabled={!canProceed()}
                   className="w-full py-3 text-white rounded-2xl font-semibold"
-                  style={{ background: 'linear-gradient(135deg, #8A8076, #5a524e)' }}>
+                  style={{ background: '#1F86C7' }}>
                   Continue to Documents <ChevronRight className="w-5 h-5 ml-1" />
                 </Button>
               </div>
@@ -223,7 +223,7 @@ export default function CreateTicket() {
                 />
                 <Button onClick={handleSubmit} disabled={mutation.isPending}
                   className="w-full py-3 text-white rounded-2xl font-semibold"
-                  style={{ background: 'linear-gradient(135deg, #8A8076, #5a524e)' }}>
+                  style={{ background: '#1F86C7' }}>
                   {mutation.isPending ? (
                     <div className="flex items-center gap-2 justify-center">
                       <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
