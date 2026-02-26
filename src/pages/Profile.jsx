@@ -95,7 +95,7 @@ export default function Profile() {
               className={`w-full p-4 flex items-center justify-between hover:bg-white/60 transition-colors active:bg-white/80 ${index < menuItems.length - 1 ? 'border-b border-white/60' : ''}`}>
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: '#f5f3f118' }}>
-                  <item.icon className="w-5 h-5" style={{ color: '#8A8076' }} />
+                  <item.icon className="w-5 h-5" style={{ color: '#8E8478' }} />
                 </div>
                 <span className="font-medium text-slate-700">{item.label}</span>
               </div>
