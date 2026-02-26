@@ -227,11 +227,11 @@ export default function Home() {
 
       {/* ── 4. LATEST NEWS ── */}
       <div className="mt-6">
-        <SectionHeader title="Latest Updates" onViewAll={() => {}} />
+        <SectionHeader title="Latest Updates" />
         <div className="px-4 space-y-3">
           {NEWS.map((n, i) => (
             <motion.div key={n.id} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 + i * 0.05 }}>
-              <Card className="flex overflow-hidden" onClick={() => {}}>
+              <Card className="flex overflow-hidden">
                 <img src={n.img} alt={n.title} className="w-24 h-20 object-cover flex-shrink-0" />
                 <div className="p-3 flex flex-col justify-center">
                   <div className="flex items-center gap-1.5 mb-1">
@@ -249,12 +249,12 @@ export default function Home() {
 
       {/* ── 5. EVENTS ── */}
       <div className="mt-6">
-        <SectionHeader title="Events" onViewAll={() => {}} />
+        <SectionHeader title="Events" onViewAll={() => navigate(createPageUrl('Events'))} />
         <div className="pl-4 flex gap-3 overflow-x-auto pb-1 hide-scrollbar pr-4">
           {EVENTS.map((ev, i) => (
             <motion.div key={ev.id} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.06 }}
               className="flex-shrink-0 w-48">
-              <Card onClick={() => {}}>
+              <Card onClick={() => navigate(createPageUrl('Events'))}>
                 <div className="relative h-28">
                   <img src={ev.img} alt={ev.title} className="w-full h-full object-cover" />
                   <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.55), transparent)' }} />
@@ -275,12 +275,12 @@ export default function Home() {
 
       {/* ── 6. DEALS & PROMO ── */}
       <div className="mt-6 mb-4">
-        <SectionHeader title="Deals & Promos" onViewAll={() => {}} />
+        <SectionHeader title="Deals & Promos" />
         <div className="pl-4 flex gap-3 overflow-x-auto pb-1 hide-scrollbar pr-4">
           {DEALS.map((d, i) => (
             <motion.div key={d.id} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.06 }}
               className="flex-shrink-0 w-44">
-              <Card onClick={() => {}}>
+              <Card onClick={() => navigate(createPageUrl('Explore'))}>
                 <div className="relative h-28">
                   <img src={d.img} alt={d.title} className="w-full h-full object-cover" />
                   <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.55), transparent)' }} />
