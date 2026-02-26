@@ -83,12 +83,12 @@ export default function PropertyListing() {
       <div className="px-4 py-5 space-y-4">
         {isLoading ? (
           Array.from({ length: 3 }).map((_, i) => (
-            <div key={i} className="rounded-2xl overflow-hidden animate-pulse" style={{ background: 'rgba(255,255,255,0.55)' }}>
-              <div className="w-full aspect-video bg-slate-200" />
+            <div key={i} className="rounded-2xl overflow-hidden animate-pulse" style={{ background: 'rgba(255,255,255,0.75)', backdropFilter: 'blur(12px)' }}>
+              <div className="w-full aspect-video bg-slate-300/50" />
               <div className="p-4 space-y-2">
-                <div className="h-3 bg-slate-200 rounded w-20" />
-                <div className="h-5 bg-slate-200 rounded w-3/4" />
-                <div className="h-3 bg-slate-200 rounded w-1/2" />
+                <div className="h-3 bg-slate-300/50 rounded w-20" />
+                <div className="h-5 bg-slate-300/50 rounded w-3/4" />
+                <div className="h-3 bg-slate-300/50 rounded w-1/2" />
               </div>
             </div>
           ))
