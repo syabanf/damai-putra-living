@@ -231,8 +231,8 @@ export default function CreateTicket() {
         <Button
           onClick={step === STEPS.length ? handleSubmit : next}
           disabled={!canProceed() || mutation.isPending}
-          className="w-full h-14 text-white rounded-2xl font-semibold text-base"
-          style={{ background: 'linear-gradient(135deg, #1FB6D5, #169ab5)', boxShadow: '0 8px 24px rgba(31,182,213,0.35)' }}
+          className="w-full h-11 text-slate-800 rounded-xl font-semibold text-sm"
+          style={{ background: '#E4E4E4' }}
         >
           {mutation.isPending ? (
             <motion.div
