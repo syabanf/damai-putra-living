@@ -15,7 +15,8 @@ import StatusBadge from '@/components/ui/StatusBadge';
 const GlassCard = ({ children, className = '', onClick }) => (
   <div
     onClick={onClick}
-    className={`bg-white/70 backdrop-blur-xl rounded-2xl border border-white/80 shadow-sm shadow-slate-200/60 ${onClick ? 'cursor-pointer active:scale-[0.98] transition-transform' : ''} ${className}`}
+    className={`rounded-2xl ${onClick ? 'cursor-pointer active:scale-[0.98] transition-transform' : ''} ${className}`}
+    style={{ background: 'rgba(255,255,255,0.75)', backdropFilter: 'blur(16px)', border: '1px solid rgba(255,255,255,0.85)', boxShadow: '0 2px 12px rgba(138,127,115,0.1)' }}
   >
     {children}
   </div>
@@ -153,7 +154,7 @@ export default function MyUnit() {
   const displayedUnits = activeTab === 'owner' ? ownedUnits : rentedUnits;
 
   return (
-    <div className="min-h-screen pb-28" style={{ background: 'linear-gradient(160deg, #f5f3f0 0%, #ece8e3 50%, #e8e2db 100%)' }}>
+    <div className="min-h-screen pb-28" style={{ background: 'linear-gradient(160deg, #f0ede9 0%, #e8e4df 50%, #e2ddd8 100%)' }}>
       {/* Header */}
       <div className="px-5 pt-14 pb-5 rounded-b-3xl" style={{ background: 'linear-gradient(150deg, #8A8076 0%, #6e6560 45%, #3d3733 100%)' }}>
         <h1 className="text-2xl font-bold text-white">My Unit</h1>

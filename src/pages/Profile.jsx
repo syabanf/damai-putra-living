@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/button";
 import BottomNav from '@/components/navigation/BottomNav';
 
 const GlassCard = ({ children, className = '' }) => (
-  <div className={`bg-white/70 backdrop-blur-xl rounded-2xl border border-white/80 shadow-sm shadow-slate-200/60 ${className}`}>
+  <div className={`rounded-2xl ${className}`} style={{ background: 'rgba(255,255,255,0.75)', backdropFilter: 'blur(16px)', border: '1px solid rgba(255,255,255,0.85)', boxShadow: '0 2px 12px rgba(138,127,115,0.1)' }}>
     {children}
   </div>
 );

@@ -51,7 +51,8 @@ const STATUS_STYLE = {
 
 const GlassCard = ({ children, className = '', onClick }) => (
   <div onClick={onClick}
-    className={`bg-white/80 backdrop-blur-xl rounded-2xl border border-white/80 shadow-sm ${onClick ? 'cursor-pointer active:scale-[0.98] transition-transform' : ''} ${className}`}>
+    className={`rounded-2xl ${onClick ? 'cursor-pointer active:scale-[0.98] transition-transform' : ''} ${className}`}
+    style={{ background: 'rgba(255,255,255,0.75)', backdropFilter: 'blur(16px)', border: '1px solid rgba(255,255,255,0.85)', boxShadow: '0 2px 12px rgba(138,127,115,0.1)' }}>
     {children}
   </div>
 );
