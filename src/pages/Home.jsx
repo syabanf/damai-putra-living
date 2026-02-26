@@ -23,7 +23,7 @@ const Card = ({ children, className = '', onClick }) => (
 
 const SectionHeader = ({ title, onViewAll }) => (
   <div className="flex justify-between items-center mb-3 px-4">
-    <h2 className="font-bold text-slate-800 text-base">{title}</h2>
+    <h2 className="font-bold text-base" style={{ color: '#2E2E2E' }}>{title}</h2>
     {onViewAll && (
       <button onClick={onViewAll} className="text-xs font-semibold flex items-center gap-0.5" style={{ color: '#1F86C7' }}>
         View All <ChevronRight className="w-3.5 h-3.5" />

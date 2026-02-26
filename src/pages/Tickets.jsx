@@ -94,8 +94,8 @@ export default function Tickets() {
 
   if (!hasApprovedUnit) {
     return (
-      <div className="min-h-screen pb-28" style={{ background: 'linear-gradient(160deg, #f5f3f0 0%, #ece8e3 50%, #e8e2db 100%)' }}>
-        <div className="px-5 pt-14 pb-6 rounded-b-3xl" style={{ background: 'linear-gradient(150deg, #8A8076 0%, #6e6560 45%, #3d3733 100%)' }}>
+      <div className="min-h-screen pb-28" style={{ background: '#F4F5F7' }}>
+        <div className="px-5 pt-14 pb-6 rounded-b-3xl" style={{ background: 'linear-gradient(150deg, #8A7F73 0%, #6e6560 45%, #2E2E2E 100%)' }}>
           <p className="text-white/50 text-xs font-semibold uppercase tracking-widest mb-1">Damai Putra Living</p>
           <h1 className="text-2xl font-bold text-white">Digital Permits</h1>
           <p className="text-white/50 text-sm mt-1">Permit & activity management</p>
@@ -124,8 +124,8 @@ export default function Tickets() {
   }
 
   return (
-    <div className="min-h-screen pb-28" style={{ background: 'linear-gradient(160deg, #f5f3f0 0%, #ece8e3 50%, #e8e2db 100%)' }}>
-      <div className="px-5 pt-14 pb-5 rounded-b-3xl" style={{ background: 'linear-gradient(150deg, #8A8076 0%, #6e6560 45%, #3d3733 100%)' }}>
+    <div className="min-h-screen pb-28" style={{ background: '#F4F5F7' }}>
+      <div className="px-5 pt-14 pb-5 rounded-b-3xl" style={{ background: 'linear-gradient(150deg, #8A7F73 0%, #6e6560 45%, #2E2E2E 100%)' }}>
         <div className="flex justify-between items-center mb-4">
           <div>
             <p className="text-white/50 text-xs font-semibold uppercase tracking-widest mb-0.5">Damai Putra Living</p>
@@ -167,7 +167,7 @@ export default function Tickets() {
               </p>
               {activeTab === 'all' && (
                 <Button onClick={() => navigate(createPageUrl('CreateTicket'))}
-                  className="mt-4 text-white rounded-xl" style={{ backgroundColor: '#8A8076' }}>
+                  className="mt-4 text-white rounded-xl" style={{ backgroundColor: '#1F86C7' }}>
                   <Plus className="w-4 h-4 mr-2" /> New Application
                 </Button>
               )}
