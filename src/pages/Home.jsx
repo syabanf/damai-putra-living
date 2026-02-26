@@ -1,255 +1,307 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 import {
-  Building2, Plus, FileCheck, Bell, ChevronRight,
-  Wrench, Truck, Calendar, Users, ArrowRight, CheckCircle, Clock
+  Bell, ChevronRight, Building2, Phone, CalendarDays, Bus,
+  Compass, UtensilsCrossed, Sparkles, Heart, Globe,
+  ChevronLeft, ArrowRight, Tag, Newspaper
 } from 'lucide-react';
-import { Button } from "@/components/ui/button";
 import BottomNav from '@/components/navigation/BottomNav';
 
-const GlassCard = ({ children, className = '', onClick }) => (
+/* ── helpers ── */
+const Card = ({ children, className = '', onClick }) => (
   <div
     onClick={onClick}
-    className={`bg-white/70 backdrop-blur-xl rounded-2xl border border-white/80 shadow-sm shadow-slate-200/60 ${onClick ? 'cursor-pointer active:scale-[0.98] transition-transform' : ''} ${className}`}
+    className={`bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden ${onClick ? 'cursor-pointer active:scale-[0.98] transition-transform' : ''} ${className}`}
   >
     {children}
   </div>
 );
 
-const quickActions = [
-  { icon: FileCheck, label: 'Izin Kegiatan', type: 'izin_kegiatan', color: '#4f86f7', bg: '#ebf0ff' },
-  { icon: Wrench, label: 'Renovasi', type: 'renovasi_minor', color: '#f97316', bg: '#fff3eb' },
-  { icon: Truck, label: 'Pindah', type: 'pindah_masuk', color: '#10b981', bg: '#ecfdf5' },
-  { icon: Users, label: 'Kontraktor', type: 'akses_kontraktor', color: '#8b5cf6', bg: '#f5f3ff' },
+const SectionHeader = ({ title, onViewAll }) => (
+  <div className="flex justify-between items-center mb-3 px-4">
+    <h2 className="font-bold text-slate-800 text-base">{title}</h2>
+    {onViewAll && (
+      <button onClick={onViewAll} className="text-xs font-semibold flex items-center gap-0.5" style={{ color: '#8A8076' }}>
+        View All <ChevronRight className="w-3.5 h-3.5" />
+      </button>
+    )}
+  </div>
+);
+
+/* ── static data ── */
+const HERO_SLIDES = [
+  {
+    img: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=80',
+    headline: 'The Future of the City\nComes to Life Here',
+    sub: 'Damai Putra Township',
+  },
+  {
+    img: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80',
+    headline: 'Modern Living\nin Harmony',
+    sub: 'World-Class Amenities',
+  },
+  {
+    img: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&q=80',
+    headline: 'Your Smart\nCommunity Hub',
+    sub: 'Digital Services at Your Fingertips',
+  },
 ];
 
+const QUICK_FEATURES = [
+  { icon: Building2,    label: 'Property',      color: '#4f86f7', bg: '#ebf0ff', page: 'MyUnit' },
+  { icon: Phone,        label: 'Hotline',        color: '#ef4444', bg: '#fef2f2', page: null },
+  { icon: CalendarDays, label: 'Events',         color: '#10b981', bg: '#ecfdf5', page: null },
+  { icon: Bus,          label: 'Transportation', color: '#f59e0b', bg: '#fffbeb', page: null },
+  { icon: Compass,      label: 'Virtual Tour',   color: '#8b5cf6', bg: '#f5f3ff', page: null },
+  { icon: UtensilsCrossed, label: 'Culinary',    color: '#f97316', bg: '#fff7ed', page: null },
+  { icon: Sparkles,     label: 'NICE',           color: '#0891b2', bg: '#ecfeff', page: null },
+  { icon: Heart,        label: 'Tzu Chi',        color: '#e11d48', bg: '#fff1f2', page: null },
+];
+
+const LANGUAGES = [
+  { code: 'en', label: 'English' },
+  { code: 'id', label: 'Bahasa Indonesia' },
+  { code: 'zh', label: '中文 (Mandarin)' },
+];
+
+const NEWS = [
+  { id: 1, title: 'ASG News February 2026', date: '13 Feb 2026', img: 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=400&q=80' },
+  { id: 2, title: 'Township Development Update Q1', date: '01 Feb 2026', img: 'https://images.unsplash.com/photo-1582407947304-fd86f028f716?w=400&q=80' },
+  { id: 3, title: 'New Amenities Opening Soon', date: '20 Jan 2026', img: 'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=400&q=80' },
+];
+
+const EVENTS = [
+  { id: 1, title: 'Galloping Fortune', date: '09 Feb – 28 Feb 2026', img: 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=400&q=80' },
+  { id: 2, title: 'Spring Garden Festival', date: '01 Mar – 15 Mar 2026', img: 'https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=400&q=80' },
+];
+
+const DEALS = [
+  { id: 1, title: 'Ramadhan Bazaar 2026', date: '24 Feb 2026', tag: 'BAZAAR', img: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=400&q=80' },
+  { id: 2, title: 'Food & Beverage Fiesta', date: '05 Mar 2026', tag: 'PROMO', img: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=400&q=80' },
+  { id: 3, title: 'Weekend Property Fair', date: '15 Mar 2026', tag: 'FAIR', img: 'https://images.unsplash.com/photo-1560184897-ae75f418493e?w=400&q=80' },
+];
+
+/* ─────────────────────────────────────────── */
 export default function Home() {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
+  const [slide, setSlide] = useState(0);
+  const [lang, setLang] = useState('en');
+  const [showLang, setShowLang] = useState(false);
+  const slideTimer = useRef(null);
 
+  useEffect(() => { base44.auth.me().then(setUser).catch(() => {}); }, []);
+
+  /* auto-advance carousel */
   useEffect(() => {
-    base44.auth.me().then(setUser).catch(() => {});
+    slideTimer.current = setInterval(() => setSlide(s => (s + 1) % HERO_SLIDES.length), 4000);
+    return () => clearInterval(slideTimer.current);
   }, []);
 
-  const { data: units = [] } = useQuery({
-    queryKey: ['units'],
-    queryFn: () => base44.entities.Unit.list(),
-  });
-
-  const { data: tickets = [] } = useQuery({
-    queryKey: ['tickets'],
-    queryFn: () => base44.entities.Ticket.list('-created_date'),
-  });
+  const goSlide = (n) => {
+    clearInterval(slideTimer.current);
+    setSlide((slide + n + HERO_SLIDES.length) % HERO_SLIDES.length);
+    slideTimer.current = setInterval(() => setSlide(s => (s + 1) % HERO_SLIDES.length), 4000);
+  };
 
   const { data: notifications = [] } = useQuery({
-    queryKey: ['notifications'],
+    queryKey: ['notifications', user?.email],
     queryFn: () => base44.entities.Notification.filter({ user_email: user?.email, read: false }),
     enabled: !!user?.email,
   });
 
-  const approvedUnits = units.filter(u => u.status === 'approved');
-  const recentTickets = tickets.slice(0, 3);
   const unreadCount = notifications.length;
-
-  const getGreeting = () => {
-    const hour = new Date().getHours();
-    if (hour < 12) return 'Selamat Pagi';
-    if (hour < 17) return 'Selamat Siang';
-    return 'Selamat Malam';
-  };
+  const currentLang = LANGUAGES.find(l => l.code === lang);
 
   return (
-    <div className="min-h-screen pb-28" style={{ background: 'linear-gradient(160deg, #f5f3f0 0%, #ece8e3 50%, #e8e2db 100%)' }}>
-      {/* Header */}
-      <div className="relative overflow-hidden px-5 pt-14 pb-24 rounded-b-[2.5rem]"
-        style={{ background: 'linear-gradient(150deg, #8A8076 0%, #6e6560 45%, #3d3733 100%)' }}>
-        <div className="absolute -top-12 -right-12 w-56 h-56 rounded-full opacity-10 bg-white" />
-        <div className="absolute -bottom-8 -left-8 w-40 h-40 rounded-full opacity-5 bg-white" />
+    <div className="min-h-screen pb-24 bg-slate-50">
 
-        <div className="relative flex justify-between items-start">
-          <div>
-            <p className="text-white/60 text-sm">{getGreeting()},</p>
-            <h1 className="text-2xl font-bold text-white mt-0.5">{user?.full_name?.split(' ')[0] || 'Selamat Datang'}</h1>
+      {/* ── 1. HERO BANNER ── */}
+      <div className="relative h-64 overflow-hidden">
+        {HERO_SLIDES.map((s, i) => (
+          <div key={i} className={`absolute inset-0 transition-opacity duration-700 ${i === slide ? 'opacity-100' : 'opacity-0'}`}>
+            <img src={s.img} alt={s.title} className="w-full h-full object-cover" />
+            <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(20,16,12,0.72) 0%, rgba(20,16,12,0.18) 55%, transparent 100%)' }} />
           </div>
-          <button
-            onClick={() => navigate(createPageUrl('Notifications'))}
-            className="relative w-11 h-11 bg-white/15 backdrop-blur-sm rounded-xl flex items-center justify-center border border-white/20 active:scale-90 transition-transform"
-          >
-            <Bell className="w-5 h-5 text-white" />
-            {unreadCount > 0 && (
-              <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 rounded-full text-[10px] font-bold text-white flex items-center justify-center">
-                {unreadCount > 9 ? '9+' : unreadCount}
-              </span>
-            )}
-          </button>
+        ))}
+
+        {/* top bar */}
+        <div className="absolute top-0 left-0 right-0 pt-12 px-4 flex justify-between items-center z-10">
+          <div>
+            <p className="text-white/70 text-xs">Welcome back,</p>
+            <p className="text-white font-bold text-lg leading-tight">{user?.full_name?.split(' ')[0] || 'Guest'}</p>
+          </div>
+          <div className="flex items-center gap-2">
+            {/* Language selector */}
+            <div className="relative">
+              <button onClick={() => setShowLang(v => !v)}
+                className="flex items-center gap-1.5 px-3 py-2 bg-black/30 backdrop-blur-sm rounded-xl border border-white/20 text-white text-xs font-semibold">
+                <Globe className="w-3.5 h-3.5" />
+                {currentLang?.code.toUpperCase()}
+              </button>
+              {showLang && (
+                <div className="absolute right-0 top-10 bg-white rounded-xl shadow-xl border border-slate-100 overflow-hidden z-50 w-44">
+                  {LANGUAGES.map(l => (
+                    <button key={l.code} onClick={() => { setLang(l.code); setShowLang(false); }}
+                      className={`w-full text-left px-4 py-3 text-sm hover:bg-slate-50 transition-colors ${lang === l.code ? 'font-bold text-stone-700' : 'text-slate-600'}`}>
+                      {l.label}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+            {/* Bell */}
+            <button onClick={() => navigate(createPageUrl('Notifications'))}
+              className="relative w-9 h-9 bg-black/30 backdrop-blur-sm rounded-xl flex items-center justify-center border border-white/20">
+              <Bell className="w-4.5 h-4.5 text-white" style={{ width: 18, height: 18 }} />
+              {unreadCount > 0 && (
+                <span className="absolute -top-1 -right-1 w-4.5 h-4.5 bg-red-500 rounded-full text-[9px] font-bold text-white flex items-center justify-center" style={{ width: 18, height: 18 }}>
+                  {unreadCount > 9 ? '9+' : unreadCount}
+                </span>
+              )}
+            </button>
+          </div>
+        </div>
+
+        {/* headline */}
+        <div className="absolute bottom-0 left-0 right-0 px-5 pb-5 z-10">
+          <p className="text-white font-bold text-xl leading-snug whitespace-pre-line">{HERO_SLIDES[slide].headline}</p>
+          <p className="text-white/60 text-xs mt-1">{HERO_SLIDES[slide].sub}</p>
+        </div>
+
+        {/* carousel controls */}
+        <button onClick={() => goSlide(-1)} className="absolute left-3 top-1/2 -translate-y-1/2 z-10 w-8 h-8 bg-black/25 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/20">
+          <ChevronLeft className="w-4 h-4 text-white" />
+        </button>
+        <button onClick={() => goSlide(1)} className="absolute right-3 top-1/2 -translate-y-1/2 z-10 w-8 h-8 bg-black/25 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/20">
+          <ChevronRight className="w-4 h-4 text-white" />
+        </button>
+
+        {/* dots */}
+        <div className="absolute bottom-14 right-5 flex gap-1 z-10">
+          {HERO_SLIDES.map((_, i) => (
+            <button key={i} onClick={() => setSlide(i)}
+              className={`rounded-full transition-all ${i === slide ? 'w-4 h-1.5 bg-white' : 'w-1.5 h-1.5 bg-white/40'}`} />
+          ))}
         </div>
       </div>
 
-      {/* Stats card pulled up */}
-      <div className="px-4 -mt-14 relative z-10">
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
-          <GlassCard className="p-5 shadow-lg shadow-slate-200/80">
-            <div className="grid grid-cols-3 gap-4">
-              <div className="text-center">
-                <p className="text-2xl font-bold text-slate-800">{approvedUnits.length}</p>
-                <p className="text-xs text-slate-500 mt-1">Unit Aktif</p>
-              </div>
-              <div className="text-center border-x border-slate-100/80">
-                <p className="text-2xl font-bold text-slate-800">
-                  {tickets.filter(t => ['open', 'under_review', 'in_progress'].includes(t.status)).length}
-                </p>
-                <p className="text-xs text-slate-500 mt-1">Proses</p>
-              </div>
-              <div className="text-center">
-                <p className="text-2xl font-bold text-slate-800">
-                  {tickets.filter(t => t.status === 'approved').length}
-                </p>
-                <p className="text-xs text-slate-500 mt-1">Disetujui</p>
-              </div>
-            </div>
-          </GlassCard>
-        </motion.div>
-      </div>
-
-      <div className="px-4 mt-5 space-y-5">
-        {/* Quick Actions */}
-        <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }}>
-          <div className="flex justify-between items-center mb-3">
-            <h2 className="font-bold text-slate-700">Buat Izin Baru</h2>
-          </div>
-          <div className="grid grid-cols-4 gap-3">
-            {quickActions.map((action, i) => (
-              <motion.button
-                key={action.type}
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.18 + i * 0.04 }}
-                onClick={() => navigate(createPageUrl('CreateTicket') + `?type=${action.type}`)}
-                className="flex flex-col items-center gap-2 p-3 rounded-2xl active:scale-95 transition-transform"
-                style={{ background: action.bg }}
-              >
-                <action.icon className="w-6 h-6" style={{ color: action.color }} />
-                <span className="text-[10px] font-semibold text-center leading-tight text-slate-600">{action.label}</span>
+      {/* ── 2. QUICK ACCESS ── */}
+      <div className="mt-5">
+        <SectionHeader title="Quick Access" />
+        <div className="px-4 grid grid-cols-4 gap-3">
+          {QUICK_FEATURES.map((f, i) => {
+            const Icon = f.icon;
+            return (
+              <motion.button key={f.label}
+                initial={{ opacity: 0, scale: 0.85 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: i * 0.035 }}
+                onClick={() => f.page ? navigate(createPageUrl(f.page)) : null}
+                className="flex flex-col items-center gap-2 py-3 px-1 rounded-2xl active:scale-95 transition-transform"
+                style={{ background: f.bg }}>
+                <Icon className="w-6 h-6" style={{ color: f.color }} />
+                <span className="text-[10px] font-semibold text-center leading-tight text-slate-600">{f.label}</span>
               </motion.button>
-            ))}
-          </div>
-        </motion.div>
-
-        {/* My Units */}
-        {approvedUnits.length === 0 ? (
-          <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.22 }}>
-            <GlassCard className="p-5">
-              <div className="flex items-center gap-4">
-                <div className="w-14 h-14 bg-amber-100 rounded-2xl flex items-center justify-center flex-shrink-0">
-                  <Building2 className="w-7 h-7 text-amber-600" />
-                </div>
-                <div className="flex-1">
-                  <h3 className="font-bold text-slate-800">Daftarkan Unit Anda</h3>
-                  <p className="text-sm text-slate-500 mt-0.5">Diperlukan untuk membuat izin</p>
-                </div>
-                <Button
-                  onClick={() => navigate(createPageUrl('AddUnit'))}
-                  size="sm"
-                  className="text-white rounded-xl"
-                  style={{ background: 'linear-gradient(135deg, #8A8076, #6e6560)' }}
-                >
-                  <Plus className="w-4 h-4" />
-                </Button>
-              </div>
-            </GlassCard>
-          </motion.div>
-        ) : (
-          <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.22 }}>
-            <div className="flex justify-between items-center mb-3">
-              <h2 className="font-bold text-slate-700">Unit Saya</h2>
-              <button onClick={() => navigate(createPageUrl('MyUnit'))} className="text-sm font-medium flex items-center gap-1" style={{ color: '#8A8076' }}>
-                Lihat Semua <ChevronRight className="w-4 h-4" />
-              </button>
-            </div>
-            <div className="space-y-3">
-              {approvedUnits.slice(0, 2).map(unit => (
-                <GlassCard key={unit.id} className="p-4" onClick={() => navigate(createPageUrl('UnitDetail') + `?id=${unit.id}`)}>
-                  <div className="flex items-center gap-3">
-                    <div className="w-11 h-11 rounded-xl flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #8A8076, #5a524e)' }}>
-                      <Building2 className="w-5 h-5 text-white" />
-                    </div>
-                    <div className="flex-1">
-                      <p className="font-semibold text-slate-800">{unit.unit_number}</p>
-                      <p className="text-xs text-slate-400">{unit.property_name}{unit.tower ? ` · Tower ${unit.tower}` : ''}</p>
-                    </div>
-                    <div className="flex items-center gap-1 text-emerald-600">
-                      <CheckCircle className="w-4 h-4" />
-                      <span className="text-xs font-medium">Aktif</span>
-                    </div>
-                  </div>
-                </GlassCard>
-              ))}
-            </div>
-          </motion.div>
-        )}
-
-        {/* Recent Tickets */}
-        {recentTickets.length > 0 && (
-          <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.28 }}>
-            <div className="flex justify-between items-center mb-3">
-              <h2 className="font-bold text-slate-700">Tiket Terbaru</h2>
-              <button onClick={() => navigate(createPageUrl('Tickets'))} className="text-sm font-medium flex items-center gap-1" style={{ color: '#8A8076' }}>
-                Lihat Semua <ChevronRight className="w-4 h-4" />
-              </button>
-            </div>
-            <div className="space-y-3">
-              {recentTickets.map((ticket, i) => (
-                <motion.div key={ticket.id} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.3 + i * 0.04 }}>
-                  <GlassCard className="p-4" onClick={() => navigate(createPageUrl('TicketDetail') + `?id=${ticket.id}`)}>
-                    <div className="flex items-center justify-between">
-                      <div className="flex-1 min-w-0">
-                        <p className="font-semibold text-slate-800 text-sm capitalize truncate">
-                          {ticket.permit_type?.replace(/_/g, ' ') || ticket.category}
-                        </p>
-                        <p className="text-xs text-slate-400 mt-0.5">
-                          {ticket.unit_number} · {new Date(ticket.created_date).toLocaleDateString('id-ID', { day: '2-digit', month: 'short' })}
-                        </p>
-                      </div>
-                      <div className="flex items-center gap-2 ml-3">
-                        <span className={`text-[10px] font-bold px-2 py-1 rounded-full ${
-                          ticket.status === 'approved' ? 'bg-emerald-100 text-emerald-700' :
-                          ticket.status === 'rejected' ? 'bg-red-100 text-red-700' :
-                          ticket.status === 'open' ? 'bg-blue-100 text-blue-700' :
-                          'bg-amber-100 text-amber-700'
-                        }`}>
-                          {ticket.status?.replace(/_/g, ' ').toUpperCase()}
-                        </span>
-                        <ChevronRight className="w-4 h-4 text-slate-300" />
-                      </div>
-                    </div>
-                  </GlassCard>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-        )}
-
-        {/* Create first ticket CTA */}
-        {recentTickets.length === 0 && approvedUnits.length > 0 && (
-          <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.28 }}>
-            <GlassCard className="p-6 text-center" onClick={() => navigate(createPageUrl('CreateTicket'))}>
-              <div className="w-16 h-16 bg-stone-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                <FileCheck className="w-8 h-8 text-stone-400" />
-              </div>
-              <h3 className="font-bold text-slate-700 mb-1">Belum Ada Tiket</h3>
-              <p className="text-sm text-slate-500 mb-4">Buat izin pertama Anda sekarang</p>
-              <Button className="text-white rounded-xl h-11 px-6" style={{ background: 'linear-gradient(135deg, #8A8076, #6e6560)' }}>
-                <Plus className="w-4 h-4 mr-2" /> Buat Izin
-              </Button>
-            </GlassCard>
-          </motion.div>
-        )}
+            );
+          })}
+        </div>
       </div>
 
+      {/* ── 3. PROMO / CTA ── */}
+      <div className="mt-6 mx-4">
+        <div className="rounded-2xl overflow-hidden relative" style={{ background: 'linear-gradient(135deg, #8A8076 0%, #3d3733 100%)' }}>
+          <div className="absolute -right-8 -top-8 w-32 h-32 rounded-full bg-white/10" />
+          <div className="absolute -left-4 -bottom-6 w-24 h-24 rounded-full bg-white/5" />
+          <div className="relative px-5 py-5">
+            <p className="text-white/70 text-xs font-semibold uppercase tracking-widest mb-1">Exclusive Membership</p>
+            <h3 className="text-white font-bold text-lg leading-snug mb-2">Join Sedayu One and get access to various rewards and benefits!</h3>
+            <button className="mt-1 px-5 py-2.5 bg-white rounded-xl text-sm font-bold flex items-center gap-2" style={{ color: '#5a524e' }}>
+              Register Now <ArrowRight className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* ── 4. LATEST NEWS ── */}
+      <div className="mt-6">
+        <SectionHeader title="Latest Updates" onViewAll={() => {}} />
+        <div className="px-4 space-y-3">
+          {NEWS.map((n, i) => (
+            <motion.div key={n.id} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 + i * 0.05 }}>
+              <Card className="flex overflow-hidden" onClick={() => {}}>
+                <img src={n.img} alt={n.title} className="w-24 h-20 object-cover flex-shrink-0" />
+                <div className="p-3 flex flex-col justify-center">
+                  <div className="flex items-center gap-1.5 mb-1">
+                    <Newspaper className="w-3 h-3 text-stone-400" />
+                    <span className="text-[10px] text-stone-400 font-semibold uppercase tracking-wide">News</span>
+                  </div>
+                  <p className="font-semibold text-slate-800 text-sm leading-tight">{n.title}</p>
+                  <p className="text-xs text-slate-400 mt-1">{n.date}</p>
+                </div>
+              </Card>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+
+      {/* ── 5. EVENTS ── */}
+      <div className="mt-6">
+        <SectionHeader title="Events" onViewAll={() => {}} />
+        <div className="pl-4 flex gap-3 overflow-x-auto pb-1 hide-scrollbar pr-4">
+          {EVENTS.map((ev, i) => (
+            <motion.div key={ev.id} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.06 }}
+              className="flex-shrink-0 w-48">
+              <Card onClick={() => {}}>
+                <div className="relative h-28">
+                  <img src={ev.img} alt={ev.title} className="w-full h-full object-cover" />
+                  <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.55), transparent)' }} />
+                  <span className="absolute top-2 left-2 bg-emerald-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">EVENT</span>
+                </div>
+                <div className="p-3">
+                  <p className="font-semibold text-slate-800 text-sm leading-tight">{ev.title}</p>
+                  <div className="flex items-center gap-1 mt-1">
+                    <CalendarDays className="w-3 h-3 text-slate-400" />
+                    <p className="text-[10px] text-slate-400">{ev.date}</p>
+                  </div>
+                </div>
+              </Card>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+
+      {/* ── 6. DEALS & PROMO ── */}
+      <div className="mt-6 mb-4">
+        <SectionHeader title="Deals & Promos" onViewAll={() => {}} />
+        <div className="pl-4 flex gap-3 overflow-x-auto pb-1 hide-scrollbar pr-4">
+          {DEALS.map((d, i) => (
+            <motion.div key={d.id} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.06 }}
+              className="flex-shrink-0 w-44">
+              <Card onClick={() => {}}>
+                <div className="relative h-28">
+                  <img src={d.img} alt={d.title} className="w-full h-full object-cover" />
+                  <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.55), transparent)' }} />
+                  <span className="absolute top-2 left-2 text-white text-[10px] font-bold px-2 py-0.5 rounded-full" style={{ background: '#8A8076' }}>
+                    {d.tag}
+                  </span>
+                </div>
+                <div className="p-3">
+                  <p className="font-semibold text-slate-800 text-xs leading-tight">{d.title}</p>
+                  <div className="flex items-center gap-1 mt-1">
+                    <Tag className="w-3 h-3 text-slate-400" />
+                    <p className="text-[10px] text-slate-400">{d.date}</p>
+                  </div>
+                </div>
+              </Card>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+
+      {/* ── 7. BOTTOM NAV ── */}
       <BottomNav currentPage="Home" />
     </div>
   );
