@@ -143,64 +143,204 @@ export default function Rewards() {
         </div>
       </div>
 
-      {/* Categories */}
-      <div className="px-5 py-3 overflow-x-auto hide-scrollbar">
-        <div className="flex gap-2 w-max">
-          {CATS.map(c => (
-            <button key={c.value} onClick={() => setActiveCategory(c.value)}
-              className="px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all active:scale-95"
-              style={activeCategory === c.value
-                ? { background: 'linear-gradient(135deg, #1FB6D5, #169ab5)', color: '#fff', boxShadow: '0 3px 10px rgba(31,182,213,0.35)' }
-                : { background: 'rgba(255,255,255,0.75)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.85)', color: '#64748b' }
-              }>{c.label}</button>
-          ))}
-        </div>
-      </div>
+      {/* Content by Tab */}
+      {activeTab === 'rewards' ? (
+        <>
+          {/* Categories */}
+          <div className="px-5 py-3 overflow-x-auto hide-scrollbar">
+            <div className="flex gap-2 w-max">
+              {CATS.map(c => (
+                <button key={c.value} onClick={() => setActiveCategory(c.value)}
+                  className="px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all active:scale-95"
+                  style={activeCategory === c.value
+                    ? { background: 'linear-gradient(135deg, #1FB6D5, #169ab5)', color: '#fff', boxShadow: '0 3px 10px rgba(31,182,213,0.35)' }
+                    : { background: 'rgba(255,255,255,0.75)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.85)', color: '#64748b' }
+                  }>{c.label}</button>
+              ))}
+            </div>
+          </div>
 
-      {/* Reward Grid */}
-      <div className="px-4 py-5 grid grid-cols-2 gap-3">
-        {isLoading ? (
-          Array.from({ length: 4 }).map((_, i) => (
-            <div key={i} className="rounded-2xl overflow-hidden animate-pulse" style={{ background: 'rgba(255,255,255,0.5)' }}>
-              <div className="w-full h-32 bg-slate-200/50" />
-              <div className="p-3 space-y-2">
-                <div className="h-3.5 bg-slate-200/50 rounded w-3/4" />
+          {/* Reward Grid */}
+          <div className="px-4 py-5 grid grid-cols-2 gap-3">
+            {isLoading ? (
+              Array.from({ length: 4 }).map((_, i) => (
+                <div key={i} className="rounded-2xl overflow-hidden animate-pulse" style={{ background: 'rgba(255,255,255,0.5)' }}>
+                  <div className="w-full h-32 bg-slate-200/50" />
+                  <div className="p-3 space-y-2">
+                    <div className="h-3.5 bg-slate-200/50 rounded w-3/4" />
+                  </div>
+                </div>
+              ))
+            ) : filtered.length === 0 ? (
+              <div className="col-span-2 flex flex-col items-center py-20">
+                <Gift className="w-12 h-12 text-slate-300 mb-3" />
+                <p className="text-slate-500 font-medium">No rewards found</p>
+              </div>
+            ) : (
+              filtered.map((reward, i) => (
+                <motion.div key={reward.id}
+                  initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.04 }}
+                  onClick={() => navigate(createPageUrl('RewardDetail') + `?id=${reward.id}`)}
+                  className="rounded-2xl overflow-hidden cursor-pointer active:scale-95 transition-transform"
+                  style={{ background: 'rgba(255,255,255,0.75)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.85)', boxShadow: '0 2px 12px rgba(138,127,115,0.1)' }}>
+                  <div className="h-32 overflow-hidden">
+                    <img src={reward.image_url || 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400'}
+                      alt={reward.title} className="w-full h-full object-cover" />
+                  </div>
+                  <div className="p-3">
+                    <p className="font-bold text-slate-800 text-xs leading-snug line-clamp-2">{reward.title}</p>
+                    <p className="text-[10px] text-slate-400 mt-0.5 truncate">{reward.merchant_name}</p>
+                    <div className="flex items-center justify-between mt-2">
+                      <div className="flex items-center gap-1">
+                        <Star className="w-3 h-3 text-amber-400 fill-amber-400" />
+                        <span className="text-xs font-bold text-slate-700">{reward.points_required?.toLocaleString()}</span>
+                      </div>
+                      <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${myPoints >= reward.points_required ? 'bg-[#e6f8fb] text-[#1FB6D5]' : 'bg-slate-100 text-slate-400'}`}>
+                        {myPoints >= reward.points_required ? 'Claim' : 'Not enough'}
+                      </span>
+                    </div>
+                  </div>
+                </motion.div>
+              ))
+            )}
+          </div>
+        </>
+      ) : (
+        /* Scan Bill Tab */
+        <>
+          {!scannedData ? (
+            <div className="px-4 mt-5">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="rounded-2xl p-8 text-center"
+                style={{ background: 'rgba(255,255,255,0.75)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.85)' }}
+              >
+                <div className="w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center" style={{ background: '#e6f8fb' }}>
+                  <Camera className="w-8 h-8" style={{ color: '#1FB6D5' }} />
+                </div>
+                <h2 className="font-bold text-lg text-slate-800 mb-2">Scan Your Bill</h2>
+                <p className="text-sm text-slate-500 mb-6">Take a photo of your paid bill QR code to add points to your account.</p>
+                
+                <button
+                  onClick={() => fileInputRef.current?.click()}
+                  className="w-full py-3 rounded-xl font-bold text-white transition-all active:scale-95 mb-3"
+                  style={{ background: 'linear-gradient(135deg, #1FB6D5 0%, #0F9BB8 100%)', boxShadow: '0 3px 10px rgba(31,182,213,0.35)' }}
+                >
+                  Choose Photo from Gallery
+                </button>
+
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageUpload}
+                  className="hidden"
+                />
+
+                <p className="text-xs text-slate-400 mt-4">Supported formats: JPG, PNG</p>
+              </motion.div>
+
+              <div className="mt-8 rounded-2xl p-5 mb-20" style={{ background: 'rgba(255,255,255,0.75)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.85)' }}>
+                <h3 className="font-bold text-slate-800 mb-3">How it works</h3>
+                <ul className="space-y-2 text-sm text-slate-600">
+                  <li className="flex gap-2">
+                    <span className="font-bold text-teal-600 flex-shrink-0">1</span>
+                    <span>Make a purchase at any participating merchant</span>
+                  </li>
+                  <li className="flex gap-2">
+                    <span className="font-bold text-teal-600 flex-shrink-0">2</span>
+                    <span>Get your paid bill receipt with QR code</span>
+                  </li>
+                  <li className="flex gap-2">
+                    <span className="font-bold text-teal-600 flex-shrink-0">3</span>
+                    <span>Scan the QR code here to earn points</span>
+                  </li>
+                  <li className="flex gap-2">
+                    <span className="font-bold text-teal-600 flex-shrink-0">4</span>
+                    <span>Points added instantly to your account</span>
+                  </li>
+                </ul>
               </div>
             </div>
-          ))
-        ) : filtered.length === 0 ? (
-          <div className="col-span-2 flex flex-col items-center py-20">
-            <Gift className="w-12 h-12 text-slate-300 mb-3" />
-            <p className="text-slate-500 font-medium">No rewards found</p>
-          </div>
-        ) : (
-          filtered.map((reward, i) => (
-            <motion.div key={reward.id}
-              initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.04 }}
-              onClick={() => navigate(createPageUrl('RewardDetail') + `?id=${reward.id}`)}
-              className="rounded-2xl overflow-hidden cursor-pointer active:scale-95 transition-transform"
-              style={{ background: 'rgba(255,255,255,0.75)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.85)', boxShadow: '0 2px 12px rgba(138,127,115,0.1)' }}>
-              <div className="h-32 overflow-hidden">
-                <img src={reward.image_url || 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400'}
-                  alt={reward.title} className="w-full h-full object-cover" />
-              </div>
-              <div className="p-3">
-                <p className="font-bold text-slate-800 text-xs leading-snug line-clamp-2">{reward.title}</p>
-                <p className="text-[10px] text-slate-400 mt-0.5 truncate">{reward.merchant_name}</p>
-                <div className="flex items-center justify-between mt-2">
-                  <div className="flex items-center gap-1">
-                    <Star className="w-3 h-3 text-amber-400 fill-amber-400" />
-                    <span className="text-xs font-bold text-slate-700">{reward.points_required?.toLocaleString()}</span>
-                  </div>
-                  <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${myPoints >= reward.points_required ? 'bg-[#e6f8fb] text-[#1FB6D5]' : 'bg-slate-100 text-slate-400'}`}>
-                    {myPoints >= reward.points_required ? 'Claim' : 'Not enough'}
-                  </span>
+          ) : scannedData.success ? (
+            <div className="px-4 mt-5 mb-20">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="rounded-2xl p-8 text-center"
+                style={{ background: 'rgba(255,255,255,0.75)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.85)' }}
+              >
+                <motion.div
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
+                  className="w-20 h-20 rounded-full mx-auto mb-6 flex items-center justify-center"
+                  style={{ background: '#d1fae5' }}
+                >
+                  <CheckCircle2 className="w-10 h-10 text-emerald-600" />
+                </motion.div>
+
+                <h2 className="font-bold text-xl text-slate-800 mb-2">Bill Verified!</h2>
+                <p className="text-sm text-slate-500 mb-6">Your purchase has been verified successfully.</p>
+
+                <div className="bg-emerald-50 rounded-xl p-4 mb-6">
+                  <p className="text-xs text-emerald-600 font-semibold uppercase tracking-widest mb-1">Points Earned</p>
+                  <p className="text-emerald-700 font-bold text-3xl">+{scannedData.points}</p>
                 </div>
-              </div>
-            </motion.div>
-          ))
-        )}
-      </div>
+
+                <div className="text-left bg-slate-50 rounded-xl p-4 mb-6 space-y-2">
+                  <div className="flex justify-between text-sm">
+                    <span className="text-slate-600">Reference ID:</span>
+                    <span className="font-semibold text-slate-800">{scannedData.reference}</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-slate-600">New Balance:</span>
+                    <span className="font-semibold text-slate-800">{(myPoints + scannedData.points).toLocaleString()}</span>
+                  </div>
+                </div>
+
+                <button
+                  onClick={confirmPoints}
+                  disabled={addPointsMutation.isPending}
+                  className="w-full py-3 rounded-xl font-bold text-white transition-all active:scale-95 mb-3"
+                  style={{ background: addPointsMutation.isPending ? '#cbd5e1' : 'linear-gradient(135deg, #1FB6D5 0%, #0F9BB8 100%)', boxShadow: '0 3px 10px rgba(31,182,213,0.35)' }}
+                >
+                  {addPointsMutation.isPending ? 'Adding Points...' : 'Confirm & Add Points'}
+                </button>
+
+                {addPointsMutation.isSuccess && (
+                  <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-sm text-emerald-600 font-semibold">
+                    Points added to your account! ✓
+                  </motion.p>
+                )}
+              </motion.div>
+            </div>
+          ) : (
+            <div className="px-4 mt-5 mb-20">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="rounded-2xl p-8 text-center"
+                style={{ background: 'rgba(255,255,255,0.75)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.85)' }}
+              >
+                <div className="w-20 h-20 rounded-full mx-auto mb-6 flex items-center justify-center" style={{ background: '#fee2e2' }}>
+                  <X className="w-10 h-10 text-red-600" />
+                </div>
+                <h2 className="font-bold text-lg text-slate-800 mb-2">Scan Failed</h2>
+                <p className="text-sm text-slate-500 mb-6">{scannedData.error}</p>
+                <button
+                  onClick={resetScan}
+                  className="w-full py-3 rounded-xl font-bold text-white transition-all active:scale-95"
+                  style={{ background: 'linear-gradient(135deg, #1FB6D5 0%, #0F9BB8 100%)' }}
+                >
+                  Try Again
+                </button>
+              </motion.div>
+            </div>
+          )}
+        </>
+      )}
 
     </div>
   );
