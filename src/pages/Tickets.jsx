@@ -169,7 +169,7 @@ export default function Tickets() {
               </p>
               {activeTab === 'all' && (
                 <Button onClick={() => navigate(createPageUrl('CreateTicket'))}
-                  className="mt-4 text-white rounded-xl" style={{ backgroundColor: '#1F86C7' }}>
+                  className="mt-4 text-white rounded-xl" style={{ backgroundColor: '#1FB6D5' }}>
                   <Plus className="w-4 h-4 mr-2" /> New Application
                 </Button>
               )}
