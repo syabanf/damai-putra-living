@@ -160,6 +160,9 @@ export default function CreateTicket() {
     visitor_name: '',
     visitor_phone: '',
     visitor_id: '',
+    vehicle_type: '',
+    vehicle_plate: '',
+    moving_company: '',
     document_urls: []
   });
 
