@@ -289,7 +289,13 @@ export default function ExploreMap({ mode: initialMode = 'transport', onBack }) 
                initial={{ opacity: 0, x: -20 }}
                animate={{ opacity: 1, x: 0 }}
                transition={{ delay: idx * 0.05 }}
-               onClick={() => setSelectedItem(item)}
+               onClick={() => {
+                 if (mode === 'explore') {
+                   navigate(createPageUrl(`ExploreDetail?id=${item.id}`));
+                 } else {
+                   setSelectedItem(item);
+                 }
+               }}
                className="p-3 rounded-xl cursor-pointer active:scale-95 transition-all"
                style={{ background: 'rgba(255,255,255,0.75)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.85)' }}
              >
