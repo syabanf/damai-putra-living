@@ -68,6 +68,7 @@ const MapIcon = (type, isTransport) => {
 };
 
 export default function ExploreMap({ mode: initialMode = 'transport', onBack }) {
+  const navigate = useNavigate();
   const [mode, setMode] = useState(initialMode);
   const [selectedItem, setSelectedItem] = useState(null);
   const [showList, setShowList] = useState(false);
