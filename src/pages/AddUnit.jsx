@@ -149,7 +149,7 @@ export default function AddUnit() {
   };
 
   return (
-    <div className="min-h-screen pb-28" style={{ background: 'linear-gradient(160deg, #F5F4F2 0%, #edecea 55%, #e7e5e2 100%)' }}>
+    <div className="min-h-screen pb-40" style={{ background: 'linear-gradient(160deg, #F5F4F2 0%, #edecea 55%, #e7e5e2 100%)' }}>
       {/* Header */}
       <div className="px-5 pt-6 pb-5 rounded-b-3xl" style={{ background: 'linear-gradient(150deg, #1a5068 0%, #0F3D4C 55%, #0a2d38 100%)' }}>
         <div className="flex items-center gap-4 mb-4">
