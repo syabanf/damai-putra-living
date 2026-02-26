@@ -121,7 +121,7 @@ export default function Notifications() {
                   <motion.div key={notification.id}
                     initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, x: -100 }} transition={{ delay: index * 0.04 }}>
                     <GlassCard className={`p-4 ${!notification.read ? 'border-l-4' : ''}`}
-                      style={!notification.read ? { borderLeftColor: '#8A8076' } : {}}
+                      style={!notification.read ? { borderLeftColor: '#1FB6D5' } : {}}
                       onClick={() => handleNotificationClick(notification)}>
                       <div className="flex items-start gap-3">
                         <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${config.color}`}>
