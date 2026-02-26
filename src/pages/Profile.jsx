@@ -101,7 +101,7 @@ export default function Profile() {
               </div>
               <div className="flex items-center gap-2">
                 {item.count !== undefined && (
-                  <span className="px-2 py-0.5 text-xs font-semibold rounded-full" style={{ backgroundColor: '#f5f3f1', color: '#8A8076' }}>
+                  <span className="px-2 py-0.5 text-xs font-semibold rounded-full" style={{ backgroundColor: '#f5f3f1', color: '#8E8478' }}>
                     {item.count}
                   </span>
                 )}
