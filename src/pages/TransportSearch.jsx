@@ -34,7 +34,9 @@ export default function TransportSearch() {
 
   const handleSearch = () => {
     if (fromLocation && toLocation && departDate) {
-      navigate(createPageUrl(`TransportResult?from=${encodeURIComponent(fromLocation)}&to=${encodeURIComponent(toLocation)}&date=${departDate}&type=${transportType}`));
+      const fromId = fromLocation.split('|')[0];
+      const toId = toLocation.split('|')[0];
+      navigate(createPageUrl(`TransportResult?from=${fromId}&to=${toId}&date=${departDate}&type=${transportType}`));
     }
   };
 
