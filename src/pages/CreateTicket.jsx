@@ -225,7 +225,10 @@ export default function CreateTicket() {
       user_email: user?.email,
       user_name: user?.full_name,
       status: 'open',
-      workflow_stage: 'submitted'
+      workflow_stage: 'submitted',
+      vehicle_type: formData.vehicle_type || undefined,
+      vehicle_plate: formData.vehicle_plate || undefined,
+      moving_company: formData.moving_company || undefined,
     });
   };
 
