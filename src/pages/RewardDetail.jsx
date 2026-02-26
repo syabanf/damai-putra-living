@@ -107,7 +107,7 @@ export default function RewardDetail() {
 
       {/* Points badge */}
       <div className="px-4 -mt-0">
-        <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-4 flex items-center justify-between">
+        <div className="rounded-2xl p-4 flex items-center justify-between" style={{ background: 'rgba(255,255,255,0.75)', backdropFilter: 'blur(16px)', border: '1px solid rgba(255,255,255,0.85)', boxShadow: '0 2px 12px rgba(138,127,115,0.1)' }}>
           <div className="flex items-center gap-2">
             <Star className="w-5 h-5 text-amber-400 fill-amber-400" />
             <span className="font-bold text-slate-800 text-lg">{reward.points_required?.toLocaleString()} Points</span>
@@ -120,7 +120,7 @@ export default function RewardDetail() {
 
       <div className="px-4 mt-4 space-y-4">
         {/* Info */}
-        <div className="bg-white rounded-2xl shadow-sm border border-slate-100 divide-y divide-slate-100">
+        <div className="rounded-2xl divide-y" style={{ background: 'rgba(255,255,255,0.75)', backdropFilter: 'blur(16px)', border: '1px solid rgba(255,255,255,0.85)', boxShadow: '0 2px 12px rgba(138,127,115,0.1)', '--tw-divide-color': 'rgba(255,255,255,0.6)' }}>
           {reward.merchant_location && (
             <div className="flex items-center gap-3 px-4 py-3.5">
               <MapPin className="w-4 h-4 text-slate-400" />
@@ -143,7 +143,7 @@ export default function RewardDetail() {
 
         {/* T&C */}
         {reward.terms?.length > 0 && (
-          <div className="bg-white rounded-2xl p-4 shadow-sm border border-slate-100">
+          <div className="rounded-2xl p-4" style={{ background: 'rgba(255,255,255,0.75)', backdropFilter: 'blur(16px)', border: '1px solid rgba(255,255,255,0.85)' }}>
             <h3 className="font-bold text-slate-800 text-sm mb-3">Terms & Conditions</h3>
             <ul className="space-y-2">
               {reward.terms.map((t, i) => (
