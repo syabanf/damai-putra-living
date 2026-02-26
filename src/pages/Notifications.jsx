@@ -141,7 +141,7 @@ export default function Notifications() {
                           <p className="text-[10px] text-slate-400 mt-2">{new Date(notification.created_date).toLocaleString()}</p>
                         </div>
                         {!notification.read && (
-                          <div className="w-2 h-2 rounded-full flex-shrink-0 mt-2" style={{ backgroundColor: '#8A8076' }} />
+                          <div className="w-2 h-2 rounded-full flex-shrink-0 mt-2" style={{ backgroundColor: '#1FB6D5' }} />
                         )}
                       </div>
                     </GlassCard>
