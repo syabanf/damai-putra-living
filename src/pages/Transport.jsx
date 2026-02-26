@@ -208,8 +208,8 @@ export default function Transport() {
               <button
                 key={route.id}
                 onClick={() => setSelectedRoute({ ...route, type: 'mrt' })}
-                className="w-full rounded-2xl p-4 text-left transition-all active:scale-95"
-                style={{ background: 'rgba(255,255,255,0.75)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.85)', boxShadow: '0 2px 12px rgba(138,127,115,0.08)' }}
+                className="w-full rounded-2xl p-4 text-left transition-all active:scale-95 hover:shadow-md"
+                style={{ background: 'rgba(255,255,255,0.72)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.85)', boxShadow: '0 2px 8px rgba(138,127,115,0.08)' }}
               >
                 <div className="flex items-center gap-2 mb-2">
                   <div className="w-3 h-3 rounded-full" style={{ background: route.color }} />
