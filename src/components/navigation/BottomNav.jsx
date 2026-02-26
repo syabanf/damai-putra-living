@@ -1,14 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
-import { Home, Compass, HelpCircle, User } from 'lucide-react';
+import { Home, Building2, FileText, Bell, User } from 'lucide-react';
 import { cn } from "@/lib/utils";
 
 const navItems = [
-  { icon: Home,        label: 'Home',    page: 'Home' },
-  { icon: Compass,     label: 'Explore', page: 'Tickets' },
-  { icon: HelpCircle,  label: 'Help',    page: 'Notifications' },
-  { icon: User,        label: 'Profile', page: 'Profile' },
+  { icon: Home,      label: 'Home',     page: 'Home' },
+  { icon: Building2, label: 'Property', page: 'PropertyListing' },
+  { icon: FileText,  label: 'Permits',  page: 'Tickets' },
+  { icon: Bell,      label: 'Notif',    page: 'Notifications' },
+  { icon: User,      label: 'Profile',  page: 'Profile' },
 ];
 
 export default function BottomNav({ currentPage }) {
@@ -23,7 +24,7 @@ export default function BottomNav({ currentPage }) {
               <Link
                 key={item.page}
                 to={createPageUrl(item.page)}
-                className="flex flex-col items-center gap-1 px-4 py-2 rounded-xl transition-all active:scale-90"
+                className="flex flex-col items-center gap-1 px-3 py-2 rounded-xl transition-all active:scale-90"
               >
                 <div className={cn(
                   "w-9 h-9 rounded-xl flex items-center justify-center transition-all",

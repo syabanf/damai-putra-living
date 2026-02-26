@@ -52,14 +52,14 @@ const HERO_SLIDES = [
 ];
 
 const QUICK_FEATURES = [
-  { icon: Building2,    label: 'Property',      color: '#4f86f7', bg: '#ebf0ff', page: 'MyUnit' },
-  { icon: Phone,        label: 'Hotline',        color: '#ef4444', bg: '#fef2f2', page: null },
-  { icon: CalendarDays, label: 'Events',         color: '#10b981', bg: '#ecfdf5', page: null },
-  { icon: Bus,          label: 'Transportation', color: '#f59e0b', bg: '#fffbeb', page: null },
-  { icon: Compass,      label: 'Virtual Tour',   color: '#8b5cf6', bg: '#f5f3ff', page: null },
-  { icon: UtensilsCrossed, label: 'Culinary',    color: '#f97316', bg: '#fff7ed', page: null },
-  { icon: Sparkles,     label: 'NICE',           color: '#0891b2', bg: '#ecfeff', page: null },
-  { icon: Heart,        label: 'Tzu Chi',        color: '#e11d48', bg: '#fff1f2', page: null },
+  { icon: Building2,       label: 'Property',   color: '#1F86C7', bg: '#e8f4fb', page: 'PropertyListing' },
+  { icon: HomeIcon,        label: 'My Unit',    color: '#8A7F73', bg: '#f5f3f0', page: 'MyUnit' },
+  { icon: FileText,        label: 'Permits',    color: '#10b981', bg: '#ecfdf5', page: 'Tickets' },
+  { icon: Phone,           label: 'Hotline',    color: '#ef4444', bg: '#fef2f2', page: null },
+  { icon: CalendarDays,    label: 'Events',     color: '#f59e0b', bg: '#fffbeb', page: null },
+  { icon: UtensilsCrossed, label: 'Culinary',   color: '#f97316', bg: '#fff7ed', page: null },
+  { icon: MapPin,          label: 'Explore',    color: '#8b5cf6', bg: '#f5f3ff', page: null },
+  { icon: Sparkles,        label: 'Rewards',    color: '#0891b2', bg: '#ecfeff', page: null },
 ];
 
 const LANGUAGES = [
