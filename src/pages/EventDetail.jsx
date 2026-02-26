@@ -39,15 +39,15 @@ export default function EventDetail() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ background: 'linear-gradient(160deg, #f0ede9 0%, #e8e4df 100%)' }}>
-        <div className="w-8 h-8 border-2 border-[#1F86C7] border-t-transparent rounded-full animate-spin" />
+      <div className="min-h-screen flex items-center justify-center" style={{ background: 'linear-gradient(160deg, #F5F4F2 0%, #edecea 100%)' }}>
+        <div className="w-8 h-8 border-2 border-[#1FB6D5] border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
 
   if (!event) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ background: 'linear-gradient(160deg, #f0ede9 0%, #e8e4df 100%)' }}>
+      <div className="min-h-screen flex items-center justify-center" style={{ background: 'linear-gradient(160deg, #F5F4F2 0%, #edecea 100%)' }}>
         <p className="text-slate-500">Event not found.</p>
       </div>
     );
@@ -56,7 +56,7 @@ export default function EventDetail() {
   const allImages = [event.banner_image, ...(event.gallery || [])].filter(Boolean);
 
   return (
-    <div className="min-h-screen pb-10" style={{ background: 'linear-gradient(160deg, #f0ede9 0%, #e8e4df 50%, #e2ddd8 100%)' }}>
+    <div className="min-h-screen pb-10" style={{ background: 'linear-gradient(160deg, #F5F4F2 0%, #edecea 55%, #e7e5e2 100%)' }}>
       {/* Hero */}
       <div className="relative h-72 overflow-hidden bg-slate-200">
         {allImages.length > 0 ? (
@@ -91,7 +91,7 @@ export default function EventDetail() {
           <div className="absolute top-12 left-1/2 -translate-x-1/2">
             <span className={`text-[11px] font-bold px-3 py-1 rounded-full ${
               event.status === 'ongoing' ? 'bg-emerald-500 text-white' :
-              event.status === 'upcoming' ? 'bg-[#1F86C7] text-white' :
+              event.status === 'upcoming' ? 'bg-[#1FB6D5] text-white' :
               'bg-slate-500 text-white'
             }`}>
               {event.status === 'ongoing' ? 'Ongoing' : event.status === 'upcoming' ? 'Upcoming' : 'Past'}
@@ -111,8 +111,8 @@ export default function EventDetail() {
         <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
           className="rounded-2xl divide-y" style={{ background: 'rgba(255,255,255,0.75)', backdropFilter: 'blur(16px)', border: '1px solid rgba(255,255,255,0.85)', boxShadow: '0 2px 12px rgba(138,127,115,0.1)' }}>
           <div className="flex items-center gap-3 px-4 py-3.5">
-            <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: '#e8f4fb' }}>
-              <CalendarDays style={{ color: '#1F86C7', width: 18, height: 18 }} />
+            <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: '#e6f8fb' }}>
+              <CalendarDays style={{ color: '#1FB6D5', width: 18, height: 18 }} />
             </div>
             <div>
               <p className="text-xs text-slate-400 font-semibold">Date</p>
@@ -170,7 +170,7 @@ export default function EventDetail() {
           {event.map_url && (
             <a href={event.map_url} target="_blank" rel="noopener noreferrer"
               className="flex-1 py-4 rounded-2xl font-bold text-white flex items-center justify-center gap-2 shadow-md active:scale-95 transition-transform"
-              style={{ background: 'linear-gradient(135deg, #1F86C7, #1669a0)' }}>
+              style={{ background: 'linear-gradient(135deg, #1FB6D5, #169ab5)' }}>
               <MapPin className="w-4 h-4" />
               View Location
             </a>
@@ -179,7 +179,7 @@ export default function EventDetail() {
             <a href={event.ticket_url} target="_blank" rel="noopener noreferrer"
               className="flex-1 py-4 rounded-2xl font-bold flex items-center justify-center gap-2 active:scale-95 transition-transform"
               style={{ background: 'rgba(255,255,255,0.75)', backdropFilter: 'blur(16px)', border: '1px solid rgba(255,255,255,0.85)' }}
-              style={{ color: '#1F86C7' }}>
+              style={{ color: '#1FB6D5' }}>
               <ExternalLink className="w-4 h-4" />
               Get Ticket
             </a>
@@ -187,7 +187,7 @@ export default function EventDetail() {
           {!event.map_url && !event.ticket_url && (
             <button onClick={handleShare}
               className="w-full py-4 rounded-2xl font-bold text-white flex items-center justify-center gap-2 shadow-md active:scale-95 transition-transform"
-              style={{ background: 'linear-gradient(135deg, #1F86C7, #1669a0)' }}>
+              style={{ background: 'linear-gradient(135deg, #1FB6D5, #169ab5)' }}>
               <Share2 className="w-4 h-4" />
               Share Event
             </button>
