@@ -238,7 +238,93 @@ export default function TransportExploreMap() {
            </div>
          )}
        </motion.div>
-      )}
-      </div>
-      );
-      }
+       )}
+
+       {/* Filter Section */}
+       <div className="mx-4 mt-4 rounded-2xl p-4" style={{ background: 'rgba(255,255,255,0.75)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.85)' }}>
+       <div className="flex items-center justify-between mb-3">
+         <h3 className="text-xs font-bold text-slate-800 flex items-center gap-2">
+           <Filter className="w-4 h-4" />
+           Filter by Type
+         </h3>
+         <button onClick={() => setFilterType('all')} className="text-xs text-slate-500 hover:text-slate-700 font-medium">Reset</button>
+       </div>
+       <div className="flex flex-wrap gap-2">
+         {LEGEND_ITEMS[mode].map(item => (
+           <button
+             key={item.type}
+             onClick={() => setFilterType(filterType === item.type ? 'all' : item.type)}
+             className="px-3 py-1.5 rounded-full text-xs font-semibold transition-all"
+             style={filterType === item.type
+               ? { background: item.color, color: '#fff', boxShadow: `0 2px 8px ${item.color}40` }
+               : { background: 'rgba(255,255,255,0.8)', color: '#64748b', border: `1px solid ${item.color}40` }
+             }
+           >
+             {item.label}
+           </button>
+         ))}
+       </div>
+       </div>
+
+       {/* List View Toggle & Items */}
+       <div className="mx-4 mt-4">
+       <button
+         onClick={() => setShowList(!showList)}
+         className="w-full py-2.5 rounded-xl font-semibold text-sm transition-all"
+         style={{
+           background: showList ? 'linear-gradient(135deg, #1FB6D5 0%, #0F9BB8 100%)' : 'rgba(255,255,255,0.75)',
+           color: showList ? '#fff' : '#64748b',
+           border: showList ? 'none' : '1px solid rgba(255,255,255,0.85)'
+         }}
+       >
+         {showList ? '↑ Hide List' : '↓ Show List'}
+       </button>
+       </div>
+
+       {/* Items List */}
+       {showList && (
+       <motion.div
+         initial={{ opacity: 0, height: 0 }}
+         animate={{ opacity: 1, height: 'auto' }}
+         exit={{ opacity: 0, height: 0 }}
+         className="mx-4 mt-4 space-y-2 mb-6"
+       >
+         {filteredData.length > 0 ? (
+           filteredData.map((item, idx) => (
+             <motion.div
+               key={item.id}
+               initial={{ opacity: 0, x: -20 }}
+               animate={{ opacity: 1, x: 0 }}
+               transition={{ delay: idx * 0.05 }}
+               onClick={() => setSelectedItem(item)}
+               className="p-3 rounded-xl cursor-pointer active:scale-95 transition-all"
+               style={{ background: 'rgba(255,255,255,0.75)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.85)' }}
+             >
+               <div className="flex items-center justify-between">
+                 <div className="flex-1">
+                   <h4 className="font-semibold text-slate-800 text-sm">{item.name}</h4>
+                   <p className="text-xs text-slate-500 mt-0.5">
+                     {mode === 'transport' 
+                       ? `${item.routes} routes • ${item.status}` 
+                       : `${item.category}${item.rating ? ` • ${item.rating}★` : ''}`
+                     }
+                   </p>
+                 </div>
+                 <div className="text-right">
+                   <div className="w-8 h-8 rounded-full flex items-center justify-center" style={{ background: `${mode === 'transport' ? (item.type === 'hub' ? '#1FB6D5' : '#8E8478') : item.type === 'commercial' ? '#1FB6D5' : item.type === 'culinary' ? '#ef4444' : item.type === 'retail' ? '#f97316' : item.type === 'entertainment' ? '#f59e0b' : item.type === 'community' ? '#10b981' : item.type === 'attraction' ? '#8b5cf6' : '#ec4899'}` }}>
+                     <span className="text-white text-xs font-bold">→</span>
+                   </div>
+                 </div>
+               </div>
+             </motion.div>
+           ))
+         ) : (
+           <div className="p-4 text-center rounded-xl" style={{ background: 'rgba(255,255,255,0.75)' }}>
+             <p className="text-sm text-slate-500">No items found for this filter</p>
+           </div>
+         )}
+       </motion.div>
+       )}
+       </div>
+       );
+       }
