@@ -123,7 +123,11 @@ export default function UnitDetail() {
                   <p className="font-bold text-slate-800 capitalize">{unit.status}</p>
                 </div>
               </div>
-              <StatusBadge status={unit.status} />
+              <span className={`text-xs font-bold px-3 py-1 rounded-full capitalize ${
+                unit.status === 'approved' ? 'bg-emerald-100 text-emerald-700' :
+                unit.status === 'rejected' ? 'bg-red-100 text-red-700' :
+                'bg-amber-100 text-amber-700'
+              }`}>{unit.status}</span>
             </div>
 
             {unit.status === 'rejected' && unit.rejection_note && (
@@ -381,7 +385,11 @@ export default function UnitDetail() {
                         </div>
                       </div>
                       <div className="flex items-center gap-2">
-                        <StatusBadge status={ticket.status} />
+                        <span className={`text-xs font-bold px-2 py-0.5 rounded-full capitalize ${
+                          ticket.status === 'approved' || ticket.status === 'completed' ? 'bg-emerald-100 text-emerald-700' :
+                          ticket.status === 'rejected' ? 'bg-red-100 text-red-700' :
+                          'bg-amber-100 text-amber-700'
+                        }`}>{ticket.status?.replace(/_/g, ' ')}</span>
                         <ChevronRight className="w-4 h-4 text-slate-300" />
                       </div>
                     </button>
