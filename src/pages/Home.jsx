@@ -118,7 +118,7 @@ export default function Home() {
   const currentLang = LANGUAGES.find(l => l.code === lang);
 
   return (
-    <div className="min-h-screen pb-24" style={{ background: 'linear-gradient(160deg, #f0ede9 0%, #e8e4df 50%, #e2ddd8 100%)' }}>
+    <div className="min-h-screen pb-24" style={{ background: 'linear-gradient(160deg, #F5F4F2 0%, #edecea 55%, #e7e5e2 100%)' }}>
 
       {/* ── 1. HERO BANNER ── */}
       <div className="relative h-64 overflow-hidden">
