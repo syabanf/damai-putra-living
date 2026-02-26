@@ -7,7 +7,7 @@ import { motion } from 'framer-motion';
 import {
   Bell, ChevronRight, Building2, Phone, CalendarDays, Bus,
   Compass, UtensilsCrossed, Sparkles, Heart, Globe,
-  ChevronLeft, ArrowRight, Tag, Newspaper
+  ChevronLeft, ArrowRight, Tag, Newspaper, FileText, Home as HomeIcon, MapPin
 } from 'lucide-react';
 import BottomNav from '@/components/navigation/BottomNav';
 
