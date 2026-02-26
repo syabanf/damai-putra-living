@@ -9,7 +9,6 @@ import {
   AlertCircle, RefreshCw, Home, KeyRound, CreditCard, CalendarRange
 } from 'lucide-react';
 import { Button } from "@/components/ui/button";
-import BottomNav from '@/components/navigation/BottomNav';
 import StatusBadge from '@/components/ui/StatusBadge';
 
 const GlassCard = ({ children, className = '', onClick }) => (
@@ -231,7 +230,6 @@ export default function MyUnit() {
         )}
       </div>
 
-      <BottomNav currentPage="MyUnit" />
     </div>
   );
 }

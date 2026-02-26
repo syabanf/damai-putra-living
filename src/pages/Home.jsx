@@ -9,7 +9,6 @@ import {
   Compass, UtensilsCrossed, Sparkles, Heart, Globe,
   ChevronLeft, ArrowRight, Tag, Newspaper, FileText, Home as HomeIcon, MapPin
 } from 'lucide-react';
-import BottomNav from '@/components/navigation/BottomNav';
 
 /* ── helpers ── */
 const Card = ({ children, className = '', onClick }) => (
@@ -302,8 +301,6 @@ export default function Home() {
         </div>
       </div>
 
-      {/* ── 7. BOTTOM NAV ── */}
-      <BottomNav currentPage="Home" />
     </div>
   );
 }

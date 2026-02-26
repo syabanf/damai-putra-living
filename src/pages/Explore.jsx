@@ -5,7 +5,6 @@ import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
 import { Search, X, MapPin, Compass } from 'lucide-react';
 import { motion } from 'framer-motion';
-import BottomNav from '@/components/navigation/BottomNav';
 import { PAGE_BG, GlassHeader, Chip, SearchBar } from '@/components/ui/DesignSystem';
 
 const CATEGORIES = [
@@ -141,7 +140,6 @@ export default function Explore() {
         )}
       </div>
 
-      <BottomNav currentPage="Explore" />
     </div>
   );
 }

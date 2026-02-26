@@ -9,7 +9,6 @@ import {
   FileText, LogOut, ChevronRight, Shield, Bell, Globe
 } from 'lucide-react';
 import { Button } from "@/components/ui/button";
-import BottomNav from '@/components/navigation/BottomNav';
 
 const GlassCard = ({ children, className = '' }) => (
   <div className={`rounded-2xl ${className}`} style={{ background: 'rgba(255,255,255,0.75)', backdropFilter: 'blur(16px)', border: '1px solid rgba(255,255,255,0.85)', boxShadow: '0 2px 12px rgba(138,127,115,0.1)' }}>
@@ -126,7 +125,6 @@ export default function Profile() {
         <p className="text-slate-400 text-xs">Damai Putra Apps v1.0.0</p>
       </div>
 
-      <BottomNav currentPage="Profile" />
     </div>
   );
 }
