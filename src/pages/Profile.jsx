@@ -40,9 +40,9 @@ export default function Profile() {
     { icon: Building2, label: 'My Units', count: approvedUnits.length, action: () => navigate(createPageUrl('MyUnit')) },
     { icon: Bell, label: 'Notifications', action: () => navigate(createPageUrl('Notifications')) },
     { icon: Globe, label: 'Language', value: 'English', action: () => {} },
-    { icon: Shield, label: 'Privacy & Security', action: () => {} },
-    { icon: HelpCircle, label: 'Help Center', action: () => {} },
-    { icon: FileText, label: 'Terms of Service', action: () => {} },
+    { icon: Shield, label: 'Privacy & Security', action: () => navigate(createPageUrl('PrivacySecurity')) },
+    { icon: HelpCircle, label: 'Help Center', action: () => navigate(createPageUrl('HelpCenter')) },
+    { icon: FileText, label: 'Terms of Service', action: () => navigate(createPageUrl('PrivacySecurity')) },
   ];
 
   return (
