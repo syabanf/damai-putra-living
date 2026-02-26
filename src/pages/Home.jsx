@@ -58,7 +58,7 @@ const QUICK_FEATURES = [
   { icon: Phone,           label: 'Hotline',    color: '#ef4444', bg: '#fef2f2', page: null },
   { icon: CalendarDays,    label: 'Events',     color: '#f59e0b', bg: '#fffbeb', page: null },
   { icon: UtensilsCrossed, label: 'Culinary',   color: '#f97316', bg: '#fff7ed', page: null },
-  { icon: MapPin,          label: 'Explore',    color: '#8b5cf6', bg: '#f5f3ff', page: null },
+  { icon: MapPin,          label: 'Explore',    color: '#8b5cf6', bg: '#f5f3ff', page: 'Explore' },
   { icon: Sparkles,        label: 'Rewards',    color: '#0891b2', bg: '#ecfeff', page: null },
 ];
 
