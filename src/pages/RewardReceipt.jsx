@@ -67,8 +67,8 @@ export default function RewardReceipt() {
   };
 
   if (!claim) return (
-    <div className="min-h-screen flex items-center justify-center" style={{ background: '#F4F5F7' }}>
-      <div className="w-8 h-8 border-2 border-[#1F86C7] border-t-transparent rounded-full animate-spin" />
+    <div className="min-h-screen flex items-center justify-center" style={{ background: 'linear-gradient(160deg, #F5F4F2 0%, #edecea 100%)' }}>
+      <div className="w-8 h-8 border-2 border-[#1FB6D5] border-t-transparent rounded-full animate-spin" />
     </div>
   );
 
