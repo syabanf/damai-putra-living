@@ -88,6 +88,7 @@ import Transport from './pages/Transport';
 import TransportSearch from './pages/TransportSearch';
 import TransportResult from './pages/TransportResult';
 import ActiveTicket from './pages/ActiveTicket';
+import TransportTicketDetail from './pages/TransportTicketDetail';
 import __Layout from './Layout.jsx';
 
 
@@ -133,6 +134,7 @@ export const PAGES = {
     "TransportSearch": TransportSearch,
     "TransportResult": TransportResult,
     "ActiveTicket": ActiveTicket,
+    "TransportTicketDetail": TransportTicketDetail,
 }
 
 export const pagesConfig = {
