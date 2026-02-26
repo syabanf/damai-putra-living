@@ -46,7 +46,7 @@ export default function Profile() {
   ];
 
   return (
-    <div className="min-h-screen pb-28" style={{ background: 'linear-gradient(160deg, #f5f3f0 0%, #ece8e3 50%, #e8e2db 100%)' }}>
+    <div className="min-h-screen pb-28" style={{ background: 'linear-gradient(160deg, #f0ede9 0%, #e8e4df 50%, #e2ddd8 100%)' }}>
       {/* Header */}
       <div className="relative overflow-hidden px-5 pt-14 pb-24 rounded-b-[2.5rem]"
         style={{ background: 'linear-gradient(150deg, #8A8076 0%, #6e6560 45%, #3d3733 100%)' }}>

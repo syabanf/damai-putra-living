@@ -75,7 +75,7 @@ export default function RewardReceipt() {
   const statusCfg = STATUS_CFG[claim.status] || STATUS_CFG.unused;
 
   return (
-    <div className="min-h-screen pb-10" style={{ background: '#F4F5F7' }}>
+    <div className="min-h-screen pb-10" style={{ background: 'linear-gradient(160deg, #f0ede9 0%, #e8e4df 50%, #e2ddd8 100%)' }}>
       {/* Header */}
       <div className="px-5 pt-12 pb-5 bg-white shadow-sm flex items-center justify-between">
         <div className="flex items-center gap-3">

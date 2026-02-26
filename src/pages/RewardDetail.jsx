@@ -89,7 +89,7 @@ export default function RewardDetail() {
   );
 
   return (
-    <div className="min-h-screen pb-10" style={{ background: '#F4F5F7' }}>
+    <div className="min-h-screen pb-10" style={{ background: 'linear-gradient(160deg, #f0ede9 0%, #e8e4df 50%, #e2ddd8 100%)' }}>
       {/* Hero */}
       <div className="relative h-64 bg-slate-200 overflow-hidden">
         <img src={reward.image_url || 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=800&q=80'}
