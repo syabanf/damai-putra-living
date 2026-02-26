@@ -9,7 +9,6 @@ import {
   ChevronRight, ClipboardList, Building2, Shovel, Banknote
 } from 'lucide-react';
 import { Button } from "@/components/ui/button";
-import BottomNav from '@/components/navigation/BottomNav';
 
 const PERMIT_ICONS = {
   izin_kegiatan: Calendar,
@@ -119,7 +118,6 @@ export default function Tickets() {
             </GlassCard>
           </motion.div>
         </div>
-        <BottomNav currentPage="Tickets" />
       </div>
     );
   }
@@ -224,7 +222,6 @@ export default function Tickets() {
         )}
       </div>
 
-      <BottomNav currentPage="Tickets" />
     </div>
   );
 }

@@ -5,7 +5,6 @@ import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
 import { Calendar, CalendarDays, X } from 'lucide-react';
 import { motion } from 'framer-motion';
-import BottomNav from '@/components/navigation/BottomNav';
 import { PAGE_BG, GlassHeader, GlassCard, Chip, SearchBar } from '@/components/ui/DesignSystem';
 
 const CATEGORIES = [
@@ -139,7 +138,6 @@ export default function Events() {
         )}
       </div>
 
-      <BottomNav currentPage="Events" />
     </div>
   );
 }
