@@ -223,7 +223,7 @@ export default function CreateTicket() {
                 />
                 <Button onClick={handleSubmit} disabled={mutation.isPending}
                   className="w-full py-3 text-white rounded-2xl font-semibold"
-                  style={{ background: '#1F86C7' }}>
+                  style={{ background: 'linear-gradient(135deg, #1FB6D5, #169ab5)' }}>
                   {mutation.isPending ? (
                     <div className="flex items-center gap-2 justify-center">
                       <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
