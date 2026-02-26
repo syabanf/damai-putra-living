@@ -218,7 +218,7 @@ export default function Home() {
           <div className="relative px-5 py-5">
             <p className="text-white/70 text-xs font-semibold uppercase tracking-widest mb-1">Exclusive Membership</p>
             <h3 className="text-white font-bold text-lg leading-snug mb-2">Join Damai Putra Living and get access to various rewards and benefits!</h3>
-            <button className="mt-1 px-5 py-2.5 bg-white rounded-xl text-sm font-bold flex items-center gap-2" style={{ color: '#5a524e' }}>
+            <button className="mt-1 px-5 py-2.5 bg-white rounded-xl text-sm font-bold flex items-center gap-2" style={{ color: '#1F86C7' }}>
               Register Now <ArrowRight className="w-4 h-4" />
             </button>
           </div>
@@ -284,7 +284,7 @@ export default function Home() {
                 <div className="relative h-28">
                   <img src={d.img} alt={d.title} className="w-full h-full object-cover" />
                   <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.55), transparent)' }} />
-                  <span className="absolute top-2 left-2 text-white text-[10px] font-bold px-2 py-0.5 rounded-full" style={{ background: '#8A8076' }}>
+                  <span className="absolute top-2 left-2 text-white text-[10px] font-bold px-2 py-0.5 rounded-full" style={{ background: '#1F86C7' }}>
                     {d.tag}
                   </span>
                 </div>
