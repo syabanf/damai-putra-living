@@ -170,9 +170,9 @@ export default function RewardDetail() {
         {showModal && (
           <div className="fixed inset-0 z-50 bg-black/50 flex items-end justify-center p-4">
             <motion.div initial={{ y: 80, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: 80, opacity: 0 }}
-              className="bg-white rounded-3xl p-6 w-full max-w-sm">
+              className="rounded-3xl p-6 w-full max-w-sm" style={{ background: 'rgba(255,255,255,0.92)', backdropFilter: 'blur(20px)', border: '1px solid rgba(255,255,255,0.9)' }}>
               <h3 className="font-bold text-lg text-slate-800 text-center">Confirm Reward Claim</h3>
-              <div className="bg-slate-50 rounded-2xl p-4 mt-4">
+              <div className="rounded-2xl p-4 mt-4" style={{ background: 'rgba(245,243,240,0.8)' }}>
                 <p className="font-semibold text-slate-700 text-sm text-center">{reward.title}</p>
                 <div className="flex items-center justify-center gap-1.5 mt-2">
                   <Star className="w-4 h-4 text-amber-400 fill-amber-400" />
