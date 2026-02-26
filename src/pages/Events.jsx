@@ -3,9 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
-import { Calendar, CalendarDays, X } from 'lucide-react';
+import { Calendar, CalendarDays, Search, X } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { PAGE_BG, GlassHeader, GlassCard, Chip, SearchBar } from '@/components/ui/DesignSystem';
 
 const CATEGORIES = [
   { value: 'all', label: 'All' },
@@ -60,31 +59,40 @@ export default function Events() {
   }, [events, activeCategory, search]);
 
   return (
-    <div className="min-h-screen pb-28" style={{ background: PAGE_BG }}>
+    <div className="min-h-screen pb-28" style={{ background: 'linear-gradient(160deg, #f0ede9 0%, #e8e4df 55%, #e2ddd8 100%)' }}>
       {/* Header */}
-      <GlassHeader className="pt-12 pb-4">
-        <div className="flex items-center justify-between mb-4">
+      <div className="px-5 pt-14 pb-5 rounded-b-[2rem] relative overflow-hidden" style={{ background: 'linear-gradient(150deg, #8A8076 0%, #6e6560 45%, #3d3733 100%)' }}>
+        <div className="absolute -top-8 -right-8 w-40 h-40 rounded-full opacity-10 bg-white pointer-events-none" />
+        <div className="flex items-center justify-between mb-4 relative">
           <div>
-            <p className="text-xs font-bold uppercase tracking-widest" style={{ color: '#8A7F73' }}>Damai Putra</p>
-            <h1 className="font-bold text-2xl text-slate-800">Events</h1>
+            <p className="text-white/50 text-[10px] font-semibold uppercase tracking-widest">Damai Putra Living</p>
+            <h1 className="font-bold text-2xl text-white">Events</h1>
           </div>
           <button onClick={() => navigate(createPageUrl('EventsCalendar'))}
-            className="w-10 h-10 rounded-2xl flex items-center justify-center border border-white/70 shadow-sm"
-            style={{ background: 'rgba(255,255,255,0.65)' }}>
-            <Calendar className="w-5 h-5 text-slate-600" />
+            className="w-10 h-10 rounded-2xl flex items-center justify-center transition-all active:scale-90"
+            style={{ background: 'rgba(255,255,255,0.18)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.28)' }}>
+            <Calendar className="w-5 h-5 text-white" />
           </button>
         </div>
-        <SearchBar value={search} onChange={e => setSearch(e.target.value)} onClear={() => setSearch('')} placeholder="Search events..." />
-      </GlassHeader>
+        <div className="relative rounded-xl flex items-center gap-2 px-3" style={{ background: 'rgba(255,255,255,0.15)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.2)' }}>
+          <Search className="w-4 h-4 text-white/60 flex-shrink-0" />
+          <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search events..."
+            className="flex-1 h-10 bg-transparent text-sm text-white placeholder-white/50 border-0 outline-none" />
+          {search && <button onClick={() => setSearch('')}><X className="w-4 h-4 text-white/60" /></button>}
+        </div>
+      </div>
 
       {/* Category chips */}
-      <div style={{ background: 'rgba(255,255,255,0.55)', backdropFilter: 'blur(12px)', borderBottom: '1px solid rgba(255,255,255,0.7)' }}>
-        <div className="px-5 py-3 overflow-x-auto hide-scrollbar">
-          <div className="flex gap-2 w-max">
-            {CATEGORIES.map(cat => (
-              <Chip key={cat.value} label={cat.label} active={activeCategory === cat.value} onClick={() => setActiveCategory(cat.value)} />
-            ))}
-          </div>
+      <div className="px-5 py-3 overflow-x-auto hide-scrollbar">
+        <div className="flex gap-2 w-max">
+          {CATEGORIES.map(cat => (
+            <button key={cat.value} onClick={() => setActiveCategory(cat.value)}
+              className="px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all active:scale-95"
+              style={activeCategory === cat.value
+                ? { background: 'linear-gradient(135deg, #1F86C7, #1669a0)', color: '#fff', boxShadow: '0 3px 10px rgba(31,134,199,0.35)' }
+                : { background: 'rgba(255,255,255,0.75)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.85)', color: '#64748b' }
+              }>{cat.label}</button>
+          ))}
         </div>
       </div>
 
