@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import { motion } from 'framer-motion';
 import { ArrowLeft, MapPin, Calendar, ArrowRight, Plane, Bus, Train, Car, Package } from 'lucide-react';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import L from 'leaflet';
 
 const TRANSPORT_TYPES = [
   { id: 'shuttle', label: 'Shuttle', icon: Plane, color: '#1FB6D5' },
