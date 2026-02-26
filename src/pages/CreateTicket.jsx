@@ -186,7 +186,7 @@ export default function CreateTicket() {
                 <StepApplicant form={form} set={set} approvedUnits={approvedUnits} />
                 <Button onClick={next} disabled={!canProceed()}
                   className="w-full py-3 text-white rounded-2xl font-semibold"
-                  style={{ background: '#1F86C7' }}>
+                  style={{ background: 'linear-gradient(135deg, #1FB6D5, #169ab5)' }}>
                   Continue <ChevronRight className="w-5 h-5 ml-1" />
                 </Button>
               </div>
