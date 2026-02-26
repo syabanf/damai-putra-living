@@ -325,8 +325,8 @@ export default function CreateTicket() {
           {step === 2 && formData.category === 'permit' && (
             <motion.div key="step2" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-3 pt-2">
               <div className="mb-5">
-                <h2 className="text-lg font-bold text-slate-800">Permit Type</h2>
-                <p className="text-slate-500 text-sm mt-1">Select the category that best describes your activity.</p>
+                <h2 className="text-lg font-bold text-slate-800">Jenis Izin</h2>
+                <p className="text-slate-500 text-sm mt-1">Pilih jenis izin yang sesuai dengan kegiatan Anda.</p>
               </div>
 
               {PERMIT_TYPES.map((type) => {
