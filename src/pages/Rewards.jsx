@@ -5,7 +5,7 @@ import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
 import { Gift, Star } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { PAGE_BG, GlassHeader, GlassCard, Chip, SearchBar } from '@/components/ui/DesignSystem';
+import { Search, X } from 'lucide-react';
 
 const CATS = [
   { value: 'all', label: 'All' },
@@ -49,23 +49,24 @@ export default function Rewards() {
   }, [rewards, activeCategory, search]);
 
   return (
-    <div className="min-h-screen pb-28" style={{ background: PAGE_BG }}>
-      <GlassHeader className="pt-12 pb-4">
-        <div className="flex items-center justify-between mb-4">
+    <div className="min-h-screen pb-28" style={{ background: 'linear-gradient(160deg, #f0ede9 0%, #e8e4df 55%, #e2ddd8 100%)' }}>
+      {/* Header */}
+      <div className="px-5 pt-14 pb-5 rounded-b-[2rem] relative overflow-hidden" style={{ background: 'linear-gradient(150deg, #8A8076 0%, #6e6560 45%, #3d3733 100%)' }}>
+        <div className="absolute -top-8 -right-8 w-40 h-40 rounded-full opacity-10 bg-white pointer-events-none" />
+        <div className="flex items-center justify-between mb-4 relative">
           <div>
-            <p className="text-xs font-bold uppercase tracking-widest" style={{ color: '#8A7F73' }}>Damai Putra</p>
-            <h1 className="font-bold text-2xl text-slate-800">Rewards</h1>
+            <p className="text-white/50 text-[10px] font-semibold uppercase tracking-widest">Damai Putra Living</p>
+            <h1 className="font-bold text-2xl text-white">Rewards</h1>
           </div>
           <button onClick={() => navigate(createPageUrl('MyClaims'))}
-            className="text-xs font-semibold px-3 py-1.5 rounded-xl border border-white/70 shadow-sm"
-            style={{ background: 'rgba(255,255,255,0.65)', color: '#8A7F73' }}>
+            className="text-xs font-semibold px-3 py-1.5 rounded-xl text-white transition-all active:scale-90"
+            style={{ background: 'rgba(255,255,255,0.18)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.28)' }}>
             My Claims
           </button>
         </div>
-
         {/* Points Banner */}
-        <div className="rounded-2xl p-4 flex items-center justify-between mb-4"
-          style={{ background: 'linear-gradient(135deg, #8A7F73, #5a524e)', boxShadow: '0 4px 16px rgba(90,82,78,0.35)' }}>
+        <div className="rounded-2xl p-4 flex items-center justify-between mb-4 relative"
+          style={{ background: 'rgba(255,255,255,0.15)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.25)' }}>
           <div>
             <p className="text-white/70 text-xs font-semibold">Your Points</p>
             <div className="flex items-center gap-1.5 mt-0.5">
@@ -75,16 +76,26 @@ export default function Rewards() {
           </div>
           <Gift className="w-10 h-10 text-white/20" />
         </div>
-
-        <SearchBar value={search} onChange={e => setSearch(e.target.value)} onClear={() => setSearch('')} placeholder="Search rewards..." />
-      </GlassHeader>
+        {/* Search */}
+        <div className="relative rounded-xl flex items-center gap-2 px-3" style={{ background: 'rgba(255,255,255,0.15)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.2)' }}>
+          <Search className="w-4 h-4 text-white/60 flex-shrink-0" />
+          <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search rewards..."
+            className="flex-1 h-10 bg-transparent text-sm text-white placeholder-white/50 border-0 outline-none" />
+          {search && <button onClick={() => setSearch('')}><X className="w-4 h-4 text-white/60" /></button>}
+        </div>
+      </div>
 
       {/* Categories */}
-      <div style={{ background: 'rgba(255,255,255,0.55)', backdropFilter: 'blur(12px)', borderBottom: '1px solid rgba(255,255,255,0.7)' }}>
-        <div className="px-5 py-3 overflow-x-auto hide-scrollbar">
-          <div className="flex gap-2 w-max">
-            {CATS.map(c => <Chip key={c.value} label={c.label} active={activeCategory === c.value} onClick={() => setActiveCategory(c.value)} />)}
-          </div>
+      <div className="px-5 py-3 overflow-x-auto hide-scrollbar">
+        <div className="flex gap-2 w-max">
+          {CATS.map(c => (
+            <button key={c.value} onClick={() => setActiveCategory(c.value)}
+              className="px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all active:scale-95"
+              style={activeCategory === c.value
+                ? { background: 'linear-gradient(135deg, #1F86C7, #1669a0)', color: '#fff', boxShadow: '0 3px 10px rgba(31,134,199,0.35)' }
+                : { background: 'rgba(255,255,255,0.75)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.85)', color: '#64748b' }
+              }>{c.label}</button>
+          ))}
         </div>
       </div>
 
