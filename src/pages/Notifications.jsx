@@ -15,9 +15,10 @@ const notificationConfig = {
   info:            { icon: Bell,        color: 'bg-stone-100 text-stone-600'     },
 };
 
-const GlassCard = ({ children, className = '', onClick, style }) => (
-  <div onClick={onClick} style={style}
-    className={`bg-white/70 backdrop-blur-xl rounded-2xl border border-white/80 shadow-sm shadow-slate-200/60 ${onClick ? 'cursor-pointer active:scale-[0.98] transition-transform' : ''} ${className}`}>
+const GlassCard = ({ children, className = '', onClick, style: extraStyle }) => (
+  <div onClick={onClick}
+    className={`rounded-2xl ${onClick ? 'cursor-pointer active:scale-[0.98] transition-transform' : ''} ${className}`}
+    style={{ background: 'rgba(255,255,255,0.75)', backdropFilter: 'blur(16px)', border: '1px solid rgba(255,255,255,0.85)', boxShadow: '0 2px 12px rgba(138,127,115,0.1)', ...extraStyle }}>
     {children}
   </div>
 );
@@ -58,7 +59,7 @@ export default function Notifications() {
   const unreadCount = notifications.filter(n => !n.read).length;
 
   return (
-    <div className="min-h-screen pb-8" style={{ background: 'linear-gradient(160deg, #f5f3f0 0%, #ece8e3 50%, #e8e2db 100%)' }}>
+    <div className="min-h-screen pb-8" style={{ background: 'linear-gradient(160deg, #f0ede9 0%, #e8e4df 50%, #e2ddd8 100%)' }}>
       {/* Header */}
       <div className="px-5 pt-14 pb-6 rounded-b-3xl" style={{ background: 'linear-gradient(150deg, #8A8076 0%, #6e6560 45%, #3d3733 100%)' }}>
         <div className="flex items-center justify-between">
