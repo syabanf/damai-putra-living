@@ -27,7 +27,7 @@ export default function ExploreDetail() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ background: '#F4F5F7' }}>
+      <div className="min-h-screen flex items-center justify-center" style={{ background: 'linear-gradient(160deg, #f0ede9 0%, #e8e4df 100%)' }}>
         <div className="w-8 h-8 border-2 border-[#1F86C7] border-t-transparent rounded-full animate-spin" />
       </div>
     );
@@ -35,7 +35,7 @@ export default function ExploreDetail() {
 
   if (!destination) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ background: '#F4F5F7' }}>
+      <div className="min-h-screen flex items-center justify-center" style={{ background: 'linear-gradient(160deg, #f0ede9 0%, #e8e4df 100%)' }}>
         <p className="text-slate-500">Destination not found.</p>
       </div>
     );
@@ -44,7 +44,7 @@ export default function ExploreDetail() {
   const allImages = [destination.hero_image, ...(destination.gallery || [])].filter(Boolean);
 
   return (
-    <div className="min-h-screen pb-10" style={{ background: '#F4F5F7' }}>
+    <div className="min-h-screen pb-10" style={{ background: 'linear-gradient(160deg, #f0ede9 0%, #e8e4df 50%, #e2ddd8 100%)' }}>
       {/* Hero */}
       <div className="relative h-72 overflow-hidden bg-slate-200">
         {allImages.length > 0 ? (
