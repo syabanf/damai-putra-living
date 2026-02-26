@@ -30,6 +30,22 @@ const DESTINATION_PINS = [
   { id: 10, name: 'Fashion District', lat: 3.1400, lng: 101.5800, type: 'retail', category: 'Fashion', rating: 4.3 },
 ];
 
+const LEGEND_ITEMS = {
+  transport: [
+    { type: 'hub', label: 'Major Hub', color: '#1FB6D5' },
+    { type: 'stop', label: 'Bus Stop', color: '#8E8478' },
+  ],
+  explore: [
+    { type: 'commercial', label: 'Shopping', color: '#1FB6D5' },
+    { type: 'culinary', label: 'F&B', color: '#ef4444' },
+    { type: 'retail', label: 'Retail', color: '#f97316' },
+    { type: 'entertainment', label: 'Entertainment', color: '#f59e0b' },
+    { type: 'community', label: 'Community', color: '#10b981' },
+    { type: 'attraction', label: 'Attraction', color: '#8b5cf6' },
+    { type: 'health', label: 'Health', color: '#ec4899' },
+  ],
+};
+
 const MapIcon = (type, isTransport) => {
   const colors = isTransport ? {
     hub: '#1FB6D5',
@@ -41,12 +57,13 @@ const MapIcon = (type, isTransport) => {
     attraction: '#8b5cf6',
     entertainment: '#f59e0b',
     community: '#10b981',
+    health: '#ec4899',
   };
   
   return L.divIcon({
-    html: `<div style="background-color: ${colors[type] || '#1FB6D5'}; width: 30px; height: 30px; border-radius: 50%; border: 3px solid white; display: flex; align-items: center; justify-content: center; font-weight: bold; color: white; font-size: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.2);"></div>`,
-    iconSize: [30, 30],
-    className: 'custom-icon',
+    html: `<div style="background-color: ${colors[type] || '#1FB6D5'}; width: 36px; height: 36px; border-radius: 50%; border: 3px solid white; display: flex; align-items: center; justify-content: center; font-weight: bold; color: white; font-size: 14px; box-shadow: 0 3px 10px rgba(0,0,0,0.25);"></div>`,
+    iconSize: [36, 36],
+    className: 'custom-icon-hover',
   });
 };
 
