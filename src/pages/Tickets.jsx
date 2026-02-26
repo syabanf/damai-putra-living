@@ -113,7 +113,7 @@ export default function Tickets() {
               </p>
               <Button onClick={() => navigate(createPageUrl('MyUnit'))}
                 className="text-white rounded-xl h-12 px-6"
-                style={{ background: 'linear-gradient(135deg, #8A8076, #6e6560)' }}>
+                style={{ background: 'linear-gradient(135deg, #1a5068, #0F3D4C)' }}>
                 Register Your Unit
               </Button>
             </GlassCard>
