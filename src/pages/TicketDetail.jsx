@@ -131,7 +131,7 @@ export default function TicketDetail() {
               const isPending = i > currentStageIdx;
               return (
                 <div key={stage.key} className="flex items-center gap-3 py-2">
-                  <div className={`w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 border-2 ${isDone ? 'bg-emerald-500 border-emerald-500' : isCurrent ? 'bg-white border-slate-200' : 'bg-white border-slate-200'}`} style={isCurrent ? { background: '#1F86C7', borderColor: '#1F86C7' } : {}}>
+                  <div className={`w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 border-2 ${isDone ? 'bg-emerald-500 border-emerald-500' : isCurrent ? 'bg-white border-slate-200' : 'bg-white border-slate-200'}`} style={isCurrent ? { background: '#1FB6D5', borderColor: '#1FB6D5' } : {}}>
                     {isDone
                       ? <CheckCircle className="w-4 h-4 text-white" />
                       : <span className={`text-[10px] font-bold ${isCurrent ? 'text-white' : 'text-slate-400'}`}>{i + 1}</span>}
