@@ -78,9 +78,13 @@ export default function Transport() {
           onClick={() => setShowBus(!showBus)}
           className={`flex-1 py-2.5 px-3 rounded-xl font-semibold text-sm flex items-center justify-center gap-2 transition-all ${
             showBus
-              ? 'bg-red-500 text-white shadow-md'
-              : 'bg-white text-slate-600 border border-slate-200'
+              ? 'text-white shadow-md'
+              : 'text-slate-600'
           }`}
+          style={showBus
+            ? { background: 'linear-gradient(135deg, #ef4444, #dc2626)', boxShadow: '0 4px 12px rgba(239,68,68,0.35)' }
+            : { background: 'rgba(255,255,255,0.72)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.85)', boxShadow: '0 2px 8px rgba(138,127,115,0.08)' }
+          }
         >
           <Bus className="w-4 h-4" />
           Bus Routes
@@ -89,9 +93,13 @@ export default function Transport() {
           onClick={() => setShowMRT(!showMRT)}
           className={`flex-1 py-2.5 px-3 rounded-xl font-semibold text-sm flex items-center justify-center gap-2 transition-all ${
             showMRT
-              ? 'bg-blue-600 text-white shadow-md'
-              : 'bg-white text-slate-600 border border-slate-200'
+              ? 'text-white shadow-md'
+              : 'text-slate-600'
           }`}
+          style={showMRT
+            ? { background: 'linear-gradient(135deg, #2563eb, #1e40af)', boxShadow: '0 4px 12px rgba(37,99,235,0.35)' }
+            : { background: 'rgba(255,255,255,0.72)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.85)', boxShadow: '0 2px 8px rgba(138,127,115,0.08)' }
+          }
         >
           <Train className="w-4 h-4" />
           MRT Lines
