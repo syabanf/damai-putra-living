@@ -19,7 +19,7 @@ const CATEGORIES = [
 
 const STATUS_COLOR = {
   ongoing: { bg: '#ecfdf5', text: '#10b981', label: 'Ongoing' },
-  upcoming: { bg: '#e8f4fb', text: '#1F86C7', label: 'Upcoming' },
+  upcoming: { bg: '#e6f8fb', text: '#1FB6D5', label: 'Upcoming' },
   past: { bg: 'rgba(255,255,255,0.6)', text: '#94a3b8', label: 'Past' },
 };
 
