@@ -126,6 +126,20 @@ export default function TransportExploreMap() {
         </MapContainer>
       </div>
 
+      {/* Stats Section */}
+      <div className="mx-4 mt-4 flex gap-3">
+        <div className="flex-1 rounded-2xl p-4" style={{ background: 'rgba(255,255,255,0.75)', backdropFilter: 'blur(12px)' }}>
+          <p className="text-xs text-slate-500 font-semibold">Total Available</p>
+          <p className="text-2xl font-bold text-slate-800 mt-1">{filteredData.length}</p>
+        </div>
+        <div className="flex-1 rounded-2xl p-4" style={{ background: 'rgba(31,182,213,0.1)', backdropFilter: 'blur(12px)' }}>
+          <p className="text-xs text-slate-600 font-semibold">{mode === 'transport' ? 'Routes' : 'Categories'}</p>
+          <p className="text-2xl font-bold" style={{ color: '#1FB6D5' }} className="mt-1">
+            {mode === 'transport' ? filteredData.reduce((sum, i) => sum + i.routes, 0) : mode === 'explore' ? new Set(filteredData.map(i => i.type)).size : 0}
+          </p>
+        </div>
+      </div>
+
       {/* Toggle Buttons */}
       <div className="mx-4 mt-4 flex gap-3">
         <motion.button
