@@ -41,29 +41,26 @@ export default function TenantList() {
   }, [tenants, search]);
 
   return (
-    <div className="min-h-screen" style={{ background: 'linear-gradient(160deg, #f0ede9 0%, #e8e4df 50%, #e2ddd8 100%)' }}>
+    <div className="min-h-screen pb-10" style={{ background: 'linear-gradient(160deg, #f0ede9 0%, #e8e4df 55%, #e2ddd8 100%)' }}>
       {/* Header */}
-      <div className="px-5 pt-12 pb-4" style={{ background: 'rgba(255,255,255,0.85)', backdropFilter: 'blur(20px)', borderBottom: '1px solid rgba(255,255,255,0.9)' }}>
-        <div className="flex items-center gap-3 mb-4">
+      <div className="px-5 pt-14 pb-5 rounded-b-[2rem] relative overflow-hidden" style={{ background: 'linear-gradient(150deg, #8A8076 0%, #6e6560 45%, #3d3733 100%)' }}>
+        <div className="absolute -top-8 -right-8 w-40 h-40 rounded-full opacity-10 bg-white pointer-events-none" />
+        <div className="flex items-center gap-3 mb-4 relative">
           <button onClick={() => navigate(-1)}
-            className="w-9 h-9 rounded-xl flex items-center justify-center border border-white/70" style={{ background: 'rgba(255,255,255,0.65)' }}>
-            <ArrowLeft className="w-4 h-4 text-slate-600" />
+            className="w-10 h-10 rounded-2xl flex items-center justify-center transition-all active:scale-90"
+            style={{ background: 'rgba(255,255,255,0.18)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.28)' }}>
+            <ArrowLeft className="w-4 h-4 text-white" />
           </button>
           <div>
-            <p className="text-[10px] text-slate-400 font-semibold uppercase tracking-wide">{destinationName}</p>
-            <h1 className="font-bold text-lg text-slate-800 leading-tight">Tenant List</h1>
+            <p className="text-white/50 text-[10px] font-semibold uppercase tracking-widest">{destinationName}</p>
+            <h1 className="font-bold text-xl text-white leading-tight">Tenant List</h1>
           </div>
         </div>
-        <div className="relative">
-          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-          <input value={search} onChange={e => setSearch(e.target.value)}
-            placeholder="Search tenant..."
-            className="w-full h-11 pl-10 pr-10 rounded-xl text-sm text-slate-700 placeholder-slate-400 border-0 outline-none" style={{ background: 'rgba(255,255,255,0.65)', backdropFilter: 'blur(12px)' }} />
-          {search && (
-            <button onClick={() => setSearch('')} className="absolute right-3 top-1/2 -translate-y-1/2">
-              <X className="w-4 h-4 text-slate-400" />
-            </button>
-          )}
+        <div className="relative rounded-xl flex items-center gap-2 px-3" style={{ background: 'rgba(255,255,255,0.15)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.2)' }}>
+          <Search className="w-4 h-4 text-white/60 flex-shrink-0" />
+          <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search tenant..."
+            className="flex-1 h-10 bg-transparent text-sm text-white placeholder-white/50 border-0 outline-none" />
+          {search && <button onClick={() => setSearch('')}><X className="w-4 h-4 text-white/60" /></button>}
         </div>
       </div>
 
