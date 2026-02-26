@@ -2,24 +2,32 @@ import React, { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Bus, Compass } from 'lucide-react';
+import { ArrowLeft, Bus, Compass, MapPin, Clock, DollarSign } from 'lucide-react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
 
 const TRANSPORT_STATIONS = [
-  { id: 1, name: 'Damai Putra Township', lat: 3.1089, lng: 101.5180, type: 'hub' },
-  { id: 2, name: 'Central Station', lat: 3.1466, lng: 101.6956, type: 'hub' },
-  { id: 3, name: 'Jalan Utama Terminal', lat: 3.1200, lng: 101.5500, type: 'stop' },
-  { id: 4, name: 'Terminal Kota', lat: 3.1350, lng: 101.5900, type: 'stop' },
-  { id: 5, name: 'Jalan Merdeka', lat: 3.1250, lng: 101.5700, type: 'stop' },
+  { id: 1, name: 'Damai Putra Hub', lat: 3.1089, lng: 101.5180, type: 'hub', routes: 5, status: 'Active' },
+  { id: 2, name: 'KL Central Station', lat: 3.1466, lng: 101.6956, type: 'hub', routes: 12, status: 'Active' },
+  { id: 3, name: 'Jalan Utama Terminal', lat: 3.1200, lng: 101.5500, type: 'stop', routes: 3, status: 'Active' },
+  { id: 4, name: 'Terminal Kota', lat: 3.1350, lng: 101.5900, type: 'stop', routes: 4, status: 'Active' },
+  { id: 5, name: 'Jalan Merdeka Stop', lat: 3.1250, lng: 101.5700, type: 'stop', routes: 2, status: 'Active' },
+  { id: 6, name: 'Sentosa Terminal', lat: 3.1400, lng: 101.5400, type: 'stop', routes: 3, status: 'Active' },
+  { id: 7, name: 'Bukit Bintang Hub', lat: 3.1380, lng: 101.7120, type: 'hub', routes: 8, status: 'Active' },
+  { id: 8, name: 'Midvalley Stop', lat: 3.1120, lng: 101.6850, type: 'stop', routes: 2, status: 'Active' },
 ];
 
 const DESTINATION_PINS = [
-  { id: 1, name: 'Central Mall', lat: 3.1350, lng: 101.5900, type: 'commercial' },
-  { id: 2, name: 'Food Court', lat: 3.1200, lng: 101.5500, type: 'culinary' },
-  { id: 3, name: 'Theme Park', lat: 3.1450, lng: 101.6000, type: 'entertainment' },
-  { id: 4, name: 'Community Center', lat: 3.1100, lng: 101.5300, type: 'community' },
-  { id: 5, name: 'Premium Outlets', lat: 3.1250, lng: 101.5700, type: 'retail' },
+  { id: 1, name: 'Central Mall', lat: 3.1350, lng: 101.5900, type: 'commercial', category: 'Shopping Mall', rating: 4.5 },
+  { id: 2, name: 'The Curve F&B Zone', lat: 3.1200, lng: 101.5500, type: 'culinary', category: 'Food Court', rating: 4.3 },
+  { id: 3, name: 'Sunway Lagoon Theme Park', lat: 3.1450, lng: 101.6000, type: 'entertainment', category: 'Theme Park', rating: 4.6 },
+  { id: 4, name: 'Community Center Damansara', lat: 3.1100, lng: 101.5300, type: 'community', category: 'Community', rating: 4.1 },
+  { id: 5, name: 'Premium Outlets KL', lat: 3.1250, lng: 101.5700, type: 'retail', category: 'Outlets', rating: 4.4 },
+  { id: 6, name: 'Pavilion KL', lat: 3.1500, lng: 101.7200, type: 'commercial', category: 'Shopping Mall', rating: 4.7 },
+  { id: 7, name: 'Nandos Restaurant', lat: 3.1150, lng: 101.6100, type: 'culinary', category: 'Restaurant', rating: 4.2 },
+  { id: 8, name: 'Petronas Twin Towers', lat: 3.1570, lng: 101.6876, type: 'attraction', category: 'Attraction', rating: 4.8 },
+  { id: 9, name: 'Klang Valley Health Center', lat: 3.1300, lng: 101.5600, type: 'health', category: 'Healthcare', rating: 4.0 },
+  { id: 10, name: 'Fashion District', lat: 3.1400, lng: 101.5800, type: 'retail', category: 'Fashion', rating: 4.3 },
 ];
 
 const MapIcon = (type, isTransport) => {
