@@ -21,14 +21,17 @@ export const Textarea = ({ value, onChange, placeholder, rows = 3 }) => (
   <textarea className={ic + ' resize-none'} style={{ minHeight: rows * 28 }} value={value} onChange={e => onChange(e.target.value)} placeholder={placeholder} />
 );
 
-export const Select = ({ value, onChange, options, placeholder = 'Select...' }) => (
-  <select className={ic} value={value} onChange={e => onChange(e.target.value)}>
-    <option value="">{placeholder}</option>
-    {options.map(o => (
-      <option key={o.value} value={o.value}>{o.label}</option>
-    ))}
-  </select>
-);
+export const Select = ({ value, onChange, options, placeholder = 'Select...' }) => {
+  const isDark = typeof window !== 'undefined' && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  return (
+    <select className={`${ic} ${isDark ? 'bg-slate-800 text-slate-100' : ''}`} value={value} onChange={e => onChange(e.target.value)}>
+      <option value="">{placeholder}</option>
+      {options.map(o => (
+        <option key={o.value} value={o.value}>{o.label}</option>
+      ))}
+    </select>
+  );
+};
 
 export const Checkbox = ({ label, checked, onChange }) => (
   <label className="flex items-center gap-2.5 cursor-pointer py-1">

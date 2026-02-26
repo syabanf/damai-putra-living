@@ -52,6 +52,7 @@
 /* Mobile optimizations */
 body {
   overscroll-behavior: none;
+  padding-top: env(safe-area-inset-top);
 }
 
 button, [role="button"], a, nav *, [role="navigation"] * {
