@@ -88,14 +88,14 @@ export default function ExploreDetail() {
         {/* Description */}
         {destination.description && (
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-            className="bg-white rounded-2xl p-4 shadow-sm border border-slate-100">
+            className="rounded-2xl p-4" style={{ background: 'rgba(255,255,255,0.75)', backdropFilter: 'blur(16px)', border: '1px solid rgba(255,255,255,0.85)', boxShadow: '0 2px 12px rgba(138,127,115,0.1)' }}>
             <p className="text-slate-600 text-sm leading-relaxed">{destination.description}</p>
           </motion.div>
         )}
 
         {/* Info Cards */}
         <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }}
-          className="bg-white rounded-2xl shadow-sm border border-slate-100 divide-y divide-slate-100">
+          className="rounded-2xl divide-y" style={{ background: 'rgba(255,255,255,0.75)', backdropFilter: 'blur(16px)', border: '1px solid rgba(255,255,255,0.85)', boxShadow: '0 2px 12px rgba(138,127,115,0.1)', '--tw-divide-color': 'rgba(255,255,255,0.6)' }}>
           {destination.opening_hours && (
             <div className="flex items-center gap-3 px-4 py-3.5">
               <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: '#e8f4fb' }}>
@@ -135,7 +135,7 @@ export default function ExploreDetail() {
                 <motion.div key={tenant.id}
                   initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.2 + i * 0.04 }}
                   onClick={() => navigate(createPageUrl('TenantDetail') + `?id=${tenant.id}`)}
-                  className="bg-white rounded-2xl p-3 flex flex-col items-center gap-2 shadow-sm border border-slate-100 cursor-pointer active:scale-95 transition-transform">
+                  className="rounded-2xl p-3 flex flex-col items-center gap-2 cursor-pointer active:scale-95 transition-transform" style={{ background: 'rgba(255,255,255,0.75)', backdropFilter: 'blur(16px)', border: '1px solid rgba(255,255,255,0.85)' }}>
                   {tenant.logo_url ? (
                     <img src={tenant.logo_url} alt={tenant.name} className="w-12 h-12 rounded-xl object-cover" />
                   ) : (
@@ -154,7 +154,7 @@ export default function ExploreDetail() {
         {destination.website_url && (
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }}>
             <a href={destination.website_url} target="_blank" rel="noopener noreferrer"
-              className="flex items-center justify-between bg-white rounded-2xl px-4 py-4 shadow-sm border border-slate-100">
+              className="flex items-center justify-between rounded-2xl px-4 py-4" style={{ background: 'rgba(255,255,255,0.75)', backdropFilter: 'blur(16px)', border: '1px solid rgba(255,255,255,0.85)' }}>
               <div className="flex items-center gap-3">
                 <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: '#ecfdf5' }}>
                   <ExternalLink className="w-4 h-4" style={{ color: '#10b981', width: 16, height: 16 }} />

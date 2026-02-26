@@ -109,7 +109,7 @@ export default function EventDetail() {
       <div className="px-5 py-5 space-y-4">
         {/* Date & Location info */}
         <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
-          className="bg-white rounded-2xl shadow-sm border border-slate-100 divide-y divide-slate-100">
+          className="rounded-2xl divide-y" style={{ background: 'rgba(255,255,255,0.75)', backdropFilter: 'blur(16px)', border: '1px solid rgba(255,255,255,0.85)', boxShadow: '0 2px 12px rgba(138,127,115,0.1)' }}>
           <div className="flex items-center gap-3 px-4 py-3.5">
             <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: '#e8f4fb' }}>
               <CalendarDays style={{ color: '#1F86C7', width: 18, height: 18 }} />
@@ -149,7 +149,7 @@ export default function EventDetail() {
         {/* Description */}
         {event.description && (
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 }}
-            className="bg-white rounded-2xl p-4 shadow-sm border border-slate-100">
+            className="rounded-2xl p-4" style={{ background: 'rgba(255,255,255,0.75)', backdropFilter: 'blur(16px)', border: '1px solid rgba(255,255,255,0.85)' }}>
             <h2 className="font-bold text-slate-800 mb-2 text-sm">About This Event</h2>
             <p className="text-slate-600 text-sm leading-relaxed">{event.description}</p>
           </motion.div>
@@ -158,7 +158,7 @@ export default function EventDetail() {
         {/* Organizer */}
         {event.organizer && (
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.08 }}
-            className="bg-white rounded-2xl px-4 py-3 shadow-sm border border-slate-100">
+            className="rounded-2xl px-4 py-3" style={{ background: 'rgba(255,255,255,0.75)', backdropFilter: 'blur(16px)', border: '1px solid rgba(255,255,255,0.85)' }}>
             <p className="text-xs text-slate-400 font-semibold">Organizer</p>
             <p className="text-sm font-semibold text-slate-700 mt-0.5">{event.organizer}</p>
           </motion.div>
@@ -177,7 +177,8 @@ export default function EventDetail() {
           )}
           {event.ticket_url && (
             <a href={event.ticket_url} target="_blank" rel="noopener noreferrer"
-              className="flex-1 py-4 rounded-2xl font-bold flex items-center justify-center gap-2 shadow-sm active:scale-95 transition-transform border border-slate-200 bg-white"
+              className="flex-1 py-4 rounded-2xl font-bold flex items-center justify-center gap-2 active:scale-95 transition-transform"
+              style={{ background: 'rgba(255,255,255,0.75)', backdropFilter: 'blur(16px)', border: '1px solid rgba(255,255,255,0.85)' }}
               style={{ color: '#1F86C7' }}>
               <ExternalLink className="w-4 h-4" />
               Get Ticket
