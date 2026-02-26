@@ -41,6 +41,15 @@ export default function AddUnit() {
     tower: '',
     unit_number: '',
     unit_type: '',
+    bedroom_count: '',
+    bathroom_count: '',
+    floor_number: '',
+    area_size: '',
+    land_size: '',
+    building_size: '',
+    garage_count: '',
+    business_type: '',
+    location_detail: '',
     ownership_status: '',
     document_url: '',
     agree_terms: false,
@@ -257,6 +266,143 @@ export default function AddUnit() {
                 </Select>
                 {errors.unit_type && <p className="text-red-500 text-xs">{errors.unit_type}</p>}
               </div>
+
+              {/* Conditional fields based on unit type */}
+              {(formData.unit_type === 'apartment' || formData.unit_type === 'house') && (
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="space-y-2">
+                    <Label className="text-slate-700 font-medium text-sm">Bedrooms</Label>
+                    <Input
+                      type="number"
+                      placeholder="e.g., 2"
+                      value={formData.bedroom_count}
+                      onChange={(e) => setFormData({ ...formData, bedroom_count: e.target.value })}
+                      className="h-12 rounded-xl"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label className="text-slate-700 font-medium text-sm">Bathrooms</Label>
+                    <Input
+                      type="number"
+                      placeholder="e.g., 1"
+                      value={formData.bathroom_count}
+                      onChange={(e) => setFormData({ ...formData, bathroom_count: e.target.value })}
+                      className="h-12 rounded-xl"
+                    />
+                  </div>
+                </div>
+              )}
+
+              {formData.unit_type === 'apartment' && (
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="space-y-2">
+                    <Label className="text-slate-700 font-medium text-sm">Floor Number</Label>
+                    <Input
+                      type="number"
+                      placeholder="e.g., 5"
+                      value={formData.floor_number}
+                      onChange={(e) => setFormData({ ...formData, floor_number: e.target.value })}
+                      className="h-12 rounded-xl"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label className="text-slate-700 font-medium text-sm">Area (m²)</Label>
+                    <Input
+                      type="number"
+                      placeholder="e.g., 85"
+                      value={formData.area_size}
+                      onChange={(e) => setFormData({ ...formData, area_size: e.target.value })}
+                      className="h-12 rounded-xl"
+                    />
+                  </div>
+                </div>
+              )}
+
+              {formData.unit_type === 'house' && (
+                <div className="space-y-3">
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="space-y-2">
+                      <Label className="text-slate-700 font-medium text-sm">Land Size (m²)</Label>
+                      <Input
+                        type="number"
+                        placeholder="e.g., 200"
+                        value={formData.land_size}
+                        onChange={(e) => setFormData({ ...formData, land_size: e.target.value })}
+                        className="h-12 rounded-xl"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="text-slate-700 font-medium text-sm">Building Size (m²)</Label>
+                      <Input
+                        type="number"
+                        placeholder="e.g., 150"
+                        value={formData.building_size}
+                        onChange={(e) => setFormData({ ...formData, building_size: e.target.value })}
+                        className="h-12 rounded-xl"
+                      />
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <Label className="text-slate-700 font-medium text-sm">Garages/Parking</Label>
+                    <Input
+                      type="number"
+                      placeholder="e.g., 2"
+                      value={formData.garage_count}
+                      onChange={(e) => setFormData({ ...formData, garage_count: e.target.value })}
+                      className="h-12 rounded-xl"
+                    />
+                  </div>
+                </div>
+              )}
+
+              {formData.unit_type === 'kavling' && (
+                <div className="space-y-2">
+                  <Label className="text-slate-700 font-medium text-sm">Land Size (m²)</Label>
+                  <Input
+                    type="number"
+                    placeholder="e.g., 500"
+                    value={formData.land_size}
+                    onChange={(e) => setFormData({ ...formData, land_size: e.target.value })}
+                    className="h-12 rounded-xl"
+                  />
+                </div>
+              )}
+
+              {formData.unit_type === 'commercial' && (
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="space-y-2">
+                    <Label className="text-slate-700 font-medium text-sm">Business Type</Label>
+                    <Input
+                      placeholder="e.g., Retail"
+                      value={formData.business_type}
+                      onChange={(e) => setFormData({ ...formData, business_type: e.target.value })}
+                      className="h-12 rounded-xl"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label className="text-slate-700 font-medium text-sm">Area (m²)</Label>
+                    <Input
+                      type="number"
+                      placeholder="e.g., 120"
+                      value={formData.area_size}
+                      onChange={(e) => setFormData({ ...formData, area_size: e.target.value })}
+                      className="h-12 rounded-xl"
+                    />
+                  </div>
+                </div>
+              )}
+
+              {formData.unit_type && (
+                <div className="space-y-2">
+                  <Label className="text-slate-700 font-medium text-sm">Location Details</Label>
+                  <Input
+                    placeholder="Street address, area, etc."
+                    value={formData.location_detail}
+                    onChange={(e) => setFormData({ ...formData, location_detail: e.target.value })}
+                    className="h-12 rounded-xl"
+                  />
+                </div>
+              )}
               </motion.div>
           )}
 
