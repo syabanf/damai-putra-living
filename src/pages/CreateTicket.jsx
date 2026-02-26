@@ -341,7 +341,10 @@ export default function CreateTicket() {
                         <type.icon className="w-5 h-5" style={{ color: selected ? '#fff' : '#64748b' }} />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <p className="font-semibold text-slate-800 text-sm">{type.label}</p>
+                        <div className="flex items-center gap-2">
+                          <p className="font-semibold text-slate-800 text-sm">{type.label}</p>
+                          <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-md bg-stone-100 text-stone-500">{type.code}</span>
+                        </div>
                         <p className="text-xs text-slate-500 mt-0.5">{type.description}</p>
                       </div>
                       {selected && <Check className="w-5 h-5 flex-shrink-0" style={{ color: '#8A8076' }} />}
