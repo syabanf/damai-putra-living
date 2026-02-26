@@ -70,6 +70,7 @@ const MapIcon = (type, isTransport) => {
 export default function TransportExploreMap() {
   const navigate = useNavigate();
   const [mode, setMode] = useState('transport');
+  const [selectedItem, setSelectedItem] = useState(null);
   
   const urlParams = new URLSearchParams(window.location.search);
   const initialMode = urlParams.get('mode') || 'transport';
