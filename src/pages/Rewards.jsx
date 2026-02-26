@@ -136,7 +136,7 @@ export default function Rewards() {
         </div>
         {/* Search - Only on Rewards Tab */}
         {activeTab === 'rewards' && (
-          <div className="relative rounded-xl flex items-center gap-2 px-3" style={{ background: 'rgba(255,255,255,0.15)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.2)' }}>
+          <div className="relative rounded-xl flex items-center gap-2 px-3 mt-3" style={{ background: 'rgba(255,255,255,0.15)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.2)' }}>
             <Search className="w-4 h-4 text-white/60 flex-shrink-0" />
             <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search rewards..."
               className="flex-1 h-10 bg-transparent text-sm text-white placeholder-white/50 border-0 outline-none" />
