@@ -635,8 +635,8 @@ export default function CreateTicket() {
                   <p className="text-xs font-bold uppercase tracking-wider" style={{ color: '#8A8076' }}>Permit Details</p>
                 </div>
                 <div className="p-4 space-y-2">
-                  <Row label="Category" value="Digital Permit Application" />
-                  {formData.permit_type && <Row label="Permit Type" value={PERMIT_TYPES.find(t => t.id === formData.permit_type)?.label} />}
+                  <Row label="Kategori" value="Permohonan Izin Digital" />
+                  {formData.permit_type && <Row label="Jenis Izin" value={`[${selectedPermitType?.code}] ${selectedPermitType?.label}`} />}
                   {formData.activity_date && <Row label="Start Date" value={new Date(formData.activity_date + 'T00:00:00').toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' })} />}
                   {formData.activity_end_date && <Row label="End Date" value={new Date(formData.activity_end_date + 'T00:00:00').toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' })} />}
                   {formData.activity_time && <Row label="Time" value={`${formData.activity_time}${formData.activity_end_time ? ' – ' + formData.activity_end_time : ''}`} />}
