@@ -89,7 +89,7 @@ export default function Events() {
             <button key={cat.value} onClick={() => setActiveCategory(cat.value)}
               className="px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all active:scale-95"
               style={activeCategory === cat.value
-                ? { background: 'linear-gradient(135deg, #1F86C7, #1669a0)', color: '#fff', boxShadow: '0 3px 10px rgba(31,134,199,0.35)' }
+                ? { background: 'linear-gradient(135deg, #1FB6D5, #169ab5)', color: '#fff', boxShadow: '0 3px 10px rgba(31,182,213,0.35)' }
                 : { background: 'rgba(255,255,255,0.75)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.85)', color: '#64748b' }
               }>{cat.label}</button>
           ))}
