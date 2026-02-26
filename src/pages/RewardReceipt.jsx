@@ -92,7 +92,8 @@ export default function RewardReceipt() {
       <div className="px-4 py-5 space-y-4">
         {/* Reward Summary Card */}
         <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
-          className="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden">
+          className="rounded-3xl overflow-hidden"
+          style={{ background: 'rgba(255,255,255,0.75)', backdropFilter: 'blur(16px)', border: '1px solid rgba(255,255,255,0.85)', boxShadow: '0 2px 16px rgba(138,127,115,0.12)' }}>
           {claim.reward_image_url && (
             <img src={claim.reward_image_url} alt={claim.reward_title} className="w-full h-40 object-cover" />
           )}
@@ -122,7 +123,8 @@ export default function RewardReceipt() {
 
         {/* QR Code Section */}
         <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.06 }}
-          className="bg-white rounded-3xl shadow-sm border border-slate-100 p-6 flex flex-col items-center">
+          className="rounded-3xl p-6 flex flex-col items-center"
+          style={{ background: 'rgba(255,255,255,0.75)', backdropFilter: 'blur(16px)', border: '1px solid rgba(255,255,255,0.85)', boxShadow: '0 2px 16px rgba(138,127,115,0.12)' }}>
           
           {/* QR Code - generated from claim_code using a URL */}
           <div className="w-48 h-48 rounded-2xl overflow-hidden border-4 border-slate-100 flex items-center justify-center bg-white">
@@ -145,7 +147,8 @@ export default function RewardReceipt() {
 
         {/* Reward Details */}
         <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-          className="bg-white rounded-2xl shadow-sm border border-slate-100 divide-y divide-slate-100">
+          className="rounded-2xl divide-y"
+          style={{ background: 'rgba(255,255,255,0.75)', backdropFilter: 'blur(16px)', border: '1px solid rgba(255,255,255,0.85)', boxShadow: '0 2px 12px rgba(138,127,115,0.1)' }}>
           <div className="flex items-center gap-3 px-4 py-3.5">
             <Star className="w-4 h-4 text-amber-400 fill-amber-400" />
             <div>

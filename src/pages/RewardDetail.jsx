@@ -135,7 +135,7 @@ export default function RewardDetail() {
 
         {/* Description */}
         {reward.description && (
-          <div className="bg-white rounded-2xl p-4 shadow-sm border border-slate-100">
+          <div className="rounded-2xl p-4" style={{ background: 'rgba(255,255,255,0.75)', backdropFilter: 'blur(16px)', border: '1px solid rgba(255,255,255,0.85)' }}>
             <h3 className="font-bold text-slate-800 text-sm mb-2">About This Reward</h3>
             <p className="text-slate-600 text-sm leading-relaxed">{reward.description}</p>
           </div>
