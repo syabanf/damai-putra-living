@@ -25,7 +25,7 @@ const SectionHeader = ({ title, onViewAll }) => (
   <div className="flex justify-between items-center mb-3 px-4">
     <h2 className="font-bold text-slate-800 text-base">{title}</h2>
     {onViewAll && (
-      <button onClick={onViewAll} className="text-xs font-semibold flex items-center gap-0.5" style={{ color: '#8A8076' }}>
+      <button onClick={onViewAll} className="text-xs font-semibold flex items-center gap-0.5" style={{ color: '#1F86C7' }}>
         View All <ChevronRight className="w-3.5 h-3.5" />
       </button>
     )}
@@ -118,7 +118,7 @@ export default function Home() {
   const currentLang = LANGUAGES.find(l => l.code === lang);
 
   return (
-    <div className="min-h-screen pb-24 bg-slate-50">
+    <div className="min-h-screen pb-24" style={{ background: '#F4F5F7' }}>
 
       {/* ── 1. HERO BANNER ── */}
       <div className="relative h-64 overflow-hidden">
@@ -212,7 +212,7 @@ export default function Home() {
 
       {/* ── 3. PROMO / CTA ── */}
       <div className="mt-6 mx-4">
-        <div className="rounded-2xl overflow-hidden relative" style={{ background: 'linear-gradient(135deg, #8A8076 0%, #3d3733 100%)' }}>
+        <div className="rounded-2xl overflow-hidden relative" style={{ background: 'linear-gradient(135deg, #8A7F73 0%, #2E2E2E 100%)' }}>
           <div className="absolute -right-8 -top-8 w-32 h-32 rounded-full bg-white/10" />
           <div className="absolute -left-4 -bottom-6 w-24 h-24 rounded-full bg-white/5" />
           <div className="relative px-5 py-5">
