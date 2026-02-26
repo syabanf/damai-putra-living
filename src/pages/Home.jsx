@@ -227,11 +227,11 @@ export default function Home() {
 
       {/* ── 4. LATEST NEWS ── */}
       <div className="mt-6">
-        <SectionHeader title="Latest Updates" />
+        <SectionHeader title="Latest Updates" onViewAll={() => navigate(createPageUrl('News'))} />
         <div className="px-4 space-y-3">
           {NEWS.map((n, i) => (
             <motion.div key={n.id} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 + i * 0.05 }}>
-              <Card className="flex overflow-hidden">
+              <Card className="flex overflow-hidden" onClick={() => navigate(createPageUrl(`NewsDetail?id=${n.id}`))}>
                 <img src={n.img} alt={n.title} className="w-24 h-20 object-cover flex-shrink-0" />
                 <div className="p-3 flex flex-col justify-center">
                   <div className="flex items-center gap-1.5 mb-1">
@@ -280,7 +280,7 @@ export default function Home() {
           {DEALS.map((d, i) => (
             <motion.div key={d.id} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.06 }}
               className="flex-shrink-0 w-44">
-              <Card onClick={() => navigate(createPageUrl('Explore'))}>
+              <Card onClick={() => navigate(createPageUrl(`DealsPromoDetail?id=${d.id}`))}>
                 <div className="relative h-28">
                   <img src={d.img} alt={d.title} className="w-full h-full object-cover" />
                   <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.55), transparent)' }} />

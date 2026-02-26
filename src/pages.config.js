@@ -80,6 +80,9 @@ import UnitDetail from './pages/UnitDetail';
 import UnitSubmitted from './pages/UnitSubmitted';
 import Verification from './pages/Verification';
 import Culinary from './pages/Culinary';
+import News from './pages/News';
+import NewsDetail from './pages/NewsDetail';
+import DealsPromoDetail from './pages/DealsPromoDetail';
 import __Layout from './Layout.jsx';
 
 
@@ -117,6 +120,9 @@ export const PAGES = {
     "UnitSubmitted": UnitSubmitted,
     "Verification": Verification,
     "Culinary": Culinary,
+    "News": News,
+    "NewsDetail": NewsDetail,
+    "DealsPromoDetail": DealsPromoDetail,
 }
 
 export const pagesConfig = {
