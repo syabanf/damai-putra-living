@@ -68,7 +68,7 @@ export default function MyClaims() {
             <p className="text-slate-500 font-medium">No claims yet</p>
             <button onClick={() => navigate(createPageUrl('Rewards'))}
               className="mt-4 px-6 py-2.5 rounded-2xl font-semibold text-white text-sm"
-              style={{ background: '#1F86C7' }}>
+              style={{ background: 'linear-gradient(135deg, #1FB6D5, #169ab5)' }}>
               Browse Rewards
             </button>
           </GlassCard>
