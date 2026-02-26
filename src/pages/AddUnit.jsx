@@ -138,7 +138,7 @@ export default function AddUnit() {
   };
 
   return (
-    <div className="min-h-screen pb-28" style={{ background: 'linear-gradient(160deg, #f5f3f0 0%, #ece8e3 50%, #e8e2db 100%)' }}>
+    <div className="min-h-screen pb-28" style={{ background: 'linear-gradient(160deg, #f0ede9 0%, #e8e4df 50%, #e2ddd8 100%)' }}>
       {/* Header */}
       <div className="px-5 pt-6 pb-5 rounded-b-3xl" style={{ background: 'linear-gradient(150deg, #8A8076 0%, #6e6560 45%, #3d3733 100%)' }}>
         <div className="flex items-center gap-4 mb-4">
@@ -491,7 +491,7 @@ export default function AddUnit() {
       </div>
 
       {/* Bottom Actions */}
-      <div className="fixed bottom-0 left-0 right-0 p-6" style={{ background: 'rgba(245,243,240,0.9)', backdropFilter: 'blur(16px)', borderTop: '1px solid rgba(255,255,255,0.6)' }}>
+      <div className="fixed bottom-0 left-0 right-0 p-6" style={{ background: 'rgba(255,255,255,0.88)', backdropFilter: 'blur(20px)', borderTop: '1px solid rgba(255,255,255,0.9)' }}>
         <Button
           onClick={handleNext}
           disabled={loading}
