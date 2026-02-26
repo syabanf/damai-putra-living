@@ -95,8 +95,9 @@ export default function Tickets() {
   if (!hasApprovedUnit) {
     return (
       <div className="min-h-screen pb-28" style={{ background: 'linear-gradient(160deg, #f0ede9 0%, #e8e4df 50%, #e2ddd8 100%)' }}>
-        <div className="px-5 pt-14 pb-6 rounded-b-3xl" style={{ background: 'linear-gradient(150deg, #8A7F73 0%, #6e6560 45%, #2E2E2E 100%)' }}>
-          <p className="text-white/50 text-xs font-semibold uppercase tracking-widest mb-1">Damai Putra Living</p>
+        <div className="px-5 pt-14 pb-6 rounded-b-[2rem] relative overflow-hidden" style={{ background: 'linear-gradient(150deg, #8A8076 0%, #6e6560 45%, #3d3733 100%)' }}>
+          <div className="absolute -top-8 -right-8 w-40 h-40 rounded-full opacity-10 bg-white pointer-events-none" />
+          <p className="text-white/50 text-[10px] font-semibold uppercase tracking-widest mb-1">Damai Putra Living</p>
           <h1 className="text-2xl font-bold text-white">Digital Permits</h1>
           <p className="text-white/50 text-sm mt-1">Permit & activity management</p>
         </div>
@@ -124,17 +125,19 @@ export default function Tickets() {
 
   return (
     <div className="min-h-screen pb-28" style={{ background: 'linear-gradient(160deg, #f0ede9 0%, #e8e4df 50%, #e2ddd8 100%)' }}>
-      <div className="px-5 pt-14 pb-5 rounded-b-3xl" style={{ background: 'linear-gradient(150deg, #8A7F73 0%, #6e6560 45%, #2E2E2E 100%)' }}>
-        <div className="flex justify-between items-center mb-4">
+      <div className="px-5 pt-14 pb-5 rounded-b-[2rem] relative overflow-hidden" style={{ background: 'linear-gradient(150deg, #8A8076 0%, #6e6560 45%, #3d3733 100%)' }}>
+        <div className="absolute -top-8 -right-8 w-40 h-40 rounded-full opacity-10 bg-white pointer-events-none" />
+        <div className="flex justify-between items-center mb-4 relative">
           <div>
             <p className="text-white/50 text-xs font-semibold uppercase tracking-widest mb-0.5">Damai Putra Living</p>
             <h1 className="text-2xl font-bold text-white">Digital Permits</h1>
             <p className="text-white/50 text-sm">Permit & activity management</p>
           </div>
-          <Button onClick={() => navigate(createPageUrl('CreateTicket'))}
-            className="h-10 px-4 text-white rounded-xl border border-white/20 bg-white/15 backdrop-blur-sm hover:bg-white/25">
-            <Plus className="w-4 h-4 mr-1" /> New
-          </Button>
+          <button onClick={() => navigate(createPageUrl('CreateTicket'))}
+            className="h-10 px-4 text-white rounded-xl text-sm font-semibold flex items-center gap-1.5 transition-all active:scale-90"
+            style={{ background: 'rgba(255,255,255,0.18)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.28)' }}>
+            <Plus className="w-4 h-4" /> New
+          </button>
         </div>
         {/* Tabs */}
         <div className="flex gap-1 p-1 rounded-xl overflow-x-auto hide-scrollbar" style={{ background: 'rgba(0,0,0,0.2)' }}>
