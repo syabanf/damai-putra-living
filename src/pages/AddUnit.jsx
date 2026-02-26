@@ -570,7 +570,7 @@ export default function AddUnit() {
                   onClick={handleSubmit}
                   disabled={loading}
                   className="flex-1 h-12 rounded-xl text-white"
-                  style={{ backgroundColor: '#8A8076' }}
+                  style={{ background: 'linear-gradient(135deg, #1FB6D5, #169ab5)' }}
                 >
                   {loading ? 'Submitting...' : 'Confirm'}
                 </Button>
