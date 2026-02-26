@@ -128,7 +128,9 @@ export default function TransportResult() {
   }, [type]);
 
   const handleSelectTransport = (transport) => {
-    navigate(createPageUrl(`TicketDetail?transportId=${transport.id}`));
+    const fromId = params.get('from');
+    const toId = params.get('to');
+    navigate(createPageUrl(`TransportTicketDetails?from=${fromId}&to=${toId}&date=${date}&type=${type}`));
   };
 
   return (
