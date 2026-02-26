@@ -12,6 +12,16 @@ const TRANSPORT_TYPES = [
   { id: 'delivery', label: 'Delivery', icon: Package, color: '#8b5cf6' },
 ];
 
+const LOCATIONS = [
+  { id: '221', name: 'Damai Putra' },
+  { id: '213123', name: 'Central Station' },
+  { id: '101', name: 'Kl Airport' },
+  { id: '102', name: 'Sentosa Terminal' },
+  { id: '103', name: 'Bukit Bintang' },
+  { id: '104', name: 'Klang Valley' },
+  { id: '105', name: 'Shah Alam' },
+];
+
 export default function TransportSearch() {
   const navigate = useNavigate();
   const [transportType, setTransportType] = useState('shuttle');
@@ -19,6 +29,8 @@ export default function TransportSearch() {
   const [toLocation, setToLocation] = useState('');
   const [departDate, setDepartDate] = useState('');
   const [returnDate, setReturnDate] = useState('');
+  const [showFromDropdown, setShowFromDropdown] = useState(false);
+  const [showToDropdown, setShowToDropdown] = useState(false);
 
   const handleSearch = () => {
     if (fromLocation && toLocation && departDate) {
