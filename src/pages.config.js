@@ -88,10 +88,10 @@ import TransportExploreMap from './pages/TransportExploreMap';
 import TransportResult from './pages/TransportResult';
 import TransportSearch from './pages/TransportSearch';
 import TransportTicketDetail from './pages/TransportTicketDetail';
-import TransportTicketDetails from './pages/TransportTicketDetails';
 import UnitDetail from './pages/UnitDetail';
 import UnitSubmitted from './pages/UnitSubmitted';
 import Verification from './pages/Verification';
+import TransportTicketDetails from './pages/TransportTicketDetails';
 import __Layout from './Layout.jsx';
 
 
@@ -137,10 +137,10 @@ export const PAGES = {
     "TransportResult": TransportResult,
     "TransportSearch": TransportSearch,
     "TransportTicketDetail": TransportTicketDetail,
-    "TransportTicketDetails": TransportTicketDetails,
     "UnitDetail": UnitDetail,
     "UnitSubmitted": UnitSubmitted,
     "Verification": Verification,
+    "TransportTicketDetails": TransportTicketDetails,
 }
 
 export const pagesConfig = {

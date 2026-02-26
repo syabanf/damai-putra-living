@@ -169,7 +169,7 @@ export default function CreateTicket() {
         <p className="text-white/60 text-xs mt-2 font-medium">{STEPS[step - 1]}</p>
       </div>
 
-      <div className="px-4 py-5 pb-32">
+      <div className="px-4 py-5">
         <AnimatePresence mode="wait">
           <motion.div key={step}
             initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}
@@ -185,13 +185,18 @@ export default function CreateTicket() {
               <div className="space-y-5">
                 {/* Selected permit badge */}
                 {selectedPermit && (
-                   <div className="flex items-center gap-3 p-3 rounded-xl" style={{ background: selectedPermit.bg }}>
-                     <selectedPermit.icon className="w-5 h-5" style={{ color: selectedPermit.color }} />
-                     <span className="font-semibold text-sm text-slate-700">{selectedPermit.label}</span>
-                     <button onClick={() => setStep(1)} className="ml-auto text-xs text-slate-400 underline">Change</button>
-                   </div>
-                 )}
-                 <StepApplicant form={form} set={set} approvedUnits={approvedUnits} />
+                  <div className="flex items-center gap-3 p-3 rounded-xl" style={{ background: selectedPermit.bg }}>
+                    <selectedPermit.icon className="w-5 h-5" style={{ color: selectedPermit.color }} />
+                    <span className="font-semibold text-sm text-slate-700">{selectedPermit.label}</span>
+                    <button onClick={() => setStep(1)} className="ml-auto text-xs text-slate-400 underline">Change</button>
+                  </div>
+                )}
+                <StepApplicant form={form} set={set} approvedUnits={approvedUnits} />
+                <Button onClick={next} disabled={!canProceed()}
+                  className="w-full py-3 text-white rounded-2xl font-semibold"
+                  style={{ background: 'linear-gradient(135deg, #1FB6D5, #169ab5)' }}>
+                  Continue <ChevronRight className="w-5 h-5 ml-1" />
+                </Button>
               </div>
             )}
 
@@ -204,6 +209,11 @@ export default function CreateTicket() {
                   uploading={uploading}
                   onUpload={uploadSingle}
                 />
+                <Button onClick={next} disabled={!canProceed()}
+                  className="w-full py-3 text-white rounded-2xl font-semibold"
+                  style={{ background: 'linear-gradient(135deg, #1FB6D5, #169ab5)' }}>
+                  Continue to Documents <ChevronRight className="w-5 h-5 ml-1" />
+                </Button>
               </div>
             )}
 
@@ -219,38 +229,23 @@ export default function CreateTicket() {
                   selectedPermit={selectedPermit}
                   user={user}
                 />
+                <Button onClick={handleSubmit} disabled={mutation.isPending}
+                  className="w-full py-3 text-white rounded-2xl font-semibold"
+                  style={{ background: 'linear-gradient(135deg, #1FB6D5, #169ab5)' }}>
+                  {mutation.isPending ? (
+                    <div className="flex items-center gap-2 justify-center">
+                      <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                      Submitting...
+                    </div>
+                  ) : (
+                    <><CheckCircle className="w-5 h-5 mr-2" /> Submit Application</>
+                  )}
+                </Button>
               </div>
             )}
 
           </motion.div>
         </AnimatePresence>
-      </div>
-
-      {/* Sticky Bottom Actions */}
-      <div className="fixed bottom-0 left-0 right-0 px-4 z-20" style={{ bottom: 'calc(6rem + env(safe-area-inset-bottom))', background: 'rgba(142,132,120,0.9)', backdropFilter: 'blur(20px)', borderTop: '1px solid rgba(142,132,120,0.7)', paddingTop: '1.5rem', paddingBottom: '1.5rem' }}>
-        <Button
-          onClick={step === STEPS.length ? handleSubmit : next}
-          disabled={!canProceed() || mutation.isPending}
-          className="w-full h-11 text-slate-800 rounded-xl font-semibold text-sm"
-          style={{ background: '#E4E4E4' }}
-        >
-          {mutation.isPending ? (
-            <motion.div
-              animate={{ rotate: 360 }}
-              transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-              className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full"
-            />
-          ) : step === STEPS.length ? (
-            <>
-              <CheckCircle className="w-5 h-5 mr-2" />
-              Submit Application
-            </>
-          ) : (
-            <>
-              Continue <ChevronRight className="w-5 h-5 ml-2" />
-            </>
-          )}
-        </Button>
       </div>
     </div>
   );

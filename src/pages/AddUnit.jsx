@@ -658,12 +658,12 @@ export default function AddUnit() {
       </div>
 
       {/* Bottom Actions */}
-      <div className="sticky z-20 p-6" style={{ bottom: 'calc(6rem + env(safe-area-inset-bottom))', background: 'rgba(142,132,120,0.9)', backdropFilter: 'blur(20px)', borderTop: '1px solid rgba(142,132,120,0.7)' }}>
+      <div className="fixed bottom-0 left-0 right-0 p-6" style={{ background: 'rgba(255,255,255,0.88)', backdropFilter: 'blur(20px)', borderTop: '1px solid rgba(255,255,255,0.9)' }}>
         <Button
           onClick={handleNext}
           disabled={loading}
-          className="w-full h-11 text-slate-800 rounded-xl font-semibold text-sm"
-          style={{ background: '#E4E4E4' }}
+          className="w-full h-14 text-white rounded-2xl font-semibold text-base"
+          style={{ background: 'linear-gradient(135deg, #1FB6D5, #169ab5)', boxShadow: '0 8px 24px rgba(31,182,213,0.35)' }}
         >
           {loading ? (
             <motion.div
