@@ -91,42 +91,78 @@ export default function TransportSearch() {
         <h3 className="text-xs font-bold text-slate-600 uppercase tracking-wide">Route Details</h3>
 
         {/* From Location */}
-        <div>
-          <label className="text-xs text-slate-600 font-semibold mb-1.5 block">From</label>
-          <input
-            type="text"
-            placeholder="Departure location"
-            value={fromLocation}
-            onChange={(e) => setFromLocation(e.target.value)}
-            className="w-full px-4 py-3 rounded-xl border transition-all focus:outline-none focus:ring-2"
-            style={{
-              background: 'rgba(255,255,255,0.72)',
-              backdropFilter: 'blur(12px)',
-              border: '1px solid rgba(255,255,255,0.85)',
-              boxShadow: '0 2px 8px rgba(138,127,115,0.08)',
-              focusRing: '0 0 0 2px rgba(31,182,213,0.2)'
-            }}
-          />
-        </div>
+          <div className="relative">
+            <label className="text-xs text-slate-600 font-semibold mb-1.5 block">From</label>
+            <button
+              onClick={() => {
+                setShowFromDropdown(!showFromDropdown);
+                setShowToDropdown(false);
+              }}
+              className="w-full px-4 py-3 rounded-xl border transition-all text-left focus:outline-none"
+              style={{
+                background: 'rgba(255,255,255,0.72)',
+                backdropFilter: 'blur(12px)',
+                border: '1px solid rgba(255,255,255,0.85)',
+                boxShadow: '0 2px 8px rgba(138,127,115,0.08)',
+                color: fromLocation ? '#1f2937' : '#9ca3af'
+              }}
+            >
+              {fromLocation ? fromLocation.split('|')[1] : 'Select departure'}
+            </button>
+            {showFromDropdown && (
+              <div className="absolute top-full left-0 right-0 mt-1 bg-white rounded-xl border border-slate-200 shadow-lg z-10">
+                {LOCATIONS.map(loc => (
+                  <button
+                    key={loc.id}
+                    onClick={() => {
+                      setFromLocation(`${loc.id}|${loc.name}`);
+                      setShowFromDropdown(false);
+                    }}
+                    className="w-full px-4 py-2.5 text-left text-sm hover:bg-slate-50 border-b border-slate-100 last:border-b-0 transition-colors"
+                  >
+                    {loc.name}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
 
-        {/* To Location */}
-        <div>
-          <label className="text-xs text-slate-600 font-semibold mb-1.5 block">To</label>
-          <input
-            type="text"
-            placeholder="Arrival location"
-            value={toLocation}
-            onChange={(e) => setToLocation(e.target.value)}
-            className="w-full px-4 py-3 rounded-xl border transition-all focus:outline-none focus:ring-2"
-            style={{
-              background: 'rgba(255,255,255,0.72)',
-              backdropFilter: 'blur(12px)',
-              border: '1px solid rgba(255,255,255,0.85)',
-              boxShadow: '0 2px 8px rgba(138,127,115,0.08)',
-              focusRing: '0 0 0 2px rgba(31,182,213,0.2)'
-            }}
-          />
-        </div>
+          {/* To Location */}
+          <div className="relative">
+            <label className="text-xs text-slate-600 font-semibold mb-1.5 block">To</label>
+            <button
+              onClick={() => {
+                setShowToDropdown(!showToDropdown);
+                setShowFromDropdown(false);
+              }}
+              className="w-full px-4 py-3 rounded-xl border transition-all text-left focus:outline-none"
+              style={{
+                background: 'rgba(255,255,255,0.72)',
+                backdropFilter: 'blur(12px)',
+                border: '1px solid rgba(255,255,255,0.85)',
+                boxShadow: '0 2px 8px rgba(138,127,115,0.08)',
+                color: toLocation ? '#1f2937' : '#9ca3af'
+              }}
+            >
+              {toLocation ? toLocation.split('|')[1] : 'Select arrival'}
+            </button>
+            {showToDropdown && (
+              <div className="absolute top-full left-0 right-0 mt-1 bg-white rounded-xl border border-slate-200 shadow-lg z-10">
+                {LOCATIONS.map(loc => (
+                  <button
+                    key={loc.id}
+                    onClick={() => {
+                      setToLocation(`${loc.id}|${loc.name}`);
+                      setShowToDropdown(false);
+                    }}
+                    className="w-full px-4 py-2.5 text-left text-sm hover:bg-slate-50 border-b border-slate-100 last:border-b-0 transition-colors"
+                  >
+                    {loc.name}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
 
         {/* Swap Button */}
         <button
