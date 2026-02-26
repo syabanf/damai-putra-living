@@ -234,6 +234,7 @@ export default function CreateTicket() {
   const needsWorkScope = selectedPermitType?.requires?.includes('work_scope');
   const needsContractorCompany = selectedPermitType?.requires?.includes('contractor_company');
   const needsNumWorkers = selectedPermitType?.requires?.includes('num_workers');
+  const needsMovingInfo = selectedPermitType?.requires?.includes('moving_info');
 
   const progressSteps = formData.category === 'permit' ? 3 : 2;
   const currentProgress = formData.category === 'permit' ? step : (step === 3 ? 2 : 1);
