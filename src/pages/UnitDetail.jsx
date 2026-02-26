@@ -310,8 +310,8 @@ export default function UnitDetail() {
         {unit.status === 'rejected' && (
           <button onClick={() => navigate(createPageUrl('AddUnit') + `?resubmit=${unit.id}`)}
             className="w-full h-14 rounded-2xl text-white font-semibold flex items-center justify-center gap-2 active:scale-[0.98] transition-transform"
-            style={{ background: 'linear-gradient(135deg, #8A8076, #6e6560)', boxShadow: '0 4px 20px rgba(138,128,118,0.35)' }}>
-            <RefreshCw className="w-5 h-5" /> Resubmit Application
+            style={{ background: 'linear-gradient(135deg, #1FB6D5, #169ab5)', boxShadow: '0 4px 20px rgba(31,182,213,0.35)' }}>
+             <RefreshCw className="w-5 h-5" /> Resubmit Application
           </button>
         )}
 
