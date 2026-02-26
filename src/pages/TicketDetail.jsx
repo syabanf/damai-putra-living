@@ -54,7 +54,7 @@ const Row = ({ label, value }) => value ? (
 ) : null;
 
 const Section = ({ title, icon: Icon, children }) => (
-  <div className="bg-white/80 rounded-2xl p-4">
+  <div className="rounded-2xl p-4" style={{ background: 'rgba(255,255,255,0.75)', backdropFilter: 'blur(16px)', border: '1px solid rgba(255,255,255,0.85)', boxShadow: '0 2px 12px rgba(138,127,115,0.08)' }}>
     <div className="flex items-center gap-2 mb-3 pb-2 border-b border-slate-100">
       {Icon && <Icon className="w-4 h-4 text-stone-500" />}
       <h3 className="font-bold text-slate-700 text-sm uppercase tracking-wide">{title}</h3>
@@ -76,7 +76,7 @@ export default function TicketDetail() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ background: '#F4F5F7' }}>
+      <div className="min-h-screen flex items-center justify-center" style={{ background: 'linear-gradient(160deg, #f0ede9 0%, #e8e4df 100%)' }}>
         <div className="w-8 h-8 border-2 border-stone-400 border-t-transparent rounded-full animate-spin" />
       </div>
     );
@@ -84,7 +84,7 @@ export default function TicketDetail() {
 
   if (!ticket) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center px-5" style={{ background: '#F4F5F7' }}>
+      <div className="min-h-screen flex flex-col items-center justify-center px-5" style={{ background: 'linear-gradient(160deg, #f0ede9 0%, #e8e4df 100%)' }}>
         <AlertCircle className="w-12 h-12 text-slate-300 mb-3" />
         <p className="text-slate-500 font-medium">Permit not found</p>
         <Button onClick={() => navigate(createPageUrl('Tickets'))} className="mt-4" variant="outline">Back to Permits</Button>
@@ -102,7 +102,7 @@ export default function TicketDetail() {
   const currency = (n) => n ? `IDR ${Number(n).toLocaleString('id-ID')}` : null;
 
   return (
-    <div className="min-h-screen pb-10" style={{ background: '#F4F5F7' }}>
+    <div className="min-h-screen pb-10" style={{ background: 'linear-gradient(160deg, #f0ede9 0%, #e8e4df 50%, #e2ddd8 100%)' }}>
       {/* Header */}
       <div className="px-5 pt-14 pb-5 rounded-b-3xl" style={{ background: 'linear-gradient(150deg, #8A7F73 0%, #6e6560 45%, #2E2E2E 100%)' }}>
         <div className="flex items-start gap-3">

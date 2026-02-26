@@ -71,7 +71,7 @@ export default function PropertyDetail() {
   };
 
   return (
-    <div className="min-h-screen bg-white flex flex-col pb-28">
+    <div className="min-h-screen flex flex-col pb-28" style={{ background: 'linear-gradient(160deg, #f0ede9 0%, #e8e4df 50%, #e2ddd8 100%)' }}>
 
       {/* Hero Gallery */}
       <div className="relative w-full aspect-video bg-slate-200 overflow-hidden">
@@ -213,7 +213,7 @@ export default function PropertyDetail() {
       </div>
 
       {/* Sticky CTA */}
-      <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md px-5 py-4 bg-white border-t border-slate-100 z-20">
+      <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md px-5 py-4 z-20" style={{ background: 'rgba(255,255,255,0.88)', backdropFilter: 'blur(20px)', borderTop: '1px solid rgba(255,255,255,0.9)' }}>
         <div className="flex gap-3">
           <button
             onClick={handleContact}

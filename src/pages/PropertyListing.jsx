@@ -42,13 +42,13 @@ export default function PropertyListing() {
   }, [properties, activeCategory, search]);
 
   return (
-    <div className="min-h-screen" style={{ background: '#F4F5F7' }}>
+    <div className="min-h-screen" style={{ background: 'linear-gradient(160deg, #f0ede9 0%, #e8e4df 50%, #e2ddd8 100%)' }}>
       {/* Header */}
-      <div className="px-5 pt-12 pb-4 bg-white shadow-sm">
+      <div className="px-5 pt-12 pb-4" style={{ background: 'rgba(255,255,255,0.85)', backdropFilter: 'blur(20px)', borderBottom: '1px solid rgba(255,255,255,0.9)' }}>
         <div className="flex items-center gap-3 mb-4">
           <button
             onClick={() => navigate(-1)}
-            className="w-9 h-9 rounded-xl flex items-center justify-center border border-slate-200 bg-slate-50">
+            className="w-9 h-9 rounded-xl flex items-center justify-center border border-white/70" style={{ background: 'rgba(255,255,255,0.65)' }}>
             <ArrowLeft className="w-4 h-4 text-slate-600" />
           </button>
           <h1 className="font-bold text-xl text-slate-800 flex-1">Property</h1>
@@ -61,7 +61,7 @@ export default function PropertyListing() {
             value={search}
             onChange={e => setSearch(e.target.value)}
             placeholder="Search property..."
-            className="w-full h-11 pl-10 pr-10 rounded-xl bg-slate-100 text-sm text-slate-700 placeholder-slate-400 border-0 outline-none focus:ring-2 focus:ring-[#1F86C7]/20"
+            className="w-full h-11 pl-10 pr-10 rounded-xl text-sm text-slate-700 placeholder-slate-400 border-0 outline-none focus:ring-2 focus:ring-[#1F86C7]/20" style={{ background: 'rgba(255,255,255,0.65)', backdropFilter: 'blur(12px)' }}
           />
           {search && (
             <button onClick={() => setSearch('')} className="absolute right-3 top-1/2 -translate-y-1/2">
@@ -72,7 +72,7 @@ export default function PropertyListing() {
       </div>
 
       {/* Category chips */}
-      <div className="px-5 py-3 bg-white border-b border-slate-100 overflow-x-auto hide-scrollbar">
+      <div className="px-5 py-3 overflow-x-auto hide-scrollbar" style={{ background: 'rgba(255,255,255,0.55)', backdropFilter: 'blur(12px)', borderBottom: '1px solid rgba(255,255,255,0.7)' }}>
         <div className="flex gap-2 w-max">
           {CATEGORIES.map(cat => (
             <button
@@ -94,7 +94,7 @@ export default function PropertyListing() {
       <div className="px-4 py-5 space-y-4">
         {isLoading ? (
           Array.from({ length: 3 }).map((_, i) => (
-            <div key={i} className="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-100 animate-pulse">
+            <div key={i} className="rounded-2xl overflow-hidden animate-pulse" style={{ background: 'rgba(255,255,255,0.55)' }}>
               <div className="w-full aspect-video bg-slate-200" />
               <div className="p-4 space-y-2">
                 <div className="h-3 bg-slate-200 rounded w-20" />
