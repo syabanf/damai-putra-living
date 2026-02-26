@@ -45,7 +45,7 @@ export default function Layout({ children }) {
         }
       `}</style>
       
-      <div className="max-w-md mx-auto bg-white min-h-screen shadow-2xl relative">
+      <div className="max-w-md mx-auto min-h-screen shadow-2xl relative" style={{ background: 'linear-gradient(160deg, #f0ede9 0%, #e8e4df 100%)' }}>
         {children}
       </div>
     </div>
