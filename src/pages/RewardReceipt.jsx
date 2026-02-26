@@ -77,7 +77,7 @@ export default function RewardReceipt() {
   return (
     <div className="min-h-screen pb-10" style={{ background: 'linear-gradient(160deg, #f0ede9 0%, #e8e4df 50%, #e2ddd8 100%)' }}>
       {/* Header */}
-      <div className="px-5 pt-12 pb-5 bg-white shadow-sm flex items-center justify-between">
+      <div className="px-5 pt-12 pb-5 flex items-center justify-between" style={{ background: 'rgba(255,255,255,0.85)', backdropFilter: 'blur(20px)', borderBottom: '1px solid rgba(255,255,255,0.9)' }}>
         <div className="flex items-center gap-3">
           <button onClick={() => navigate(createPageUrl('Rewards'))} className="w-9 h-9 rounded-xl flex items-center justify-center border border-slate-200 bg-slate-50">
             <ArrowLeft className="w-4 h-4 text-slate-600" />
@@ -170,7 +170,8 @@ export default function RewardReceipt() {
         {/* T&C */}
         {claim.terms?.length > 0 && (
           <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.12 }}
-            className="bg-white rounded-2xl p-4 shadow-sm border border-slate-100">
+            className="rounded-2xl p-4"
+          style={{ background: 'rgba(255,255,255,0.75)', backdropFilter: 'blur(16px)', border: '1px solid rgba(255,255,255,0.85)', boxShadow: '0 2px 12px rgba(138,127,115,0.1)' }}>
             <p className="font-bold text-slate-800 text-sm mb-3">Terms & Conditions</p>
             <ul className="space-y-1.5">
               {claim.terms.map((t, i) => (
