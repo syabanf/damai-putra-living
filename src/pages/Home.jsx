@@ -212,7 +212,7 @@ export default function Home() {
 
       {/* ── 3. PROMO / CTA ── */}
       <div className="mt-6 mx-4">
-        <div className="rounded-2xl overflow-hidden relative" style={{ background: 'linear-gradient(135deg, #8A7F73 0%, #2E2E2E 100%)', boxShadow: '0 4px 20px rgba(90,82,78,0.3)' }}>
+        <div className="rounded-2xl overflow-hidden relative" style={{ background: 'linear-gradient(135deg, #0F3D4C 0%, #0a2d38 100%)', boxShadow: '0 4px 20px rgba(15,61,76,0.3)' }}>
           <div className="absolute -right-8 -top-8 w-32 h-32 rounded-full bg-white/10" />
           <div className="absolute -left-4 -bottom-6 w-24 h-24 rounded-full bg-white/5" />
           <div className="relative px-5 py-5">
