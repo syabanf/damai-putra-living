@@ -60,7 +60,7 @@ export default function Splash() {
           >
             Damai Putra
             <br />
-            <span style={{ color: '#1F86C7' }}>Living</span>
+            <span style={{ color: '#1FB6D5' }}>Living</span>
           </motion.h1>
 
           <motion.p
