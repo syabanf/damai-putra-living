@@ -5,7 +5,6 @@ import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
 import { Search, X, MapPin, Compass } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { Search, X } from 'lucide-react';
 
 const CATEGORIES = [
   { value: 'all', label: 'All' },
