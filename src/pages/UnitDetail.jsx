@@ -75,7 +75,7 @@ export default function UnitDetail() {
   const StatusIcon = unit.status === 'approved' ? CheckCircle : unit.status === 'rejected' ? XCircle : Clock;
 
   return (
-    <div className="min-h-screen pb-8" style={{ background: 'linear-gradient(160deg, #f5f3f0 0%, #ece8e3 50%, #e8e2db 100%)' }}>
+    <div className="min-h-screen pb-8" style={{ background: 'linear-gradient(160deg, #F5F4F2 0%, #edecea 55%, #e7e5e2 100%)' }}>
       {/* Header */}
       <div className="px-5 pt-6 pb-16 rounded-b-3xl" style={{ background: headerGradient }}>
         <div className="flex items-center gap-4 mb-8">
