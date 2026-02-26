@@ -176,7 +176,7 @@ export default function RewardReceipt() {
             <ul className="space-y-1.5">
               {claim.terms.map((t, i) => (
                 <li key={i} className="flex items-start gap-2">
-                  <div className="w-1.5 h-1.5 rounded-full bg-[#1F86C7] flex-shrink-0 mt-1.5" />
+                  <div className="w-1.5 h-1.5 rounded-full bg-[#1FB6D5] flex-shrink-0 mt-1.5" />
                   <span className="text-xs text-slate-500">{t}</span>
                 </li>
               ))}
