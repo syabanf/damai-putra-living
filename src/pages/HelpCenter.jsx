@@ -105,7 +105,7 @@ export default function HelpCenter() {
           <a href="tel:+628001234567"
             className="flex items-center gap-4 p-4 active:bg-white/50" style={{ borderBottom: '1px solid rgba(255,255,255,0.6)' }}>
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-blue-50">
-              <Phone className="w-5 h-5 text-[#1F86C7]" />
+              <Phone className="w-5 h-5 text-[#1FB6D5]" />
             </div>
             <div>
               <p className="text-sm font-semibold text-slate-700">Call Center</p>
