@@ -79,6 +79,7 @@ import Tickets from './pages/Tickets';
 import UnitDetail from './pages/UnitDetail';
 import UnitSubmitted from './pages/UnitSubmitted';
 import Verification from './pages/Verification';
+import Culinary from './pages/Culinary';
 import __Layout from './Layout.jsx';
 
 
@@ -115,6 +116,7 @@ export const PAGES = {
     "UnitDetail": UnitDetail,
     "UnitSubmitted": UnitSubmitted,
     "Verification": Verification,
+    "Culinary": Culinary,
 }
 
 export const pagesConfig = {

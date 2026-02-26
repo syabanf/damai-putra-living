@@ -55,9 +55,9 @@ const QUICK_FEATURES = [
   { icon: Building2,       label: 'Property',   color: '#1FB6D5', bg: '#e6f8fb', page: 'PropertyListing' },
   { icon: HomeIcon,        label: 'My Unit',    color: '#8E8478', bg: '#f5f3f0', page: 'MyUnit' },
   { icon: FileText,        label: 'Permits',    color: '#0F3D4C', bg: '#e6eef0', page: 'Tickets' },
-  { icon: Phone,           label: 'Hotline',    color: '#ef4444', bg: '#fef2f2', page: null },
+  { icon: Phone,           label: 'Hotline',    color: '#ef4444', bg: '#fef2f2', page: 'HelpCenter' },
   { icon: CalendarDays,    label: 'Events',     color: '#f59e0b', bg: '#fffbeb', page: 'Events' },
-  { icon: UtensilsCrossed, label: 'Culinary',   color: '#f97316', bg: '#fff7ed', page: null },
+  { icon: UtensilsCrossed, label: 'Culinary',   color: '#f97316', bg: '#fff7ed', page: 'Culinary' },
   { icon: MapPin,          label: 'Explore',    color: '#8E8478', bg: '#f5f3f0', page: 'Explore' },
   { icon: Sparkles,        label: 'Rewards',    color: '#1FB6D5', bg: '#e6f8fb', page: 'Rewards' },
 ];
@@ -218,8 +218,8 @@ export default function Home() {
           <div className="relative px-5 py-5">
             <p className="text-white/70 text-xs font-semibold uppercase tracking-widest mb-1">Exclusive Membership</p>
             <h3 className="text-white font-bold text-lg leading-snug mb-2">Join Damai Putra Living and get access to various rewards and benefits!</h3>
-            <button className="mt-1 px-5 py-2.5 bg-white rounded-xl text-sm font-bold flex items-center gap-2" style={{ color: '#1FB6D5' }}>
-              Register Now <ArrowRight className="w-4 h-4" />
+            <button onClick={() => navigate(createPageUrl('Rewards'))} className="mt-1 px-5 py-2.5 bg-white rounded-xl text-sm font-bold flex items-center gap-2" style={{ color: '#1FB6D5' }}>
+              View Rewards <ArrowRight className="w-4 h-4" />
             </button>
           </div>
         </div>
