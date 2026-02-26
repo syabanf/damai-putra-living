@@ -49,6 +49,15 @@
   -webkit-tap-highlight-color: transparent;
 }
 
+/* Mobile optimizations */
+body {
+  overscroll-behavior: none;
+}
+
+button, [role="button"], a, nav *, [role="navigation"] * {
+  user-select: none;
+}
+
 /* Custom focus styles */
 button:focus-visible,
 a:focus-visible,

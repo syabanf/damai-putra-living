@@ -1,13 +1,38 @@
-import React from 'react';
+import React, { useEffect, createContext, useState, useContext } from 'react';
 import BottomNav from '@/components/navigation/BottomNav';
 
 // Pages that should NOT show BottomNav
 const NO_NAV_PAGES = ['Splash', 'Onboarding', 'Register', 'Verification', 'ForgotPassword', 'RegistrationSuccess', 'UnitSubmitted', 'TicketSubmitted'];
 
+// Dark mode context
+const DarkModeContext = createContext();
+
+export function useDarkMode() {
+  return useContext(DarkModeContext);
+}
+
 export default function Layout({ children, currentPageName }) {
+  const [isDark, setIsDark] = useState(false);
   const hideNav = NO_NAV_PAGES.includes(currentPageName);
 
+  // Detect system dark mode preference
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    setIsDark(mediaQuery.matches);
+    const handler = (e) => {
+      setIsDark(e.matches);
+      if (e.matches) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    };
+    mediaQuery.addEventListener('change', handler);
+    return () => mediaQuery.removeEventListener('change', handler);
+  }, []);
+
   return (
+    <DarkModeContext.Provider value={isDark}>
     <div className="min-h-screen bg-stone-200">
       <style>{`
         :root {
@@ -48,5 +73,6 @@ export default function Layout({ children, currentPageName }) {
         {!hideNav && <BottomNav currentPage={currentPageName} />}
       </div>
     </div>
+    </DarkModeContext.Provider>
   );
 }
