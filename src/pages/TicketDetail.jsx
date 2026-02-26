@@ -131,17 +131,17 @@ export default function TicketDetail() {
               const isPending = i > currentStageIdx;
               return (
                 <div key={stage.key} className="flex items-center gap-3 py-2">
-                  <div className={`w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 border-2 ${isDone ? 'bg-emerald-500 border-emerald-500' : isCurrent ? 'bg-stone-600 border-stone-600' : 'bg-white border-slate-200'}`}>
+                  <div className={`w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 border-2 ${isDone ? 'bg-emerald-500 border-emerald-500' : isCurrent ? 'border-[#1F86C7]' : 'bg-white border-slate-200'}`} style={isCurrent ? { background: '#1F86C7' } : {}} : ''}`}>
                     {isDone
                       ? <CheckCircle className="w-4 h-4 text-white" />
                       : <span className={`text-[10px] font-bold ${isCurrent ? 'text-white' : 'text-slate-400'}`}>{i + 1}</span>}
                   </div>
                   <div className="flex-1">
                     <p className={`text-sm font-medium ${isDone ? 'text-emerald-700' : isCurrent ? 'text-slate-800 font-bold' : 'text-slate-400'}`}>{stage.label}</p>
-                    {stage.dept && <p className={`text-[10px] ${isDone ? 'text-emerald-500' : isCurrent ? 'text-stone-500' : 'text-slate-300'}`}>{stage.dept}</p>}
+                    {stage.dept && <p className={`text-[10px] ${isDone ? 'text-emerald-500' : isCurrent ? 'text-blue-600' : 'text-slate-300'}`}>{stage.dept}</p>}
                   </div>
                   {isCurrent && (
-                    <span className="text-[10px] bg-stone-100 text-stone-600 px-2 py-0.5 rounded-full font-semibold">Current</span>
+                    <span className="text-[10px] px-2 py-0.5 rounded-full font-semibold" style={{ background: '#e8f4fb', color: '#1F86C7' }}>Current</span>
                   )}
                 </div>
               );
