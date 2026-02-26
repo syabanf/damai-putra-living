@@ -85,6 +85,7 @@ import NewsDetail from './pages/NewsDetail';
 import DealsPromoDetail from './pages/DealsPromoDetail';
 import CulinaryDetail from './pages/CulinaryDetail';
 import Transport from './pages/Transport';
+import TransportSearch from './pages/TransportSearch';
 import __Layout from './Layout.jsx';
 
 
@@ -127,6 +128,7 @@ export const PAGES = {
     "DealsPromoDetail": DealsPromoDetail,
     "CulinaryDetail": CulinaryDetail,
     "Transport": Transport,
+    "TransportSearch": TransportSearch,
 }
 
 export const pagesConfig = {
