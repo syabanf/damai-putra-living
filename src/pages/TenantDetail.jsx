@@ -31,7 +31,7 @@ export default function TenantDetail() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ background: '#F4F5F7' }}>
+      <div className="min-h-screen flex items-center justify-center" style={{ background: 'linear-gradient(160deg, #f0ede9 0%, #e8e4df 100%)' }}>
         <div className="w-8 h-8 border-2 border-[#1F86C7] border-t-transparent rounded-full animate-spin" />
       </div>
     );
@@ -39,7 +39,7 @@ export default function TenantDetail() {
 
   if (!tenant) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ background: '#F4F5F7' }}>
+      <div className="min-h-screen flex items-center justify-center" style={{ background: 'linear-gradient(160deg, #f0ede9 0%, #e8e4df 100%)' }}>
         <p className="text-slate-500">Tenant not found.</p>
       </div>
     );
@@ -53,12 +53,12 @@ export default function TenantDetail() {
   };
 
   return (
-    <div className="min-h-screen pb-10" style={{ background: '#F4F5F7' }}>
+    <div className="min-h-screen pb-10" style={{ background: 'linear-gradient(160deg, #f0ede9 0%, #e8e4df 50%, #e2ddd8 100%)' }}>
       {/* Header area */}
-      <div className="bg-white pb-6 shadow-sm">
+      <div className="pb-6" style={{ background: 'rgba(255,255,255,0.85)', backdropFilter: 'blur(20px)', borderBottom: '1px solid rgba(255,255,255,0.9)' }}>
         <div className="px-5 pt-12 pb-4">
           <button onClick={() => navigate(-1)}
-            className="w-9 h-9 rounded-xl flex items-center justify-center border border-slate-200 bg-slate-50 mb-4">
+            className="w-9 h-9 rounded-xl flex items-center justify-center border border-white/70 mb-4" style={{ background: 'rgba(255,255,255,0.65)' }}>
             <ArrowLeft className="w-4 h-4 text-slate-600" />
           </button>
         </div>
@@ -91,14 +91,14 @@ export default function TenantDetail() {
         {/* Description */}
         {tenant.description && (
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
-            className="bg-white rounded-2xl p-4 shadow-sm border border-slate-100">
+            className="rounded-2xl p-4" style={{ background: 'rgba(255,255,255,0.75)', backdropFilter: 'blur(16px)', border: '1px solid rgba(255,255,255,0.85)' }}>
             <p className="text-slate-600 text-sm leading-relaxed">{tenant.description}</p>
           </motion.div>
         )}
 
         {/* Info */}
         <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 }}
-          className="bg-white rounded-2xl shadow-sm border border-slate-100 divide-y divide-slate-100">
+          className="rounded-2xl divide-y" style={{ background: 'rgba(255,255,255,0.75)', backdropFilter: 'blur(16px)', border: '1px solid rgba(255,255,255,0.85)' }}>
           {tenant.opening_hours && (
             <div className="flex items-center gap-3 px-4 py-3.5">
               <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: '#e8f4fb' }}>

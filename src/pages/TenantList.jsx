@@ -41,12 +41,12 @@ export default function TenantList() {
   }, [tenants, search]);
 
   return (
-    <div className="min-h-screen" style={{ background: '#F4F5F7' }}>
+    <div className="min-h-screen" style={{ background: 'linear-gradient(160deg, #f0ede9 0%, #e8e4df 50%, #e2ddd8 100%)' }}>
       {/* Header */}
-      <div className="px-5 pt-12 pb-4 bg-white shadow-sm">
+      <div className="px-5 pt-12 pb-4" style={{ background: 'rgba(255,255,255,0.85)', backdropFilter: 'blur(20px)', borderBottom: '1px solid rgba(255,255,255,0.9)' }}>
         <div className="flex items-center gap-3 mb-4">
           <button onClick={() => navigate(-1)}
-            className="w-9 h-9 rounded-xl flex items-center justify-center border border-slate-200 bg-slate-50">
+            className="w-9 h-9 rounded-xl flex items-center justify-center border border-white/70" style={{ background: 'rgba(255,255,255,0.65)' }}>
             <ArrowLeft className="w-4 h-4 text-slate-600" />
           </button>
           <div>
@@ -58,7 +58,7 @@ export default function TenantList() {
           <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
           <input value={search} onChange={e => setSearch(e.target.value)}
             placeholder="Search tenant..."
-            className="w-full h-11 pl-10 pr-10 rounded-xl bg-slate-100 text-sm text-slate-700 placeholder-slate-400 border-0 outline-none" />
+            className="w-full h-11 pl-10 pr-10 rounded-xl text-sm text-slate-700 placeholder-slate-400 border-0 outline-none" style={{ background: 'rgba(255,255,255,0.65)', backdropFilter: 'blur(12px)' }} />
           {search && (
             <button onClick={() => setSearch('')} className="absolute right-3 top-1/2 -translate-y-1/2">
               <X className="w-4 h-4 text-slate-400" />
@@ -71,7 +71,7 @@ export default function TenantList() {
         {isLoading ? (
           <div className="grid grid-cols-3 gap-3">
             {Array.from({ length: 9 }).map((_, i) => (
-              <div key={i} className="bg-white rounded-2xl p-4 aspect-square animate-pulse" />
+              <div key={i} className="rounded-2xl p-4 aspect-square animate-pulse" style={{ background: 'rgba(255,255,255,0.55)' }} />
             ))}
           </div>
         ) : filtered.length === 0 ? (
@@ -86,7 +86,7 @@ export default function TenantList() {
                 initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: i * 0.03 }}
                 onClick={() => navigate(createPageUrl('TenantDetail') + `?id=${tenant.id}`)}
-                className="bg-white rounded-2xl p-3 flex flex-col items-center gap-2 shadow-sm border border-slate-100 cursor-pointer active:scale-95 transition-transform">
+                className="rounded-2xl p-3 flex flex-col items-center gap-2 cursor-pointer active:scale-95 transition-transform" style={{ background: 'rgba(255,255,255,0.75)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.85)' }}>
                 {tenant.logo_url ? (
                   <img src={tenant.logo_url} alt={tenant.name} className="w-14 h-14 rounded-xl object-cover" />
                 ) : (
