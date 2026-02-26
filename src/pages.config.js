@@ -48,7 +48,6 @@
  * The mainPage value must match a key in the PAGES object exactly.
  */
 import AddUnit from './pages/AddUnit';
-import CreateTicket from './pages/CreateTicket';
 import ForgotPassword from './pages/ForgotPassword';
 import MyUnit from './pages/MyUnit';
 import Notifications from './pages/Notifications';
@@ -57,7 +56,6 @@ import Profile from './pages/Profile';
 import Register from './pages/Register';
 import RegistrationSuccess from './pages/RegistrationSuccess';
 import Splash from './pages/Splash';
-import TicketDetail from './pages/TicketDetail';
 import TicketSubmitted from './pages/TicketSubmitted';
 import Tickets from './pages/Tickets';
 import UnitDetail from './pages/UnitDetail';
@@ -68,7 +66,6 @@ import __Layout from './Layout.jsx';
 
 export const PAGES = {
     "AddUnit": AddUnit,
-    "CreateTicket": CreateTicket,
     "ForgotPassword": ForgotPassword,
     "MyUnit": MyUnit,
     "Notifications": Notifications,
@@ -77,7 +74,6 @@ export const PAGES = {
     "Register": Register,
     "RegistrationSuccess": RegistrationSuccess,
     "Splash": Splash,
-    "TicketDetail": TicketDetail,
     "TicketSubmitted": TicketSubmitted,
     "Tickets": Tickets,
     "UnitDetail": UnitDetail,
