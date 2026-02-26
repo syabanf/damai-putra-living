@@ -16,9 +16,19 @@ const Card = ({ children, className = '', onClick }) => (
   </div>
 );
 
+const CUISINE_CATEGORIES = [
+  { id: 'all', label: 'All', icon: '🍽️' },
+  { id: 'indonesian', label: 'Indonesian', icon: '🇮🇩' },
+  { id: 'asian', label: 'Asian', icon: '🥢' },
+  { id: 'western', label: 'Western', icon: '🍔' },
+  { id: 'cafe', label: 'Cafe', icon: '☕' },
+  { id: 'dessert', label: 'Dessert', icon: '🍰' },
+];
+
 export default function Culinary() {
   const navigate = useNavigate();
   const [search, setSearch] = useState('');
+  const [activeCategory, setActiveCategory] = useState('all');
 
   const { data: tenants = [] } = useQuery({
     queryKey: ['tenants'],
@@ -31,10 +41,12 @@ export default function Culinary() {
   });
 
   const foodBeverageTenants = tenants.filter(t => t.category === 'food_beverage');
-  const filteredTenants = foodBeverageTenants.filter(t =>
-    t.name.toLowerCase().includes(search.toLowerCase()) ||
-    t.description?.toLowerCase().includes(search.toLowerCase())
-  );
+  const filteredTenants = foodBeverageTenants.filter(t => {
+    const matchSearch = t.name.toLowerCase().includes(search.toLowerCase()) ||
+      t.description?.toLowerCase().includes(search.toLowerCase());
+    const matchCategory = activeCategory === 'all' || t.cuisine_type === activeCategory;
+    return matchSearch && matchCategory;
+  });
 
   return (
     <div className="min-h-screen pb-20" style={{ background: 'linear-gradient(160deg, #F5F4F2 0%, #edecea 55%, #e7e5e2 100%)' }}>
@@ -48,7 +60,7 @@ export default function Culinary() {
 
       {/* Search */}
       <div className="px-4 py-4">
-        <div className="flex items-center gap-2 px-4 py-3 rounded-2xl bg-white border border-slate-200">
+        <div className="flex items-center gap-2 px-4 py-3 rounded-2xl bg-white border border-slate-200 mb-4">
           <Search className="w-4 h-4 text-slate-400" />
           <input
             type="text"
@@ -58,6 +70,23 @@ export default function Culinary() {
             className="flex-1 bg-transparent text-sm outline-none text-slate-800 placeholder-slate-400"
           />
         </div>
+
+        {/* Categories */}
+        <div className="flex gap-2 overflow-x-auto pb-2 hide-scrollbar">
+          {CUISINE_CATEGORIES.map(cat => (
+            <button
+              key={cat.id}
+              onClick={() => setActiveCategory(cat.id)}
+              className={`px-4 py-2 rounded-full whitespace-nowrap font-medium text-sm transition-all flex-shrink-0 ${
+                activeCategory === cat.id
+                  ? 'bg-cyan-500 text-white'
+                  : 'bg-white text-slate-700 border border-slate-200'
+              }`}
+            >
+              <span className="mr-1">{cat.icon}</span>{cat.label}
+            </button>
+          ))}
+        </div>
       </div>
 
       {/* Tenants List */}
@@ -65,15 +94,15 @@ export default function Culinary() {
         {filteredTenants.length > 0 ? (
           filteredTenants.map((tenant, i) => (
             <motion.div key={tenant.id} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}>
-              <Card>
+              <Card onClick={() => navigate(createPageUrl('CulinaryDetail') + `?id=${tenant.id}`)}>
                 <div className="p-4">
                   <div className="flex items-start justify-between mb-2">
-                    <div>
+                    <div className="flex-1">
                       <p className="font-bold text-slate-800">{tenant.name}</p>
                       <p className="text-xs text-slate-500 mt-0.5">{tenant.destination_name}</p>
                     </div>
                     {tenant.logo_url && (
-                      <img src={tenant.logo_url} alt={tenant.name} className="w-10 h-10 rounded-lg object-cover" />
+                      <img src={tenant.logo_url} alt={tenant.name} className="w-10 h-10 rounded-lg object-cover flex-shrink-0 ml-2" />
                     )}
                   </div>
                   {tenant.description && (
