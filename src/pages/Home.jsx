@@ -2,7 +2,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import { base44 } from '@/api/base44Client';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { usePullToRefresh } from '@/components/hooks/usePullToRefresh';
+import PullToRefreshIndicator from '@/components/ui/PullToRefreshIndicator';
 import { motion } from 'framer-motion';
 import {
   Bell, ChevronRight, Building2, Phone, CalendarDays, Bus,
@@ -90,11 +92,18 @@ const DEALS = [
 /* ─────────────────────────────────────────── */
 export default function Home() {
   const navigate = useNavigate();
+  const qc = useQueryClient();
   const [user, setUser] = useState(null);
   const [slide, setSlide] = useState(0);
   const [lang, setLang] = useState('en');
   const [showLang, setShowLang] = useState(false);
   const slideTimer = useRef(null);
+
+  const { isRefreshing, containerRef } = usePullToRefresh(() =>
+    Promise.all([
+      qc.invalidateQueries({ queryKey: ['notifications'] }),
+    ])
+  );
 
   useEffect(() => { base44.auth.me().then(setUser).catch(() => {}); }, []);
 
@@ -120,7 +129,8 @@ export default function Home() {
   const currentLang = LANGUAGES.find(l => l.code === lang);
 
   return (
-    <div className="min-h-screen pb-24" style={{ background: 'linear-gradient(160deg, #F5F4F2 0%, #edecea 55%, #e7e5e2 100%)' }}>
+    <div ref={containerRef} className="min-h-screen pb-24 overflow-y-auto" style={{ background: 'linear-gradient(160deg, #F5F4F2 0%, #edecea 55%, #e7e5e2 100%)' }}>
+      <PullToRefreshIndicator isRefreshing={isRefreshing} />
 
       {/* ── 1. HERO BANNER ── */}
       <div className="relative h-64 overflow-hidden">
