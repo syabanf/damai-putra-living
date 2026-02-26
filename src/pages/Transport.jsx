@@ -107,7 +107,7 @@ export default function Transport() {
       </div>
 
       {/* Map */}
-      <div className="mx-4 rounded-2xl overflow-hidden" style={{ height: '400px', boxShadow: '0 4px 12px rgba(138,127,115,0.15)' }}>
+      <div className="mx-4 rounded-2xl overflow-hidden" style={{ height: '400px', boxShadow: '0 4px 20px rgba(15,61,76,0.25)', border: '1px solid rgba(255,255,255,0.75)' }}>
         <MapContainer center={mapCenter} zoom={15} style={{ height: '100%', width: '100%' }}>
           <TileLayer
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
