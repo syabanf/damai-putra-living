@@ -68,9 +68,17 @@ export default function CreateTicket() {
 
   const mutation = useMutation({
     mutationFn: (data) => base44.entities.Ticket.create(data),
+    onMutate: (data) => {
+      const previous = qc.getQueryData(['tickets']);
+      qc.setQueryData(['tickets'], (old) => [...(old || []), { ...data, id: Date.now() }]);
+      return { previous };
+    },
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ['tickets'] });
       navigate(createPageUrl('TicketSubmitted'));
+    },
+    onError: (err, data, context) => {
+      qc.setQueryData(['tickets'], context?.previous);
     },
   });
 
