@@ -73,6 +73,8 @@ import TenantDetail from './pages/TenantDetail';
 import Events from './pages/Events';
 import EventDetail from './pages/EventDetail';
 import EventsCalendar from './pages/EventsCalendar';
+import HelpCenter from './pages/HelpCenter';
+import PrivacySecurity from './pages/PrivacySecurity';
 import __Layout from './Layout.jsx';
 
 
@@ -103,6 +105,8 @@ export const PAGES = {
     "Events": Events,
     "EventDetail": EventDetail,
     "EventsCalendar": EventsCalendar,
+    "HelpCenter": HelpCenter,
+    "PrivacySecurity": PrivacySecurity,
 }
 
 export const pagesConfig = {
