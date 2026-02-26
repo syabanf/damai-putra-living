@@ -66,6 +66,10 @@ import UnitSubmitted from './pages/UnitSubmitted';
 import Verification from './pages/Verification';
 import PropertyListing from './pages/PropertyListing';
 import PropertyDetail from './pages/PropertyDetail';
+import Explore from './pages/Explore';
+import ExploreDetail from './pages/ExploreDetail';
+import TenantList from './pages/TenantList';
+import TenantDetail from './pages/TenantDetail';
 import __Layout from './Layout.jsx';
 
 
@@ -89,6 +93,10 @@ export const PAGES = {
     "Verification": Verification,
     "PropertyListing": PropertyListing,
     "PropertyDetail": PropertyDetail,
+    "Explore": Explore,
+    "ExploreDetail": ExploreDetail,
+    "TenantList": TenantList,
+    "TenantDetail": TenantDetail,
 }
 
 export const pagesConfig = {
