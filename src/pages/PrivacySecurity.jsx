@@ -34,7 +34,7 @@ export default function PrivacySecurity() {
 
       {/* Hero */}
       <div className="mx-4 mt-5 rounded-2xl p-5 flex items-center gap-4"
-        style={{ background: 'linear-gradient(135deg, #1F86C7, #1669a0)', boxShadow: '0 4px 16px rgba(31,134,199,0.3)' }}>
+        style={{ background: 'linear-gradient(135deg, #1FB6D5, #169ab5)', boxShadow: '0 4px 16px rgba(31,182,213,0.3)' }}>
         <div className="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center flex-shrink-0">
           <Shield className="w-7 h-7 text-white" />
         </div>
