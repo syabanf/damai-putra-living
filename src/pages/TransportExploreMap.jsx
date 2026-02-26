@@ -1,93 +1,11 @@
-import React, { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { createPageUrl } from '@/utils';
-import { motion } from 'framer-motion';
-import { ArrowLeft, Bus, Compass, MapPin, Clock, Star, Filter } from 'lucide-react';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import L from 'leaflet';
-
-const TRANSPORT_STATIONS = [
-  { id: 1, name: 'Damai Putra Hub', lat: 3.1089, lng: 101.5180, type: 'hub', routes: 5, status: 'Active' },
-  { id: 2, name: 'KL Central Station', lat: 3.1466, lng: 101.6956, type: 'hub', routes: 12, status: 'Active' },
-  { id: 3, name: 'Jalan Utama Terminal', lat: 3.1200, lng: 101.5500, type: 'stop', routes: 3, status: 'Active' },
-  { id: 4, name: 'Terminal Kota', lat: 3.1350, lng: 101.5900, type: 'stop', routes: 4, status: 'Active' },
-  { id: 5, name: 'Jalan Merdeka Stop', lat: 3.1250, lng: 101.5700, type: 'stop', routes: 2, status: 'Active' },
-  { id: 6, name: 'Sentosa Terminal', lat: 3.1400, lng: 101.5400, type: 'stop', routes: 3, status: 'Active' },
-  { id: 7, name: 'Bukit Bintang Hub', lat: 3.1380, lng: 101.7120, type: 'hub', routes: 8, status: 'Active' },
-  { id: 8, name: 'Midvalley Stop', lat: 3.1120, lng: 101.6850, type: 'stop', routes: 2, status: 'Active' },
-];
-
-const DESTINATION_PINS = [
-  { id: 1, name: 'Central Mall', lat: 3.1350, lng: 101.5900, type: 'commercial', category: 'Shopping Mall', rating: 4.5 },
-  { id: 2, name: 'The Curve F&B Zone', lat: 3.1200, lng: 101.5500, type: 'culinary', category: 'Food Court', rating: 4.3 },
-  { id: 3, name: 'Sunway Lagoon Theme Park', lat: 3.1450, lng: 101.6000, type: 'entertainment', category: 'Theme Park', rating: 4.6 },
-  { id: 4, name: 'Community Center Damansara', lat: 3.1100, lng: 101.5300, type: 'community', category: 'Community', rating: 4.1 },
-  { id: 5, name: 'Premium Outlets KL', lat: 3.1250, lng: 101.5700, type: 'retail', category: 'Outlets', rating: 4.4 },
-  { id: 6, name: 'Pavilion KL', lat: 3.1500, lng: 101.7200, type: 'commercial', category: 'Shopping Mall', rating: 4.7 },
-  { id: 7, name: 'Nandos Restaurant', lat: 3.1150, lng: 101.6100, type: 'culinary', category: 'Restaurant', rating: 4.2 },
-  { id: 8, name: 'Petronas Twin Towers', lat: 3.1570, lng: 101.6876, type: 'attraction', category: 'Attraction', rating: 4.8 },
-  { id: 9, name: 'Klang Valley Health Center', lat: 3.1300, lng: 101.5600, type: 'health', category: 'Healthcare', rating: 4.0 },
-  { id: 10, name: 'Fashion District', lat: 3.1400, lng: 101.5800, type: 'retail', category: 'Fashion', rating: 4.3 },
-];
-
-const LEGEND_ITEMS = {
-  transport: [
-    { type: 'hub', label: 'Major Hub', color: '#1FB6D5' },
-    { type: 'stop', label: 'Bus Stop', color: '#8E8478' },
-  ],
-  explore: [
-    { type: 'commercial', label: 'Shopping', color: '#1FB6D5' },
-    { type: 'culinary', label: 'F&B', color: '#ef4444' },
-    { type: 'retail', label: 'Retail', color: '#f97316' },
-    { type: 'entertainment', label: 'Entertainment', color: '#f59e0b' },
-    { type: 'community', label: 'Community', color: '#10b981' },
-    { type: 'attraction', label: 'Attraction', color: '#8b5cf6' },
-    { type: 'health', label: 'Health', color: '#ec4899' },
-  ],
-};
-
-const MapIcon = (type, isTransport) => {
-  const colors = isTransport ? {
-    hub: '#1FB6D5',
-    stop: '#8E8478',
-  } : {
-    commercial: '#1FB6D5',
-    retail: '#f97316',
-    culinary: '#ef4444',
-    attraction: '#8b5cf6',
-    entertainment: '#f59e0b',
-    community: '#10b981',
-    health: '#ec4899',
-  };
-  
-  return L.divIcon({
-    html: `<div style="background-color: ${colors[type] || '#1FB6D5'}; width: 36px; height: 36px; border-radius: 50%; border: 3px solid white; display: flex; align-items: center; justify-content: center; font-weight: bold; color: white; font-size: 14px; box-shadow: 0 3px 10px rgba(0,0,0,0.25);"></div>`,
-    iconSize: [36, 36],
-    className: 'custom-icon-hover',
-  });
-};
+import ExploreMap from '@/components/map/ExploreMap';
 
 export default function TransportExploreMap() {
   const navigate = useNavigate();
-  const [mode, setMode] = useState('transport');
-  const [selectedItem, setSelectedItem] = useState(null);
-  const [showList, setShowList] = useState(false);
-  const [filterType, setFilterType] = useState('all');
   
   const urlParams = new URLSearchParams(window.location.search);
   const initialMode = urlParams.get('mode') || 'transport';
-  
-  React.useEffect(() => {
-    if (initialMode) setMode(initialMode);
-  }, [initialMode]);
-
-  const data = mode === 'transport' ? TRANSPORT_STATIONS : DESTINATION_PINS;
-  const title = mode === 'transport' ? 'Transport Stations' : 'Explore Destinations';
-  
-  const filteredData = useMemo(() => {
-    if (filterType === 'all') return data;
-    return data.filter(item => item.type === filterType);
-  }, [data, filterType]);
 
   return (
     <div className="min-h-screen pb-24" style={{ background: 'linear-gradient(160deg, #F5F4F2 0%, #edecea 55%, #e7e5e2 100%)' }}>
