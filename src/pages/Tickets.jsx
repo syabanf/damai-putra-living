@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import { base44 } from '@/api/base44Client';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { usePullToRefresh } from '@/components/hooks/usePullToRefresh';
+import PullToRefreshIndicator from '@/components/ui/PullToRefreshIndicator';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Plus, FileCheck, Wrench, Truck, Calendar, Users, Lock,
@@ -66,8 +68,16 @@ const TABS = [
 
 export default function Tickets() {
   const navigate = useNavigate();
+  const qc = useQueryClient();
   const [user, setUser] = useState(null);
   const [activeTab, setActiveTab] = useState('all');
+
+  const { isRefreshing, containerRef } = usePullToRefresh(() =>
+    Promise.all([
+      qc.invalidateQueries({ queryKey: ['tickets'] }),
+      qc.invalidateQueries({ queryKey: ['units'] }),
+    ])
+  );
 
   useEffect(() => { base44.auth.me().then(setUser).catch(() => {}); }, []);
 
@@ -94,7 +104,8 @@ export default function Tickets() {
 
   if (!hasApprovedUnit) {
     return (
-      <div className="min-h-screen pb-28" style={{ background: 'linear-gradient(160deg, #F5F4F2 0%, #edecea 55%, #e7e5e2 100%)' }}>
+      <div ref={containerRef} className="min-h-screen pb-28 overflow-y-auto" style={{ background: 'linear-gradient(160deg, #F5F4F2 0%, #edecea 55%, #e7e5e2 100%)' }}>
+        <PullToRefreshIndicator isRefreshing={isRefreshing} />
         <div className="px-5 pt-14 pb-6 rounded-b-[2rem] relative overflow-hidden" style={{ background: 'linear-gradient(150deg, #1a5068 0%, #0F3D4C 55%, #0a2d38 100%)' }}>
           <div className="absolute -top-8 -right-8 w-40 h-40 rounded-full opacity-10 bg-white pointer-events-none" />
           <p className="text-white/50 text-[10px] font-semibold uppercase tracking-widest mb-1">Damai Putra Living</p>
@@ -124,7 +135,8 @@ export default function Tickets() {
   }
 
   return (
-    <div className="min-h-screen pb-28" style={{ background: 'linear-gradient(160deg, #F5F4F2 0%, #edecea 55%, #e7e5e2 100%)' }}>
+    <div ref={containerRef} className="min-h-screen pb-28 overflow-y-auto" style={{ background: 'linear-gradient(160deg, #F5F4F2 0%, #edecea 55%, #e7e5e2 100%)' }}>
+      <PullToRefreshIndicator isRefreshing={isRefreshing} />
       <div className="px-5 pt-14 pb-5 rounded-b-[2rem] relative overflow-hidden" style={{ background: 'linear-gradient(150deg, #1a5068 0%, #0F3D4C 55%, #0a2d38 100%)' }}>
         <div className="absolute -top-8 -right-8 w-40 h-40 rounded-full opacity-10 bg-white pointer-events-none" />
         <div className="flex justify-between items-center mb-4 relative">
