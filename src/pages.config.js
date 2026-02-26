@@ -49,72 +49,72 @@
  */
 import AddUnit from './pages/AddUnit';
 import CreateTicket from './pages/CreateTicket';
+import EventDetail from './pages/EventDetail';
+import Events from './pages/Events';
+import EventsCalendar from './pages/EventsCalendar';
+import Explore from './pages/Explore';
+import ExploreDetail from './pages/ExploreDetail';
 import ForgotPassword from './pages/ForgotPassword';
+import HelpCenter from './pages/HelpCenter';
 import Home from './pages/Home';
+import MyClaims from './pages/MyClaims';
 import MyUnit from './pages/MyUnit';
 import Notifications from './pages/Notifications';
 import Onboarding from './pages/Onboarding';
+import PrivacySecurity from './pages/PrivacySecurity';
 import Profile from './pages/Profile';
+import PropertyDetail from './pages/PropertyDetail';
+import PropertyListing from './pages/PropertyListing';
 import Register from './pages/Register';
 import RegistrationSuccess from './pages/RegistrationSuccess';
+import RewardDetail from './pages/RewardDetail';
+import RewardReceipt from './pages/RewardReceipt';
+import Rewards from './pages/Rewards';
 import Splash from './pages/Splash';
+import TenantDetail from './pages/TenantDetail';
+import TenantList from './pages/TenantList';
 import TicketDetail from './pages/TicketDetail';
 import TicketSubmitted from './pages/TicketSubmitted';
 import Tickets from './pages/Tickets';
 import UnitDetail from './pages/UnitDetail';
 import UnitSubmitted from './pages/UnitSubmitted';
 import Verification from './pages/Verification';
-import PropertyListing from './pages/PropertyListing';
-import PropertyDetail from './pages/PropertyDetail';
-import Explore from './pages/Explore';
-import ExploreDetail from './pages/ExploreDetail';
-import TenantList from './pages/TenantList';
-import TenantDetail from './pages/TenantDetail';
-import Events from './pages/Events';
-import EventDetail from './pages/EventDetail';
-import EventsCalendar from './pages/EventsCalendar';
-import HelpCenter from './pages/HelpCenter';
-import PrivacySecurity from './pages/PrivacySecurity';
-import Rewards from './pages/Rewards';
-import RewardDetail from './pages/RewardDetail';
-import RewardReceipt from './pages/RewardReceipt';
-import MyClaims from './pages/MyClaims';
 import __Layout from './Layout.jsx';
 
 
 export const PAGES = {
     "AddUnit": AddUnit,
     "CreateTicket": CreateTicket,
+    "EventDetail": EventDetail,
+    "Events": Events,
+    "EventsCalendar": EventsCalendar,
+    "Explore": Explore,
+    "ExploreDetail": ExploreDetail,
     "ForgotPassword": ForgotPassword,
+    "HelpCenter": HelpCenter,
     "Home": Home,
+    "MyClaims": MyClaims,
     "MyUnit": MyUnit,
     "Notifications": Notifications,
     "Onboarding": Onboarding,
+    "PrivacySecurity": PrivacySecurity,
     "Profile": Profile,
+    "PropertyDetail": PropertyDetail,
+    "PropertyListing": PropertyListing,
     "Register": Register,
     "RegistrationSuccess": RegistrationSuccess,
+    "RewardDetail": RewardDetail,
+    "RewardReceipt": RewardReceipt,
+    "Rewards": Rewards,
     "Splash": Splash,
+    "TenantDetail": TenantDetail,
+    "TenantList": TenantList,
     "TicketDetail": TicketDetail,
     "TicketSubmitted": TicketSubmitted,
     "Tickets": Tickets,
     "UnitDetail": UnitDetail,
     "UnitSubmitted": UnitSubmitted,
     "Verification": Verification,
-    "PropertyListing": PropertyListing,
-    "PropertyDetail": PropertyDetail,
-    "Explore": Explore,
-    "ExploreDetail": ExploreDetail,
-    "TenantList": TenantList,
-    "TenantDetail": TenantDetail,
-    "Events": Events,
-    "EventDetail": EventDetail,
-    "EventsCalendar": EventsCalendar,
-    "HelpCenter": HelpCenter,
-    "PrivacySecurity": PrivacySecurity,
-    "Rewards": Rewards,
-    "RewardDetail": RewardDetail,
-    "RewardReceipt": RewardReceipt,
-    "MyClaims": MyClaims,
 }
 
 export const pagesConfig = {
