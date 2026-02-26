@@ -261,7 +261,7 @@ export default function CreateTicket() {
             <h1 className="text-base font-bold text-white">
               {showReview ? 'Review & Submit' : 
                step === 1 ? 'New Request' : 
-               step === 2 ? 'Select Permit Type' : 
+               step === 2 ? 'Pilih Jenis Izin' : 
                'Application Details'}
             </h1>
             <p className="text-xs text-white/50 mt-0.5">
