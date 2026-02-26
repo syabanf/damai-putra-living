@@ -103,11 +103,18 @@ export default function TransportExploreMap() {
             attribution='&copy; OpenStreetMap contributors'
           />
           {data.map(item => (
-            <Marker key={item.id} position={[item.lat, item.lng]} icon={MapIcon(item.type, mode === 'transport')}>
-              <Popup>
-                <div className="text-sm font-semibold">{item.name}</div>
-              </Popup>
-            </Marker>
+           <Marker 
+             key={item.id} 
+             position={[item.lat, item.lng]} 
+             icon={MapIcon(item.type, mode === 'transport')}
+             eventHandlers={{
+               click: () => setSelectedItem(item),
+             }}
+           >
+             <Popup>
+               <div className="text-sm font-semibold">{item.name}</div>
+             </Popup>
+           </Marker>
           ))}
         </MapContainer>
       </div>
