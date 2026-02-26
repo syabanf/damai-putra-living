@@ -34,35 +34,86 @@ const CATEGORIES = [
 ];
 
 const PERMIT_TYPES = [
-  { 
-    id: 'renovation', label: 'Renovation / Fit-Out', icon: HardHat,
-    description: 'Interior renovation or fit-out works',
-    requires: ['work_scope', 'visitor_details', 'num_workers'],
-    docs: 'Floor plan, contractor credentials, work schedule'
-  },
-  { 
-    id: 'moving_in', label: 'Move-In Permit', icon: Package,
-    description: 'Move furniture and belongings into the unit',
-    requires: ['visitor_details'],
-    docs: 'Valid ID of movers, vehicle plate number'
-  },
-  { 
-    id: 'moving_out', label: 'Move-Out Permit', icon: Truck,
-    description: 'Move furniture and belongings out of the unit',
-    requires: ['visitor_details'],
-    docs: 'Valid ID of movers, vehicle plate number'
-  },
-  { 
-    id: 'event', label: 'Event / Gathering Permit', icon: PartyPopper,
-    description: 'Host an event in common or private areas',
+  {
+    id: 'izin_kegiatan',
+    label: 'Izin Kegiatan',
+    code: 'IZIN-05',
+    icon: PartyPopper,
+    description: 'Surat Permohonan Izin Kegiatan di area properti',
     requires: ['visitor_details', 'num_workers'],
-    docs: 'Event brief, expected guest list count'
+    docs: 'KTP pemohon, proposal kegiatan'
   },
-  { 
-    id: 'contractor_access', label: 'Contractor / Vendor Access', icon: Users,
-    description: 'Grant access for external contractors or vendors',
+  {
+    id: 'renovasi_minor',
+    label: 'Izin Renovasi Minor',
+    code: 'IZIN-03',
+    icon: HardHat,
+    description: 'Surat Permohonan Ijin Kerja Renovasi Minor',
+    requires: ['work_scope', 'visitor_details', 'contractor_company', 'num_workers'],
+    docs: 'KTP pemohon, gambar kerja, surat pernyataan tetangga'
+  },
+  {
+    id: 'renovasi_mayor',
+    label: 'Izin Renovasi Mayor',
+    code: 'IZIN-04',
+    icon: HardHat,
+    description: 'Surat Permohonan Ijin Kerja Renovasi Mayor',
+    requires: ['work_scope', 'visitor_details', 'contractor_company', 'num_workers'],
+    docs: 'KTP, IMB, gambar kerja, surat pernyataan tetangga, deposit'
+  },
+  {
+    id: 'pembangunan_kavling',
+    label: 'Izin Pembangunan Kavling',
+    code: 'IZIN-02',
+    icon: HardHat,
+    description: 'Ketentuan Izin Pembangunan Kavling',
+    requires: ['work_scope', 'visitor_details', 'contractor_company', 'num_workers'],
+    docs: 'KTP, IMB, gambar rencana bangun, surat pernyataan tetangga'
+  },
+  {
+    id: 'galian',
+    label: 'Izin Galian',
+    code: 'IZIN-19',
+    icon: HardHat,
+    description: 'Berita Acara Pemeriksaan Galian',
+    requires: ['work_scope', 'visitor_details', 'contractor_company', 'num_workers'],
+    docs: 'KTP, gambar rencana galian, surat izin kontraktor'
+  },
+  {
+    id: 'pindah_masuk',
+    label: 'Izin Pindah Masuk',
+    code: 'IZIN-15',
+    icon: Package,
+    description: 'Form Bantuan Keamanan Untuk Masuk',
+    requires: ['visitor_details', 'moving_info'],
+    docs: 'KTP pemohon, plat nomor kendaraan'
+  },
+  {
+    id: 'pindah_keluar',
+    label: 'Izin Pindah Keluar',
+    code: 'IZIN-16',
+    icon: Truck,
+    description: 'Form Bantuan Keamanan Untuk Keluar',
+    requires: ['visitor_details', 'moving_info'],
+    docs: 'KTP pemohon, plat nomor kendaraan'
+  },
+  {
+    id: 'pencairan_deposit',
+    label: 'Pencairan Deposit',
+    code: 'IZIN-11',
+    icon: Users,
+    description: 'Surat Permohonan Pencairan Deposit Renovasi',
+    requires: [],
+    docs: 'Bukti pembayaran deposit, berita acara pemeriksaan'
+  },
+  {
+    id: 'akses_kontraktor',
+    label: 'Akses Kontraktor / Vendor',
+    code: 'IZIN-15',
+    icon: Users,
+    description: 'Form Bantuan Keamanan untuk akses kontraktor/vendor',
     requires: ['visitor_details', 'contractor_company', 'num_workers'],
-    docs: 'Contractor ID, company credentials, scope of work'
+    docs: 'KTP kontraktor, surat tugas perusahaan, plat nomor'
   },
 ];
 
