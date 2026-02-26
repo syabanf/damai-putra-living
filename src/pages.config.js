@@ -91,6 +91,7 @@ import TransportTicketDetail from './pages/TransportTicketDetail';
 import UnitDetail from './pages/UnitDetail';
 import UnitSubmitted from './pages/UnitSubmitted';
 import Verification from './pages/Verification';
+import TransportTicketDetails from './pages/TransportTicketDetails';
 import __Layout from './Layout.jsx';
 
 
@@ -139,6 +140,7 @@ export const PAGES = {
     "UnitDetail": UnitDetail,
     "UnitSubmitted": UnitSubmitted,
     "Verification": Verification,
+    "TransportTicketDetails": TransportTicketDetails,
 }
 
 export const pagesConfig = {
