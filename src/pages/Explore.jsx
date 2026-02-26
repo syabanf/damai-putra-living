@@ -5,7 +5,7 @@ import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
 import { Search, X, MapPin, Compass } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { PAGE_BG, GlassHeader, Chip, SearchBar } from '@/components/ui/DesignSystem';
+import { Search, X } from 'lucide-react';
 
 const CATEGORIES = [
   { value: 'all', label: 'All' },
@@ -65,13 +65,16 @@ export default function Explore() {
       </div>
 
       {/* Category chips */}
-      <div style={{ background: 'rgba(255,255,255,0.55)', backdropFilter: 'blur(12px)', borderBottom: '1px solid rgba(255,255,255,0.7)' }}>
-        <div className="px-5 py-3 overflow-x-auto hide-scrollbar">
-          <div className="flex gap-2 w-max">
-            {CATEGORIES.map(cat => (
-              <Chip key={cat.value} label={cat.label} active={activeCategory === cat.value} onClick={() => setActiveCategory(cat.value)} />
-            ))}
-          </div>
+      <div className="px-5 py-3 overflow-x-auto hide-scrollbar">
+        <div className="flex gap-2 w-max">
+          {CATEGORIES.map(cat => (
+            <button key={cat.value} onClick={() => setActiveCategory(cat.value)}
+              className="px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all active:scale-95"
+              style={activeCategory === cat.value
+                ? { background: 'linear-gradient(135deg, #1F86C7, #1669a0)', color: '#fff', boxShadow: '0 3px 10px rgba(31,134,199,0.35)' }
+                : { background: 'rgba(255,255,255,0.75)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.85)', color: '#64748b' }
+              }>{cat.label}</button>
+          ))}
         </div>
       </div>
 
