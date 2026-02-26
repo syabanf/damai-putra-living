@@ -89,6 +89,23 @@ export default function Explore() {
         </div>
       </div>
 
+      {/* Map Section */}
+      <div className="mx-4 mt-4 rounded-2xl overflow-hidden h-56" style={{ boxShadow: '0 4px 20px rgba(31,182,213,0.2)' }}>
+        <MapContainer center={[3.1200, 101.5600]} zoom={12} style={{ height: '100%', width: '100%' }}>
+          <TileLayer
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            attribution='&copy; OpenStreetMap contributors'
+          />
+          {DESTINATION_PINS.map(pin => (
+            <Marker key={pin.id} position={[pin.lat, pin.lng]} icon={MapIcon(pin.type)}>
+              <Popup>
+                <div className="text-sm font-semibold">{pin.name}</div>
+              </Popup>
+            </Marker>
+          ))}
+        </MapContainer>
+      </div>
+
       {/* Category chips */}
       <div className="px-5 py-3 overflow-x-auto hide-scrollbar">
         <div className="flex gap-2 w-max">
