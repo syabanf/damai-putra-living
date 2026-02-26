@@ -14,6 +14,20 @@ const TRANSPORT_TYPES = [
   { id: 'delivery', label: 'Delivery', icon: Package, color: '#8b5cf6' },
 ];
 
+const TRANSPORT_STATIONS = [
+  { id: 1, name: 'Damai Putra Township', lat: 3.1089, lng: 101.5180, type: 'hub' },
+  { id: 2, name: 'Central Station', lat: 3.1466, lng: 101.6956, type: 'hub' },
+  { id: 3, name: 'Jalan Utama Terminal', lat: 3.1200, lng: 101.5500, type: 'stop' },
+  { id: 4, name: 'Terminal Kota', lat: 3.1350, lng: 101.5900, type: 'stop' },
+  { id: 5, name: 'Jalan Merdeka', lat: 3.1250, lng: 101.5700, type: 'stop' },
+];
+
+const MapIcon = (color) => L.divIcon({
+  html: `<div style="background-color: ${color}; width: 30px; height: 30px; border-radius: 50%; border: 3px solid white; display: flex; align-items: center; justify-content: center; font-weight: bold; color: white; font-size: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.2);"></div>`,
+  iconSize: [30, 30],
+  className: 'custom-icon',
+});
+
 export default function TransportSearch() {
   const navigate = useNavigate();
   const [transportType, setTransportType] = useState('shuttle');
