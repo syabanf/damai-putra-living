@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
-import { ArrowLeft, Share2, Newspaper } from 'lucide-react';
+import { ArrowLeft, Share2, Newspaper, Send } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const MOCK_NEWS = {
@@ -11,17 +11,46 @@ const MOCK_NEWS = {
   4: { id: 4, title: 'Community Events Schedule 2026', date: '15 Jan 2026', img: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&q=80', content: 'Full schedule of community events planned for 2026 with details on participation and registration. Throughout the year, we have curated a diverse range of events designed to bring the community together and celebrate our shared values. From cultural festivals to wellness programs, there is something for everyone.' },
 };
 
+const MOCK_COMMENTS = {
+  1: [
+    { id: 1, name: 'Ahmad Wijaya', time: '2 hours ago', text: 'Great news! Looking forward to the new facilities.' },
+    { id: 2, name: 'Siti Nurhaliza', time: '5 hours ago', text: 'This is wonderful development for our community.' },
+  ],
+  2: [
+    { id: 1, name: 'Budi Santoso', time: '1 day ago', text: 'Impressive progress! Keep up the good work.' },
+  ],
+  3: [],
+  4: [
+    { id: 1, name: 'Maria Santos', time: '3 days ago', text: 'Excited about the new events planned!' },
+  ],
+};
+
 export default function NewsDetail() {
   const navigate = useNavigate();
   const params = new URLSearchParams(window.location.search);
   const id = params.get('id');
   const news = MOCK_NEWS[id] || MOCK_NEWS[1];
+  const [comments, setComments] = useState(MOCK_COMMENTS[id] || []);
+  const [commentText, setCommentText] = useState('');
 
   const handleShare = () => {
     if (navigator.share) {
       navigator.share({ title: news.title, text: news.content, url: window.location.href });
     } else {
       navigator.clipboard.writeText(window.location.href);
+    }
+  };
+
+  const handleAddComment = () => {
+    if (commentText.trim()) {
+      const newComment = {
+        id: comments.length + 1,
+        name: 'You',
+        time: 'just now',
+        text: commentText,
+      };
+      setComments([newComment, ...comments]);
+      setCommentText('');
     }
   };
 
@@ -60,12 +89,59 @@ export default function NewsDetail() {
         </motion.div>
 
         {/* Body */}
-        <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-          className="rounded-2xl p-4"
-          style={{ background: 'rgba(255,255,255,0.75)', backdropFilter: 'blur(16px)', border: '1px solid rgba(255,255,255,0.85)' }}>
-          <p className="text-slate-600 text-sm leading-relaxed whitespace-pre-wrap">{news.content}</p>
-        </motion.div>
-      </div>
-    </div>
-  );
-}
+         <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
+           className="rounded-2xl p-4"
+           style={{ background: 'rgba(255,255,255,0.75)', backdropFilter: 'blur(16px)', border: '1px solid rgba(255,255,255,0.85)' }}>
+           <p className="text-slate-600 text-sm leading-relaxed whitespace-pre-wrap">{news.content}</p>
+         </motion.div>
+
+         {/* Comments Section */}
+         <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }}>
+           <div className="rounded-2xl p-4" style={{ background: 'rgba(255,255,255,0.75)', backdropFilter: 'blur(16px)', border: '1px solid rgba(255,255,255,0.85)' }}>
+             <h3 className="font-bold text-slate-800 mb-4">Comments ({comments.length})</h3>
+
+             {/* Comment Input */}
+             <div className="flex gap-2 mb-4 pb-4 border-b border-slate-200">
+               <div className="w-8 h-8 rounded-full bg-gradient-to-br from-cyan-400 to-blue-500 flex-shrink-0" />
+               <div className="flex-1 flex gap-2">
+                 <input
+                   type="text"
+                   placeholder="Add a comment..."
+                   value={commentText}
+                   onChange={(e) => setCommentText(e.target.value)}
+                   onKeyPress={(e) => e.key === 'Enter' && handleAddComment()}
+                   className="flex-1 bg-transparent text-sm outline-none placeholder-slate-400 text-slate-700"
+                 />
+                 <button onClick={handleAddComment} disabled={!commentText.trim()}
+                   className="text-cyan-500 hover:text-cyan-600 disabled:text-slate-300 transition-colors">
+                   <Send className="w-4 h-4" />
+                 </button>
+               </div>
+             </div>
+
+             {/* Comments List */}
+             <div className="space-y-3">
+               {comments.length > 0 ? (
+                 comments.map((comment) => (
+                   <motion.div key={comment.id} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }}
+                     className="flex gap-3">
+                     <div className="w-8 h-8 rounded-full bg-gradient-to-br from-orange-400 to-red-500 flex-shrink-0" />
+                     <div className="flex-1">
+                       <div className="flex items-center gap-2">
+                         <span className="font-semibold text-sm text-slate-800">{comment.name}</span>
+                         <span className="text-xs text-slate-400">{comment.time}</span>
+                       </div>
+                       <p className="text-sm text-slate-600 mt-1">{comment.text}</p>
+                     </div>
+                   </motion.div>
+                 ))
+               ) : (
+                 <p className="text-center text-slate-400 text-sm py-4">No comments yet. Be the first to comment!</p>
+               )}
+             </div>
+           </div>
+         </motion.div>
+        </div>
+        </div>
+        );
+        }
