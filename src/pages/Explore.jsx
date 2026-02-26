@@ -18,6 +18,30 @@ const CATEGORIES = [
   { value: 'community', label: 'Community' },
 ];
 
+const DESTINATION_PINS = [
+  { id: 1, name: 'Central Mall', lat: 3.1350, lng: 101.5900, type: 'commercial' },
+  { id: 2, name: 'Food Court', lat: 3.1200, lng: 101.5500, type: 'culinary' },
+  { id: 3, name: 'Theme Park', lat: 3.1450, lng: 101.6000, type: 'entertainment' },
+  { id: 4, name: 'Community Center', lat: 3.1100, lng: 101.5300, type: 'community' },
+  { id: 5, name: 'Premium Outlets', lat: 3.1250, lng: 101.5700, type: 'retail' },
+];
+
+const MapIcon = (type) => {
+  const colors = {
+    commercial: '#1FB6D5',
+    retail: '#f97316',
+    culinary: '#ef4444',
+    attraction: '#8b5cf6',
+    entertainment: '#f59e0b',
+    community: '#10b981',
+  };
+  return L.divIcon({
+    html: `<div style="background-color: ${colors[type] || '#1FB6D5'}; width: 30px; height: 30px; border-radius: 50%; border: 3px solid white; display: flex; align-items: center; justify-content: center; font-weight: bold; color: white; font-size: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.2);"></div>`,
+    iconSize: [30, 30],
+    className: 'custom-icon',
+  });
+};
+
 export default function Explore() {
   const navigate = useNavigate();
   const [search, setSearch] = useState('');
