@@ -45,10 +45,10 @@ export default function Profile() {
   ];
 
   return (
-    <div className="min-h-screen pb-28" style={{ background: 'linear-gradient(160deg, #f0ede9 0%, #e8e4df 50%, #e2ddd8 100%)' }}>
+    <div className="min-h-screen pb-28" style={{ background: 'linear-gradient(160deg, #F5F4F2 0%, #edecea 55%, #e7e5e2 100%)' }}>
       {/* Header */}
       <div className="relative overflow-hidden px-5 pt-14 pb-24 rounded-b-[2.5rem]"
-        style={{ background: 'linear-gradient(150deg, #8A8076 0%, #6e6560 45%, #3d3733 100%)' }}>
+        style={{ background: 'linear-gradient(150deg, #1a5068 0%, #0F3D4C 55%, #0a2d38 100%)' }}>
         <div className="absolute -top-10 -right-10 w-48 h-48 rounded-full opacity-10 bg-white" />
         <h1 className="text-2xl font-bold text-white mb-8 relative">Profile</h1>
         <div className="flex items-center gap-4 relative">
