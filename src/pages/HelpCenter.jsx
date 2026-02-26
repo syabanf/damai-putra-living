@@ -66,7 +66,7 @@ export default function HelpCenter() {
 
       {/* Hero */}
       <div className="mx-4 mt-5 rounded-2xl p-5 flex items-center gap-4"
-        style={{ background: 'linear-gradient(135deg, #8A7F73, #5a524e)', boxShadow: '0 4px 16px rgba(90,82,78,0.3)' }}>
+        style={{ background: 'linear-gradient(135deg, #1a5068, #0F3D4C)', boxShadow: '0 4px 16px rgba(15,61,76,0.3)' }}>
         <div className="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center flex-shrink-0">
           <HelpCircle className="w-7 h-7 text-white" />
         </div>
