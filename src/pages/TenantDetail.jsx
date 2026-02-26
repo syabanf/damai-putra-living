@@ -53,35 +53,38 @@ export default function TenantDetail() {
   };
 
   return (
-    <div className="min-h-screen pb-10" style={{ background: 'linear-gradient(160deg, #f0ede9 0%, #e8e4df 50%, #e2ddd8 100%)' }}>
+    <div className="min-h-screen pb-10" style={{ background: 'linear-gradient(160deg, #f0ede9 0%, #e8e4df 55%, #e2ddd8 100%)' }}>
       {/* Header area */}
-      <div className="pb-6" style={{ background: 'rgba(255,255,255,0.85)', backdropFilter: 'blur(20px)', borderBottom: '1px solid rgba(255,255,255,0.9)' }}>
-        <div className="px-5 pt-12 pb-4">
+      <div className="pb-8 rounded-b-[2rem] relative overflow-hidden" style={{ background: 'linear-gradient(150deg, #8A8076 0%, #6e6560 45%, #3d3733 100%)' }}>
+        <div className="absolute -top-8 -right-8 w-40 h-40 rounded-full opacity-10 bg-white pointer-events-none" />
+        <div className="px-5 pt-14 pb-4 relative">
           <button onClick={() => navigate(-1)}
-            className="w-9 h-9 rounded-xl flex items-center justify-center border border-white/70 mb-4" style={{ background: 'rgba(255,255,255,0.65)' }}>
-            <ArrowLeft className="w-4 h-4 text-slate-600" />
+            className="w-10 h-10 rounded-2xl flex items-center justify-center mb-4 transition-all active:scale-90"
+            style={{ background: 'rgba(255,255,255,0.18)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.28)' }}>
+            <ArrowLeft className="w-4 h-4 text-white" />
           </button>
         </div>
-
-        <div className="flex flex-col items-center px-5">
+        <div className="flex flex-col items-center px-5 pb-2">
           {tenant.logo_url ? (
             <img src={tenant.logo_url} alt={tenant.name}
-              className="w-24 h-24 rounded-2xl object-cover shadow-md border border-slate-100" />
+              className="w-24 h-24 rounded-2xl object-cover shadow-xl border-2 border-white/30" />
           ) : (
-            <div className="w-24 h-24 rounded-2xl bg-slate-100 flex items-center justify-center shadow-md">
-              <Users className="w-10 h-10 text-slate-400" />
+            <div className="w-24 h-24 rounded-2xl flex items-center justify-center shadow-xl"
+              style={{ background: 'rgba(255,255,255,0.2)', border: '2px solid rgba(255,255,255,0.3)' }}>
+              <Users className="w-10 h-10 text-white/70" />
             </div>
           )}
-          <h1 className="font-bold text-xl text-slate-800 mt-3">{tenant.name}</h1>
+          <h1 className="font-bold text-xl text-white mt-3">{tenant.name}</h1>
           {tenant.category && (
-            <span className="mt-1.5 text-xs px-3 py-1 rounded-full font-semibold" style={{ background: '#e8f4fb', color: '#1F86C7' }}>
+            <span className="mt-1.5 text-xs px-3 py-1 rounded-full font-semibold text-white"
+              style={{ background: 'rgba(255,255,255,0.2)', backdropFilter: 'blur(8px)', border: '1px solid rgba(255,255,255,0.3)' }}>
               {CATEGORY_LABELS[tenant.category] || tenant.category}
             </span>
           )}
           {tenant.destination_name && (
             <div className="flex items-center gap-1.5 mt-2">
-              <MapPin className="w-3.5 h-3.5 text-slate-400" />
-              <p className="text-sm text-slate-500">{tenant.destination_name}</p>
+              <MapPin className="w-3.5 h-3.5 text-white/60" />
+              <p className="text-sm text-white/70">{tenant.destination_name}</p>
             </div>
           )}
         </div>
