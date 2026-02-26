@@ -229,21 +229,26 @@ export default function CreateTicket() {
       {/* Sticky Bottom Actions */}
       <div className="fixed bottom-0 left-0 right-0 px-4 z-20" style={{ bottom: 'calc(6rem + env(safe-area-inset-bottom))', background: 'rgba(142,132,120,0.9)', backdropFilter: 'blur(20px)', borderTop: '1px solid rgba(142,132,120,0.7)', paddingTop: '1.5rem', paddingBottom: '1.5rem' }}>
         <Button
-          onClick={handleNext}
-          disabled={loading}
+          onClick={step === STEPS.length ? handleSubmit : next}
+          disabled={!canProceed() || mutation.isPending}
           className="w-full h-14 text-white rounded-2xl font-semibold text-base"
           style={{ background: 'linear-gradient(135deg, #1FB6D5, #169ab5)', boxShadow: '0 8px 24px rgba(31,182,213,0.35)' }}
         >
-          {loading ? (
+          {mutation.isPending ? (
             <motion.div
               animate={{ rotate: 360 }}
               transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
               className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full"
             />
-          ) : step === totalSteps ? (
-            'Submit Registration'
+          ) : step === STEPS.length ? (
+            <>
+              <CheckCircle className="w-5 h-5 mr-2" />
+              Submit Application
+            </>
           ) : (
-            'Continue'
+            <>
+              Continue <ChevronRight className="w-5 h-5 ml-2" />
+            </>
           )}
         </Button>
       </div>
