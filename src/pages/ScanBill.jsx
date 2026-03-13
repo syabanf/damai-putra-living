@@ -4,7 +4,7 @@ import { createPageUrl } from '@/utils';
 import { base44 } from '@/api/base44Client';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Camera, CheckCircle2, X } from 'lucide-react';
+import { ArrowLeft, Camera, CheckCircle2, X, Receipt, Clock, XCircle } from 'lucide-react';
 
 export default function ScanBill() {
   const navigate = useNavigate();
@@ -22,6 +22,12 @@ export default function ScanBill() {
   const { data: userPoints } = useQuery({
     queryKey: ['userPoints', user?.email],
     queryFn: () => base44.entities.UserPoints.filter({ user_email: user?.email }),
+    enabled: !!user?.email,
+  });
+
+  const { data: scannedReceipts = [] } = useQuery({
+    queryKey: ['scannedReceipts', user?.email],
+    queryFn: () => base44.entities.ScannedReceipt.filter({ user_email: user?.email }),
     enabled: !!user?.email,
   });
 
@@ -116,31 +122,50 @@ Jika tidak ditemukan, isi dengan null. Hanya return JSON tanpa penjelasan.`,
     setIsProcessing(false);
   };
 
-  const confirmPoints = async () => {
-    if (scannedData?.success && scannedData?.points) {
-      try {
-        // Save to database
-        await base44.entities.ScannedReceipt.create({
-          receipt_number: scannedData.receipt_number,
-          merchant_address: scannedData.merchant_address,
-          total_amount: scannedData.total_amount,
-          receipt_image_url: scannedData.receipt_image_url,
-          ocr_raw_text: scannedData.ocr_raw_text,
-          points_earned: scannedData.points,
-          status: 'verified',
-          user_email: user?.email,
-          user_name: user?.full_name,
-          scan_date: new Date().toISOString()
-        });
+  const saveMutation = useMutation({
+    mutationFn: async (data) => {
+      // Save to database
+      await base44.entities.ScannedReceipt.create({
+        receipt_number: data.receipt_number,
+        merchant_address: data.merchant_address,
+        total_amount: data.total_amount,
+        receipt_image_url: data.receipt_image_url,
+        ocr_raw_text: data.ocr_raw_text,
+        points_earned: data.points,
+        status: 'verified',
+        user_email: user?.email,
+        user_name: user?.full_name,
+        scan_date: new Date().toISOString()
+      });
 
-        // Add points to user
-        addPointsMutation.mutate(scannedData.points);
-      } catch (error) {
-        setScannedData({ 
-          success: false, 
-          error: 'Gagal menyimpan data. Silakan coba lagi.' 
+      // Add points to user
+      const current = userPoints?.[0];
+      if (current) {
+        await base44.entities.UserPoints.update(current.id, {
+          balance: (current.balance || 0) + data.points,
+          total_earned: (current.total_earned || 0) + data.points,
         });
       }
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['userPoints', user?.email] });
+      queryClient.invalidateQueries({ queryKey: ['scannedReceipts'] });
+      // Navigate to history or show success for 2 seconds then reset
+      setTimeout(() => {
+        navigate(createPageUrl('Rewards'));
+      }, 2000);
+    },
+    onError: (error) => {
+      setScannedData({ 
+        success: false, 
+        error: 'Gagal menyimpan data. Silakan coba lagi.' 
+      });
+    }
+  });
+
+  const confirmPoints = async () => {
+    if (scannedData?.success && scannedData?.points) {
+      saveMutation.mutate(scannedData);
     }
   };
 
@@ -279,16 +304,16 @@ Jika tidak ditemukan, isi dengan null. Hanya return JSON tanpa penjelasan.`,
 
             <button
               onClick={confirmPoints}
-              disabled={addPointsMutation.isPending}
+              disabled={saveMutation.isPending}
               className="w-full py-3 rounded-xl font-bold text-white transition-all active:scale-95 mb-3"
-              style={{ background: addPointsMutation.isPending ? '#cbd5e1' : 'linear-gradient(135deg, #1FB6D5 0%, #0F9BB8 100%)', boxShadow: '0 3px 10px rgba(31,182,213,0.35)' }}
+              style={{ background: saveMutation.isPending ? '#cbd5e1' : 'linear-gradient(135deg, #1FB6D5 0%, #0F9BB8 100%)', boxShadow: '0 3px 10px rgba(31,182,213,0.35)' }}
             >
-              {addPointsMutation.isPending ? 'Adding Points...' : 'Confirm & Add Points'}
+              {saveMutation.isPending ? 'Menyimpan...' : 'Confirm & Add Points'}
             </button>
 
-            {addPointsMutation.isSuccess && (
+            {saveMutation.isSuccess && (
               <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-sm text-emerald-600 font-semibold">
-                Points added to your account! ✓
+                Poin berhasil ditambahkan! ✓
               </motion.p>
             )}
           </motion.div>
@@ -336,6 +361,79 @@ Jika tidak ditemukan, isi dengan null. Hanya return JSON tanpa penjelasan.`,
               Scan Struk Lain
             </button>
           </motion.div>
+        </div>
+      )}
+
+      {/* History Section */}
+      {!scannedData && scannedReceipts.length > 0 && (
+        <div className="px-4 mt-8 pb-8">
+          <h2 className="font-bold text-lg text-slate-800 mb-4">Riwayat Scan</h2>
+          <div className="space-y-3">
+            {scannedReceipts.map((receipt, i) => (
+              <motion.div
+                key={receipt.id}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.05 }}
+                className="rounded-2xl p-4"
+                style={{ background: 'rgba(255,255,255,0.75)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.85)' }}
+              >
+                <div className="flex items-start gap-3">
+                  <div className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 ${
+                    receipt.status === 'verified' ? 'bg-emerald-100' :
+                    receipt.status === 'rejected' ? 'bg-red-100' :
+                    receipt.status === 'duplicate' ? 'bg-amber-100' : 'bg-slate-100'
+                  }`}>
+                    {receipt.status === 'verified' ? (
+                      <CheckCircle2 className="w-6 h-6 text-emerald-600" />
+                    ) : receipt.status === 'rejected' ? (
+                      <XCircle className="w-6 h-6 text-red-600" />
+                    ) : receipt.status === 'duplicate' ? (
+                      <Receipt className="w-6 h-6 text-amber-600" />
+                    ) : (
+                      <Clock className="w-6 h-6 text-slate-600" />
+                    )}
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex items-start justify-between mb-1">
+                      <div>
+                        <p className="font-semibold text-slate-800 text-sm">{receipt.receipt_number}</p>
+                        {receipt.merchant_address && (
+                          <p className="text-xs text-slate-500 mt-0.5">{receipt.merchant_address}</p>
+                        )}
+                      </div>
+                      <span className={`text-xs font-bold px-2.5 py-1 rounded-full whitespace-nowrap ${
+                        receipt.status === 'verified' ? 'bg-emerald-100 text-emerald-700' :
+                        receipt.status === 'rejected' ? 'bg-red-100 text-red-700' :
+                        receipt.status === 'duplicate' ? 'bg-amber-100 text-amber-700' : 'bg-slate-100 text-slate-700'
+                      }`}>
+                        {receipt.status === 'verified' ? 'Verified' :
+                         receipt.status === 'rejected' ? 'Rejected' :
+                         receipt.status === 'duplicate' ? 'Duplicate' : 'Pending'}
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between mt-2 pt-2 border-t border-slate-100">
+                      <div className="text-xs text-slate-500">
+                        {new Date(receipt.scan_date).toLocaleDateString('id-ID', { 
+                          day: '2-digit', 
+                          month: 'short', 
+                          year: 'numeric' 
+                        })}
+                      </div>
+                      {receipt.status === 'verified' && (
+                        <div className="text-xs font-bold text-emerald-600">+{receipt.points_earned} poin</div>
+                      )}
+                    </div>
+                    {(receipt.status === 'rejected' || receipt.status === 'duplicate') && receipt.duplicate_reason && (
+                      <div className="mt-2 pt-2 border-t border-slate-100">
+                        <p className="text-xs text-slate-500">{receipt.duplicate_reason}</p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
         </div>
       )}
     </div>
