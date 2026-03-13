@@ -12,6 +12,7 @@ export default function ScanBill() {
   const [user, setUser] = useState(null);
   const [scannedData, setScannedData] = useState(null);
   const [showCamera, setShowCamera] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
   const fileInputRef = useRef(null);
 
   React.useEffect(() => {
@@ -43,19 +44,103 @@ export default function ScanBill() {
     const file = e.target.files?.[0];
     if (!file) return;
 
+    setIsProcessing(true);
+    
     try {
-      const fileUrl = await base44.integrations.Core.UploadFile({ file });
-      // Mock QR code scanning - in production this would use a QR code library
-      const mockPoints = Math.floor(Math.random() * 50) + 100; // 100-150 points
-      setScannedData({ success: true, points: mockPoints, reference: `BILL-${Date.now()}` });
+      // Upload image
+      const { file_url } = await base44.integrations.Core.UploadFile({ file });
+      
+      // Extract text using OCR
+      const ocrResult = await base44.integrations.Core.InvokeLLM({
+        prompt: `Ekstrak informasi berikut dari struk/invoice ini dalam format JSON:
+- receipt_number: nomor resi/invoice (biasanya di bagian atas atau header, format angka/huruf)
+- merchant_address: alamat lengkap merchant/toko
+- total_amount: jumlah pembayaran total (angka saja, tanpa simbol)
+
+Jika tidak ditemukan, isi dengan null. Hanya return JSON tanpa penjelasan.`,
+        file_urls: [file_url],
+        response_json_schema: {
+          type: "object",
+          properties: {
+            receipt_number: { type: ["string", "null"] },
+            merchant_address: { type: ["string", "null"] },
+            total_amount: { type: ["number", "null"] },
+            raw_text: { type: "string" }
+          }
+        }
+      });
+
+      // Validate extracted data
+      if (!ocrResult.receipt_number || !ocrResult.total_amount) {
+        setScannedData({ 
+          success: false, 
+          error: 'Tidak dapat membaca nomor resi atau jumlah pembayaran. Pastikan foto struk jelas dan lengkap.' 
+        });
+        setIsProcessing(false);
+        return;
+      }
+
+      // Check for duplicate receipt number
+      const existingReceipts = await base44.entities.ScannedReceipt.filter({ 
+        receipt_number: ocrResult.receipt_number 
+      });
+
+      if (existingReceipts.length > 0) {
+        setScannedData({ 
+          success: false, 
+          isDuplicate: true,
+          error: `Nomor resi ${ocrResult.receipt_number} sudah pernah digunakan. Struk ini sudah pernah di-scan sebelumnya.`,
+          existingReceipt: existingReceipts[0]
+        });
+        setIsProcessing(false);
+        return;
+      }
+
+      // Calculate points (1 point per 1000 IDR)
+      const points = Math.floor(ocrResult.total_amount / 1000);
+
+      setScannedData({ 
+        success: true, 
+        receipt_number: ocrResult.receipt_number,
+        merchant_address: ocrResult.merchant_address,
+        total_amount: ocrResult.total_amount,
+        points: points,
+        receipt_image_url: file_url,
+        ocr_raw_text: ocrResult.raw_text
+      });
+      
     } catch (error) {
-      setScannedData({ success: false, error: 'Failed to scan bill' });
+      setScannedData({ success: false, error: 'Gagal memproses struk. Silakan coba lagi.' });
     }
+    
+    setIsProcessing(false);
   };
 
   const confirmPoints = async () => {
     if (scannedData?.success && scannedData?.points) {
-      addPointsMutation.mutate(scannedData.points);
+      try {
+        // Save to database
+        await base44.entities.ScannedReceipt.create({
+          receipt_number: scannedData.receipt_number,
+          merchant_address: scannedData.merchant_address,
+          total_amount: scannedData.total_amount,
+          receipt_image_url: scannedData.receipt_image_url,
+          ocr_raw_text: scannedData.ocr_raw_text,
+          points_earned: scannedData.points,
+          status: 'verified',
+          user_email: user?.email,
+          user_name: user?.full_name,
+          scan_date: new Date().toISOString()
+        });
+
+        // Add points to user
+        addPointsMutation.mutate(scannedData.points);
+      } catch (error) {
+        setScannedData({ 
+          success: false, 
+          error: 'Gagal menyimpan data. Silakan coba lagi.' 
+        });
+      }
     }
   };
 
@@ -105,10 +190,11 @@ export default function ScanBill() {
             
             <button
               onClick={() => fileInputRef.current?.click()}
+              disabled={isProcessing}
               className="w-full py-3 rounded-xl font-bold text-white transition-all active:scale-95 mb-3"
-              style={{ background: 'linear-gradient(135deg, #1FB6D5 0%, #0F9BB8 100%)', boxShadow: '0 3px 10px rgba(31,182,213,0.35)' }}
+              style={{ background: isProcessing ? '#cbd5e1' : 'linear-gradient(135deg, #1FB6D5 0%, #0F9BB8 100%)', boxShadow: '0 3px 10px rgba(31,182,213,0.35)' }}
             >
-              Choose Photo from Gallery
+              {isProcessing ? 'Memproses...' : 'Choose Photo from Gallery'}
             </button>
 
             <input
@@ -172,8 +258,18 @@ export default function ScanBill() {
 
             <div className="text-left bg-slate-50 rounded-xl p-4 mb-6 space-y-2">
               <div className="flex justify-between text-sm">
-                <span className="text-slate-600">Reference ID:</span>
-                <span className="font-semibold text-slate-800">{scannedData.reference}</span>
+                <span className="text-slate-600">Nomor Resi:</span>
+                <span className="font-semibold text-slate-800">{scannedData.receipt_number}</span>
+              </div>
+              {scannedData.merchant_address && (
+                <div className="flex justify-between text-sm">
+                  <span className="text-slate-600">Merchant:</span>
+                  <span className="font-semibold text-slate-800 text-right">{scannedData.merchant_address}</span>
+                </div>
+              )}
+              <div className="flex justify-between text-sm">
+                <span className="text-slate-600">Total:</span>
+                <span className="font-semibold text-slate-800">Rp {scannedData.total_amount?.toLocaleString('id-ID')}</span>
               </div>
               <div className="flex justify-between text-sm">
                 <span className="text-slate-600">New Balance:</span>
@@ -205,17 +301,39 @@ export default function ScanBill() {
             className="rounded-2xl p-8 text-center"
             style={{ background: 'rgba(255,255,255,0.75)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.85)' }}
           >
-            <div className="w-20 h-20 rounded-full mx-auto mb-6 flex items-center justify-center" style={{ background: '#fee2e2' }}>
-              <X className="w-10 h-10 text-red-600" />
+            <div className="w-20 h-20 rounded-full mx-auto mb-6 flex items-center justify-center" 
+              style={{ background: scannedData.isDuplicate ? '#fef3c7' : '#fee2e2' }}>
+              <X className="w-10 h-10" style={{ color: scannedData.isDuplicate ? '#d97706' : '#dc2626' }} />
             </div>
-            <h2 className="font-bold text-lg text-slate-800 mb-2">Scan Failed</h2>
+            <h2 className="font-bold text-lg text-slate-800 mb-2">
+              {scannedData.isDuplicate ? 'Struk Duplikat' : 'Gagal Scan'}
+            </h2>
             <p className="text-sm text-slate-500 mb-6">{scannedData.error}</p>
+            
+            {scannedData.isDuplicate && scannedData.existingReceipt && (
+              <div className="bg-amber-50 rounded-xl p-4 mb-6 text-left">
+                <p className="text-xs text-amber-600 font-semibold uppercase tracking-widest mb-2">Scan Sebelumnya</p>
+                <div className="space-y-1 text-sm">
+                  <div className="flex justify-between">
+                    <span className="text-slate-600">Tanggal:</span>
+                    <span className="font-semibold text-slate-800">
+                      {new Date(scannedData.existingReceipt.scan_date).toLocaleDateString('id-ID')}
+                    </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-slate-600">Poin:</span>
+                    <span className="font-semibold text-slate-800">{scannedData.existingReceipt.points_earned}</span>
+                  </div>
+                </div>
+              </div>
+            )}
+
             <button
               onClick={resetScan}
               className="w-full py-3 rounded-xl font-bold text-white transition-all active:scale-95"
               style={{ background: 'linear-gradient(135deg, #1FB6D5 0%, #0F9BB8 100%)' }}
             >
-              Try Again
+              Scan Struk Lain
             </button>
           </motion.div>
         </div>
