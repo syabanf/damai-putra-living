@@ -5,7 +5,7 @@ import { base44 } from '@/api/base44Client';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { motion, AnimatePresence } from 'framer-motion';
 import { toast } from 'sonner';
-import { ArrowLeft, Camera, CheckCircle2, X, Receipt, Clock, XCircle, AlertCircle } from 'lucide-react';
+import { ArrowLeft, Camera, CheckCircle2, X, Receipt, Clock, XCircle, AlertCircle, Image } from 'lucide-react';
 
 export default function ScanBill() {
   const navigate = useNavigate();
@@ -15,6 +15,7 @@ export default function ScanBill() {
   const [showCamera, setShowCamera] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const fileInputRef = useRef(null);
+  const cameraInputRef = useRef(null);
 
   React.useEffect(() => {
     base44.auth.me().then(setUser).catch(() => {});
@@ -254,17 +255,44 @@ Jika tidak ditemukan, isi dengan null. Hanya return JSON tanpa penjelasan.`,
               <Camera className="w-8 h-8" style={{ color: '#1FB6D5' }} />
             </div>
             <h2 className="font-bold text-lg text-slate-800 mb-2">Scan Your Bill</h2>
-            <p className="text-sm text-slate-500 mb-6">Take a photo of your paid bill QR code to add points to your account.</p>
-            
-            <button
-              onClick={() => fileInputRef.current?.click()}
-              disabled={isProcessing}
-              className="w-full py-3 rounded-xl font-bold text-white transition-all active:scale-95 mb-3"
-              style={{ background: isProcessing ? '#cbd5e1' : 'linear-gradient(135deg, #1FB6D5 0%, #0F9BB8 100%)', boxShadow: '0 3px 10px rgba(31,182,213,0.35)' }}
-            >
-              {isProcessing ? 'Memproses...' : 'Choose Photo from Gallery'}
-            </button>
+            <p className="text-sm text-slate-500 mb-6">Foto struk pembayaran Anda untuk mendapatkan poin.</p>
 
+            {isProcessing ? (
+              <div className="flex flex-col items-center gap-3 py-4">
+                <div className="w-10 h-10 border-4 border-[#1FB6D5] border-t-transparent rounded-full animate-spin" />
+                <p className="text-sm text-slate-500 font-medium">Memproses struk...</p>
+              </div>
+            ) : (
+              <div className="flex gap-3">
+                <button
+                  onClick={() => cameraInputRef.current?.click()}
+                  className="flex-1 py-4 rounded-xl font-bold text-white flex flex-col items-center gap-2 active:scale-95 transition-transform"
+                  style={{ background: 'linear-gradient(135deg, #1FB6D5 0%, #0F9BB8 100%)', boxShadow: '0 3px 10px rgba(31,182,213,0.35)' }}
+                >
+                  <Camera className="w-6 h-6" />
+                  <span className="text-sm">Kamera</span>
+                </button>
+                <button
+                  onClick={() => fileInputRef.current?.click()}
+                  className="flex-1 py-4 rounded-xl font-bold flex flex-col items-center gap-2 active:scale-95 transition-transform border-2"
+                  style={{ background: 'rgba(31,182,213,0.08)', borderColor: '#1FB6D5', color: '#0F9BB8' }}
+                >
+                  <Image className="w-6 h-6" />
+                  <span className="text-sm">Galeri</span>
+                </button>
+              </div>
+            )}
+
+            {/* Camera input */}
+            <input
+              ref={cameraInputRef}
+              type="file"
+              accept="image/*"
+              capture="environment"
+              onChange={handleImageUpload}
+              className="hidden"
+            />
+            {/* Gallery input */}
             <input
               ref={fileInputRef}
               type="file"
@@ -273,7 +301,7 @@ Jika tidak ditemukan, isi dengan null. Hanya return JSON tanpa penjelasan.`,
               className="hidden"
             />
 
-            <p className="text-xs text-slate-400 mt-4">Supported formats: JPG, PNG</p>
+            <p className="text-xs text-slate-400 mt-4">Format: JPG, PNG</p>
           </motion.div>
 
           <div className="mt-8 rounded-2xl p-5" style={{ background: 'rgba(255,255,255,0.75)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.85)' }}>
