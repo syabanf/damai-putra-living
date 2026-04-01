@@ -3,8 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import { base44 } from '@/api/base44Client';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { motion } from 'framer-motion';
-import { ArrowLeft, Camera, CheckCircle2, X, Receipt, Clock, XCircle } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { toast } from 'sonner';
+import { ArrowLeft, Camera, CheckCircle2, X, Receipt, Clock, XCircle, AlertCircle } from 'lucide-react';
 
 export default function ScanBill() {
   const navigate = useNavigate();
@@ -78,10 +79,9 @@ Jika tidak ditemukan, isi dengan null. Hanya return JSON tanpa penjelasan.`,
 
       // Validate extracted data
       if (!ocrResult.receipt_number || !ocrResult.total_amount) {
-        setScannedData({ 
-          success: false, 
-          error: 'Tidak dapat membaca nomor resi atau jumlah pembayaran. Pastikan foto struk jelas dan lengkap.' 
-        });
+        const errMsg = 'Tidak dapat membaca nomor resi atau jumlah pembayaran. Pastikan foto struk jelas dan lengkap.';
+        setScannedData({ success: false, error: errMsg });
+        toast.error('Scan Gagal', { description: errMsg });
         setIsProcessing(false);
         return;
       }
@@ -92,12 +92,14 @@ Jika tidak ditemukan, isi dengan null. Hanya return JSON tanpa penjelasan.`,
       });
 
       if (existingReceipts.length > 0) {
+        const dupMsg = `Nomor resi ${ocrResult.receipt_number} sudah pernah digunakan.`;
         setScannedData({ 
           success: false, 
           isDuplicate: true,
-          error: `Nomor resi ${ocrResult.receipt_number} sudah pernah digunakan. Struk ini sudah pernah di-scan sebelumnya.`,
+          error: dupMsg + ' Struk ini sudah pernah di-scan sebelumnya.',
           existingReceipt: existingReceipts[0]
         });
+        toast.warning('Struk Duplikat', { description: dupMsg });
         setIsProcessing(false);
         return;
       }
@@ -117,6 +119,7 @@ Jika tidak ditemukan, isi dengan null. Hanya return JSON tanpa penjelasan.`,
       
     } catch (error) {
       setScannedData({ success: false, error: 'Gagal memproses struk. Silakan coba lagi.' });
+      toast.error('Gagal Scan', { description: 'Terjadi kesalahan saat memproses struk.' });
     }
     
     setIsProcessing(false);
@@ -150,16 +153,14 @@ Jika tidak ditemukan, isi dengan null. Hanya return JSON tanpa penjelasan.`,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['userPoints', user?.email] });
       queryClient.invalidateQueries({ queryKey: ['scannedReceipts'] });
-      // Navigate to history or show success for 2 seconds then reset
+      toast.success('Poin Berhasil Ditambahkan!', { description: `+${scannedData?.points} poin telah ditambahkan ke akun Anda.` });
       setTimeout(() => {
-        navigate(createPageUrl('Rewards'));
-      }, 2000);
+        resetScan();
+      }, 1500);
     },
-    onError: (error) => {
-      setScannedData({ 
-        success: false, 
-        error: 'Gagal menyimpan data. Silakan coba lagi.' 
-      });
+    onError: () => {
+      toast.error('Gagal Menyimpan', { description: 'Gagal menyimpan data. Silakan coba lagi.' });
+      setScannedData({ success: false, error: 'Gagal menyimpan data. Silakan coba lagi.' });
     }
   });
 
@@ -365,75 +366,81 @@ Jika tidak ditemukan, isi dengan null. Hanya return JSON tanpa penjelasan.`,
       )}
 
       {/* History Section */}
-      {!scannedData && scannedReceipts.length > 0 && (
+      {!scannedData && (
         <div className="px-4 mt-8 pb-8">
           <h2 className="font-bold text-lg text-slate-800 mb-4">Riwayat Scan</h2>
-          <div className="space-y-3">
-            {scannedReceipts.map((receipt, i) => (
-              <motion.div
-                key={receipt.id}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.05 }}
-                className="rounded-2xl p-4"
-                style={{ background: 'rgba(255,255,255,0.75)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.85)' }}
-              >
-                <div className="flex items-start gap-3">
-                  <div className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 ${
-                    receipt.status === 'verified' ? 'bg-emerald-100' :
-                    receipt.status === 'rejected' ? 'bg-red-100' :
-                    receipt.status === 'duplicate' ? 'bg-amber-100' : 'bg-slate-100'
-                  }`}>
-                    {receipt.status === 'verified' ? (
-                      <CheckCircle2 className="w-6 h-6 text-emerald-600" />
-                    ) : receipt.status === 'rejected' ? (
-                      <XCircle className="w-6 h-6 text-red-600" />
-                    ) : receipt.status === 'duplicate' ? (
-                      <Receipt className="w-6 h-6 text-amber-600" />
-                    ) : (
-                      <Clock className="w-6 h-6 text-slate-600" />
-                    )}
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex items-start justify-between mb-1">
-                      <div>
-                        <p className="font-semibold text-slate-800 text-sm">{receipt.receipt_number}</p>
-                        {receipt.merchant_address && (
-                          <p className="text-xs text-slate-500 mt-0.5">{receipt.merchant_address}</p>
-                        )}
-                      </div>
-                      <span className={`text-xs font-bold px-2.5 py-1 rounded-full whitespace-nowrap ${
-                        receipt.status === 'verified' ? 'bg-emerald-100 text-emerald-700' :
-                        receipt.status === 'rejected' ? 'bg-red-100 text-red-700' :
-                        receipt.status === 'duplicate' ? 'bg-amber-100 text-amber-700' : 'bg-slate-100 text-slate-700'
-                      }`}>
-                        {receipt.status === 'verified' ? 'Verified' :
-                         receipt.status === 'rejected' ? 'Rejected' :
-                         receipt.status === 'duplicate' ? 'Duplicate' : 'Pending'}
-                      </span>
-                    </div>
-                    <div className="flex items-center justify-between mt-2 pt-2 border-t border-slate-100">
-                      <div className="text-xs text-slate-500">
-                        {new Date(receipt.scan_date).toLocaleDateString('id-ID', { 
-                          day: '2-digit', 
-                          month: 'short', 
-                          year: 'numeric' 
-                        })}
-                      </div>
-                      {receipt.status === 'verified' && (
-                        <div className="text-xs font-bold text-emerald-600">+{receipt.points_earned} poin</div>
+          {scannedReceipts.length === 0 ? (
+            <div className="rounded-2xl p-8 text-center" style={{ background: 'rgba(255,255,255,0.75)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.85)' }}>
+              <Receipt className="w-10 h-10 text-slate-300 mx-auto mb-3" />
+              <p className="text-sm text-slate-400">Belum ada riwayat scan</p>
+            </div>
+          ) : (
+            <div className="space-y-3">
+              {[...scannedReceipts].sort((a,b) => new Date(b.scan_date) - new Date(a.scan_date)).map((receipt, i) => (
+                <motion.div
+                  key={receipt.id}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: i * 0.05 }}
+                  className="rounded-2xl p-4"
+                  style={{ background: 'rgba(255,255,255,0.75)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.85)' }}
+                >
+                  <div className="flex items-start gap-3">
+                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 ${
+                      receipt.status === 'verified' ? 'bg-emerald-100' :
+                      receipt.status === 'rejected' ? 'bg-red-100' :
+                      receipt.status === 'duplicate' ? 'bg-amber-100' : 'bg-slate-100'
+                    }`}>
+                      {receipt.status === 'verified' ? (
+                        <CheckCircle2 className="w-6 h-6 text-emerald-600" />
+                      ) : receipt.status === 'rejected' ? (
+                        <XCircle className="w-6 h-6 text-red-600" />
+                      ) : receipt.status === 'duplicate' ? (
+                        <AlertCircle className="w-6 h-6 text-amber-600" />
+                      ) : (
+                        <Clock className="w-6 h-6 text-slate-600" />
                       )}
                     </div>
-                    {(receipt.status === 'rejected' || receipt.status === 'duplicate') && receipt.duplicate_reason && (
-                      <div className="mt-2 pt-2 border-t border-slate-100">
-                        <p className="text-xs text-slate-500">{receipt.duplicate_reason}</p>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-start justify-between gap-2 mb-1">
+                        <div className="min-w-0">
+                          <p className="font-semibold text-slate-800 text-sm truncate">{receipt.receipt_number}</p>
+                          {receipt.merchant_address && (
+                            <p className="text-xs text-slate-500 mt-0.5 truncate">{receipt.merchant_address}</p>
+                          )}
+                        </div>
+                        <span className={`text-xs font-bold px-2.5 py-1 rounded-full whitespace-nowrap flex-shrink-0 ${
+                          receipt.status === 'verified' ? 'bg-emerald-100 text-emerald-700' :
+                          receipt.status === 'rejected' ? 'bg-red-100 text-red-700' :
+                          receipt.status === 'duplicate' ? 'bg-amber-100 text-amber-700' : 'bg-slate-100 text-slate-700'
+                        }`}>
+                          {receipt.status === 'verified' ? '✓ Verified' :
+                           receipt.status === 'rejected' ? '✗ Rejected' :
+                           receipt.status === 'duplicate' ? '⚠ Duplicate' : 'Pending'}
+                        </span>
                       </div>
-                    )}
+                      <div className="flex items-center justify-between mt-2 pt-2 border-t border-slate-100">
+                        <span className="text-xs text-slate-500">
+                          {new Date(receipt.scan_date).toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' })}
+                        </span>
+                        {receipt.status === 'verified' && (
+                          <span className="text-xs font-bold text-emerald-600">+{receipt.points_earned} poin</span>
+                        )}
+                        {(receipt.status === 'rejected' || receipt.status === 'duplicate') && (
+                          <span className="text-xs font-semibold text-red-500">0 poin</span>
+                        )}
+                      </div>
+                      {(receipt.status === 'rejected' || receipt.status === 'duplicate') && receipt.duplicate_reason && (
+                        <div className="mt-2 pt-2 border-t border-slate-100 bg-red-50 rounded-lg px-3 py-2">
+                          <p className="text-xs text-red-600">{receipt.duplicate_reason}</p>
+                        </div>
+                      )}
+                    </div>
                   </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+                </motion.div>
+              ))}
+            </div>
+          )}
         </div>
       )}
     </div>
