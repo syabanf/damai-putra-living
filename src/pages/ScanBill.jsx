@@ -82,6 +82,21 @@ Jika tidak ditemukan, isi dengan null. Hanya return JSON tanpa penjelasan.`,
         const errMsg = 'Tidak dapat membaca nomor resi atau jumlah pembayaran. Pastikan foto struk jelas dan lengkap.';
         setScannedData({ success: false, error: errMsg });
         toast.error('Scan Gagal', { description: errMsg });
+        // Save failed scan to history
+        await base44.entities.ScannedReceipt.create({
+          receipt_number: ocrResult.receipt_number || `FAIL-${Date.now()}`,
+          merchant_address: ocrResult.merchant_address || null,
+          total_amount: null,
+          receipt_image_url: file_url,
+          ocr_raw_text: ocrResult.raw_text || '',
+          points_earned: 0,
+          status: 'rejected',
+          duplicate_reason: errMsg,
+          user_email: user?.email,
+          user_name: user?.full_name,
+          scan_date: new Date().toISOString()
+        });
+        queryClient.invalidateQueries({ queryKey: ['scannedReceipts'] });
         setIsProcessing(false);
         return;
       }
@@ -92,14 +107,29 @@ Jika tidak ditemukan, isi dengan null. Hanya return JSON tanpa penjelasan.`,
       });
 
       if (existingReceipts.length > 0) {
-        const dupMsg = `Nomor resi ${ocrResult.receipt_number} sudah pernah digunakan.`;
+        const dupMsg = `Nomor resi ${ocrResult.receipt_number} sudah pernah digunakan. Struk ini sudah pernah di-scan sebelumnya.`;
         setScannedData({ 
           success: false, 
           isDuplicate: true,
-          error: dupMsg + ' Struk ini sudah pernah di-scan sebelumnya.',
+          error: dupMsg,
           existingReceipt: existingReceipts[0]
         });
-        toast.warning('Struk Duplikat', { description: dupMsg });
+        toast.error('Scan Gagal - Duplikat', { description: `Nomor resi ${ocrResult.receipt_number} sudah pernah digunakan.` });
+        // Save duplicate scan to history
+        await base44.entities.ScannedReceipt.create({
+          receipt_number: `DUP-${ocrResult.receipt_number}-${Date.now()}`,
+          merchant_address: ocrResult.merchant_address || null,
+          total_amount: ocrResult.total_amount,
+          receipt_image_url: file_url,
+          ocr_raw_text: ocrResult.raw_text || '',
+          points_earned: 0,
+          status: 'rejected',
+          duplicate_reason: dupMsg,
+          user_email: user?.email,
+          user_name: user?.full_name,
+          scan_date: new Date().toISOString()
+        });
+        queryClient.invalidateQueries({ queryKey: ['scannedReceipts'] });
         setIsProcessing(false);
         return;
       }
@@ -120,6 +150,18 @@ Jika tidak ditemukan, isi dengan null. Hanya return JSON tanpa penjelasan.`,
     } catch (error) {
       setScannedData({ success: false, error: 'Gagal memproses struk. Silakan coba lagi.' });
       toast.error('Gagal Scan', { description: 'Terjadi kesalahan saat memproses struk.' });
+      try {
+        await base44.entities.ScannedReceipt.create({
+          receipt_number: `ERR-${Date.now()}`,
+          points_earned: 0,
+          status: 'rejected',
+          duplicate_reason: 'Terjadi kesalahan teknis saat memproses struk.',
+          user_email: user?.email,
+          user_name: user?.full_name,
+          scan_date: new Date().toISOString()
+        });
+        queryClient.invalidateQueries({ queryKey: ['scannedReceipts'] });
+      } catch (_) {}
     }
     
     setIsProcessing(false);
