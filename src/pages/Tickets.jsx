@@ -58,6 +58,53 @@ const GlassCard = ({ children, className = '', onClick }) => (
   </div>
 );
 
+const TicketCard = ({ ticket, onClick }) => {
+  const Icon = PERMIT_ICONS[ticket.permit_type] || FileCheck;
+  const st = STATUS_STYLE[ticket.status] || STATUS_STYLE.open;
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 16 }}
+      animate={{ opacity: 1, y: 0 }}
+      onClick={onClick}
+      className="rounded-3xl p-4 cursor-pointer active:scale-[0.98] transition-transform"
+      style={{ background: '#ffffff', boxShadow: '0 2px 16px rgba(15,61,76,0.08)', border: '1px solid rgba(15,61,76,0.06)' }}
+    >
+      <div className="flex items-start gap-3">
+        <div className="w-11 h-11 rounded-2xl flex items-center justify-center flex-shrink-0" style={{ background: '#f0f4f6' }}>
+          <Icon className="w-5 h-5" style={{ color: '#0F3D4C' }} />
+        </div>
+        <div className="flex-1 min-w-0">
+          <p className="font-bold text-slate-800 text-sm capitalize">
+            {PERMIT_LABELS[ticket.permit_type] || ticket.permit_type?.replace(/_/g, ' ') || 'Permit'}
+          </p>
+          <p className="text-xs mt-0.5" style={{ color: '#7a8fa0' }}>
+            Unit {ticket.unit_number || '–'} · {new Date(ticket.created_date).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })}
+          </p>
+          {ticket.reference_number && (
+            <p className="text-xs mt-0.5" style={{ color: '#9baab8' }}>{ticket.reference_number}</p>
+          )}
+          {ticket.activity_date && (
+            <p className="text-xs mt-0.5" style={{ color: '#9baab8' }}>
+              Scheduled: {new Date(ticket.activity_date).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })}
+            </p>
+          )}
+        </div>
+        <div className="flex flex-col items-end gap-2 flex-shrink-0">
+          <span className="text-[10px] font-bold px-2.5 py-1 rounded-full whitespace-nowrap"
+            style={{ background: st.bg, color: st.color }}>{st.label}</span>
+          <ChevronRight className="w-4 h-4" style={{ color: '#c8d4db' }} />
+        </div>
+      </div>
+      {ticket.status === 'approved' && ticket.permit_id && (
+        <div className="mt-3 pt-3 border-t flex items-center gap-1.5" style={{ borderColor: '#e8f5f0' }}>
+          <FileCheck className="w-3.5 h-3.5" style={{ color: '#059669' }} />
+          <span className="text-xs font-semibold" style={{ color: '#059669' }}>Permit No. {ticket.permit_id}</span>
+        </div>
+      )}
+    </motion.div>
+  );
+};
+
 const TABS = [
   { key: 'all',         label: 'All' },
   { key: 'open',        label: 'Submitted' },
@@ -137,25 +184,27 @@ export default function Tickets() {
   return (
     <div ref={containerRef} className="min-h-screen pb-40 overflow-y-auto" style={{ background: 'linear-gradient(160deg, #F5F4F2 0%, #edecea 55%, #e7e5e2 100%)' }}>
       <PullToRefreshIndicator isRefreshing={isRefreshing} />
-      <div className="px-5 pt-14 pb-5 rounded-b-[2rem] relative overflow-hidden" style={{ background: 'linear-gradient(150deg, #1a5068 0%, #0F3D4C 55%, #0a2d38 100%)' }}>
-        <div className="absolute -top-8 -right-8 w-40 h-40 rounded-full opacity-10 bg-white pointer-events-none" />
-        <div className="flex justify-between items-center mb-4 relative">
+      <div className="px-5 pt-14 pb-6 rounded-b-[2.5rem] relative overflow-hidden" style={{ background: 'linear-gradient(150deg, #1e6080 0%, #0F3D4C 55%, #092a38 100%)' }}>
+        <div className="absolute -top-10 -right-10 w-48 h-48 rounded-full opacity-[0.07] bg-white pointer-events-none" />
+        <div className="absolute -bottom-6 -left-6 w-32 h-32 rounded-full opacity-[0.05] bg-white pointer-events-none" />
+        <div className="flex justify-between items-start mb-5 relative">
           <div>
-            <p className="text-white/50 text-xs font-semibold uppercase tracking-widest mb-0.5">Damai Putra Living</p>
-            <h1 className="text-2xl font-bold text-white">Digital Permits</h1>
-            <p className="text-white/50 text-sm">Permit & activity management</p>
+            <p className="text-white/40 text-[10px] font-bold uppercase tracking-widest mb-1">Damai Putra Living</p>
+            <h1 className="text-[26px] font-bold text-white leading-tight">Digital Permits</h1>
+            <p className="text-white/45 text-sm mt-0.5">Permit & activity management</p>
           </div>
           <button onClick={() => navigate(createPageUrl('CreateTicket'))}
-            className="h-10 px-4 text-white rounded-xl text-sm font-semibold flex items-center gap-1.5 transition-all active:scale-90"
-            style={{ background: 'rgba(255,255,255,0.18)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.28)' }}>
+            className="h-10 px-4 text-white rounded-2xl text-sm font-semibold flex items-center gap-1.5 transition-all active:scale-90 mt-1"
+            style={{ background: 'rgba(255,255,255,0.15)', backdropFilter: 'blur(16px)', border: '1px solid rgba(255,255,255,0.25)', boxShadow: '0 2px 12px rgba(0,0,0,0.12)' }}>
             <Plus className="w-4 h-4" /> New
           </button>
         </div>
         {/* Tabs */}
-        <div className="flex gap-1 p-1 rounded-xl overflow-x-auto hide-scrollbar" style={{ background: 'rgba(0,0,0,0.2)' }}>
+        <div className="flex gap-1 p-1 rounded-2xl overflow-x-auto hide-scrollbar" style={{ background: 'rgba(0,0,0,0.18)' }}>
           {TABS.map(tab => (
             <button key={tab.key} onClick={() => setActiveTab(tab.key)}
-              className={`flex-shrink-0 px-3 py-2 rounded-lg text-xs font-semibold transition-all whitespace-nowrap ${activeTab === tab.key ? 'bg-white/90 text-slate-800 shadow-sm' : 'text-white/60 hover:text-white'}`}>
+              className={`flex-shrink-0 px-3.5 py-2 rounded-xl text-xs font-semibold transition-all whitespace-nowrap ${activeTab === tab.key ? 'shadow-sm' : 'text-white/55 hover:text-white/80'}`}
+              style={activeTab === tab.key ? { background: '#ffffff', color: '#0F3D4C' } : {}}>
               {tab.label}
             </button>
           ))}
@@ -171,67 +220,32 @@ export default function Tickets() {
           </div>
         ) : filtered.length === 0 ? (
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-            <GlassCard className="p-8 text-center">
-              <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <ClipboardList className="w-8 h-8 text-slate-400" />
+            <div className="rounded-3xl p-8 text-center" style={{ background: '#ffffff', boxShadow: '0 2px 16px rgba(15,61,76,0.08)' }}>
+              <div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4" style={{ background: '#f0f4f6' }}>
+                <ClipboardList className="w-8 h-8" style={{ color: '#9baab8' }} />
               </div>
-              <p className="text-slate-600 font-medium">No permits found</p>
+              <p className="font-bold text-slate-700">No permits found</p>
               <p className="text-slate-400 text-sm mt-1">
                 {activeTab === 'all' ? 'Submit your first permit application' : `No ${TABS.find(t=>t.key===activeTab)?.label} permits`}
               </p>
               {activeTab === 'all' && (
                 <Button onClick={() => navigate(createPageUrl('CreateTicket'))}
-                  className="mt-4 text-white rounded-xl" style={{ backgroundColor: '#1FB6D5' }}>
+                  className="mt-5 text-white rounded-2xl h-11 px-6" style={{ background: 'linear-gradient(135deg, #1e6080, #0F3D4C)' }}>
                   <Plus className="w-4 h-4 mr-2" /> New Application
                 </Button>
               )}
-            </GlassCard>
+            </div>
           </motion.div>
         ) : (
           <div className="space-y-3">
             <AnimatePresence>
-              {filtered.map((ticket, index) => {
-                const Icon = PERMIT_ICONS[ticket.permit_type] || FileCheck;
-                const st = STATUS_STYLE[ticket.status] || STATUS_STYLE.open;
-                return (
-                  <motion.div key={ticket.id} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: index * 0.04 }}>
-                    <GlassCard className="p-4" onClick={() => navigate(createPageUrl('TicketDetail') + `?id=${ticket.id}`)}>
-                      <div className="flex items-start justify-between gap-3">
-                        <div className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 bg-stone-100">
-                          <Icon className="w-6 h-6 text-stone-600" />
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <p className="font-semibold text-slate-800 text-sm">
-                            {PERMIT_LABELS[ticket.permit_type] || ticket.permit_type?.replace(/_/g, ' ') || 'Permit'}
-                          </p>
-                          <p className="text-xs text-slate-500 mt-0.5">
-                            Unit {ticket.unit_number || '–'} · {new Date(ticket.created_date).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })}
-                          </p>
-                          {ticket.reference_number && (
-                            <p className="text-xs text-stone-400 mt-0.5">{ticket.reference_number}</p>
-                          )}
-                          {ticket.activity_date && (
-                            <p className="text-xs text-slate-400 mt-0.5">
-                              Scheduled: {new Date(ticket.activity_date).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })}
-                            </p>
-                          )}
-                        </div>
-                        <div className="flex flex-col items-end gap-2">
-                          <span className="text-[10px] font-bold px-2.5 py-1 rounded-full whitespace-nowrap"
-                            style={{ background: st.bg, color: st.color }}>{st.label}</span>
-                          <ChevronRight className="w-4 h-4 text-slate-300" />
-                        </div>
-                      </div>
-                      {ticket.status === 'approved' && ticket.permit_id && (
-                        <div className="mt-3 pt-3 border-t border-slate-100/80 flex items-center gap-2">
-                          <FileCheck className="w-3.5 h-3.5 text-emerald-600" />
-                          <span className="text-xs text-emerald-600 font-semibold">Permit No. {ticket.permit_id}</span>
-                        </div>
-                      )}
-                    </GlassCard>
-                  </motion.div>
-                );
-              })}
+              {filtered.map((ticket, index) => (
+                <TicketCard
+                  key={ticket.id}
+                  ticket={ticket}
+                  onClick={() => navigate(createPageUrl('TicketDetail') + `?id=${ticket.id}`)}
+                />
+              ))}
             </AnimatePresence>
           </div>
         )}
