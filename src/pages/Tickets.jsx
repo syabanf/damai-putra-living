@@ -140,7 +140,10 @@ export default function Tickets() {
 
   const hasApprovedUnit = units.some(u => u.status === 'approved');
 
+  const ALLOWED_TYPES = ['renovasi_mayor', 'renovasi_minor', 'pencairan_deposit'];
+
   const filtered = tickets.filter(t => {
+    if (!ALLOWED_TYPES.includes(t.permit_type)) return false;
     if (activeTab === 'all') return true;
     if (activeTab === 'open') return ['open', 'under_review', 'waiting_approval'].includes(t.status);
     if (activeTab === 'in_progress') return ['in_progress', 'inspection_required'].includes(t.status);
