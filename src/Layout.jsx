@@ -72,7 +72,9 @@ export default function Layout({ children, currentPageName }) {
           background: 'linear-gradient(160deg, #F5F4F2 0%, #edecea 55%, #e7e5e2 100%)' 
         }}
       >
-        {children}
+        <div style={{ paddingBottom: hideNav ? 0 : 'calc(6rem + env(safe-area-inset-bottom))' }}>
+          {children}
+        </div>
         {!hideNav && <BottomNav currentPage={currentPageName} />}
       </div>
     </div>
