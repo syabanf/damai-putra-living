@@ -113,6 +113,19 @@ const TABS = [
   { key: 'closed',      label: 'Closed' },
 ];
 
+const CATEGORIES = [
+  { key: 'all',                label: 'Semua' },
+  { key: 'renovasi_minor',     label: 'Renovasi Minor' },
+  { key: 'renovasi_mayor',     label: 'Renovasi Mayor' },
+  { key: 'pindah_masuk',       label: 'Pindah Masuk' },
+  { key: 'pindah_keluar',      label: 'Pindah Keluar' },
+  { key: 'izin_kegiatan',      label: 'Izin Kegiatan' },
+  { key: 'pembangunan_kavling',label: 'Pembangunan' },
+  { key: 'galian',             label: 'Galian' },
+  { key: 'akses_kontraktor',   label: 'Kontraktor' },
+  { key: 'pencairan_deposit',  label: 'Deposit' },
+];
+
 export default function Tickets() {
   const navigate = useNavigate();
   const qc = useQueryClient();
@@ -135,24 +148,14 @@ export default function Tickets() {
   });
 
   const { data: tickets = [], isLoading } = useQuery({
-    queryKey: ['tickets'],
-    queryFn: () => base44.entities.Ticket.list('-created_date'),
+    queryKey: ['tickets', user?.email],
+    queryFn: () => user?.email
+      ? base44.entities.Ticket.filter({ user_email: user.email }, '-created_date')
+      : [],
+    enabled: !!user?.email,
   });
 
   const hasApprovedUnit = units.some(u => u.status === 'approved');
-
-  const CATEGORIES = [
-    { key: 'all', label: 'Semua' },
-    { key: 'renovasi_minor', label: 'Renovasi Minor' },
-    { key: 'renovasi_mayor', label: 'Renovasi Mayor' },
-    { key: 'pindah_masuk', label: 'Pindah Masuk' },
-    { key: 'pindah_keluar', label: 'Pindah Keluar' },
-    { key: 'izin_kegiatan', label: 'Izin Kegiatan' },
-    { key: 'pembangunan_kavling', label: 'Pembangunan' },
-    { key: 'galian', label: 'Galian' },
-    { key: 'akses_kontraktor', label: 'Kontraktor' },
-    { key: 'pencairan_deposit', label: 'Deposit' },
-  ];
 
   const filtered = tickets.filter(t => {
     const statusMatch = (() => {
