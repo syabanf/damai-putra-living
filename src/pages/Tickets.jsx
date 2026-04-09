@@ -130,8 +130,11 @@ export default function Tickets() {
   useEffect(() => { base44.auth.me().then(setUser).catch(() => {}); }, []);
 
   const { data: units = [] } = useQuery({
-    queryKey: ['units'],
-    queryFn: () => base44.entities.Unit.list(),
+    queryKey: ['units', user?.email],
+    queryFn: () => user?.email
+      ? base44.entities.Unit.filter({ user_email: user.email })
+      : [],
+    enabled: !!user,
   });
 
   const { data: tickets = [], isLoading } = useQuery({
