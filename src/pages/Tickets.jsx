@@ -135,8 +135,11 @@ export default function Tickets() {
   });
 
   const { data: tickets = [], isLoading } = useQuery({
-    queryKey: ['tickets'],
-    queryFn: () => base44.entities.Ticket.list('-created_date'),
+    queryKey: ['tickets', user?.email],
+    queryFn: () => user?.email
+      ? base44.entities.Ticket.filter({ user_email: user.email }, '-created_date')
+      : [],
+    enabled: !!user,
   });
 
   const hasApprovedUnit = units.some(u => u.status === 'approved');
