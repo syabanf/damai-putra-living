@@ -1,0 +1,70 @@
+{
+  "name": "Inspection",
+  "type": "object",
+  "properties": {
+    "application_id": {
+      "type": "string"
+    },
+    "inspection_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "inspector_name": {
+      "type": "string"
+    },
+    "inspection_type": {
+      "type": "string",
+      "enum": [
+        "Initial Check",
+        "Progress Check",
+        "Final Check",
+        "Deposit Release Check"
+      ]
+    },
+    "site_condition": {
+      "type": "string"
+    },
+    "issue_found": {
+      "type": "string"
+    },
+    "issue_severity": {
+      "type": "string",
+      "enum": [
+        "None",
+        "Minor",
+        "Moderate",
+        "Critical"
+      ]
+    },
+    "corrective_action": {
+      "type": "string"
+    },
+    "follow_up_deadline": {
+      "type": "string",
+      "format": "date"
+    },
+    "inspection_result": {
+      "type": "string",
+      "enum": [
+        "Pass",
+        "Need Revision",
+        "Hold",
+        "Failed"
+      ]
+    },
+    "photo_evidence": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "application_id",
+    "inspection_date",
+    "inspection_type"
+  ]
+}

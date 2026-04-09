@@ -4,6 +4,13 @@ import { queryClientInstance } from '@/lib/query-client'
 import { pagesConfig } from './pages.config'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import PageNotFound from './lib/PageNotFound';
+import PermitDashboard from './pages/PermitDashboard';
+import PermitList from './pages/PermitList';
+import PermitSubmission from './pages/PermitSubmission';
+import PermitDetail from './pages/PermitDetail';
+import PermitApproval from './pages/PermitApproval';
+import PermitInspection from './pages/PermitInspection';
+import PermitMasterData from './pages/PermitMasterData';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
 import UserNotRegisteredError from '@/components/UserNotRegisteredError';
 
@@ -57,6 +64,13 @@ const AuthenticatedApp = () => {
           }
         />
       ))}
+      <Route path="/PermitDashboard" element={<PermitDashboard />} />
+      <Route path="/PermitList" element={<PermitList />} />
+      <Route path="/PermitSubmission" element={<PermitSubmission />} />
+      <Route path="/PermitDetail" element={<PermitDetail />} />
+      <Route path="/PermitApproval" element={<PermitApproval />} />
+      <Route path="/PermitInspection" element={<PermitInspection />} />
+      <Route path="/PermitMasterData" element={<PermitMasterData />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
