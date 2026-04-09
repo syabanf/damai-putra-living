@@ -1,0 +1,57 @@
+{
+  "name": "DepositPaymentRecord",
+  "type": "object",
+  "properties": {
+    "related_permit_application_id": {
+      "type": "string"
+    },
+    "payment_type": {
+      "type": "string",
+      "enum": [
+        "Deposit",
+        "Admin Fee",
+        "Other"
+      ]
+    },
+    "receipt_number": {
+      "type": "string"
+    },
+    "invoice_number": {
+      "type": "string"
+    },
+    "payment_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "payment_period": {
+      "type": "string"
+    },
+    "payment_amount": {
+      "type": "number"
+    },
+    "tax_amount": {
+      "type": "number",
+      "default": 0
+    },
+    "total_amount": {
+      "type": "number"
+    },
+    "payment_method": {
+      "type": "string"
+    },
+    "payer_name": {
+      "type": "string"
+    },
+    "remarks": {
+      "type": "string"
+    },
+    "receipt_file": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "related_permit_application_id",
+    "payment_type",
+    "payment_amount"
+  ]
+}

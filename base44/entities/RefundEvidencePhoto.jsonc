@@ -1,0 +1,35 @@
+{
+  "name": "RefundEvidencePhoto",
+  "type": "object",
+  "properties": {
+    "refund_request_id": {
+      "type": "string"
+    },
+    "photo_type": {
+      "type": "string",
+      "enum": [
+        "Before",
+        "After",
+        "Damage Evidence",
+        "Supporting Evidence"
+      ]
+    },
+    "photo_title": {
+      "type": "string"
+    },
+    "photo_file": {
+      "type": "string"
+    },
+    "photo_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "refund_request_id",
+    "photo_type"
+  ]
+}

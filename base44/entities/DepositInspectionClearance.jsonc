@@ -1,0 +1,70 @@
+{
+  "name": "DepositInspectionClearance",
+  "type": "object",
+  "properties": {
+    "refund_request_id": {
+      "type": "string"
+    },
+    "inspection_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "inspector_name": {
+      "type": "string"
+    },
+    "inspection_result": {
+      "type": "string",
+      "enum": [
+        "No Issue",
+        "Minor Deduction",
+        "Major Deduction",
+        "Hold",
+        "Rejected"
+      ]
+    },
+    "damage_found": {
+      "type": "boolean",
+      "default": false
+    },
+    "damage_description": {
+      "type": "string"
+    },
+    "deduction_reason": {
+      "type": "string"
+    },
+    "deduction_amount": {
+      "type": "number",
+      "default": 0
+    },
+    "replacement_cost": {
+      "type": "number",
+      "default": 0
+    },
+    "final_refund_amount": {
+      "type": "number"
+    },
+    "inspection_notes": {
+      "type": "string"
+    },
+    "berita_acara_file": {
+      "type": "string"
+    },
+    "signed_by_customer": {
+      "type": "boolean",
+      "default": false
+    },
+    "signed_by_inspector": {
+      "type": "boolean",
+      "default": false
+    },
+    "signed_by_township_head": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "required": [
+    "refund_request_id",
+    "inspection_date",
+    "inspector_name"
+  ]
+}

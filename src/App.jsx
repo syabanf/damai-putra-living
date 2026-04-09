@@ -11,6 +11,13 @@ import PermitDetail from './pages/PermitDetail';
 import PermitApproval from './pages/PermitApproval';
 import PermitInspection from './pages/PermitInspection';
 import PermitMasterData from './pages/PermitMasterData';
+import RefundDashboard from './pages/RefundDashboard';
+import RefundList from './pages/RefundList';
+import RefundSubmission from './pages/RefundSubmission';
+import RefundDetail from './pages/RefundDetail';
+import RefundVerification from './pages/RefundVerification';
+import RefundInspectionPage from './pages/RefundInspectionPage';
+import RefundFinancePage from './pages/RefundFinancePage';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
 import UserNotRegisteredError from '@/components/UserNotRegisteredError';
 
@@ -71,6 +78,13 @@ const AuthenticatedApp = () => {
       <Route path="/PermitApproval" element={<PermitApproval />} />
       <Route path="/PermitInspection" element={<PermitInspection />} />
       <Route path="/PermitMasterData" element={<PermitMasterData />} />
+      <Route path="/RefundDashboard" element={<RefundDashboard />} />
+      <Route path="/RefundList" element={<RefundList />} />
+      <Route path="/RefundSubmission" element={<RefundSubmission />} />
+      <Route path="/RefundDetail" element={<RefundDetail />} />
+      <Route path="/RefundVerification" element={<RefundVerification />} />
+      <Route path="/RefundInspectionPage" element={<RefundInspectionPage />} />
+      <Route path="/RefundFinancePage" element={<RefundFinancePage />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );

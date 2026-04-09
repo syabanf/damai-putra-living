@@ -1,0 +1,119 @@
+{
+  "name": "DepositRefundRequest",
+  "type": "object",
+  "properties": {
+    "refund_request_number": {
+      "type": "string"
+    },
+    "related_permit_application_id": {
+      "type": "string"
+    },
+    "related_permit_number": {
+      "type": "string"
+    },
+    "refund_type": {
+      "type": "string",
+      "enum": [
+        "Renovation Deposit",
+        "Rental Deposit",
+        "Other"
+      ]
+    },
+    "refund_status": {
+      "type": "string",
+      "enum": [
+        "Draft",
+        "Submitted",
+        "Under Verification",
+        "Waiting Inspection Result",
+        "Waiting Finance Validation",
+        "Approved",
+        "Partially Approved",
+        "Rejected",
+        "Paid",
+        "Closed"
+      ],
+      "default": "Draft"
+    },
+    "request_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "applicant_name": {
+      "type": "string"
+    },
+    "owner_name": {
+      "type": "string"
+    },
+    "ktp_name": {
+      "type": "string"
+    },
+    "ktp_number": {
+      "type": "string"
+    },
+    "phone_number": {
+      "type": "string"
+    },
+    "cluster_name": {
+      "type": "string"
+    },
+    "block_number": {
+      "type": "string"
+    },
+    "unit_number": {
+      "type": "string"
+    },
+    "refund_reason": {
+      "type": "string"
+    },
+    "original_deposit_amount": {
+      "type": "number"
+    },
+    "deduction_amount": {
+      "type": "number",
+      "default": 0
+    },
+    "approved_refund_amount": {
+      "type": "number"
+    },
+    "bank_name": {
+      "type": "string"
+    },
+    "bank_account_number": {
+      "type": "string"
+    },
+    "bank_account_holder_name": {
+      "type": "string"
+    },
+    "payout_method": {
+      "type": "string",
+      "enum": [
+        "Bank Transfer",
+        "Cash",
+        "Other"
+      ],
+      "default": "Bank Transfer"
+    },
+    "payout_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "finance_notes": {
+      "type": "string"
+    },
+    "verifier_notes": {
+      "type": "string"
+    },
+    "applicant_notes": {
+      "type": "string"
+    },
+    "user_email": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "applicant_name",
+    "unit_number",
+    "refund_type"
+  ]
+}
