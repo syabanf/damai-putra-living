@@ -1,12 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
 import {
   ArrowLeft, CheckCircle, XCircle, AlertCircle,
-  FileText, Calendar, Building2, User, Truck, Wrench,
-  Eye, Banknote, ClipboardCheck, Shield
+  FileText, Building2, User, Truck, Wrench,
+  Eye, Banknote, ClipboardCheck, Shield, ClipboardList, History, Search, Clock, SkipForward
 } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 
@@ -63,15 +63,58 @@ const Section = ({ title, icon: Icon, children }) => (
   </div>
 );
 
+const PERMIT_TABS = [
+  { key: 'overview', label: 'Overview', icon: FileText },
+  { key: 'work', label: 'Work Scope', icon: ClipboardList },
+  { key: 'approvals', label: 'Approvals', icon: ClipboardCheck },
+  { key: 'inspections', label: 'Inspeksi', icon: Search },
+  { key: 'log', label: 'Log', icon: History },
+];
+
+const APPROVAL_STAGE_ICONS = {
+  Approved: { icon: CheckCircle, color: 'text-green-500', bg: 'bg-green-50' },
+  Rejected: { icon: XCircle, color: 'text-red-500', bg: 'bg-red-50' },
+  Pending:  { icon: Clock, color: 'text-slate-400', bg: 'bg-slate-50' },
+  Skipped:  { icon: SkipForward, color: 'text-slate-400', bg: 'bg-slate-50' },
+  'Revision Requested': { icon: AlertCircle, color: 'text-orange-500', bg: 'bg-orange-50' },
+};
+
 export default function TicketDetail() {
   const navigate = useNavigate();
   const urlParams = new URLSearchParams(window.location.search);
   const ticketId = urlParams.get('id');
+  const [activeTab, setActiveTab] = useState('overview');
 
   const { data: ticket, isLoading } = useQuery({
     queryKey: ['ticket', ticketId],
     queryFn: () => base44.entities.Ticket.filter({ id: ticketId }).then(r => r[0]),
     enabled: !!ticketId,
+  });
+
+  const isRenovation = ticket && ['renovasi_minor', 'renovasi_mayor'].includes(ticket.permit_type);
+
+  const { data: workItems = [] } = useQuery({
+    queryKey: ['ticket-workitems', ticketId],
+    queryFn: () => base44.entities.WorkItem.filter({ application_id: ticketId }),
+    enabled: !!ticketId && isRenovation,
+  });
+
+  const { data: approvals = [] } = useQuery({
+    queryKey: ['ticket-approvals', ticketId],
+    queryFn: () => base44.entities.ApprovalWorkflow.filter({ application_id: ticketId }),
+    enabled: !!ticketId && isRenovation,
+  });
+
+  const { data: inspections = [] } = useQuery({
+    queryKey: ['ticket-inspections', ticketId],
+    queryFn: () => base44.entities.Inspection.filter({ application_id: ticketId }),
+    enabled: !!ticketId && isRenovation,
+  });
+
+  const { data: activityLogs = [] } = useQuery({
+    queryKey: ['ticket-logs', ticketId],
+    queryFn: () => base44.entities.ActivityLog.filter({ application_id: ticketId }),
+    enabled: !!ticketId && isRenovation,
   });
 
   if (isLoading) {
@@ -104,8 +147,8 @@ export default function TicketDetail() {
   return (
     <div className="min-h-screen pb-10" style={{ background: 'linear-gradient(160deg, #F5F4F2 0%, #edecea 55%, #e7e5e2 100%)' }}>
       {/* Header */}
-      <div className="px-5 pt-14 pb-5 rounded-b-3xl" style={{ background: 'linear-gradient(150deg, #1a5068 0%, #0F3D4C 55%, #0a2d38 100%)' }}>
-        <div className="flex items-start gap-3">
+      <div className="px-5 pt-14 pb-4 rounded-b-3xl" style={{ background: 'linear-gradient(150deg, #1a5068 0%, #0F3D4C 55%, #0a2d38 100%)' }}>
+        <div className="flex items-start gap-3 mb-4">
           <button onClick={() => navigate(createPageUrl('Tickets'))}
             className="w-9 h-9 bg-white/15 rounded-xl flex items-center justify-center border border-white/20 flex-shrink-0 mt-0.5">
             <ArrowLeft className="w-5 h-5 text-white" />
@@ -118,20 +161,141 @@ export default function TicketDetail() {
           <span className="px-3 py-1.5 rounded-full text-xs font-bold mt-1 flex-shrink-0"
             style={{ background: st.bg, color: st.color }}>{st.label}</span>
         </div>
+        {/* Tabs — only for renovation tickets */}
+        {isRenovation && (
+          <div className="flex gap-1 overflow-x-auto hide-scrollbar">
+            {PERMIT_TABS.map(({ key, label, icon: Icon }) => (
+              <button key={key} onClick={() => setActiveTab(key)}
+                className={`flex-shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all whitespace-nowrap ${
+                  activeTab === key ? 'bg-white text-slate-800' : 'bg-white/15 text-white/70 border border-white/20'
+                }`}>
+                <Icon className="w-3 h-3" />{label}
+              </button>
+            ))}
+          </div>
+        )}
       </div>
 
       <div className="px-4 py-5 space-y-4">
 
-        {/* ── Approval Workflow ── */}
+        {/* ── RENOVATION TABS ── */}
+        {isRenovation && activeTab === 'work' && (
+          <Section title="Lingkup Pekerjaan" icon={ClipboardList}>
+            {workItems.length === 0 ? (
+              <p className="text-slate-400 text-sm text-center py-4">Tidak ada work item tercatat</p>
+            ) : (
+              <div className="space-y-2">
+                {workItems.map(item => (
+                  <div key={item.id} className={`flex items-center justify-between p-3 rounded-xl border ${
+                    item.work_item_type === 'Major' ? 'border-purple-200 bg-purple-50' : 'border-sky-200 bg-sky-50'
+                  }`}>
+                    <div>
+                      <p className="text-sm font-semibold text-slate-800">{item.work_item_name}</p>
+                      <p className="text-xs text-slate-500">{item.work_item_type} · {item.work_category || 'General'}</p>
+                    </div>
+                    <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                      item.review_status === 'Approved' ? 'bg-green-100 text-green-700' :
+                      item.review_status === 'Rejected' ? 'bg-red-100 text-red-700' :
+                      'bg-slate-100 text-slate-500'
+                    }`}>{item.review_status}</span>
+                  </div>
+                ))}
+              </div>
+            )}
+          </Section>
+        )}
+
+        {isRenovation && activeTab === 'approvals' && (
+          <Section title="Approval Timeline" icon={ClipboardCheck}>
+            {approvals.length === 0 ? (
+              <p className="text-slate-400 text-sm text-center py-4">Belum ada approval</p>
+            ) : (
+              <div className="space-y-3">
+                {approvals.sort((a, b) => (a.sequence_order || 0) - (b.sequence_order || 0)).map((appr, i) => {
+                  const cfg = APPROVAL_STAGE_ICONS[appr.approval_status] || APPROVAL_STAGE_ICONS.Pending;
+                  const Icon = cfg.icon;
+                  return (
+                    <div key={i} className="flex gap-3">
+                      <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${cfg.bg}`}>
+                        <Icon className={`w-4 h-4 ${cfg.color}`} />
+                      </div>
+                      <div className="flex-1 pb-3 border-b border-slate-100 last:border-0">
+                        <div className="flex items-center justify-between">
+                          <p className="text-sm font-semibold text-slate-800">{appr.approval_stage}</p>
+                          <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${cfg.bg} ${cfg.color}`}>{appr.approval_status}</span>
+                        </div>
+                        {appr.approver_name && <p className="text-xs text-slate-500">By: {appr.approver_name}</p>}
+                        {appr.approval_date && <p className="text-xs text-slate-400">{new Date(appr.approval_date).toLocaleDateString('id-ID')}</p>}
+                        {appr.approval_notes && <p className="text-xs text-slate-500 mt-1 italic">"{appr.approval_notes}"</p>}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </Section>
+        )}
+
+        {isRenovation && activeTab === 'inspections' && (
+          <Section title="Riwayat Inspeksi" icon={Search}>
+            {inspections.length === 0 ? (
+              <p className="text-slate-400 text-sm text-center py-4">Belum ada inspeksi</p>
+            ) : (
+              <div className="space-y-3">
+                {inspections.map(ins => (
+                  <div key={ins.id} className="border border-slate-200 rounded-xl p-3">
+                    <div className="flex items-center justify-between mb-1">
+                      <p className="text-sm font-semibold text-slate-800">{ins.inspection_type}</p>
+                      <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                        ins.inspection_result === 'Pass' ? 'bg-green-100 text-green-700' :
+                        ins.inspection_result === 'Failed' ? 'bg-red-100 text-red-700' :
+                        'bg-amber-100 text-amber-700'
+                      }`}>{ins.inspection_result}</span>
+                    </div>
+                    <p className="text-xs text-slate-400">{ins.inspection_date} · {ins.inspector_name}</p>
+                    {ins.site_condition && <p className="text-xs text-slate-600 mt-1">Kondisi: {ins.site_condition}</p>}
+                    {ins.issue_found && <p className="text-xs text-red-600 mt-0.5">Temuan: {ins.issue_found}</p>}
+                    {ins.corrective_action && <p className="text-xs text-amber-600 mt-0.5">Tindakan: {ins.corrective_action}</p>}
+                  </div>
+                ))}
+              </div>
+            )}
+          </Section>
+        )}
+
+        {isRenovation && activeTab === 'log' && (
+          <Section title="Activity Log" icon={History}>
+            {activityLogs.length === 0 ? (
+              <p className="text-slate-400 text-sm text-center py-4">Belum ada aktivitas</p>
+            ) : (
+              <div className="space-y-2">
+                {[...activityLogs].sort((a, b) => new Date(b.performed_at) - new Date(a.performed_at)).map(log => (
+                  <div key={log.id} className="flex gap-2.5 py-2 border-b border-slate-100 last:border-0">
+                    <div className="w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0 mt-1.5" />
+                    <div>
+                      <p className="text-sm text-slate-800">{log.activity_description}</p>
+                      <p className="text-xs text-slate-400">{log.performed_by} · {log.performed_at ? new Date(log.performed_at).toLocaleString('id-ID') : ''}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </Section>
+        )}
+
+        {/* Non-renovation OR overview tab: show existing sections */}
+        {(!isRenovation || activeTab === 'overview') && (
+          <>
+        {/* ── Approval Progress ── */}
         <Section title="Approval Progress" icon={ClipboardCheck}>
           <div className="space-y-1">
             {WORKFLOW.map((stage, i) => {
               const isDone = i < currentStageIdx;
               const isCurrent = i === currentStageIdx;
-              const isPending = i > currentStageIdx;
               return (
                 <div key={stage.key} className="flex items-center gap-3 py-2">
-                  <div className={`w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 border-2 ${isDone ? 'bg-emerald-500 border-emerald-500' : isCurrent ? 'bg-white border-slate-200' : 'bg-white border-slate-200'}`} style={isCurrent ? { background: '#1FB6D5', borderColor: '#1FB6D5' } : {}}>
+                  <div className={`w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 border-2 ${isDone ? 'bg-emerald-500 border-emerald-500' : isCurrent ? 'border-sky-400' : 'bg-white border-slate-200'}`}
+                    style={isCurrent ? { background: '#1FB6D5', borderColor: '#1FB6D5' } : {}}>
                     {isDone
                       ? <CheckCircle className="w-4 h-4 text-white" />
                       : <span className={`text-[10px] font-bold ${isCurrent ? 'text-white' : 'text-slate-400'}`}>{i + 1}</span>}
@@ -268,6 +432,9 @@ export default function TicketDetail() {
               ))}
             </div>
           </Section>
+        )}
+
+        </>
         )}
 
         <Button variant="outline" onClick={() => navigate(createPageUrl('Tickets'))}
