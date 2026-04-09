@@ -118,6 +118,7 @@ export default function Tickets() {
   const qc = useQueryClient();
   const [user, setUser] = useState(null);
   const [activeTab, setActiveTab] = useState('all');
+  const [activeCategory, setActiveCategory] = useState('all');
 
   const { isRefreshing, containerRef } = usePullToRefresh(() =>
     Promise.all([
@@ -140,13 +141,30 @@ export default function Tickets() {
 
   const hasApprovedUnit = units.some(u => u.status === 'approved');
 
+  const CATEGORIES = [
+    { key: 'all', label: 'Semua' },
+    { key: 'renovasi_minor', label: 'Renovasi Minor' },
+    { key: 'renovasi_mayor', label: 'Renovasi Mayor' },
+    { key: 'pindah_masuk', label: 'Pindah Masuk' },
+    { key: 'pindah_keluar', label: 'Pindah Keluar' },
+    { key: 'izin_kegiatan', label: 'Izin Kegiatan' },
+    { key: 'pembangunan_kavling', label: 'Pembangunan' },
+    { key: 'galian', label: 'Galian' },
+    { key: 'akses_kontraktor', label: 'Kontraktor' },
+    { key: 'pencairan_deposit', label: 'Deposit' },
+  ];
+
   const filtered = tickets.filter(t => {
-    if (activeTab === 'all') return true;
-    if (activeTab === 'open') return ['open', 'under_review', 'waiting_approval'].includes(t.status);
-    if (activeTab === 'in_progress') return ['in_progress', 'inspection_required'].includes(t.status);
-    if (activeTab === 'approved') return t.status === 'approved';
-    if (activeTab === 'closed') return ['closed', 'rejected', 'completed', 'deposit_returned'].includes(t.status);
-    return true;
+    const statusMatch = (() => {
+      if (activeTab === 'all') return true;
+      if (activeTab === 'open') return ['open', 'under_review', 'waiting_approval'].includes(t.status);
+      if (activeTab === 'in_progress') return ['in_progress', 'inspection_required'].includes(t.status);
+      if (activeTab === 'approved') return t.status === 'approved';
+      if (activeTab === 'closed') return ['closed', 'rejected', 'completed', 'deposit_returned'].includes(t.status);
+      return true;
+    })();
+    const catMatch = activeCategory === 'all' || t.permit_type === activeCategory;
+    return statusMatch && catMatch;
   });
 
   if (!hasApprovedUnit) {
@@ -199,7 +217,7 @@ export default function Tickets() {
             <Plus className="w-4 h-4" /> New
           </button>
         </div>
-        {/* Tabs */}
+        {/* Status Tabs */}
         <div className="flex gap-1 p-1 rounded-2xl overflow-x-auto hide-scrollbar" style={{ background: 'rgba(0,0,0,0.18)' }}>
           {TABS.map(tab => (
             <button key={tab.key} onClick={() => setActiveTab(tab.key)}
@@ -211,7 +229,25 @@ export default function Tickets() {
         </div>
       </div>
 
-      <div className="px-4 py-5">
+      {/* Category filter */}
+      <div className="px-4 pt-4">
+        <div className="flex gap-2 overflow-x-auto hide-scrollbar pb-1">
+          {CATEGORIES.map(cat => (
+            <button
+              key={cat.key}
+              onClick={() => setActiveCategory(cat.key)}
+              className="flex-shrink-0 px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all whitespace-nowrap"
+              style={activeCategory === cat.key
+                ? { background: '#0F3D4C', color: '#ffffff' }
+                : { background: '#ffffff', color: '#4a6272', border: '1px solid #dde4e8' }}
+            >
+              {cat.label}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="px-4 py-3">
         {isLoading ? (
           <div className="space-y-3">
             {[1, 2, 3].map(i => (
