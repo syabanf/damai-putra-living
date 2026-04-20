@@ -108,6 +108,19 @@ export default function CreateTicket() {
   const totalSteps = activeSteps.length;
 
   const mutation = useMutation({
+    onMutate: async () => {
+      await qc.cancelQueries({ queryKey: ['tickets'] });
+      const prev = qc.getQueryData(['tickets', user?.email]);
+      // Optimistically show an empty placeholder so the list feels instant
+      qc.setQueryData(['tickets', user?.email], (old = []) => [
+        { id: '__optimistic__', permit_type: form.permit_type, status: 'open', created_date: new Date().toISOString(), unit_number: form.unit_number || '' },
+        ...old,
+      ]);
+      return { prev };
+    },
+    onError: (_err, _vars, ctx) => {
+      if (ctx?.prev) qc.setQueryData(['tickets', user?.email], ctx.prev);
+    },
     mutationFn: async (data) => {
       const ticket = await base44.entities.Ticket.create(data);
       // If renovation type, create linked PermitApplication + WorkItems + ActivityLog

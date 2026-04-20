@@ -91,11 +91,9 @@ export default function StepActivity({ form, set, permitType, uploading, onUploa
       {isMoving && (
         <Section title="D. Security / Moving Details">
           <F label="Move Type" required>
-            <select className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-stone-300 transition-all"
-              value={form.permit_type} disabled>
-              <option value="pindah_masuk">Move In</option>
-              <option value="pindah_keluar">Move Out</option>
-            </select>
+            <div className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-sm text-slate-700 font-medium">
+              {form.permit_type === 'pindah_masuk' ? 'Move In' : 'Move Out'}
+            </div>
           </F>
           <F label="Moving Date" required>
             <Input type="date" value={form.activity_date} onChange={v => set('activity_date', v)} />

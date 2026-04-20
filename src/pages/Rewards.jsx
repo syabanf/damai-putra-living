@@ -49,6 +49,17 @@ export default function Rewards() {
         });
       }
     },
+    onMutate: async (points) => {
+      await queryClient.cancelQueries({ queryKey: ['userPoints', user?.email] });
+      const prev = queryClient.getQueryData(['userPoints', user?.email]);
+      queryClient.setQueryData(['userPoints', user?.email], (old = []) =>
+        old.map((r, i) => i === 0 ? { ...r, balance: (r.balance || 0) + points, total_earned: (r.total_earned || 0) + points } : r)
+      );
+      return { prev };
+    },
+    onError: (_err, _pts, ctx) => {
+      if (ctx?.prev) queryClient.setQueryData(['userPoints', user?.email], ctx.prev);
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['userPoints', user?.email] });
     },

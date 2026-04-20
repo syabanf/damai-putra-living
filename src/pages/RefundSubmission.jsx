@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
-import { ChevronRight, ChevronLeft, CheckCircle2, Upload, FileText } from 'lucide-react';
+import { ChevronRight, ChevronLeft, CheckCircle2, Upload, FileText, ChevronDown, Check } from 'lucide-react';
+import { Drawer, DrawerContent, DrawerHeader, DrawerTitle } from '@/components/ui/drawer';
 import RefundLayout from '@/components/refund/RefundLayout';
 
 const CHECKLIST_ITEMS = [
@@ -31,11 +32,35 @@ const Input = (props) => (
   <input {...props} className="w-full px-3 py-2.5 rounded-xl border border-slate-200 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-200" />
 );
 
-const Select = ({ children, ...props }) => (
-  <select {...props} className="w-full px-3 py-2.5 rounded-xl border border-slate-200 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-200">
-    {children}
-  </select>
-);
+const DrawerSelect = ({ value, onChange, options, placeholder = 'Select...' }) => {
+  const [open, setOpen] = useState(false);
+  const selected = options.find(o => o.value === value);
+  return (
+    <>
+      <button type="button" onClick={() => setOpen(true)}
+        className="w-full px-3 py-2.5 rounded-xl border border-slate-200 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-200 flex items-center justify-between text-left">
+        <span className={selected ? 'text-slate-800' : 'text-slate-400'}>{selected ? selected.label : placeholder}</span>
+        <ChevronDown className="w-4 h-4 text-slate-400 flex-shrink-0" />
+      </button>
+      <Drawer open={open} onOpenChange={setOpen}>
+        <DrawerContent>
+          <DrawerHeader><DrawerTitle className="text-base">{placeholder}</DrawerTitle></DrawerHeader>
+          <div className="px-4 pb-6 space-y-1 overflow-y-auto max-h-[60vh]">
+            {options.map(o => (
+              <button key={o.value} type="button"
+                onClick={() => { onChange(o.value); setOpen(false); }}
+                className="w-full flex items-center justify-between px-4 py-3.5 rounded-xl text-sm font-medium transition-colors"
+                style={o.value === value ? { background: '#eff6ff', color: '#1e40af' } : { color: '#334155' }}>
+                {o.label}
+                {o.value === value && <Check className="w-4 h-4 text-blue-600" />}
+              </button>
+            ))}
+          </div>
+        </DrawerContent>
+      </Drawer>
+    </>
+  );
+};
 
 const Textarea = (props) => (
   <textarea {...props} rows={3} className="w-full px-3 py-2.5 rounded-xl border border-slate-200 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-200 resize-none" />
@@ -62,6 +87,14 @@ export default function RefundSubmission() {
   const set = (k, v) => setForm(f => ({ ...f, [k]: v }));
 
   const createMutation = useMutation({
+    onMutate: async () => {
+      await qc.cancelQueries({ queryKey: ['deposit-refunds'] });
+      const prev = qc.getQueryData(['deposit-refunds']);
+      return { prev };
+    },
+    onError: (_err, _vars, ctx) => {
+      if (ctx?.prev) qc.setQueryData(['deposit-refunds'], ctx.prev);
+    },
     mutationFn: async () => {
       const num = `RFD/${new Date().getFullYear()}/${String(Date.now()).slice(-5)}`;
       const req = await base44.entities.DepositRefundRequest.create({
@@ -154,11 +187,13 @@ export default function RefundSubmission() {
           {step === 0 && (
             <>
               <Field label="Refund Type" required>
-                <Select value={form.refund_type} onChange={e => set('refund_type', e.target.value)}>
-                  <option>Renovation Deposit</option>
-                  <option>Rental Deposit</option>
-                  <option>Other</option>
-                </Select>
+                <DrawerSelect value={form.refund_type} onChange={v => set('refund_type', v)}
+                  placeholder="Select refund type..."
+                  options={[
+                    { value: 'Renovation Deposit', label: 'Renovation Deposit' },
+                    { value: 'Rental Deposit', label: 'Rental Deposit' },
+                    { value: 'Other', label: 'Other' },
+                  ]} />
               </Field>
               <Field label="Related Permit Number" required>
                 <Input value={form.related_permit_number} onChange={e => set('related_permit_number', e.target.value)} placeholder="DP/RNV-MIN/2026/001" />
@@ -226,11 +261,13 @@ export default function RefundSubmission() {
                 <Input value={form.bank_account_holder_name} onChange={e => set('bank_account_holder_name', e.target.value)} />
               </Field>
               <Field label="Payout Method">
-                <Select value={form.payout_method} onChange={e => set('payout_method', e.target.value)}>
-                  <option>Bank Transfer</option>
-                  <option>Cash</option>
-                  <option>Other</option>
-                </Select>
+                <DrawerSelect value={form.payout_method} onChange={v => set('payout_method', v)}
+                  placeholder="Select payout method..."
+                  options={[
+                    { value: 'Bank Transfer', label: 'Bank Transfer' },
+                    { value: 'Cash', label: 'Cash' },
+                    { value: 'Other', label: 'Other' },
+                  ]} />
               </Field>
             </>
           )}

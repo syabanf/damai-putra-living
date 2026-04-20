@@ -3,23 +3,31 @@ import { QueryClientProvider } from '@tanstack/react-query'
 import { queryClientInstance } from '@/lib/query-client'
 import { pagesConfig } from './pages.config'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import React, { lazy, Suspense } from 'react';
 import PageNotFound from './lib/PageNotFound';
-import PermitDashboard from './pages/PermitDashboard';
-import PermitList from './pages/PermitList';
-import PermitSubmission from './pages/PermitSubmission';
-import PermitDetail from './pages/PermitDetail';
-import PermitApproval from './pages/PermitApproval';
-import PermitInspection from './pages/PermitInspection';
-import PermitMasterData from './pages/PermitMasterData';
-import RefundDashboard from './pages/RefundDashboard';
-import RefundList from './pages/RefundList';
-import RefundSubmission from './pages/RefundSubmission';
-import RefundDetail from './pages/RefundDetail';
-import RefundVerification from './pages/RefundVerification';
-import RefundInspectionPage from './pages/RefundInspectionPage';
-import RefundFinancePage from './pages/RefundFinancePage';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
 import UserNotRegisteredError from '@/components/UserNotRegisteredError';
+
+const PermitDashboard = lazy(() => import('./pages/PermitDashboard'));
+const PermitList = lazy(() => import('./pages/PermitList'));
+const PermitSubmission = lazy(() => import('./pages/PermitSubmission'));
+const PermitDetail = lazy(() => import('./pages/PermitDetail'));
+const PermitApproval = lazy(() => import('./pages/PermitApproval'));
+const PermitInspection = lazy(() => import('./pages/PermitInspection'));
+const PermitMasterData = lazy(() => import('./pages/PermitMasterData'));
+const RefundDashboard = lazy(() => import('./pages/RefundDashboard'));
+const RefundList = lazy(() => import('./pages/RefundList'));
+const RefundSubmission = lazy(() => import('./pages/RefundSubmission'));
+const RefundDetail = lazy(() => import('./pages/RefundDetail'));
+const RefundVerification = lazy(() => import('./pages/RefundVerification'));
+const RefundInspectionPage = lazy(() => import('./pages/RefundInspectionPage'));
+const RefundFinancePage = lazy(() => import('./pages/RefundFinancePage'));
+
+const PageLoader = () => (
+  <div className="fixed inset-0 flex items-center justify-center bg-background/60">
+    <div className="w-7 h-7 border-4 border-slate-200 border-t-slate-600 rounded-full animate-spin" />
+  </div>
+);
 
 const { Pages, Layout, mainPage } = pagesConfig;
 const mainPageKey = mainPage ?? Object.keys(Pages)[0];
@@ -54,6 +62,7 @@ const AuthenticatedApp = () => {
 
   // Render the main app
   return (
+    <Suspense fallback={<PageLoader />}>
     <Routes>
       <Route path="/" element={
         <LayoutWrapper currentPageName={mainPageKey}>
@@ -87,6 +96,7 @@ const AuthenticatedApp = () => {
       <Route path="/RefundFinancePage" element={<RefundFinancePage />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
+    </Suspense>
   );
 };
 
