@@ -139,9 +139,17 @@ export default function AddUnit() {
   const handleSubmit = async () => {
     setLoading(true);
     
+    const toNum = (v) => v !== '' && v !== null && v !== undefined ? Number(v) : undefined;
     await createUnitMutation.mutateAsync({
       ...formData,
-      monthly_rent: formData.monthly_rent ? Number(formData.monthly_rent) : undefined,
+      bedroom_count: toNum(formData.bedroom_count),
+      bathroom_count: toNum(formData.bathroom_count),
+      floor_number: toNum(formData.floor_number),
+      area_size: toNum(formData.area_size),
+      land_size: toNum(formData.land_size),
+      building_size: toNum(formData.building_size),
+      garage_count: toNum(formData.garage_count),
+      monthly_rent: toNum(formData.monthly_rent),
       status: 'pending',
       user_email: user?.email,
       user_name: user?.full_name
@@ -658,7 +666,7 @@ export default function AddUnit() {
       </div>
 
       {/* Bottom Actions */}
-      <div className="fixed bottom-0 left-0 right-0 p-6" style={{ background: 'rgba(255,255,255,0.88)', backdropFilter: 'blur(20px)', borderTop: '1px solid rgba(255,255,255,0.9)' }}>
+      <div className="fixed bottom-0 left-0 right-0 px-6 pt-4" style={{ paddingBottom: 'calc(1.5rem + env(safe-area-inset-bottom))', background: 'rgba(255,255,255,0.88)', backdropFilter: 'blur(20px)', borderTop: '1px solid rgba(255,255,255,0.9)' }}>
         <Button
           onClick={handleNext}
           disabled={loading}
