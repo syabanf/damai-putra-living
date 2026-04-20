@@ -55,8 +55,16 @@ body {
   padding-top: env(safe-area-inset-top);
 }
 
-button, [role="button"], a, nav *, [role="navigation"] * {
+button, [role="button"], a,
+nav *, [role="navigation"] *,
+.bottom-nav, .tab-bar {
   user-select: none;
+}
+
+/* Allow text selection in content areas */
+p, span, h1, h2, h3, h4, h5, h6, li, td, th, blockquote,
+.selectable, article, .ticket-detail, .content-body {
+  user-select: text;
 }
 
 /* Custom focus styles */

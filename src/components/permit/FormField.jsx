@@ -1,5 +1,6 @@
-import React from 'react';
-import { Upload, CheckCircle, X, FileText } from 'lucide-react';
+import React, { useState } from 'react';
+import { Upload, CheckCircle, X, FileText, ChevronDown, Check } from 'lucide-react';
+import { Drawer, DrawerContent, DrawerHeader, DrawerTitle } from '@/components/ui/drawer';
 
 const ic = "w-full px-4 py-3 rounded-xl border border-slate-200 bg-white text-sm text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-stone-300 focus:border-stone-400 transition-all";
 
@@ -22,14 +23,43 @@ export const Textarea = ({ value, onChange, placeholder, rows = 3 }) => (
 );
 
 export const Select = ({ value, onChange, options, placeholder = 'Select...' }) => {
-  const isDark = typeof window !== 'undefined' && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const [open, setOpen] = useState(false);
+  const selected = options.find(o => o.value === value);
   return (
-    <select className={`${ic} ${isDark ? 'bg-slate-800 text-slate-100' : ''}`} value={value} onChange={e => onChange(e.target.value)}>
-      <option value="">{placeholder}</option>
-      {options.map(o => (
-        <option key={o.value} value={o.value}>{o.label}</option>
-      ))}
-    </select>
+    <>
+      <button
+        type="button"
+        onClick={() => setOpen(true)}
+        className={`${ic} flex items-center justify-between text-left`}
+        style={{ WebkitAppearance: 'none' }}
+      >
+        <span className={selected ? 'text-slate-800' : 'text-slate-400'}>{selected ? selected.label : placeholder}</span>
+        <ChevronDown className="w-4 h-4 text-slate-400 flex-shrink-0" />
+      </button>
+      <Drawer open={open} onOpenChange={setOpen}>
+        <DrawerContent>
+          <DrawerHeader>
+            <DrawerTitle className="text-base">{placeholder}</DrawerTitle>
+          </DrawerHeader>
+          <div className="px-4 pb-6 space-y-1 overflow-y-auto max-h-[60vh]">
+            {options.map(o => (
+              <button
+                key={o.value}
+                type="button"
+                onClick={() => { onChange(o.value); setOpen(false); }}
+                className="w-full flex items-center justify-between px-4 py-3.5 rounded-xl text-sm font-medium transition-colors"
+                style={o.value === value
+                  ? { background: '#e8f4f7', color: '#0F3D4C' }
+                  : { background: 'transparent', color: '#334155' }}
+              >
+                {o.label}
+                {o.value === value && <Check className="w-4 h-4 text-teal-600" />}
+              </button>
+            ))}
+          </div>
+        </DrawerContent>
+      </Drawer>
+    </>
   );
 };
 
