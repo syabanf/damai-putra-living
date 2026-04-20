@@ -14,8 +14,8 @@ const navItems = [
 
 export default function BottomNav({ currentPage }) {
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 flex justify-center px-4 pointer-events-none" style={{ paddingBottom: 'calc(1rem + env(safe-area-inset-bottom))' }}>
-      <div className="max-w-md w-full pointer-events-auto">
+    <div className="fixed bottom-0 left-0 right-0 z-50 flex justify-center px-3 pointer-events-none" style={{ paddingBottom: 'calc(0.75rem + env(safe-area-inset-bottom))' }}>
+      <div className="max-w-[420px] w-full pointer-events-auto">
         <div
           className="flex justify-around items-center px-2 py-2 rounded-[22px] shadow-2xl"
           style={{
