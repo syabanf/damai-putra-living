@@ -16,10 +16,13 @@ const GlassCard = ({ children, className = '' }) => (
   </div>
 );
 
+import { restoreScroll } from '@/components/navigation/BottomNav';
+
 export default function Profile() {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
 
+  useEffect(() => { restoreScroll('Profile'); }, []);
   useEffect(() => {
     base44.auth.me().then(setUser).catch(() => {});
   }, []);

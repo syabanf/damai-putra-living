@@ -5,6 +5,7 @@ import { base44 } from '@/api/base44Client';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { usePullToRefresh } from '@/components/hooks/usePullToRefresh';
 import PullToRefreshIndicator from '@/components/ui/PullToRefreshIndicator';
+import { restoreScroll } from '@/components/navigation/BottomNav';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Plus, FileCheck, Wrench, Truck, Calendar, Users, Lock,
@@ -127,6 +128,7 @@ export default function Tickets() {
     ])
   );
 
+  useEffect(() => { restoreScroll('Tickets'); }, []);
   useEffect(() => { base44.auth.me().then(setUser).catch(() => {}); }, []);
 
   const { data: units = [] } = useQuery({

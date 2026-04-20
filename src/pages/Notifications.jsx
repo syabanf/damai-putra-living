@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import { base44 } from '@/api/base44Client';
@@ -23,9 +23,12 @@ const GlassCard = ({ children, className = '', onClick, style: extraStyle }) => 
   </div>
 );
 
+import { restoreScroll } from '@/components/navigation/BottomNav';
+
 export default function Notifications() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  useEffect(() => { restoreScroll('Notifications'); }, []);
 
   const { data: notifications = [], isLoading } = useQuery({
     queryKey: ['notifications'],

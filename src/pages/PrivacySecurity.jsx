@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Shield, Lock, Bell, Database, Trash2, ChevronRight } from 'lucide-react';
+import { ArrowLeft, Shield, Lock, Bell, Database, Trash2, ChevronRight, Loader2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { PAGE_BG, GlassHeader, GlassCard } from '@/components/ui/DesignSystem';
+import { base44 } from '@/api/base44Client';
+import { createPageUrl } from '@/utils';
 
 function Toggle({ value, onChange }) {
   return (
@@ -20,6 +22,30 @@ export default function PrivacySecurity() {
   const [notifications, setNotifications] = useState(true);
   const [activityTracking, setActivityTracking] = useState(true);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [deleting, setDeleting] = useState(false);
+
+  const handleDeleteAccount = async () => {
+    setDeleting(true);
+    try {
+      // Delete all user data from entities
+      const user = await base44.auth.me();
+      if (user?.email) {
+        const [units, tickets] = await Promise.all([
+          base44.entities.Unit.filter({ user_email: user.email }),
+          base44.entities.Ticket.filter({ user_email: user.email }),
+        ]);
+        await Promise.all([
+          ...units.map(u => base44.entities.Unit.delete(u.id)),
+          ...tickets.map(t => base44.entities.Ticket.delete(t.id)),
+        ]);
+      }
+      // Sign out and redirect to splash
+      base44.auth.logout(createPageUrl('Splash'));
+    } catch {
+      // Even if cleanup fails, log out
+      base44.auth.logout(createPageUrl('Splash'));
+    }
+  };
 
   return (
     <div className="min-h-screen pb-10" style={{ background: PAGE_BG }}>
@@ -142,8 +168,10 @@ export default function PrivacySecurity() {
               <button onClick={() => setShowDeleteConfirm(false)}
                 className="flex-1 py-3 rounded-2xl font-semibold text-slate-700 text-sm border border-white/70"
                 style={{ background: 'rgba(255,255,255,0.65)' }}>Cancel</button>
-              <button onClick={() => setShowDeleteConfirm(false)}
-                className="flex-1 py-3 rounded-2xl font-semibold bg-red-500 text-white text-sm">Delete</button>
+              <button onClick={handleDeleteAccount} disabled={deleting}
+                className="flex-1 py-3 rounded-2xl font-semibold bg-red-500 text-white text-sm flex items-center justify-center gap-2 disabled:opacity-70">
+                {deleting ? <><Loader2 className="w-4 h-4 animate-spin" />Deleting...</> : 'Delete'}
+              </button>
             </div>
           </motion.div>
         </div>

@@ -5,6 +5,7 @@ import { base44 } from '@/api/base44Client';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { usePullToRefresh } from '@/components/hooks/usePullToRefresh';
 import PullToRefreshIndicator from '@/components/ui/PullToRefreshIndicator';
+import { restoreScroll } from '@/components/navigation/BottomNav';
 import { motion } from 'framer-motion';
 import {
   Bell, ChevronRight, Building2, Phone, CalendarDays, Bus,
@@ -105,6 +106,7 @@ export default function Home() {
     ])
   );
 
+  useEffect(() => { restoreScroll('Home'); }, []);
   useEffect(() => { base44.auth.me().then(setUser).catch(() => {}); }, []);
 
   /* auto-advance carousel */

@@ -1,10 +1,12 @@
 import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
 import { ArrowLeft, Search, X } from 'lucide-react';
 import PropertyCard from '../components/property/PropertyCard';
+import { restoreScroll } from '@/components/navigation/BottomNav';
 
 const CATEGORIES = [
   { value: 'all', label: 'All' },
@@ -19,6 +21,7 @@ export default function PropertyListing() {
   const navigate = useNavigate();
   const [search, setSearch] = useState('');
   const [activeCategory, setActiveCategory] = useState('all');
+  React.useEffect(() => { restoreScroll('PropertyListing'); }, []);
 
   const { data: properties = [], isLoading } = useQuery({
     queryKey: ['properties'],
