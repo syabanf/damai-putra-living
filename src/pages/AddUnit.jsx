@@ -157,35 +157,35 @@ export default function AddUnit() {
   };
 
   return (
-    <div className="min-h-screen pb-52" style={{ background: 'linear-gradient(160deg, #F5F4F2 0%, #edecea 55%, #e7e5e2 100%)' }}>
+    <div className="flex flex-col h-screen overflow-hidden" style={{ background: '#F5F4F2' }}>
       {/* Header */}
-      <div className="px-5 pt-6 pb-5 rounded-b-3xl" style={{ background: 'linear-gradient(150deg, #1a5068 0%, #0F3D4C 55%, #0a2d38 100%)' }}>
-        <div className="flex items-center gap-4 mb-4">
+      <div className="flex-shrink-0 px-5 pt-5 pb-4 rounded-b-3xl" style={{ background: 'linear-gradient(150deg, #1a5068 0%, #0F3D4C 55%, #0a2d38 100%)' }}>
+        <div className="flex items-center gap-3 mb-3">
           <button
             onClick={() => step > 1 ? setStep(step - 1) : navigate(-1)}
-            className="w-10 h-10 rounded-xl bg-white/20 backdrop-blur-sm border border-white/20 flex items-center justify-center"
+            className="w-9 h-9 rounded-xl bg-white/20 backdrop-blur-sm border border-white/20 flex items-center justify-center flex-shrink-0"
           >
-            <ArrowLeft className="w-5 h-5 text-white" />
+            <ArrowLeft className="w-4 h-4 text-white" />
           </button>
           <div>
-            <h1 className="text-lg font-bold text-white">Register Unit</h1>
-            <p className="text-sm text-white/50">Step {step} of {totalSteps}</p>
+            <h1 className="text-base font-bold text-white leading-tight">Register Unit</h1>
+            <p className="text-xs text-white/50">Step {step} of {totalSteps}</p>
           </div>
         </div>
         {/* Progress */}
-        <div className="flex gap-2">
+        <div className="flex gap-1.5">
           {Array.from({ length: totalSteps }, (_, i) => i + 1).map((s) => (
             <div
               key={s}
-              className="flex-1 h-1.5 rounded-full transition-all duration-500"
+              className="flex-1 h-1 rounded-full transition-all duration-500"
               style={{ backgroundColor: s <= step ? '#fff' : 'rgba(255,255,255,0.2)' }}
             />
           ))}
         </div>
       </div>
 
-      {/* Form */}
-      <div className="px-5 pt-5">
+      {/* Scrollable Form */}
+      <div className="flex-1 overflow-y-auto px-5 pt-4 pb-4">
         <AnimatePresence mode="wait">
           {step === 1 && (
             <motion.div
@@ -195,12 +195,12 @@ export default function AddUnit() {
               exit={{ opacity: 0, x: -20 }}
               className="space-y-5"
             >
-              <div className="text-center mb-6">
-                <div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4" style={{ background: 'linear-gradient(135deg, #1a5068, #0F3D4C)' }}>
-                  <Building2 className="w-8 h-8 text-white" />
+              <div className="text-center mb-4">
+                <div className="w-12 h-12 rounded-2xl flex items-center justify-center mx-auto mb-2" style={{ background: 'linear-gradient(135deg, #1a5068, #0F3D4C)' }}>
+                  <Building2 className="w-6 h-6 text-white" />
                 </div>
-                <h2 className="text-lg font-bold text-slate-800">Unit Information</h2>
-                <p className="text-slate-500 text-sm mt-1">Select your property details</p>
+                <h2 className="text-base font-bold text-slate-800">Unit Information</h2>
+                <p className="text-slate-500 text-xs mt-0.5">Select your property details</p>
               </div>
 
               <div className="space-y-2">
@@ -422,12 +422,12 @@ export default function AddUnit() {
               exit={{ opacity: 0, x: -20 }}
               className="space-y-5"
             >
-              <div className="text-center mb-6">
-                <div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4" style={{ background: 'linear-gradient(135deg, #1a5068, #0F3D4C)' }}>
-                  <User className="w-8 h-8 text-white" />
+              <div className="text-center mb-4">
+                <div className="w-12 h-12 rounded-2xl flex items-center justify-center mx-auto mb-2" style={{ background: 'linear-gradient(135deg, #1a5068, #0F3D4C)' }}>
+                  <User className="w-6 h-6 text-white" />
                 </div>
-                <h2 className="text-lg font-bold text-slate-800">Ownership Details</h2>
-                <p className="text-slate-500 text-sm mt-1">Confirm your ownership status</p>
+                <h2 className="text-base font-bold text-slate-800">Ownership Details</h2>
+                <p className="text-slate-500 text-xs mt-0.5">Confirm your ownership status</p>
               </div>
 
               <div className="space-y-3">
@@ -496,12 +496,12 @@ export default function AddUnit() {
               exit={{ opacity: 0, x: -20 }}
               className="space-y-5"
             >
-              <div className="text-center mb-6">
-                <div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4" style={{ background: 'linear-gradient(135deg, #2563eb, #1d4ed8)' }}>
-                  <KeyRound className="w-8 h-8 text-white" />
+              <div className="text-center mb-4">
+                <div className="w-12 h-12 rounded-2xl flex items-center justify-center mx-auto mb-2" style={{ background: 'linear-gradient(135deg, #2563eb, #1d4ed8)' }}>
+                  <KeyRound className="w-6 h-6 text-white" />
                 </div>
-                <h2 className="text-lg font-bold text-slate-800">Rental Details</h2>
-                <p className="text-slate-500 text-sm mt-1">Enter your lease and owner information</p>
+                <h2 className="text-base font-bold text-slate-800">Rental Details</h2>
+                <p className="text-slate-500 text-xs mt-0.5">Enter your lease and owner information</p>
               </div>
 
               <div className="bg-blue-50/80 border border-blue-100 rounded-xl p-4 flex items-start gap-3">
@@ -587,12 +587,12 @@ export default function AddUnit() {
               exit={{ opacity: 0, x: -20 }}
               className="space-y-5"
             >
-              <div className="text-center mb-6">
-                <div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4" style={{ background: 'linear-gradient(135deg, #1a5068, #0F3D4C)' }}>
-                  <FileText className="w-8 h-8 text-white" />
+              <div className="text-center mb-4">
+                <div className="w-12 h-12 rounded-2xl flex items-center justify-center mx-auto mb-2" style={{ background: 'linear-gradient(135deg, #1a5068, #0F3D4C)' }}>
+                  <FileText className="w-6 h-6 text-white" />
                 </div>
-                <h2 className="text-lg font-bold text-slate-800">Supporting Document</h2>
-                <p className="text-slate-500 text-sm mt-1">{isTenant ? 'Upload your rental agreement (optional)' : 'Upload proof of ownership (optional)'}</p>
+                <h2 className="text-base font-bold text-slate-800">Supporting Document</h2>
+                <p className="text-slate-500 text-xs mt-0.5">{isTenant ? 'Upload your rental agreement (optional)' : 'Upload proof of ownership (optional)'}</p>
               </div>
 
               <div className="space-y-4">
@@ -662,16 +662,15 @@ export default function AddUnit() {
             </motion.div>
           )}
         </AnimatePresence>
-
       </div>
 
-      {/* Bottom Actions */}
-      <div className="fixed bottom-0 left-0 right-0 z-40 flex justify-center px-6 pt-3" style={{ paddingBottom: 'calc(5.5rem + env(safe-area-inset-bottom))', background: 'rgba(255,255,255,0.92)', backdropFilter: 'blur(20px)', borderTop: '1px solid rgba(0,0,0,0.06)' }}>
+      {/* Bottom CTA — sits above the nav, not fixed */}
+      <div className="flex-shrink-0 px-5 py-3 bg-white/90 border-t border-black/[0.05]" style={{ backdropFilter: 'blur(16px)' }}>
         <Button
           onClick={handleNext}
           disabled={loading}
-          className="w-full max-w-md h-14 text-white rounded-2xl font-semibold text-base"
-          style={{ background: 'linear-gradient(135deg, #1FB6D5, #169ab5)', boxShadow: '0 8px 24px rgba(31,182,213,0.35)' }}
+          className="w-full h-13 text-white rounded-2xl font-semibold text-base"
+          style={{ height: 52, background: 'linear-gradient(135deg, #1FB6D5, #169ab5)', boxShadow: '0 6px 20px rgba(31,182,213,0.3)' }}
         >
           {loading ? (
             <motion.div
