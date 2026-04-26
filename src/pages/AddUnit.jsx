@@ -666,11 +666,11 @@ export default function AddUnit() {
       </div>
 
       {/* Bottom Actions */}
-      <div className="fixed bottom-0 left-0 right-0 px-6 pt-3 z-40" style={{ paddingBottom: 'calc(5.5rem + env(safe-area-inset-bottom))', background: 'rgba(255,255,255,0.92)', backdropFilter: 'blur(20px)', borderTop: '1px solid rgba(0,0,0,0.06)' }}>
+      <div className="fixed bottom-0 left-0 right-0 z-40 flex justify-center px-6 pt-3" style={{ paddingBottom: 'calc(5.5rem + env(safe-area-inset-bottom))', background: 'rgba(255,255,255,0.92)', backdropFilter: 'blur(20px)', borderTop: '1px solid rgba(0,0,0,0.06)' }}>
         <Button
           onClick={handleNext}
           disabled={loading}
-          className="w-full h-14 text-white rounded-2xl font-semibold text-base"
+          className="w-full max-w-md h-14 text-white rounded-2xl font-semibold text-base"
           style={{ background: 'linear-gradient(135deg, #1FB6D5, #169ab5)', boxShadow: '0 8px 24px rgba(31,182,213,0.35)' }}
         >
           {loading ? (
