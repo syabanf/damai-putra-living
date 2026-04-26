@@ -666,7 +666,7 @@ export default function AddUnit() {
       </div>
 
       {/* Bottom Actions */}
-      <div className="fixed bottom-0 left-0 right-0 px-6 pt-4" style={{ paddingBottom: 'calc(1.5rem + env(safe-area-inset-bottom))', background: 'rgba(255,255,255,0.88)', backdropFilter: 'blur(20px)', borderTop: '1px solid rgba(255,255,255,0.9)' }}>
+      <div className="fixed bottom-0 left-0 right-0 px-6 pt-4 z-[60]" style={{ paddingBottom: 'calc(6.5rem + env(safe-area-inset-bottom))', background: 'rgba(255,255,255,0.88)', backdropFilter: 'blur(20px)', borderTop: '1px solid rgba(255,255,255,0.9)' }}>
         <Button
           onClick={handleNext}
           disabled={loading}
