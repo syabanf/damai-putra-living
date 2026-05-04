@@ -276,7 +276,7 @@ export default function AdminLottery() {
                   <button onClick={() => setEditItem(lottery)} className="p-2 hover:bg-slate-100 rounded-xl"><Edit2 className="w-4 h-4 text-slate-500" /></button>
                   <button onClick={() => { if (window.confirm('Hapus undian ini?')) deleteMutation.mutate(lottery.id); }}
                     className="p-2 hover:bg-red-50 rounded-xl"><Trash2 className="w-4 h-4 text-red-400" /></button>
-                  <button onClick={() => setExpandedId(id => id === lottery.id ? null : lottery.id)}
+                  <button onClick={() => setExpandedId(prev => prev === lottery.id ? null : lottery.id)}
                     className="p-2 hover:bg-slate-100 rounded-xl">
                     {expandedId === lottery.id ? <ChevronUp className="w-4 h-4 text-slate-500" /> : <ChevronDown className="w-4 h-4 text-slate-500" />}
                   </button>
