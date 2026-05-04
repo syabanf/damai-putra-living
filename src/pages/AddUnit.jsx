@@ -6,26 +6,13 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   ArrowLeft, Building2, Upload, FileText, User, Home as HomeIcon,
-  Check, AlertCircle, ChevronDown, X, KeyRound, CalendarRange, Phone, Mail, ShieldCheck
+  Check, AlertCircle, X, KeyRound, CalendarRange, Phone, Mail, ShieldCheck
 } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import ReadOnlyField from '@/components/ui/ReadOnlyField';
-
-const PROPERTIES = [
-  { id: 'damai-putra-1', name: 'Damai Putra Residence 1', towers: ['A', 'B', 'C'] },
-  { id: 'damai-putra-2', name: 'Damai Putra Residence 2', towers: ['D', 'E'] },
-  { id: 'damai-putra-3', name: 'Damai Putra Business Park', towers: [] },
-];
+import UnitTypeSelector from '@/components/unit/UnitTypeSelector';
 
 export default function AddUnit() {
   const navigate = useNavigate();
@@ -38,6 +25,13 @@ export default function AddUnit() {
   const [errors, setErrors] = useState({});
   
   const [formData, setFormData] = useState({
+    // Internal hierarchy fields (prefixed with _ for UI only)
+    _property_type: '',
+    _property_id: '',
+    _area_id: '',
+    _unit_structure: '',
+    unit_type_classification: '',
+    // Entity fields
     property_name: '',
     tower: '',
     unit_number: '',
@@ -75,8 +69,6 @@ export default function AddUnit() {
     loadUser();
   }, []);
 
-  const selectedProperty = PROPERTIES.find(p => p.name === formData.property_name);
-
   const createUnitMutation = useMutation({
     mutationFn: (data) => base44.entities.Unit.create(data),
     onSuccess: () => {
@@ -107,12 +99,9 @@ export default function AddUnit() {
     const newErrors = {};
     
     if (step === 1) {
+      if (!formData._property_type) newErrors.unit_type = 'Please select a property type';
       if (!formData.property_name) newErrors.property_name = 'Please select a property';
-      if (selectedProperty?.towers.length > 0 && !formData.tower) {
-        newErrors.tower = 'Please select a tower';
-      }
       if (!formData.unit_number) newErrors.unit_number = 'Please enter unit number';
-      if (!formData.unit_type) newErrors.unit_type = 'Please select unit type';
     } else if (step === 2) {
       if (!formData.ownership_status) newErrors.ownership_status = 'Please select ownership status';
     } else if (step === 3 && isTenant) {
@@ -141,8 +130,15 @@ export default function AddUnit() {
     setLoading(true);
     
     const toNum = (v) => v !== '' && v !== null && v !== undefined ? Number(v) : undefined;
+    // Strip UI-only fields
+    const { _property_type, _property_id, _area_id, _unit_structure, unit_type_classification, agree_terms, ...entityData } = formData;
     await createUnitMutation.mutateAsync({
-      ...formData,
+      ...entityData,
+      unit_type: formData.unit_type || formData._property_type,
+      // Append classification to unit_number for richer identification
+      unit_number: unit_type_classification
+        ? `${formData.unit_number} (${unit_type_classification})`
+        : formData.unit_number,
       bedroom_count: toNum(formData.bedroom_count),
       bathroom_count: toNum(formData.bathroom_count),
       floor_number: toNum(formData.floor_number),
@@ -153,7 +149,7 @@ export default function AddUnit() {
       monthly_rent: toNum(formData.monthly_rent),
       status: 'pending',
       user_email: user?.email,
-      user_name: user?.full_name
+      user_name: user?.full_name,
     });
   };
 
@@ -201,218 +197,10 @@ export default function AddUnit() {
                   <Building2 className="w-6 h-6 text-white" />
                 </div>
                 <h2 className="text-base font-bold text-slate-800">Unit Information</h2>
-                <p className="text-slate-500 text-xs mt-0.5">Select your property details</p>
+                <p className="text-slate-500 text-xs mt-0.5">Select your property classification</p>
               </div>
-
-              <div className="space-y-2">
-                <Label className="text-slate-700 font-medium">Property Name</Label>
-                <Select
-                  value={formData.property_name}
-                  onValueChange={(value) => setFormData({ ...formData, property_name: value, tower: '' })}
-                >
-                  <SelectTrigger className={`h-14 rounded-xl ${errors.property_name ? 'border-red-300' : ''}`}>
-                    <SelectValue placeholder="Select property" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {PROPERTIES.map((prop) => (
-                      <SelectItem key={prop.id} value={prop.name}>
-                        {prop.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                {errors.property_name && <p className="text-red-500 text-xs">{errors.property_name}</p>}
-              </div>
-
-              {selectedProperty?.towers.length > 0 && (
-                <div className="space-y-2">
-                  <Label className="text-slate-700 font-medium">Tower</Label>
-                  <Select
-                    value={formData.tower}
-                    onValueChange={(value) => setFormData({ ...formData, tower: value })}
-                  >
-                    <SelectTrigger className={`h-14 rounded-xl ${errors.tower ? 'border-red-300' : ''}`}>
-                      <SelectValue placeholder="Select tower" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {selectedProperty.towers.map((tower) => (
-                        <SelectItem key={tower} value={tower}>
-                          Tower {tower}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  {errors.tower && <p className="text-red-500 text-xs">{errors.tower}</p>}
-                </div>
-              )}
-
-              <div className="space-y-2">
-                <Label className="text-slate-700 font-medium">Unit Number</Label>
-                <Input
-                  placeholder="e.g., 12A, 0501"
-                  value={formData.unit_number}
-                  onChange={(e) => setFormData({ ...formData, unit_number: e.target.value })}
-                  className={`h-14 rounded-xl ${errors.unit_number ? 'border-red-300' : ''}`}
-                />
-                {errors.unit_number && <p className="text-red-500 text-xs">{errors.unit_number}</p>}
-              </div>
-
-              <div className="space-y-2">
-                <Label className="text-slate-700 font-medium">Unit Type</Label>
-                <Select
-                  value={formData.unit_type}
-                  onValueChange={(value) => setFormData({ ...formData, unit_type: value })}
-                >
-                  <SelectTrigger className={`h-14 rounded-xl ${errors.unit_type ? 'border-red-300' : ''}`}>
-                    <SelectValue placeholder="Select unit type" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="apartment">Apartment</SelectItem>
-                    <SelectItem value="house">House</SelectItem>
-                    <SelectItem value="kavling">Kavling</SelectItem>
-                    <SelectItem value="commercial">Commercial</SelectItem>
-                  </SelectContent>
-                </Select>
-                {errors.unit_type && <p className="text-red-500 text-xs">{errors.unit_type}</p>}
-              </div>
-
-              {/* Conditional fields based on unit type */}
-              {(formData.unit_type === 'apartment' || formData.unit_type === 'house') && (
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="space-y-2">
-                    <Label className="text-slate-700 font-medium text-sm">Bedrooms</Label>
-                    <Input
-                      type="number"
-                      placeholder="e.g., 2"
-                      value={formData.bedroom_count}
-                      onChange={(e) => setFormData({ ...formData, bedroom_count: e.target.value })}
-                      className="h-12 rounded-xl"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label className="text-slate-700 font-medium text-sm">Bathrooms</Label>
-                    <Input
-                      type="number"
-                      placeholder="e.g., 1"
-                      value={formData.bathroom_count}
-                      onChange={(e) => setFormData({ ...formData, bathroom_count: e.target.value })}
-                      className="h-12 rounded-xl"
-                    />
-                  </div>
-                </div>
-              )}
-
-              {formData.unit_type === 'apartment' && (
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="space-y-2">
-                    <Label className="text-slate-700 font-medium text-sm">Floor Number</Label>
-                    <Input
-                      type="number"
-                      placeholder="e.g., 5"
-                      value={formData.floor_number}
-                      onChange={(e) => setFormData({ ...formData, floor_number: e.target.value })}
-                      className="h-12 rounded-xl"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label className="text-slate-700 font-medium text-sm">Area (m²)</Label>
-                    <Input
-                      type="number"
-                      placeholder="e.g., 85"
-                      value={formData.area_size}
-                      onChange={(e) => setFormData({ ...formData, area_size: e.target.value })}
-                      className="h-12 rounded-xl"
-                    />
-                  </div>
-                </div>
-              )}
-
-              {formData.unit_type === 'house' && (
-                <div className="space-y-3">
-                  <div className="grid grid-cols-2 gap-3">
-                    <div className="space-y-2">
-                      <Label className="text-slate-700 font-medium text-sm">Land Size (m²)</Label>
-                      <Input
-                        type="number"
-                        placeholder="e.g., 200"
-                        value={formData.land_size}
-                        onChange={(e) => setFormData({ ...formData, land_size: e.target.value })}
-                        className="h-12 rounded-xl"
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label className="text-slate-700 font-medium text-sm">Building Size (m²)</Label>
-                      <Input
-                        type="number"
-                        placeholder="e.g., 150"
-                        value={formData.building_size}
-                        onChange={(e) => setFormData({ ...formData, building_size: e.target.value })}
-                        className="h-12 rounded-xl"
-                      />
-                    </div>
-                  </div>
-                  <div className="space-y-2">
-                    <Label className="text-slate-700 font-medium text-sm">Garages/Parking</Label>
-                    <Input
-                      type="number"
-                      placeholder="e.g., 2"
-                      value={formData.garage_count}
-                      onChange={(e) => setFormData({ ...formData, garage_count: e.target.value })}
-                      className="h-12 rounded-xl"
-                    />
-                  </div>
-                </div>
-              )}
-
-              {formData.unit_type === 'kavling' && (
-                <div className="space-y-2">
-                  <Label className="text-slate-700 font-medium text-sm">Land Size (m²)</Label>
-                  <Input
-                    type="number"
-                    placeholder="e.g., 500"
-                    value={formData.land_size}
-                    onChange={(e) => setFormData({ ...formData, land_size: e.target.value })}
-                    className="h-12 rounded-xl"
-                  />
-                </div>
-              )}
-
-              {formData.unit_type === 'commercial' && (
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="space-y-2">
-                    <Label className="text-slate-700 font-medium text-sm">Business Type</Label>
-                    <Input
-                      placeholder="e.g., Retail"
-                      value={formData.business_type}
-                      onChange={(e) => setFormData({ ...formData, business_type: e.target.value })}
-                      className="h-12 rounded-xl"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label className="text-slate-700 font-medium text-sm">Area (m²)</Label>
-                    <Input
-                      type="number"
-                      placeholder="e.g., 120"
-                      value={formData.area_size}
-                      onChange={(e) => setFormData({ ...formData, area_size: e.target.value })}
-                      className="h-12 rounded-xl"
-                    />
-                  </div>
-                </div>
-              )}
-
-              {formData.unit_type && (
-                <div className="space-y-2">
-                  <Label className="text-slate-700 font-medium text-sm">Location Details</Label>
-                  <Input
-                    placeholder="Street address, area, etc."
-                    value={formData.location_detail}
-                    onChange={(e) => setFormData({ ...formData, location_detail: e.target.value })}
-                    className="h-12 rounded-xl"
-                  />
-                </div>
-              )}
-              </motion.div>
+              <UnitTypeSelector formData={formData} setFormData={setFormData} errors={errors} />
+            </motion.div>
           )}
 
           {step === 2 && (
@@ -438,10 +226,12 @@ export default function AddUnit() {
                   <span className="text-xs font-bold text-emerald-700 uppercase tracking-wide">Unit Details (from Step 1)</span>
                 </div>
                 <div className="grid grid-cols-2 gap-2 text-xs">
+                  <div><span className="text-slate-500">Type</span><p className="font-semibold text-slate-800 text-sm capitalize">{formData._property_type || '—'}</p></div>
                   <div><span className="text-slate-500">Property</span><p className="font-semibold text-slate-800 text-sm leading-tight">{formData.property_name || '—'}</p></div>
-                  {formData.tower && <div><span className="text-slate-500">Tower</span><p className="font-semibold text-slate-800 text-sm">{formData.tower}</p></div>}
+                  {formData.tower && <div><span className="text-slate-500">Area</span><p className="font-semibold text-slate-800 text-sm">{formData.tower}</p></div>}
+                  {formData._unit_structure && <div><span className="text-slate-500">Level</span><p className="font-semibold text-slate-800 text-sm">{formData._unit_structure}</p></div>}
                   <div><span className="text-slate-500">Unit No.</span><p className="font-semibold text-slate-800 text-sm">{formData.unit_number || '—'}</p></div>
-                  <div><span className="text-slate-500">Type</span><p className="font-semibold text-slate-800 text-sm capitalize">{formData.unit_type || '—'}</p></div>
+                  {formData.unit_type_classification && <div><span className="text-slate-500">Classification</span><p className="font-semibold text-slate-800 text-sm">{formData.unit_type_classification}</p></div>}
                 </div>
               </div>
 
@@ -741,28 +531,20 @@ export default function AddUnit() {
               </div>
 
               <div className="bg-stone-50/80 rounded-xl p-4 mb-6 space-y-3 border border-stone-100">
-                <div className="flex justify-between">
-                  <span className="text-slate-500 text-sm">Property</span>
-                  <span className="text-slate-800 text-sm font-medium">{formData.property_name}</span>
-                </div>
-                {formData.tower && (
-                  <div className="flex justify-between">
-                    <span className="text-slate-500 text-sm">Tower</span>
-                    <span className="text-slate-800 text-sm font-medium">{formData.tower}</span>
+                {[
+                  ['Property Type', formData._property_type],
+                  ['Property', formData.property_name],
+                  ['Area', formData.tower],
+                  ['Level', formData._unit_structure],
+                  ['Unit Number', formData.unit_number],
+                  ['Classification', formData.unit_type_classification],
+                  ['Ownership', formData.ownership_status],
+                ].filter(([, v]) => v).map(([label, value]) => (
+                  <div key={label} className="flex justify-between">
+                    <span className="text-slate-500 text-sm">{label}</span>
+                    <span className="text-slate-800 text-sm font-medium capitalize">{value}</span>
                   </div>
-                )}
-                <div className="flex justify-between">
-                  <span className="text-slate-500 text-sm">Unit Number</span>
-                  <span className="text-slate-800 text-sm font-medium">{formData.unit_number}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-slate-500 text-sm">Unit Type</span>
-                  <span className="text-slate-800 text-sm font-medium capitalize">{formData.unit_type}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-slate-500 text-sm">Status</span>
-                  <span className="text-slate-800 text-sm font-medium capitalize">{formData.ownership_status}</span>
-                </div>
+                ))}
               </div>
 
               <div className="flex gap-3">
