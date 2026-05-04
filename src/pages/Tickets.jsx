@@ -9,7 +9,7 @@ import { restoreScroll } from '@/components/navigation/BottomNav';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Plus, FileCheck, Wrench, Truck, Calendar, Users, Lock,
-  ChevronRight, ClipboardList, Building2, Shovel, Banknote
+  ChevronRight, ClipboardList, Building2, Shovel, Banknote, RefreshCw, Shield
 } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 
@@ -219,11 +219,18 @@ export default function Tickets() {
             <h1 className="text-[26px] font-bold text-white leading-tight">Digital Permits</h1>
             <p className="text-white/45 text-sm mt-0.5">Permit & activity management</p>
           </div>
-          <button onClick={() => navigate(createPageUrl('CreateTicket'))}
-            className="h-10 px-4 text-white rounded-2xl text-sm font-semibold flex items-center gap-1.5 transition-all active:scale-90 mt-1"
-            style={{ background: 'rgba(255,255,255,0.15)', backdropFilter: 'blur(16px)', border: '1px solid rgba(255,255,255,0.25)', boxShadow: '0 2px 12px rgba(0,0,0,0.12)' }}>
-            <Plus className="w-4 h-4" /> New
-          </button>
+          <div className="flex gap-2 mt-1">
+            <button onClick={() => navigate(createPageUrl('RefundRequest'))}
+              className="h-10 px-3 text-white rounded-2xl text-sm font-semibold flex items-center gap-1.5 transition-all active:scale-90"
+              style={{ background: 'rgba(251,191,36,0.2)', backdropFilter: 'blur(16px)', border: '1px solid rgba(251,191,36,0.4)' }}>
+              <RefreshCw className="w-4 h-4" /> Refund
+            </button>
+            <button onClick={() => navigate(createPageUrl('CreateTicket'))}
+              className="h-10 px-4 text-white rounded-2xl text-sm font-semibold flex items-center gap-1.5 transition-all active:scale-90"
+              style={{ background: 'rgba(255,255,255,0.15)', backdropFilter: 'blur(16px)', border: '1px solid rgba(255,255,255,0.25)', boxShadow: '0 2px 12px rgba(0,0,0,0.12)' }}>
+              <Plus className="w-4 h-4" /> New
+            </button>
+          </div>
         </div>
         {/* Status Tabs */}
         <div className="flex gap-1 p-1 rounded-2xl overflow-x-auto hide-scrollbar" style={{ background: 'rgba(0,0,0,0.18)' }}>

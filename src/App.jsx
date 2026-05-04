@@ -22,6 +22,8 @@ const RefundDetail = lazy(() => import('./pages/RefundDetail'));
 const RefundVerification = lazy(() => import('./pages/RefundVerification'));
 const RefundInspectionPage = lazy(() => import('./pages/RefundInspectionPage'));
 const RefundFinancePage = lazy(() => import('./pages/RefundFinancePage'));
+const RefundRequest = lazy(() => import('./pages/RefundRequest'));
+const RefundAdmin = lazy(() => import('./pages/RefundAdmin'));
 
 const PageLoader = () => (
   <div className="fixed inset-0 flex items-center justify-center bg-background/60">
@@ -94,6 +96,8 @@ const AuthenticatedApp = () => {
       <Route path="/RefundVerification" element={<RefundVerification />} />
       <Route path="/RefundInspectionPage" element={<RefundInspectionPage />} />
       <Route path="/RefundFinancePage" element={<RefundFinancePage />} />
+      <Route path="/RefundRequest" element={<LayoutWrapper currentPageName="RefundRequest"><RefundRequest /></LayoutWrapper>} />
+      <Route path="/RefundAdmin" element={<RefundAdmin />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
     </Suspense>
