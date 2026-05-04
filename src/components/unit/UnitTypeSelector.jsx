@@ -6,7 +6,7 @@ import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from '@/components/ui/select';
 import {
-  PROPERTY_TYPES, PROPERTIES, TYPE_FIELDS,
+  PROPERTY_TYPES, PROPERTIES, TYPE_FIELDS, CLASSIFICATION_SPECS,
 } from './PropertyClassification';
 
 function CascadeField({ label, children, active, done }) {
@@ -94,7 +94,20 @@ export default function UnitTypeSelector({ formData, setFormData, errors }) {
   };
 
   const handleClassificationChange = (val) => {
-    set('unit_type_classification', val);
+    const specs = CLASSIFICATION_SPECS[val] || {};
+    setFormData(prev => ({
+      ...prev,
+      unit_type_classification: val,
+      // Prefill spec fields — convert numbers to strings for input compatibility
+      bedroom_count:   specs.bedroom_count   !== undefined ? String(specs.bedroom_count)   : prev.bedroom_count,
+      bathroom_count:  specs.bathroom_count  !== undefined ? String(specs.bathroom_count)  : prev.bathroom_count,
+      area_size:       specs.area_size       !== undefined ? String(specs.area_size)       : prev.area_size,
+      land_size:       specs.land_size       !== undefined ? String(specs.land_size)       : prev.land_size,
+      building_size:   specs.building_size   !== undefined ? String(specs.building_size)   : prev.building_size,
+      garage_count:    specs.garage_count    !== undefined ? String(specs.garage_count)    : prev.garage_count,
+      business_type:   specs.business_type   !== undefined ? specs.business_type           : prev.business_type,
+      _prefilled_from: val, // track which classification last prefilled
+    }));
   };
 
   return (
@@ -210,20 +223,27 @@ export default function UnitTypeSelector({ formData, setFormData, errors }) {
       {/* Type-specific detail fields — appear after unit classification chosen */}
       {formData.unit_type_classification && fields && (
         <div className="pt-2 border-t border-slate-100 space-y-3">
-          <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide">Unit Specifications</p>
+          <div className="flex items-center justify-between">
+            <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide">Unit Specifications</p>
+            {formData._prefilled_from && (
+              <span className="text-[10px] bg-teal-50 text-teal-600 border border-teal-200 rounded-full px-2 py-0.5 font-medium">
+                ✦ Prefilled from {formData._prefilled_from}
+              </span>
+            )}
+          </div>
 
           {(fields.showBedrooms || fields.showBathrooms) && (
             <div className="grid grid-cols-2 gap-3">
               {fields.showBedrooms && (
                 <div className="space-y-1.5">
                   <Label className="text-slate-600 text-xs">Bedrooms</Label>
-                  <Input type="number" placeholder="e.g. 2" value={formData.bedroom_count} onChange={e => set('bedroom_count', e.target.value)} className="h-11 rounded-xl" />
+                  <Input type="number" placeholder="e.g. 2" value={formData.bedroom_count} onChange={e => set('bedroom_count', e.target.value)} className="h-11 rounded-xl bg-teal-50/60" />
                 </div>
               )}
               {fields.showBathrooms && (
                 <div className="space-y-1.5">
                   <Label className="text-slate-600 text-xs">Bathrooms</Label>
-                  <Input type="number" placeholder="e.g. 1" value={formData.bathroom_count} onChange={e => set('bathroom_count', e.target.value)} className="h-11 rounded-xl" />
+                  <Input type="number" placeholder="e.g. 1" value={formData.bathroom_count} onChange={e => set('bathroom_count', e.target.value)} className="h-11 rounded-xl bg-teal-50/60" />
                 </div>
               )}
             </div>
@@ -239,7 +259,7 @@ export default function UnitTypeSelector({ formData, setFormData, errors }) {
           {fields.showAreaSize && (
             <div className="space-y-1.5">
               <Label className="text-slate-600 text-xs">Area Size (m²)</Label>
-              <Input type="number" placeholder="e.g. 85" value={formData.area_size} onChange={e => set('area_size', e.target.value)} className="h-11 rounded-xl" />
+              <Input type="number" placeholder="e.g. 85" value={formData.area_size} onChange={e => set('area_size', e.target.value)} className="h-11 rounded-xl bg-teal-50/60" />
             </div>
           )}
 
@@ -247,12 +267,12 @@ export default function UnitTypeSelector({ formData, setFormData, errors }) {
             <div className={`grid gap-3 ${fields.showBuildingSize ? 'grid-cols-2' : 'grid-cols-1'}`}>
               <div className="space-y-1.5">
                 <Label className="text-slate-600 text-xs">Land Size (m²)</Label>
-                <Input type="number" placeholder="e.g. 200" value={formData.land_size} onChange={e => set('land_size', e.target.value)} className="h-11 rounded-xl" />
+                <Input type="number" placeholder="e.g. 200" value={formData.land_size} onChange={e => set('land_size', e.target.value)} className="h-11 rounded-xl bg-teal-50/60" />
               </div>
               {fields.showBuildingSize && (
                 <div className="space-y-1.5">
                   <Label className="text-slate-600 text-xs">Building Size (m²)</Label>
-                  <Input type="number" placeholder="e.g. 150" value={formData.building_size} onChange={e => set('building_size', e.target.value)} className="h-11 rounded-xl" />
+                  <Input type="number" placeholder="e.g. 150" value={formData.building_size} onChange={e => set('building_size', e.target.value)} className="h-11 rounded-xl bg-teal-50/60" />
                 </div>
               )}
             </div>
@@ -261,14 +281,14 @@ export default function UnitTypeSelector({ formData, setFormData, errors }) {
           {fields.showGarage && (
             <div className="space-y-1.5">
               <Label className="text-slate-600 text-xs">Garages / Parking</Label>
-              <Input type="number" placeholder="e.g. 2" value={formData.garage_count} onChange={e => set('garage_count', e.target.value)} className="h-11 rounded-xl" />
+              <Input type="number" placeholder="e.g. 2" value={formData.garage_count} onChange={e => set('garage_count', e.target.value)} className="h-11 rounded-xl bg-teal-50/60" />
             </div>
           )}
 
           {fields.showBusinessType && (
             <div className="space-y-1.5">
               <Label className="text-slate-600 text-xs">Business Type</Label>
-              <Input placeholder="e.g. Retail, F&B, Office" value={formData.business_type} onChange={e => set('business_type', e.target.value)} className="h-11 rounded-xl" />
+              <Input placeholder="e.g. Retail, F&B, Office" value={formData.business_type} onChange={e => set('business_type', e.target.value)} className="h-11 rounded-xl bg-teal-50/60" />
             </div>
           )}
 
