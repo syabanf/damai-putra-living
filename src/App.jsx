@@ -27,6 +27,7 @@ const RefundAdmin = lazy(() => import('./pages/RefundAdmin'));
 const AdminPermitDashboard = lazy(() => import('./pages/AdminPermitDashboard'));
 const AdminPermitList = lazy(() => import('./pages/AdminPermitList'));
 const AdminPermitDetail = lazy(() => import('./pages/AdminPermitDetail'));
+const RefundAdminProcess = lazy(() => import('./pages/RefundAdminProcess'));
 
 const PageLoader = () => (
   <div className="fixed inset-0 flex items-center justify-center bg-background/60">
@@ -104,6 +105,7 @@ const AuthenticatedApp = () => {
       <Route path="/AdminPermitDashboard" element={<AdminPermitDashboard />} />
       <Route path="/AdminPermitList" element={<AdminPermitList />} />
       <Route path="/AdminPermitDetail" element={<AdminPermitDetail />} />
+      <Route path="/RefundAdminProcess" element={<RefundAdminProcess />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
     </Suspense>

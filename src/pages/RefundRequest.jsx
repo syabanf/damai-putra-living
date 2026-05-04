@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import { base44 } from '@/api/base44Client';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, Upload, X, FileText, Banknote, CheckCircle, Info } from 'lucide-react';
+import { ArrowLeft, Upload, X, FileText, Banknote, CheckCircle, Info, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -37,6 +37,7 @@ export default function RefundRequest() {
     cluster_name: '',
     block_number: '',
     unit_number: '',
+    selected_unit_id: '',
     refund_type: 'Renovation Deposit',
     refund_reason: '',
     original_deposit_amount: '',
@@ -44,6 +45,26 @@ export default function RefundRequest() {
     bank_account_number: '',
     bank_account_holder_name: '',
   });
+
+  const { data: userUnits = [] } = useQuery({
+    queryKey: ['my-units', user?.email],
+    queryFn: () => base44.entities.Unit.filter({ user_email: user?.email, status: 'approved' }),
+    enabled: !!user?.email,
+  });
+
+  const handleUnitSelect = (unitId) => {
+    const unit = userUnits.find(u => u.id === unitId);
+    if (!unit) return;
+    // Parse cluster/block from property_name / tower / unit_number
+    const unitNumParts = unit.unit_number?.split(' ') || [];
+    setFormData(prev => ({
+      ...prev,
+      selected_unit_id: unitId,
+      cluster_name: unit.property_name || '',
+      block_number: unit.tower || '',
+      unit_number: unit.unit_number || '',
+    }));
+  };
 
   useEffect(() => {
     base44.auth.me().then(u => {
@@ -150,12 +171,33 @@ export default function RefundRequest() {
               </div>
 
               <div className="space-y-3">
+                {/* Unit Selector */}
+                {userUnits.length > 0 && (
+                  <div className="space-y-1.5">
+                    <Label className="text-slate-700 font-medium text-sm">Pilih Unit Terdaftar</Label>
+                    <div className="relative">
+                      <select
+                        value={formData.selected_unit_id}
+                        onChange={e => handleUnitSelect(e.target.value)}
+                        className="w-full h-12 pl-3 pr-9 rounded-xl border border-input bg-background text-sm focus:outline-none focus:ring-2 focus:ring-ring appearance-none">
+                        <option value="">-- Pilih unit Anda --</option>
+                        {userUnits.map(u => (
+                          <option key={u.id} value={u.id}>
+                            {u.property_name} {u.tower ? `/ ${u.tower}` : ''} - Unit {u.unit_number}
+                          </option>
+                        ))}
+                      </select>
+                      <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+                    </div>
+                  </div>
+                )}
+
                 {[
                   { key: 'applicant_name', label: 'Nama Pemohon', placeholder: 'Nama lengkap sesuai KTP' },
                   { key: 'ktp_number', label: 'Nomor KTP', placeholder: '16 digit NIK' },
                   { key: 'phone_number', label: 'Nomor HP', placeholder: '08xx-xxxx-xxxx' },
-                  { key: 'cluster_name', label: 'Cluster', placeholder: 'Nama cluster' },
-                  { key: 'block_number', label: 'Nomor Blok', placeholder: 'e.g. A, B, C' },
+                  { key: 'cluster_name', label: 'Cluster / Properti', placeholder: 'Nama cluster' },
+                  { key: 'block_number', label: 'Tower / Blok', placeholder: 'e.g. Tower A, Blok B' },
                   { key: 'unit_number', label: 'Nomor Unit', placeholder: 'e.g. A-15' },
                 ].map(({ key, label, placeholder }) => (
                   <div key={key} className="space-y-1.5">

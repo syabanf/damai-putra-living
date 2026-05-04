@@ -6,7 +6,7 @@ const NAV_ITEMS = [
   { path: '/AdminPermitDashboard', label: 'Dashboard', icon: LayoutDashboard },
   { path: '/AdminPermitList', label: 'All Requests', icon: FileText },
   { path: '/AdminPermitList?filter=pending', label: 'Needs Action', icon: ClipboardCheck },
-  { path: '/RefundAdmin', label: 'Refund Requests', icon: RefreshCw },
+  { path: '/RefundAdminProcess', label: 'Refund Deposits', icon: RefreshCw },
 ];
 
 export default function AdminPermitLayout({ children }) {
