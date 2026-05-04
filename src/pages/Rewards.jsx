@@ -1,9 +1,9 @@
 import React, { useState, useMemo, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import { base44 } from '@/api/base44Client';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { Gift, Star, Search, X, Camera, CheckCircle2 } from 'lucide-react';
+import { Gift, Star, Search, X, Camera, CheckCircle2, Ticket } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const CATS = [
@@ -24,7 +24,7 @@ export default function Rewards() {
   const [search, setSearch] = useState('');
   const [activeCategory, setActiveCategory] = useState('all');
   const [scannedData, setScannedData] = useState(null);
-  const [activeTab, setActiveTab] = useState('rewards'); // 'rewards' or 'scan'
+  const [activeTab, setActiveTab] = useState('rewards'); // 'rewards', 'scan', or 'lottery'
 
   useEffect(() => { base44.auth.me().then(setUser).catch(() => {}); }, []);
 
@@ -144,6 +144,14 @@ export default function Rewards() {
             <Camera className="w-3.5 h-3.5" />
             Scan Bill
           </button>
+          <button onClick={() => setActiveTab('lottery')}
+            className="flex-1 py-2 rounded-lg text-xs font-semibold transition-all flex items-center justify-center gap-1"
+            style={activeTab === 'lottery'
+              ? { background: 'rgba(255,255,255,0.2)', color: '#fff', borderBottom: '2px solid #fff' }
+              : { background: 'transparent', color: 'rgba(255,255,255,0.6)' }}>
+            <Ticket className="w-3.5 h-3.5" />
+            Undian
+          </button>
         </div>
         {/* Search - Only on Rewards Tab */}
         {activeTab === 'rewards' && (
@@ -218,6 +226,11 @@ export default function Rewards() {
             )}
           </div>
         </>
+      ) : activeTab === 'lottery' ? (
+        /* Lottery Tab */
+        <div className="px-4 mt-5 mb-20">
+          <LotteryPreview user={user} myPoints={myPoints} navigate={navigate} />
+        </div>
       ) : (
         /* Scan Bill Tab */
         <>
@@ -355,6 +368,62 @@ export default function Rewards() {
         </>
       )}
 
+    </div>
+  );
+}
+
+function LotteryPreview({ user, myPoints, navigate }) {
+  const { data: lotteries = [], isLoading } = useQuery({
+    queryKey: ['lotteries-active'],
+    queryFn: () => base44.entities.Lottery.filter({ is_active: true }),
+  });
+
+  return (
+    <div>
+      <div className="flex items-center justify-between mb-4">
+        <h3 className="font-bold text-slate-800">Undian Aktif</h3>
+        <button onClick={() => navigate(createPageUrl('LotteryPage'))}
+          className="text-xs font-semibold px-3 py-1.5 rounded-xl"
+          style={{ background: 'linear-gradient(135deg, #1FB6D5, #0F3D4C)', color: '#fff' }}>
+          Lihat Semua
+        </button>
+      </div>
+      {isLoading ? (
+        Array(2).fill(0).map((_, i) => <div key={i} className="h-28 bg-white/60 rounded-2xl animate-pulse mb-3" />)
+      ) : lotteries.length === 0 ? (
+        <div className="py-12 text-center rounded-2xl" style={{ background: 'rgba(255,255,255,0.75)' }}>
+          <Ticket className="w-10 h-10 text-slate-300 mx-auto mb-2" />
+          <p className="text-slate-500 text-sm font-medium">Tidak ada undian aktif saat ini</p>
+        </div>
+      ) : lotteries.slice(0, 3).map(lottery => (
+        <div key={lottery.id} onClick={() => navigate(createPageUrl('LotteryPage'))}
+          className="mb-3 rounded-2xl overflow-hidden cursor-pointer active:scale-95 transition-transform"
+          style={{ background: 'rgba(255,255,255,0.8)', border: '1px solid rgba(255,255,255,0.9)', boxShadow: '0 2px 8px rgba(138,127,115,0.1)' }}>
+          <div className="p-4">
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-teal-400 to-teal-600 flex items-center justify-center flex-shrink-0">
+                <Gift className="w-6 h-6 text-white" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="font-bold text-slate-800 text-sm truncate">{lottery.title}</p>
+                <p className="text-xs text-slate-500">{lottery.prizes?.length || 0} hadiah · {lottery.points_per_entry} poin/spin</p>
+              </div>
+              {myPoints >= (lottery.points_per_entry || 100) ? (
+                <span className="text-xs font-bold px-2.5 py-1 rounded-full" style={{ background: '#e6f8fb', color: '#1FB6D5' }}>Ikut</span>
+              ) : (
+                <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-slate-100 text-slate-400">Poin kurang</span>
+              )}
+            </div>
+          </div>
+        </div>
+      ))}
+      {lotteries.length > 0 && (
+        <button onClick={() => navigate(createPageUrl('LotteryPage'))}
+          className="w-full mt-2 py-3 rounded-2xl text-sm font-bold text-center"
+          style={{ background: 'linear-gradient(135deg, #0F3D4C, #1a5068)', color: '#fff' }}>
+          🎡 Buka Roulette Undian
+        </button>
+      )}
     </div>
   );
 }

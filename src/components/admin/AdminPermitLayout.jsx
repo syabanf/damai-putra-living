@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { LayoutDashboard, FileText, ClipboardCheck, Menu, Building2, LogOut, RefreshCw } from 'lucide-react';
+import { LayoutDashboard, FileText, ClipboardCheck, Menu, Building2, LogOut, RefreshCw, Gift } from 'lucide-react';
 
 const NAV_ITEMS = [
   { path: '/AdminPermitDashboard', label: 'Dashboard', icon: LayoutDashboard },
   { path: '/AdminPermitList', label: 'All Requests', icon: FileText },
   { path: '/AdminPermitList?filter=pending', label: 'Needs Action', icon: ClipboardCheck },
   { path: '/RefundAdminProcess', label: 'Refund Deposits', icon: RefreshCw },
+  { path: '/AdminLottery', label: 'Undian & Roulette', icon: Gift },
 ];
 
 export default function AdminPermitLayout({ children }) {
