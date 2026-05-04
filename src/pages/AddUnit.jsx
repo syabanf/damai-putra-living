@@ -6,7 +6,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   ArrowLeft, Building2, Upload, FileText, User, Home as HomeIcon,
-  Check, AlertCircle, ChevronDown, X, KeyRound, CalendarRange, Phone, Mail
+  Check, AlertCircle, ChevronDown, X, KeyRound, CalendarRange, Phone, Mail, ShieldCheck
 } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -19,6 +19,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import ReadOnlyField from '@/components/ui/ReadOnlyField';
 
 const PROPERTIES = [
   { id: 'damai-putra-1', name: 'Damai Putra Residence 1', towers: ['A', 'B', 'C'] },
@@ -429,6 +430,34 @@ export default function AddUnit() {
                 <h2 className="text-base font-bold text-slate-800">Ownership Details</h2>
                 <p className="text-slate-500 text-xs mt-0.5">Confirm your ownership status</p>
               </div>
+
+              {/* Prefilled unit summary from step 1 */}
+              <div className="rounded-xl p-3 space-y-2 border border-emerald-200 bg-emerald-50/60">
+                <div className="flex items-center gap-1.5 mb-1">
+                  <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+                  <span className="text-xs font-bold text-emerald-700 uppercase tracking-wide">Unit Details (from Step 1)</span>
+                </div>
+                <div className="grid grid-cols-2 gap-2 text-xs">
+                  <div><span className="text-slate-500">Property</span><p className="font-semibold text-slate-800 text-sm leading-tight">{formData.property_name || '—'}</p></div>
+                  {formData.tower && <div><span className="text-slate-500">Tower</span><p className="font-semibold text-slate-800 text-sm">{formData.tower}</p></div>}
+                  <div><span className="text-slate-500">Unit No.</span><p className="font-semibold text-slate-800 text-sm">{formData.unit_number || '—'}</p></div>
+                  <div><span className="text-slate-500">Type</span><p className="font-semibold text-slate-800 text-sm capitalize">{formData.unit_type || '—'}</p></div>
+                </div>
+              </div>
+
+              {/* Prefilled applicant from user profile */}
+              {user && (
+                <div className="rounded-xl p-3 space-y-2 border border-blue-200 bg-blue-50/60">
+                  <div className="flex items-center gap-1.5 mb-1">
+                    <ShieldCheck className="w-3.5 h-3.5 text-blue-600" />
+                    <span className="text-xs font-bold text-blue-700 uppercase tracking-wide">Registered As</span>
+                  </div>
+                  <div className="grid grid-cols-2 gap-2 text-xs">
+                    <div><span className="text-slate-500">Name</span><p className="font-semibold text-slate-800 text-sm">{user.full_name}</p></div>
+                    <div><span className="text-slate-500">Email</span><p className="font-semibold text-slate-800 text-sm truncate">{user.email}</p></div>
+                  </div>
+                </div>
+              )}
 
               <div className="space-y-3">
                 <Label className="text-slate-700 font-medium">Ownership Status</Label>

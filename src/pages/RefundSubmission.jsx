@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
-import { ChevronRight, ChevronLeft, CheckCircle2, Upload, FileText, ChevronDown, Check } from 'lucide-react';
+import { ChevronRight, ChevronLeft, CheckCircle2, Upload, FileText, ChevronDown, Check, Loader2, ShieldCheck } from 'lucide-react';
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle } from '@/components/ui/drawer';
 import RefundLayout from '@/components/refund/RefundLayout';
+import ReadOnlyField from '@/components/ui/ReadOnlyField';
 
 const CHECKLIST_ITEMS = [
   { code: 'DOC-01', name: 'Kwitansi pembayaran deposit', required: true },
@@ -75,6 +76,7 @@ export default function RefundSubmission() {
     applicant_name: '', owner_name: '', ktp_name: '', ktp_number: '',
     phone_number: '', cluster_name: '', block_number: '', unit_number: '',
     refund_reason: '', original_deposit_amount: '', related_permit_number: '',
+    related_permit_application_id: '',
     bank_name: '', bank_account_number: '', bank_account_holder_name: '',
     payout_method: 'Bank Transfer', applicant_notes: '',
     request_date: new Date().toISOString().slice(0, 10),
@@ -83,8 +85,66 @@ export default function RefundSubmission() {
     CHECKLIST_ITEMS.map(item => ({ ...item, is_uploaded: false }))
   );
   const [declared, setDeclared] = useState(false);
+  const [lookingUp, setLookingUp] = useState(false);
+  const [linkedRecord, setLinkedRecord] = useState(null);
 
   const set = (k, v) => setForm(f => ({ ...f, [k]: v }));
+
+  // Auto-prefill from linked permit/ticket when permit number is entered
+  const lookupPermit = useCallback(async (permitNumber) => {
+    if (!permitNumber || permitNumber.length < 6) {
+      setLinkedRecord(null);
+      return;
+    }
+    setLookingUp(true);
+    try {
+      // Search in Tickets first
+      const tickets = await base44.entities.Ticket.list();
+      const ticket = tickets.find(t => t.reference_number === permitNumber || t.permit_id === permitNumber);
+      if (ticket) {
+        setLinkedRecord({ type: 'ticket', data: ticket });
+        setForm(f => ({
+          ...f,
+          applicant_name: f.applicant_name || ticket.user_name || '',
+          unit_number: f.unit_number || ticket.unit_number || '',
+          cluster_name: f.cluster_name || ticket.property_name || '',
+          related_permit_application_id: ticket.id,
+          original_deposit_amount: f.original_deposit_amount || (ticket.deposit_required ? String(ticket.deposit_required) : ''),
+        }));
+        setLookingUp(false);
+        return;
+      }
+      // Fallback: search PermitApplications
+      const permits = await base44.entities.PermitApplication.list();
+      const permit = permits.find(p => p.permit_number === permitNumber);
+      if (permit) {
+        setLinkedRecord({ type: 'permit', data: permit });
+        setForm(f => ({
+          ...f,
+          applicant_name: f.applicant_name || permit.applicant_name || '',
+          owner_name: f.owner_name || permit.owner_name || '',
+          phone_number: f.phone_number || permit.phone_number || '',
+          cluster_name: f.cluster_name || permit.cluster_name || '',
+          unit_number: f.unit_number || permit.unit_number || '',
+          related_permit_application_id: permit.id,
+          original_deposit_amount: f.original_deposit_amount || (permit.deposit_amount ? String(permit.deposit_amount) : ''),
+        }));
+      } else {
+        setLinkedRecord(null);
+      }
+    } catch (_) {}
+    setLookingUp(false);
+  }, []);
+
+  // Auto-prefill user info on mount
+  useEffect(() => {
+    base44.auth.me().then(u => {
+      if (u) setForm(f => ({
+        ...f,
+        applicant_name: f.applicant_name || u.full_name || '',
+      }));
+    }).catch(() => {});
+  }, []);
 
   const createMutation = useMutation({
     onMutate: async () => {
@@ -196,8 +256,40 @@ export default function RefundSubmission() {
                   ]} />
               </Field>
               <Field label="Related Permit Number" required>
-                <Input value={form.related_permit_number} onChange={e => set('related_permit_number', e.target.value)} placeholder="DP/RNV-MIN/2026/001" />
+                <div className="relative">
+                  <input
+                    value={form.related_permit_number}
+                    onChange={e => {
+                      set('related_permit_number', e.target.value);
+                      lookupPermit(e.target.value.trim());
+                    }}
+                    placeholder="DP/RNV-MIN/2026/001"
+                    className="w-full px-3 py-2.5 rounded-xl border border-slate-200 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-200 pr-9"
+                  />
+                  {lookingUp && (
+                    <Loader2 className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-blue-400 animate-spin" />
+                  )}
+                </div>
               </Field>
+
+              {/* Auto-prefilled data from linked permit */}
+              {linkedRecord && (
+                <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-3 space-y-2">
+                  <div className="flex items-center gap-1.5">
+                    <ShieldCheck className="w-4 h-4 text-emerald-600" />
+                    <span className="text-xs font-bold text-emerald-700 uppercase tracking-wide">
+                      Linked {linkedRecord.type === 'ticket' ? 'Ticket' : 'Permit'} Found — Data Auto-Filled
+                    </span>
+                  </div>
+                  <div className="grid grid-cols-2 gap-2 text-xs">
+                    {linkedRecord.data.applicant_name && <div><span className="text-slate-500">Applicant</span><p className="font-semibold text-slate-800">{linkedRecord.data.applicant_name || linkedRecord.data.user_name}</p></div>}
+                    {(linkedRecord.data.unit_number) && <div><span className="text-slate-500">Unit</span><p className="font-semibold text-slate-800">{linkedRecord.data.unit_number}</p></div>}
+                    {(linkedRecord.data.cluster_name || linkedRecord.data.property_name) && <div><span className="text-slate-500">Property</span><p className="font-semibold text-slate-800">{linkedRecord.data.cluster_name || linkedRecord.data.property_name}</p></div>}
+                    {(linkedRecord.data.deposit_required || linkedRecord.data.deposit_amount) && <div><span className="text-slate-500">Deposit</span><p className="font-semibold text-slate-800">IDR {Number(linkedRecord.data.deposit_required || linkedRecord.data.deposit_amount || 0).toLocaleString('id-ID')}</p></div>}
+                  </div>
+                </div>
+              )}
+
               <Field label="Request Date" required>
                 <Input type="date" value={form.request_date} onChange={e => set('request_date', e.target.value)} />
               </Field>
@@ -206,12 +298,27 @@ export default function RefundSubmission() {
 
           {step === 1 && (
             <>
+              {linkedRecord && (
+                <div className="bg-blue-50 border border-blue-100 rounded-xl p-3 mb-1 text-xs text-blue-700 flex items-center gap-2">
+                  <ShieldCheck className="w-4 h-4 text-blue-500 flex-shrink-0" />
+                  Fields marked as verified are auto-filled from the linked permit. Only enter new data below.
+                </div>
+              )}
               <div className="grid grid-cols-2 gap-4">
+                {/* Applicant name — may be prefilled */}
                 <Field label="Applicant Name" required>
-                  <Input value={form.applicant_name} onChange={e => set('applicant_name', e.target.value)} />
+                  {linkedRecord ? (
+                    <ReadOnlyField label="" value={form.applicant_name} />
+                  ) : (
+                    <Input value={form.applicant_name} onChange={e => set('applicant_name', e.target.value)} />
+                  )}
                 </Field>
                 <Field label="Owner Name">
-                  <Input value={form.owner_name} onChange={e => set('owner_name', e.target.value)} />
+                  {linkedRecord?.data?.owner_name ? (
+                    <ReadOnlyField label="" value={form.owner_name} />
+                  ) : (
+                    <Input value={form.owner_name} onChange={e => set('owner_name', e.target.value)} />
+                  )}
                 </Field>
                 <Field label="KTP Name" required>
                   <Input value={form.ktp_name} onChange={e => set('ktp_name', e.target.value)} />
@@ -220,16 +327,30 @@ export default function RefundSubmission() {
                   <Input value={form.ktp_number} onChange={e => set('ktp_number', e.target.value)} />
                 </Field>
                 <Field label="Phone Number">
-                  <Input value={form.phone_number} onChange={e => set('phone_number', e.target.value)} />
+                  {linkedRecord?.data?.phone_number ? (
+                    <ReadOnlyField label="" value={form.phone_number} />
+                  ) : (
+                    <Input value={form.phone_number} onChange={e => set('phone_number', e.target.value)} />
+                  )}
                 </Field>
-                <Field label="Cluster Name">
-                  <Input value={form.cluster_name} onChange={e => set('cluster_name', e.target.value)} />
+                {/* Cluster/Property — prefilled from linked record */}
+                <Field label="Cluster / Property">
+                  {linkedRecord ? (
+                    <ReadOnlyField label="" value={form.cluster_name} />
+                  ) : (
+                    <Input value={form.cluster_name} onChange={e => set('cluster_name', e.target.value)} />
+                  )}
                 </Field>
                 <Field label="Block Number">
                   <Input value={form.block_number} onChange={e => set('block_number', e.target.value)} />
                 </Field>
+                {/* Unit number — prefilled */}
                 <Field label="Unit Number" required>
-                  <Input value={form.unit_number} onChange={e => set('unit_number', e.target.value)} />
+                  {linkedRecord ? (
+                    <ReadOnlyField label="" value={form.unit_number} />
+                  ) : (
+                    <Input value={form.unit_number} onChange={e => set('unit_number', e.target.value)} />
+                  )}
                 </Field>
               </div>
               <Field label="Reason for Refund">
@@ -241,7 +362,15 @@ export default function RefundSubmission() {
           {step === 2 && (
             <>
               <Field label="Original Deposit Amount (IDR)" required>
-                <Input type="number" value={form.original_deposit_amount} onChange={e => set('original_deposit_amount', e.target.value)} placeholder="5000000" />
+                {linkedRecord && form.original_deposit_amount ? (
+                  <>
+                    <ReadOnlyField label="" value={`IDR ${Number(form.original_deposit_amount).toLocaleString('id-ID')}`} />
+                    <p className="text-xs text-slate-400 mt-1">Auto-filled from linked {linkedRecord.type}. Edit below if different.</p>
+                    <Input type="number" value={form.original_deposit_amount} onChange={e => set('original_deposit_amount', e.target.value)} placeholder="Override amount if needed..." className="mt-2" />
+                  </>
+                ) : (
+                  <Input type="number" value={form.original_deposit_amount} onChange={e => set('original_deposit_amount', e.target.value)} placeholder="5000000" />
+                )}
               </Field>
               <Field label="Applicant Notes">
                 <Textarea value={form.applicant_notes} onChange={e => set('applicant_notes', e.target.value)} placeholder="Additional information..." />

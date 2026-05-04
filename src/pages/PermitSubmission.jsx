@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
-import { ChevronRight, ChevronLeft, Check, Upload, AlertCircle } from 'lucide-react';
+import { ChevronRight, ChevronLeft, Check, Upload, AlertCircle, ShieldCheck } from 'lucide-react';
 import PermitLayout from '@/components/permit-mgmt/PermitLayout';
 import { createPageUrl } from '@/utils';
 
@@ -71,6 +71,8 @@ export default function PermitSubmission() {
   const navigate = useNavigate();
   const qc = useQueryClient();
   const [step, setStep] = useState(0);
+  const [user, setUser] = useState(null);
+  const [selectedUnitId, setSelectedUnitId] = useState('');
   const [form, setForm] = useState({
     permit_type: 'Minor Renovation',
     applicant_name: '', owner_name: '', phone_number: '', email: '', address: '',
@@ -83,6 +85,38 @@ export default function PermitSubmission() {
   });
 
   const set = (k, v) => setForm(f => ({ ...f, [k]: v }));
+
+  // Auto-prefill user profile on mount
+  useEffect(() => {
+    base44.auth.me().then(u => {
+      setUser(u);
+      setForm(f => ({
+        ...f,
+        applicant_name: f.applicant_name || u.full_name || '',
+        email: f.email || u.email || '',
+      }));
+    }).catch(() => {});
+  }, []);
+
+  const { data: allUnits = [] } = useQuery({
+    queryKey: ['units-permit-submission'],
+    queryFn: () => base44.entities.Unit.list(),
+  });
+  const approvedUnits = user ? allUnits.filter(u => u.status === 'approved' && u.user_email === user.email) : [];
+  const selectedUnit = approvedUnits.find(u => u.id === selectedUnitId);
+
+  const handleUnitSelect = (unitId) => {
+    setSelectedUnitId(unitId);
+    const unit = approvedUnits.find(u => u.id === unitId);
+    if (unit) {
+      setForm(f => ({
+        ...f,
+        cluster_name: unit.property_name || '',
+        unit_number: unit.unit_number || '',
+        property_type: unit.unit_type === 'house' ? 'Rumah' : unit.unit_type === 'commercial' ? 'Ruko' : 'Other',
+      }));
+    }
+  };
 
   const duration = form.start_date && form.end_date
     ? Math.max(0, (new Date(form.end_date) - new Date(form.start_date)) / 86400000)
@@ -153,11 +187,37 @@ export default function PermitSubmission() {
     // Step 0: Applicant
     <div key={0} className="space-y-4">
       <h2 className="text-lg font-bold text-slate-800">Applicant Information</h2>
+      {user && (
+        <div className="flex items-center gap-2 p-3 bg-emerald-50 border border-emerald-200 rounded-xl text-sm text-emerald-800">
+          <ShieldCheck className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+          Name and email are auto-filled from your profile.
+        </div>
+      )}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <Field label="Applicant Name" required><input className={inputCls} value={form.applicant_name} onChange={e => set('applicant_name', e.target.value)} placeholder="Full name" /></Field>
+        <Field label="Applicant Name" required>
+          {user ? (
+            <div className="flex items-center gap-2 px-3 py-2.5 rounded-xl bg-emerald-50 border border-emerald-200">
+              <ShieldCheck className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+              <span className="text-sm font-medium text-emerald-800 flex-1">{form.applicant_name}</span>
+              <span className="text-[10px] font-bold text-emerald-600 bg-emerald-100 px-1.5 py-0.5 rounded-full">VERIFIED</span>
+            </div>
+          ) : (
+            <input className={inputCls} value={form.applicant_name} onChange={e => set('applicant_name', e.target.value)} placeholder="Full name" />
+          )}
+        </Field>
         <Field label="Property Owner Name" required><input className={inputCls} value={form.owner_name} onChange={e => set('owner_name', e.target.value)} placeholder="Owner name" /></Field>
         <Field label="Phone Number" required><input className={inputCls} value={form.phone_number} onChange={e => set('phone_number', e.target.value)} placeholder="08xx-xxxx-xxxx" /></Field>
-        <Field label="Email"><input className={inputCls} type="email" value={form.email} onChange={e => set('email', e.target.value)} placeholder="email@example.com" /></Field>
+        <Field label="Email">
+          {user ? (
+            <div className="flex items-center gap-2 px-3 py-2.5 rounded-xl bg-emerald-50 border border-emerald-200">
+              <ShieldCheck className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+              <span className="text-sm font-medium text-emerald-800 flex-1">{form.email}</span>
+              <span className="text-[10px] font-bold text-emerald-600 bg-emerald-100 px-1.5 py-0.5 rounded-full">VERIFIED</span>
+            </div>
+          ) : (
+            <input className={inputCls} type="email" value={form.email} onChange={e => set('email', e.target.value)} placeholder="email@example.com" />
+          )}
+        </Field>
         <Field label="Address" required><input className={inputCls} value={form.address} onChange={e => set('address', e.target.value)} placeholder="Full address" /></Field>
         <Field label="Contractor Name"><input className={inputCls} value={form.contractor_name} onChange={e => set('contractor_name', e.target.value)} placeholder="If using contractor" /></Field>
         <Field label="Contractor Phone"><input className={inputCls} value={form.contractor_phone} onChange={e => set('contractor_phone', e.target.value)} /></Field>
@@ -168,10 +228,46 @@ export default function PermitSubmission() {
     // Step 1: Property
     <div key={1} className="space-y-4">
       <h2 className="text-lg font-bold text-slate-800">Property / Unit Information</h2>
+      {approvedUnits.length > 0 && (
+        <Field label="Select Registered Unit (auto-fill)">
+          <select className={inputCls} value={selectedUnitId} onChange={e => handleUnitSelect(e.target.value)}>
+            <option value="">-- Select your registered unit --</option>
+            {approvedUnits.map(u => (
+              <option key={u.id} value={u.id}>{u.unit_number} – {u.property_name}{u.tower ? ` Tower ${u.tower}` : ''}</option>
+            ))}
+          </select>
+        </Field>
+      )}
+      {selectedUnit && (
+        <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-3 flex items-center gap-2">
+          <ShieldCheck className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+          <span className="text-sm text-emerald-800">Unit data auto-filled from registered unit.</span>
+        </div>
+      )}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <Field label="Cluster Name" required><input className={inputCls} value={form.cluster_name} onChange={e => set('cluster_name', e.target.value)} placeholder="e.g. Serenia" /></Field>
+        <Field label="Cluster Name" required>
+          {selectedUnit ? (
+            <div className="flex items-center gap-2 px-3 py-2.5 rounded-xl bg-emerald-50 border border-emerald-200">
+              <ShieldCheck className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+              <span className="text-sm font-medium text-emerald-800 flex-1">{form.cluster_name}</span>
+              <span className="text-[10px] font-bold text-emerald-600 bg-emerald-100 px-1.5 py-0.5 rounded-full">VERIFIED</span>
+            </div>
+          ) : (
+            <input className={inputCls} value={form.cluster_name} onChange={e => set('cluster_name', e.target.value)} placeholder="e.g. Serenia" />
+          )}
+        </Field>
         <Field label="Block Number" required><input className={inputCls} value={form.block_number} onChange={e => set('block_number', e.target.value)} placeholder="e.g. B" /></Field>
-        <Field label="Unit Number" required><input className={inputCls} value={form.unit_number} onChange={e => set('unit_number', e.target.value)} placeholder="e.g. 12" /></Field>
+        <Field label="Unit Number" required>
+          {selectedUnit ? (
+            <div className="flex items-center gap-2 px-3 py-2.5 rounded-xl bg-emerald-50 border border-emerald-200">
+              <ShieldCheck className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+              <span className="text-sm font-medium text-emerald-800 flex-1">{form.unit_number}</span>
+              <span className="text-[10px] font-bold text-emerald-600 bg-emerald-100 px-1.5 py-0.5 rounded-full">VERIFIED</span>
+            </div>
+          ) : (
+            <input className={inputCls} value={form.unit_number} onChange={e => set('unit_number', e.target.value)} placeholder="e.g. 12" />
+          )}
+        </Field>
         <Field label="Property Type">
           <select className={inputCls} value={form.property_type} onChange={e => set('property_type', e.target.value)}>
             {['Rumah', 'Ruko', 'Other'].map(t => <option key={t}>{t}</option>)}
