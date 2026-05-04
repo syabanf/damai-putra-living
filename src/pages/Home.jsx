@@ -10,7 +10,7 @@ import { motion } from 'framer-motion';
 import {
   Bell, ChevronRight, Building2, Phone, CalendarDays, Bus,
   Compass, UtensilsCrossed, Sparkles, Heart, Globe,
-  ChevronLeft, ArrowRight, Tag, Newspaper, FileText, Home as HomeIcon, MapPin
+  ChevronLeft, ArrowRight, Tag, Newspaper, FileText, Home as HomeIcon, MapPin, ShieldCheck
 } from 'lucide-react';
 
 /* ── helpers ── */
@@ -208,7 +208,10 @@ export default function Home() {
       <div className="mt-5">
         <SectionHeader title="Quick Access" />
         <div className="px-4 grid grid-cols-4 gap-3">
-          {QUICK_FEATURES.map((f, i) => {
+          {[
+            ...QUICK_FEATURES,
+            ...(user?.role === 'admin' ? [{ icon: ShieldCheck, label: 'Admin', color: '#0F3D4C', bg: '#e6eef0', page: 'AdminPermitDashboard' }] : []),
+          ].map((f, i) => {
             const Icon = f.icon;
             return (
               <motion.button key={f.label}
