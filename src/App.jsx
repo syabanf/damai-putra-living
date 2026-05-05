@@ -31,6 +31,10 @@ const RefundAdminProcess = lazy(() => import('./pages/RefundAdminProcess'));
 const AdminLottery = lazy(() => import('./pages/AdminLottery'));
 const LotteryPage = lazy(() => import('./pages/LotteryPage'));
 const MockLogin = lazy(() => import('./pages/MockLogin'));
+const AdminResidents = lazy(() => import('./pages/AdminResidents'));
+const AdminUsers = lazy(() => import('./pages/AdminUsers'));
+const AdminCMSProperties = lazy(() => import('./pages/AdminCMSProperties'));
+const AdminLoyaltyPoints = lazy(() => import('./pages/AdminLoyaltyPoints'));
 
 const PageLoader = () => (
   <div className="fixed inset-0 flex items-center justify-center bg-background/60">
@@ -112,6 +116,10 @@ const AuthenticatedApp = () => {
       <Route path="/AdminLottery" element={<AdminLottery />} />
       <Route path="/LotteryPage" element={<LotteryPage />} />
       <Route path="/MockLogin" element={<MockLogin />} />
+      <Route path="/AdminResidents" element={<AdminResidents />} />
+      <Route path="/AdminUsers" element={<AdminUsers />} />
+      <Route path="/AdminCMSProperties" element={<AdminCMSProperties />} />
+      <Route path="/AdminLoyaltyPoints" element={<AdminLoyaltyPoints />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
     </Suspense>
