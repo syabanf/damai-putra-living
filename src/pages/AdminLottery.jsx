@@ -3,8 +3,9 @@ import { base44 } from '@/api/base44Client';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import AdminPermitLayout from '@/components/admin/AdminPermitLayout';
 import RouletteWheel from '@/components/lottery/RouletteWheel';
+import NameRouletteWheel from '@/components/lottery/NameRouletteWheel';
 import {
-  Plus, Trash2, Edit2, Gift, Users, Trophy, Eye, ChevronDown, ChevronUp, X, Check
+  Plus, Trash2, Edit2, Gift, Users, Trophy, ChevronDown, ChevronUp, X
 } from 'lucide-react';
 
 const DEFAULT_COLORS = ['#FF6B6B','#4ECDC4','#FFE66D','#A8E6CF','#FF8B94','#6C5CE7','#FD79A8','#00CEC9','#FDCB6E','#E17055','#74B9FF','#55EFC4'];
@@ -130,12 +131,6 @@ function EntriesPanel({ lottery }) {
 
   if (entries.length === 0) return <p className="text-slate-400 text-sm text-center py-6">Belum ada peserta</p>;
 
-  const pickWinner = () => {
-    const idx = Math.floor(Math.random() * entries.length);
-    const winner = entries[idx];
-    announceMutation.mutate({ winnerName: winner.user_name, winnerEmail: winner.user_email, winnerPrize: winner.spin_result || 'Hadiah Utama' });
-  };
-
   return (
     <div>
       {lottery.winner_announced && (
@@ -148,19 +143,13 @@ function EntriesPanel({ lottery }) {
           </div>
         </div>
       )}
-      {!lottery.winner_announced && (
-        <button onClick={pickWinner} disabled={announceMutation.isPending}
-          className="w-full mb-4 py-2.5 bg-amber-500 text-white rounded-xl text-sm font-bold hover:bg-amber-600 transition-colors flex items-center justify-center gap-2">
-          <Trophy className="w-4 h-4" /> {announceMutation.isPending ? 'Memilih...' : 'Pilih Pemenang Acak'}
-        </button>
-      )}
       <div className="space-y-2 max-h-72 overflow-y-auto">
         {entries.map((e, i) => (
           <div key={e.id} className="flex items-center gap-3 p-3 bg-slate-50 rounded-xl">
             <span className="w-6 h-6 rounded-full bg-teal-100 text-teal-700 text-xs font-bold flex items-center justify-center flex-shrink-0">{i + 1}</span>
             <div className="flex-1 min-w-0">
               <p className="text-sm font-semibold text-slate-800 truncate">{e.user_name || e.user_email}</p>
-              <p className="text-xs text-slate-400">{e.spin_result || '—'} · {e.points_spent} poin</p>
+              <p className="text-xs text-slate-400">{e.points_spent} poin</p>
             </div>
             <p className="text-[10px] text-slate-400 flex-shrink-0">
               {e.entry_date ? new Date(e.entry_date).toLocaleDateString('id-ID') : '—'}
@@ -168,6 +157,90 @@ function EntriesPanel({ lottery }) {
           </div>
         ))}
       </div>
+    </div>
+  );
+}
+
+function NameRoulettePanel({ lottery }) {
+  const qc = useQueryClient();
+  const [winner, setWinner] = useState(null);
+  const [prize, setPrize] = useState('');
+
+  const { data: entries = [] } = useQuery({
+    queryKey: ['lottery-entries', lottery.id],
+    queryFn: () => base44.entities.LotteryEntry.filter({ lottery_id: lottery.id }),
+    enabled: !!lottery.id,
+  });
+
+  const announceMutation = useMutation({
+    mutationFn: ({ winnerName, winnerEmail, winnerPrize }) =>
+      base44.entities.Lottery.update(lottery.id, {
+        winner_announced: true,
+        winner_name: winnerName,
+        winner_email: winnerEmail,
+        winner_prize: winnerPrize,
+      }),
+    onSuccess: () => qc.invalidateQueries({ queryKey: ['lotteries-admin'] }),
+  });
+
+  const names = [...new Set(entries.map(e => e.user_name || e.user_email))];
+
+  const handleSpinEnd = (name) => {
+    const entry = entries.find(e => (e.user_name || e.user_email) === name);
+    setWinner({ name, email: entry?.user_email || '' });
+  };
+
+  const handleAnnounce = () => {
+    if (!winner || !prize) return;
+    announceMutation.mutate({ winnerName: winner.name, winnerEmail: winner.email, winnerPrize: prize });
+  };
+
+  if (entries.length === 0) {
+    return <p className="text-slate-400 text-sm text-center py-8">Belum ada peserta untuk diputar</p>;
+  }
+
+  return (
+    <div className="space-y-5">
+      {lottery.winner_announced && (
+        <div className="p-4 bg-amber-50 border border-amber-200 rounded-2xl flex items-center gap-3">
+          <Trophy className="w-8 h-8 text-amber-500 flex-shrink-0" />
+          <div>
+            <p className="text-xs text-amber-600 font-semibold uppercase tracking-wide">Pemenang Diumumkan</p>
+            <p className="font-bold text-amber-800">{lottery.winner_name}</p>
+            <p className="text-xs text-amber-600">{lottery.winner_prize}</p>
+          </div>
+        </div>
+      )}
+
+      <div className="flex justify-center">
+        <NameRouletteWheel names={names} onSpinEnd={handleSpinEnd} />
+      </div>
+
+      {winner && (
+        <div className="p-4 bg-teal-50 border border-teal-200 rounded-2xl space-y-3">
+          <div className="flex items-center gap-2">
+            <Trophy className="w-5 h-5 text-teal-600" />
+            <p className="text-sm font-bold text-teal-800">Terpilih: <span className="text-teal-700">{winner.name}</span></p>
+          </div>
+          <div className="space-y-1.5">
+            <label className="text-xs font-semibold text-slate-600">Hadiah yang Diterima *</label>
+            <input
+              value={prize}
+              onChange={e => setPrize(e.target.value)}
+              placeholder="Contoh: Smart TV 43&quot;, Voucher Rp 1.000.000, dll"
+              className="w-full h-10 px-3 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-400"
+            />
+          </div>
+          <button
+            onClick={handleAnnounce}
+            disabled={!prize || announceMutation.isPending}
+            className="w-full py-2.5 bg-amber-500 text-white rounded-xl text-sm font-bold hover:bg-amber-600 disabled:opacity-50 transition-colors flex items-center justify-center gap-2"
+          >
+            <Trophy className="w-4 h-4" />
+            {announceMutation.isPending ? 'Menyimpan...' : 'Umumkan Pemenang'}
+          </button>
+        </div>
+      )}
     </div>
   );
 }
@@ -316,9 +389,7 @@ export default function AdminLottery() {
                   )}
                   {(activePanel[lottery.id] || 'prizes') === 'entries' && <EntriesPanel lottery={lottery} />}
                   {(activePanel[lottery.id] || 'prizes') === 'roulette' && (
-                    <div className="flex justify-center py-4">
-                      <RouletteWheel prizes={lottery.prizes || []} disabled={false} />
-                    </div>
+                    <NameRoulettePanel lottery={lottery} />
                   )}
                 </div>
               </div>
