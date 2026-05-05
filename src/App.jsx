@@ -35,6 +35,8 @@ const AdminResidents = lazy(() => import('./pages/AdminResidents'));
 const AdminUsers = lazy(() => import('./pages/AdminUsers'));
 const AdminCMSProperties = lazy(() => import('./pages/AdminCMSProperties'));
 const AdminLoyaltyPoints = lazy(() => import('./pages/AdminLoyaltyPoints'));
+const AdminCMSTenants = lazy(() => import('./pages/AdminCMSTenants'));
+const AdminCMSEvents = lazy(() => import('./pages/AdminCMSEvents'));
 
 const PageLoader = () => (
   <div className="fixed inset-0 flex items-center justify-center bg-background/60">
@@ -120,6 +122,8 @@ const AuthenticatedApp = () => {
       <Route path="/AdminUsers" element={<AdminUsers />} />
       <Route path="/AdminCMSProperties" element={<AdminCMSProperties />} />
       <Route path="/AdminLoyaltyPoints" element={<AdminLoyaltyPoints />} />
+      <Route path="/AdminCMSTenants" element={<AdminCMSTenants />} />
+      <Route path="/AdminCMSEvents" element={<AdminCMSEvents />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
     </Suspense>

@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import {
   LayoutDashboard, FileText, ClipboardCheck, Search, Settings,
   Building2, LogOut, Star, Gift, Users, Home, RefreshCw,
-  ChevronDown, ChevronRight, ShieldCheck
+  ChevronDown, ChevronRight, ShieldCheck, Store, Calendar
 } from 'lucide-react';
 
 const NAV_GROUPS = [
@@ -34,7 +34,9 @@ const NAV_GROUPS = [
   {
     label: 'CMS & Properties',
     items: [
-      { path: '/AdminCMSProperties', label: 'CMS Properties', icon: Building2 },
+      { path: '/AdminCMSProperties', label: 'Properties', icon: Building2 },
+      { path: '/AdminCMSTenants', label: 'Tenants', icon: Store },
+      { path: '/AdminCMSEvents', label: 'Events', icon: Calendar },
     ],
   },
   {
@@ -48,7 +50,7 @@ const NAV_GROUPS = [
 
 function NavGroup({ group, isActive, onClose }) {
   const hasActive = group.items.some(i => isActive(i.path));
-  const [open, setOpen] = useState(hasActive || group.label === 'Overview');
+  const [open, setOpen] = useState(hasActive);
 
   return (
     <div className="mb-0.5">
@@ -86,7 +88,7 @@ export default function SharedAdminSidebar({ onClose }) {
   const isActive = (path) => location.pathname === path;
 
   return (
-    <aside className="h-full w-64 bg-slate-900 flex flex-col">
+    <aside className="h-screen w-64 bg-slate-900 flex flex-col sticky top-0">
       {/* Logo */}
       <div className="p-5 border-b border-slate-700/50 flex-shrink-0">
         <div className="flex items-center gap-3">
