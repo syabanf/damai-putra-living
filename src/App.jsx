@@ -30,6 +30,7 @@ const AdminPermitDetail = lazy(() => import('./pages/AdminPermitDetail'));
 const RefundAdminProcess = lazy(() => import('./pages/RefundAdminProcess'));
 const AdminLottery = lazy(() => import('./pages/AdminLottery'));
 const LotteryPage = lazy(() => import('./pages/LotteryPage'));
+const MockLogin = lazy(() => import('./pages/MockLogin'));
 
 const PageLoader = () => (
   <div className="fixed inset-0 flex items-center justify-center bg-background/60">
@@ -110,6 +111,7 @@ const AuthenticatedApp = () => {
       <Route path="/RefundAdminProcess" element={<RefundAdminProcess />} />
       <Route path="/AdminLottery" element={<AdminLottery />} />
       <Route path="/LotteryPage" element={<LotteryPage />} />
+      <Route path="/MockLogin" element={<MockLogin />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
     </Suspense>

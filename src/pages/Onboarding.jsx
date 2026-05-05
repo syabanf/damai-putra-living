@@ -26,6 +26,7 @@ const SLIDES = [
 const LANGS = ['EN', 'ID'];
 
 export default function Onboarding() {
+  const navigate = useNavigate();
   const [slide, setSlide] = useState(0);
   const [lang, setLang] = useState('EN');
   const [langOpen, setLangOpen] = useState(false);
@@ -154,6 +155,17 @@ export default function Onboarding() {
         >
           Skip for now
         </button>
+
+        {/* Demo Login shortcut */}
+        <div className="mt-4 pt-4 border-t border-white/10">
+          <button
+            onClick={() => navigate('/MockLogin')}
+            className="w-full h-11 rounded-2xl text-sm font-semibold border border-white/20 text-white/70 hover:text-white hover:border-white/40 transition-all flex items-center justify-center gap-2"
+            style={{ background: 'rgba(255,255,255,0.06)', backdropFilter: 'blur(8px)' }}
+          >
+            🧪 Demo Login (Mock Account)
+          </button>
+        </div>
       </div>
     </div>
   );

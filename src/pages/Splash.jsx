@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import { motion } from 'framer-motion';
+import { FlaskConical } from 'lucide-react';
 
 export default function Splash() {
   const navigate = useNavigate();
@@ -74,12 +75,12 @@ export default function Splash() {
         </motion.div>
       </div>
 
-      {/* Bottom loading dots */}
+      {/* Bottom area */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.2, duration: 0.5 }}
-        className="relative z-10 mb-14"
+        className="relative z-10 mb-14 flex flex-col items-center gap-4"
       >
         <div className="flex gap-1.5">
           {[0, 1, 2].map((i) => (
@@ -91,6 +92,14 @@ export default function Splash() {
             />
           ))}
         </div>
+        <button
+          onClick={() => { clearTimeout(); navigate('/MockLogin'); }}
+          className="flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-semibold text-white/60 hover:text-white transition-all border border-white/15 hover:border-white/30"
+          style={{ background: 'rgba(255,255,255,0.08)', backdropFilter: 'blur(8px)' }}
+        >
+          <FlaskConical className="w-3.5 h-3.5" />
+          Demo Login
+        </button>
       </motion.div>
     </div>
   );
