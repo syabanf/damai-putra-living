@@ -123,12 +123,12 @@ export default function UnitTypeSelector({ formData, setFormData, errors }) {
               onClick={() => handlePropertyTypeChange(pt.id)}
               className={`p-3 rounded-xl border-2 text-left transition-all ${
                 propertyType === pt.id
-                  ? 'border-teal-500 bg-teal-50'
+                  ? 'border-blue-500 bg-blue-50'
                   : 'border-slate-200 bg-white hover:border-slate-300'
               }`}
             >
               <span className="text-lg">{pt.icon}</span>
-              <p className={`text-xs font-semibold mt-1 ${propertyType === pt.id ? 'text-teal-700' : 'text-slate-700'}`}>{pt.label}</p>
+              <p className={`text-xs font-semibold mt-1 ${propertyType === pt.id ? 'text-blue-700' : 'text-slate-700'}`}>{pt.label}</p>
               <p className="text-[10px] text-slate-400 leading-tight">{pt.description}</p>
             </button>
           ))}
@@ -226,7 +226,7 @@ export default function UnitTypeSelector({ formData, setFormData, errors }) {
           <div className="flex items-center justify-between">
             <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide">Unit Specifications</p>
             {formData._prefilled_from && (
-              <span className="text-[10px] bg-teal-50 text-teal-600 border border-teal-200 rounded-full px-2 py-0.5 font-medium">
+              <span className="text-[10px] bg-blue-50 text-blue-600 border border-blue-200 rounded-full px-2 py-0.5 font-medium">
                 ✦ Prefilled from {formData._prefilled_from}
               </span>
             )}
@@ -237,13 +237,13 @@ export default function UnitTypeSelector({ formData, setFormData, errors }) {
               {fields.showBedrooms && (
                 <div className="space-y-1.5">
                   <Label className="text-slate-600 text-xs">Bedrooms</Label>
-                  <Input type="number" placeholder="e.g. 2" value={formData.bedroom_count} onChange={e => set('bedroom_count', e.target.value)} className="h-11 rounded-xl bg-teal-50/60" />
+                  <Input type="number" placeholder="e.g. 2" value={formData.bedroom_count} onChange={e => set('bedroom_count', e.target.value)} className="h-11 rounded-xl bg-blue-50/60" />
                 </div>
               )}
               {fields.showBathrooms && (
                 <div className="space-y-1.5">
                   <Label className="text-slate-600 text-xs">Bathrooms</Label>
-                  <Input type="number" placeholder="e.g. 1" value={formData.bathroom_count} onChange={e => set('bathroom_count', e.target.value)} className="h-11 rounded-xl bg-teal-50/60" />
+                  <Input type="number" placeholder="e.g. 1" value={formData.bathroom_count} onChange={e => set('bathroom_count', e.target.value)} className="h-11 rounded-xl bg-blue-50/60" />
                 </div>
               )}
             </div>
@@ -259,7 +259,7 @@ export default function UnitTypeSelector({ formData, setFormData, errors }) {
           {fields.showAreaSize && (
             <div className="space-y-1.5">
               <Label className="text-slate-600 text-xs">Area Size (m²)</Label>
-              <Input type="number" placeholder="e.g. 85" value={formData.area_size} onChange={e => set('area_size', e.target.value)} className="h-11 rounded-xl bg-teal-50/60" />
+              <Input type="number" placeholder="e.g. 85" value={formData.area_size} onChange={e => set('area_size', e.target.value)} className="h-11 rounded-xl bg-blue-50/60" />
             </div>
           )}
 
@@ -267,12 +267,12 @@ export default function UnitTypeSelector({ formData, setFormData, errors }) {
             <div className={`grid gap-3 ${fields.showBuildingSize ? 'grid-cols-2' : 'grid-cols-1'}`}>
               <div className="space-y-1.5">
                 <Label className="text-slate-600 text-xs">Land Size (m²)</Label>
-                <Input type="number" placeholder="e.g. 200" value={formData.land_size} onChange={e => set('land_size', e.target.value)} className="h-11 rounded-xl bg-teal-50/60" />
+                <Input type="number" placeholder="e.g. 200" value={formData.land_size} onChange={e => set('land_size', e.target.value)} className="h-11 rounded-xl bg-blue-50/60" />
               </div>
               {fields.showBuildingSize && (
                 <div className="space-y-1.5">
                   <Label className="text-slate-600 text-xs">Building Size (m²)</Label>
-                  <Input type="number" placeholder="e.g. 150" value={formData.building_size} onChange={e => set('building_size', e.target.value)} className="h-11 rounded-xl bg-teal-50/60" />
+                  <Input type="number" placeholder="e.g. 150" value={formData.building_size} onChange={e => set('building_size', e.target.value)} className="h-11 rounded-xl bg-blue-50/60" />
                 </div>
               )}
             </div>
@@ -281,14 +281,14 @@ export default function UnitTypeSelector({ formData, setFormData, errors }) {
           {fields.showGarage && (
             <div className="space-y-1.5">
               <Label className="text-slate-600 text-xs">Garages / Parking</Label>
-              <Input type="number" placeholder="e.g. 2" value={formData.garage_count} onChange={e => set('garage_count', e.target.value)} className="h-11 rounded-xl bg-teal-50/60" />
+              <Input type="number" placeholder="e.g. 2" value={formData.garage_count} onChange={e => set('garage_count', e.target.value)} className="h-11 rounded-xl bg-blue-50/60" />
             </div>
           )}
 
           {fields.showBusinessType && (
             <div className="space-y-1.5">
               <Label className="text-slate-600 text-xs">Business Type</Label>
-              <Input placeholder="e.g. Retail, F&B, Office" value={formData.business_type} onChange={e => set('business_type', e.target.value)} className="h-11 rounded-xl bg-teal-50/60" />
+              <Input placeholder="e.g. Retail, F&B, Office" value={formData.business_type} onChange={e => set('business_type', e.target.value)} className="h-11 rounded-xl bg-blue-50/60" />
             </div>
           )}
 

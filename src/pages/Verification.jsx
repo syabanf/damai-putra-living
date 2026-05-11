@@ -104,7 +104,7 @@ export default function Verification() {
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           className="w-20 h-20 rounded-2xl flex items-center justify-center mb-8"
-          style={{ background: 'linear-gradient(135deg, #8A8076, #6e6560)', boxShadow: '0 12px 32px rgba(138,128,118,0.35)' }}
+          style={{ background: 'linear-gradient(135deg, #1684F2, #0B57C2)', boxShadow: '0 12px 32px rgba(138,128,118,0.35)' }}
         >
           {type === 'email' ? (
             <Mail className="w-10 h-10 text-white" />
@@ -141,7 +141,7 @@ export default function Verification() {
                   ? 'border-red-300 bg-red-50'
                   : digit
                     ? 'border-stone-500 bg-stone-50'
-                    : 'border-slate-200 bg-slate-50 focus:border-teal-500'
+                    : 'border-slate-200 bg-slate-50 focus:border-blue-500'
               }`}
             />
           ))}
@@ -165,7 +165,7 @@ export default function Verification() {
           onClick={handleVerify}
           disabled={loading || otp.some(d => !d)}
           className="w-full h-14 text-white rounded-2xl font-semibold text-base disabled:opacity-50"
-          style={{ background: 'linear-gradient(135deg, #8A8076, #6e6560)', boxShadow: '0 8px 24px rgba(138,128,118,0.35)' }}
+          style={{ background: 'linear-gradient(135deg, #1684F2, #0B57C2)', boxShadow: '0 8px 24px rgba(138,128,118,0.35)' }}
         >
           {loading ? (
             <motion.div
@@ -181,12 +181,12 @@ export default function Verification() {
         <div className="mt-8 text-center">
           {resendTimer > 0 ? (
             <p className="text-slate-400 text-sm">
-              Resend code in <span className="text-teal-600 font-medium">{resendTimer}s</span>
+              Resend code in <span className="text-blue-600 font-medium">{resendTimer}s</span>
             </p>
           ) : (
             <button
               onClick={handleResend}
-              className="flex items-center gap-2 font-medium" style={{ color: '#8A8076' }}
+              className="flex items-center gap-2 font-medium" style={{ color: '#1684F2' }}
             >
               <RefreshCw className="w-4 h-4" />
               Resend Code

@@ -42,7 +42,7 @@ const UnitCard = ({ unit, onClick }) => {
             <div className="flex items-center gap-2">
               <h3 className="font-bold text-slate-800 text-lg">{unit.unit_number}</h3>
               {unit.unit_type && (
-                <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full" style={{ background: 'rgba(138,127,115,0.1)', color: '#8A8076' }}>
+                <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full" style={{ background: 'rgba(138,127,115,0.1)', color: '#1684F2' }}>
                   {unit.unit_type}
                 </span>
               )}
@@ -157,9 +157,9 @@ export default function MyUnit() {
   const displayedUnits = activeTab === 'owner' ? ownedUnits : rentedUnits;
 
   return (
-    <div className="min-h-screen pb-40" style={{ background: 'linear-gradient(160deg, #F5F4F2 0%, #edecea 55%, #e7e5e2 100%)' }}>
+    <div className="min-h-screen pb-40" style={{ background: 'linear-gradient(160deg, #F6F9FC 0%, #EEF5FF 55%, #E7F0FF 100%)' }}>
       {/* Header */}
-      <div className="px-5 pt-14 pb-5 rounded-b-3xl" style={{ background: 'linear-gradient(150deg, #1a5068 0%, #0F3D4C 55%, #0a2d38 100%)' }}>
+      <div className="px-5 pt-14 pb-5 rounded-b-3xl" style={{ background: 'linear-gradient(150deg, #231F20 0%, #231F20 55%, #111214 100%)' }}>
         <h1 className="text-2xl font-bold text-white">My Unit</h1>
         <p className="text-white/50 text-sm mt-1">Manage your properties</p>
 

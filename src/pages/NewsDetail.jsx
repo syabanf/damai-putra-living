@@ -55,7 +55,7 @@ export default function NewsDetail() {
   };
 
   return (
-    <div className="min-h-screen pb-10" style={{ background: 'linear-gradient(160deg, #F5F4F2 0%, #edecea 55%, #e7e5e2 100%)' }}>
+    <div className="min-h-screen pb-10" style={{ background: 'linear-gradient(160deg, #F6F9FC 0%, #EEF5FF 55%, #E7F0FF 100%)' }}>
       {/* Header */}
       <div className="px-5 pt-12 pb-5 flex items-center justify-between" style={{ background: 'rgba(255,255,255,0.85)', backdropFilter: 'blur(20px)', borderBottom: '1px solid rgba(255,255,255,0.9)' }}>
         <div className="flex items-center gap-3">

@@ -7,7 +7,7 @@ const CONFIG = {
   'Waiting Inspection Result':{ bg: 'bg-purple-50',   text: 'text-purple-700',  dot: 'bg-purple-500' },
   'Waiting Finance Validation':{ bg: 'bg-orange-50',  text: 'text-orange-700',  dot: 'bg-orange-500' },
   'Approved':                 { bg: 'bg-emerald-50',  text: 'text-emerald-700', dot: 'bg-emerald-500' },
-  'Partially Approved':       { bg: 'bg-teal-50',     text: 'text-teal-700',    dot: 'bg-teal-500' },
+  'Partially Approved':       { bg: 'bg-blue-50',     text: 'text-blue-700',    dot: 'bg-blue-500' },
   'Rejected':                 { bg: 'bg-red-50',      text: 'text-red-700',     dot: 'bg-red-500' },
   'Paid':                     { bg: 'bg-green-100',   text: 'text-green-800',   dot: 'bg-green-600' },
   'Closed':                   { bg: 'bg-slate-100',   text: 'text-slate-500',   dot: 'bg-slate-400' },

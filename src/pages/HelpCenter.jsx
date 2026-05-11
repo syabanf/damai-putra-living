@@ -54,7 +54,7 @@ export default function HelpCenter() {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen pb-10" style={{ background: 'linear-gradient(160deg, #F5F4F2 0%, #edecea 55%, #e7e5e2 100%)' }}>
+    <div className="min-h-screen pb-10" style={{ background: 'linear-gradient(160deg, #F6F9FC 0%, #EEF5FF 55%, #E7F0FF 100%)' }}>
       <GlassHeader className="pt-12 pb-5">
         <div className="flex items-center gap-3">
           <button onClick={() => navigate(-1)} className="w-9 h-9 rounded-xl flex items-center justify-center border border-white/70" style={{ background: 'rgba(255,255,255,0.6)' }}>
@@ -66,7 +66,7 @@ export default function HelpCenter() {
 
       {/* Hero */}
       <div className="mx-4 mt-5 rounded-2xl p-5 flex items-center gap-4"
-        style={{ background: 'linear-gradient(135deg, #1a5068, #0F3D4C)', boxShadow: '0 4px 16px rgba(15,61,76,0.3)' }}>
+        style={{ background: 'linear-gradient(135deg, #231F20, #231F20)', boxShadow: '0 4px 16px rgba(15,61,76,0.3)' }}>
         <div className="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center flex-shrink-0">
           <HelpCircle className="w-7 h-7 text-white" />
         </div>
@@ -80,7 +80,7 @@ export default function HelpCenter() {
       <div className="px-4 mt-5 space-y-4">
         {faqs.map(section => (
           <div key={section.category}>
-            <p className="text-xs font-bold uppercase tracking-widest mb-2 px-1" style={{ color: '#8A7F73' }}>{section.category}</p>
+            <p className="text-xs font-bold uppercase tracking-widest mb-2 px-1" style={{ color: '#1684F2' }}>{section.category}</p>
             <GlassCard className="overflow-hidden">
               {section.items.map(item => <AccordionItem key={item.q} q={item.q} a={item.a} />)}
             </GlassCard>
@@ -90,7 +90,7 @@ export default function HelpCenter() {
 
       {/* Contact Support */}
       <div className="px-4 mt-6">
-        <p className="text-xs font-bold uppercase tracking-widest mb-2 px-1" style={{ color: '#8A7F73' }}>Still need help?</p>
+        <p className="text-xs font-bold uppercase tracking-widest mb-2 px-1" style={{ color: '#1684F2' }}>Still need help?</p>
         <GlassCard className="overflow-hidden">
           <a href="https://wa.me/628001234567" target="_blank" rel="noopener noreferrer"
             className="flex items-center gap-4 p-4 active:bg-white/50" style={{ borderBottom: '1px solid rgba(255,255,255,0.6)' }}>
@@ -105,7 +105,7 @@ export default function HelpCenter() {
           <a href="tel:+628001234567"
             className="flex items-center gap-4 p-4 active:bg-white/50" style={{ borderBottom: '1px solid rgba(255,255,255,0.6)' }}>
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-blue-50">
-              <Phone className="w-5 h-5 text-[#1FB6D5]" />
+              <Phone className="w-5 h-5 text-[#1684F2]" />
             </div>
             <div>
               <p className="text-sm font-semibold text-slate-700">Call Center</p>

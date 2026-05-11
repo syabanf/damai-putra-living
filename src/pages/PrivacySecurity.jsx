@@ -10,7 +10,7 @@ function Toggle({ value, onChange }) {
   return (
     <button onClick={() => onChange(!value)}
       className="w-11 h-6 rounded-full transition-all flex-shrink-0 relative"
-      style={{ background: value ? '#1FB6D5' : 'rgba(0,0,0,0.12)' }}>
+      style={{ background: value ? '#1684F2' : 'rgba(0,0,0,0.12)' }}>
       <span className={`absolute top-0.5 w-5 h-5 bg-white rounded-full shadow transition-all ${value ? 'left-[22px]' : 'left-0.5'}`} />
     </button>
   );
@@ -60,7 +60,7 @@ export default function PrivacySecurity() {
 
       {/* Hero */}
       <div className="mx-4 mt-5 rounded-2xl p-5 flex items-center gap-4"
-        style={{ background: 'linear-gradient(135deg, #1FB6D5, #169ab5)', boxShadow: '0 4px 16px rgba(31,182,213,0.3)' }}>
+        style={{ background: 'linear-gradient(135deg, #1684F2, #0B57C2)', boxShadow: '0 4px 16px rgba(22,132,242,0.3)' }}>
         <div className="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center flex-shrink-0">
           <Shield className="w-7 h-7 text-white" />
         </div>
@@ -72,10 +72,10 @@ export default function PrivacySecurity() {
 
       {/* Security */}
       <div className="px-4 mt-5">
-        <p className="text-xs font-bold uppercase tracking-widest mb-2 px-1" style={{ color: '#8A7F73' }}>Security</p>
+        <p className="text-xs font-bold uppercase tracking-widest mb-2 px-1" style={{ color: '#1684F2' }}>Security</p>
         <GlassCard className="overflow-hidden divide-y" style={{ '--tw-divide-opacity': 1 }}>
           {[
-            { icon: Lock, iconBg: '#e6f8fb', iconColor: '#1FB6D5', label: 'Biometric Login', desc: 'Use fingerprint or face ID', toggle: true, value: biometric, onChange: setBiometric },
+            { icon: Lock, iconBg: '#EAF3FF', iconColor: '#1684F2', label: 'Biometric Login', desc: 'Use fingerprint or face ID', toggle: true, value: biometric, onChange: setBiometric },
             { icon: Lock, iconBg: '#fffbeb', iconColor: '#d97706', label: 'Change Password', desc: 'Update your account password' },
             { icon: Shield, iconBg: '#ecfdf5', iconColor: '#10b981', label: 'Two-Factor Authentication', desc: 'Add an extra layer of protection' },
           ].map((item, idx) => (
@@ -95,11 +95,11 @@ export default function PrivacySecurity() {
 
       {/* Privacy */}
       <div className="px-4 mt-4">
-        <p className="text-xs font-bold uppercase tracking-widest mb-2 px-1" style={{ color: '#8A7F73' }}>Privacy</p>
+        <p className="text-xs font-bold uppercase tracking-widest mb-2 px-1" style={{ color: '#1684F2' }}>Privacy</p>
         <GlassCard className="overflow-hidden">
           {[
             { icon: Bell, iconBg: '#ecfdf5', iconColor: '#10b981', label: 'Push Notifications', desc: 'Receive permit & unit updates', toggle: true, value: notifications, onChange: setNotifications },
-            { icon: Database, iconBg: '#f5f3f0', iconColor: '#8A7F73', label: 'Activity Tracking', desc: 'Help us improve the app experience', toggle: true, value: activityTracking, onChange: setActivityTracking },
+            { icon: Database, iconBg: '#EEF5FF', iconColor: '#1684F2', label: 'Activity Tracking', desc: 'Help us improve the app experience', toggle: true, value: activityTracking, onChange: setActivityTracking },
           ].map((item, idx) => (
             <div key={idx} className="flex items-center gap-4 p-4" style={{ borderBottom: idx === 0 ? '1px solid rgba(255,255,255,0.6)' : 'none' }}>
               <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: item.iconBg }}>
@@ -117,7 +117,7 @@ export default function PrivacySecurity() {
 
       {/* Data & Legal */}
       <div className="px-4 mt-4">
-        <p className="text-xs font-bold uppercase tracking-widest mb-2 px-1" style={{ color: '#8A7F73' }}>Your Data</p>
+        <p className="text-xs font-bold uppercase tracking-widest mb-2 px-1" style={{ color: '#1684F2' }}>Your Data</p>
         <GlassCard className="overflow-hidden">
           {[
             { icon: Database, iconBg: 'rgba(255,255,255,0.5)', iconColor: '#64748b', label: 'Download My Data', desc: 'Request a copy of your personal data' },

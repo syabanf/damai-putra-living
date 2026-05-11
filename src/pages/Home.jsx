@@ -27,7 +27,7 @@ const SectionHeader = ({ title, onViewAll }) => (
   <div className="flex justify-between items-center mb-3 px-4">
     <h2 className="font-bold text-base" style={{ color: '#2E2E2E' }}>{title}</h2>
     {onViewAll && (
-      <button onClick={onViewAll} className="text-xs font-semibold flex items-center gap-0.5" style={{ color: '#1FB6D5' }}>
+      <button onClick={onViewAll} className="text-xs font-semibold flex items-center gap-0.5" style={{ color: '#1684F2' }}>
         View All <ChevronRight className="w-3.5 h-3.5" />
       </button>
     )}
@@ -54,16 +54,16 @@ const HERO_SLIDES = [
 ];
 
 const QUICK_FEATURES = [
-  { icon: Building2,       label: 'Property',   color: '#1FB6D5', bg: '#e6f8fb', page: 'PropertyListing' },
-  { icon: HomeIcon,        label: 'My Unit',    color: '#8E8478', bg: '#f5f3f0', page: 'MyUnit' },
-  { icon: FileText,        label: 'Permits',    color: '#0F3D4C', bg: '#e6eef0', page: 'Tickets' },
+  { icon: Building2,       label: 'Property',   color: '#1684F2', bg: '#EAF3FF', page: 'PropertyListing' },
+  { icon: HomeIcon,        label: 'My Unit',    color: '#1684F2', bg: '#EEF5FF', page: 'MyUnit' },
+  { icon: FileText,        label: 'Permits',    color: '#231F20', bg: '#EAF3FF', page: 'Tickets' },
   { icon: Phone,           label: 'Hotline',    color: '#ef4444', bg: '#fef2f2', page: 'HelpCenter' },
   { icon: CalendarDays,    label: 'Events',     color: '#f59e0b', bg: '#fffbeb', page: 'Events' },
   { icon: UtensilsCrossed, label: 'Culinary',   color: '#f97316', bg: '#fff7ed', page: 'Culinary' },
   { icon: Newspaper,       label: 'News',       color: '#8b5cf6', bg: '#faf5ff', page: 'News' },
   { icon: Bus,             label: 'Transport',  color: '#06b6d4', bg: '#ecf9fb', page: 'TransportSearch' },
-  { icon: MapPin,          label: 'Explore',    color: '#8E8478', bg: '#f5f3f0', page: 'Explore' },
-  { icon: Sparkles,        label: 'Rewards',    color: '#1FB6D5', bg: '#e6f8fb', page: 'Rewards' },
+  { icon: MapPin,          label: 'Explore',    color: '#1684F2', bg: '#EEF5FF', page: 'Explore' },
+  { icon: Sparkles,        label: 'Rewards',    color: '#1684F2', bg: '#EAF3FF', page: 'Rewards' },
 ];
 
 const LANGUAGES = [
@@ -130,7 +130,7 @@ export default function Home() {
   const currentLang = LANGUAGES.find(l => l.code === lang);
 
   return (
-    <div ref={containerRef} className="min-h-screen pb-40 overflow-y-auto" style={{ background: 'linear-gradient(160deg, #F5F4F2 0%, #edecea 55%, #e7e5e2 100%)' }}>
+    <div ref={containerRef} className="min-h-screen pb-40 overflow-y-auto" style={{ background: 'linear-gradient(160deg, #F6F9FC 0%, #EEF5FF 55%, #E7F0FF 100%)' }}>
       <PullToRefreshIndicator isRefreshing={isRefreshing} />
 
       {/* ── 1. HERO BANNER ── */}
@@ -209,7 +209,7 @@ export default function Home() {
         <div className="px-4 grid grid-cols-4 gap-3">
           {[
             ...QUICK_FEATURES,
-            ...(user?.role === 'admin' ? [{ icon: ShieldCheck, label: 'Admin', color: '#0F3D4C', bg: '#e6eef0', page: 'AdminPermitDashboard' }] : []),
+            ...(user?.role === 'admin' ? [{ icon: ShieldCheck, label: 'Admin', color: '#231F20', bg: '#EAF3FF', page: 'AdminPermitDashboard' }] : []),
           ].map((f, i) => {
             const Icon = f.icon;
             return (
@@ -228,13 +228,13 @@ export default function Home() {
 
       {/* ── 3. PROMO / CTA ── */}
       <div className="mt-6 mx-4">
-        <div className="rounded-2xl overflow-hidden relative" style={{ background: 'linear-gradient(135deg, #0F3D4C 0%, #0a2d38 100%)', boxShadow: '0 4px 20px rgba(15,61,76,0.3)' }}>
+        <div className="rounded-2xl overflow-hidden relative" style={{ background: 'linear-gradient(135deg, #231F20 0%, #111214 100%)', boxShadow: '0 4px 20px rgba(15,61,76,0.3)' }}>
           <div className="absolute -right-8 -top-8 w-32 h-32 rounded-full bg-white/10" />
           <div className="absolute -left-4 -bottom-6 w-24 h-24 rounded-full bg-white/5" />
           <div className="relative px-5 py-5">
             <p className="text-white/70 text-xs font-semibold uppercase tracking-widest mb-1">Exclusive Membership</p>
-            <h3 className="text-white font-bold text-lg leading-snug mb-2">Join Damai Putra Living and get access to various rewards and benefits!</h3>
-            <button onClick={() => navigate(createPageUrl('Rewards'))} className="mt-1 px-5 py-2.5 bg-white rounded-xl text-sm font-bold flex items-center gap-2" style={{ color: '#1FB6D5' }}>
+            <h3 className="text-white font-bold text-lg leading-snug mb-2">Join ION and get access to various rewards and benefits!</h3>
+            <button onClick={() => navigate(createPageUrl('Rewards'))} className="mt-1 px-5 py-2.5 bg-white rounded-xl text-sm font-bold flex items-center gap-2" style={{ color: '#1684F2' }}>
               View Rewards <ArrowRight className="w-4 h-4" />
             </button>
           </div>
@@ -300,7 +300,7 @@ export default function Home() {
                 <div className="relative h-28">
                   <img src={d.img} alt={d.title} className="w-full h-full object-cover" />
                   <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.55), transparent)' }} />
-                  <span className="absolute top-2 left-2 text-white text-[10px] font-bold px-2 py-0.5 rounded-full" style={{ background: '#1FB6D5' }}>
+                  <span className="absolute top-2 left-2 text-white text-[10px] font-bold px-2 py-0.5 rounded-full" style={{ background: '#1684F2' }}>
                     {d.tag}
                   </span>
                 </div>

@@ -1,6 +1,6 @@
-# Damai Putra Living
+# ION
 
-Resident lifestyle and property-service app for Damai Putra communities.
+ION-branded resident lifestyle and property-service app.
 
 ## Development
 

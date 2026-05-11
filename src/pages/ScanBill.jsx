@@ -221,7 +221,7 @@ Jika tidak ditemukan, isi dengan null. Hanya return JSON tanpa penjelasan.`,
   const currentPoints = userPoints?.[0]?.balance || 0;
 
   return (
-    <div className="min-h-screen pb-24" style={{ background: 'linear-gradient(160deg, #F5F4F2 0%, #edecea 55%, #e7e5e2 100%)' }}>
+    <div className="min-h-screen pb-24" style={{ background: 'linear-gradient(160deg, #F6F9FC 0%, #EEF5FF 55%, #E7F0FF 100%)' }}>
       {/* Header */}
       <div className="sticky top-0 z-20 pt-4 px-4 pb-4" style={{ background: 'rgba(245,244,242,0.9)', backdropFilter: 'blur(12px)', borderBottom: '1px solid rgba(255,255,255,0.5)' }}>
         <div className="flex items-center gap-3">
@@ -236,7 +236,7 @@ Jika tidak ditemukan, isi dengan null. Hanya return JSON tanpa penjelasan.`,
       </div>
 
       {/* Current Points */}
-      <div className="mx-4 mt-5 rounded-2xl p-5" style={{ background: 'linear-gradient(135deg, #1FB6D5 0%, #0F9BB8 100%)', boxShadow: '0 4px 20px rgba(31,182,213,0.3)' }}>
+      <div className="mx-4 mt-5 rounded-2xl p-5" style={{ background: 'linear-gradient(135deg, #1684F2 0%, #0B57C2 100%)', boxShadow: '0 4px 20px rgba(22,132,242,0.3)' }}>
         <p className="text-white/70 text-xs font-semibold uppercase tracking-widest mb-1">Current Balance</p>
         <p className="text-white font-bold text-3xl">{currentPoints.toLocaleString()}</p>
         <p className="text-white/60 text-xs mt-2">points</p>
@@ -251,15 +251,15 @@ Jika tidak ditemukan, isi dengan null. Hanya return JSON tanpa penjelasan.`,
             className="rounded-2xl p-8 text-center"
             style={{ background: 'rgba(255,255,255,0.75)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.85)' }}
           >
-            <div className="w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center" style={{ background: '#e6f8fb' }}>
-              <Camera className="w-8 h-8" style={{ color: '#1FB6D5' }} />
+            <div className="w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center" style={{ background: '#EAF3FF' }}>
+              <Camera className="w-8 h-8" style={{ color: '#1684F2' }} />
             </div>
             <h2 className="font-bold text-lg text-slate-800 mb-2">Scan Your Bill</h2>
             <p className="text-sm text-slate-500 mb-6">Foto struk pembayaran Anda untuk mendapatkan poin.</p>
 
             {isProcessing ? (
               <div className="flex flex-col items-center gap-3 py-4">
-                <div className="w-10 h-10 border-4 border-[#1FB6D5] border-t-transparent rounded-full animate-spin" />
+                <div className="w-10 h-10 border-4 border-[#1684F2] border-t-transparent rounded-full animate-spin" />
                 <p className="text-sm text-slate-500 font-medium">Memproses struk...</p>
               </div>
             ) : (
@@ -267,7 +267,7 @@ Jika tidak ditemukan, isi dengan null. Hanya return JSON tanpa penjelasan.`,
                 <button
                   onClick={() => cameraInputRef.current?.click()}
                   className="flex-1 py-4 rounded-xl font-bold text-white flex flex-col items-center gap-2 active:scale-95 transition-transform"
-                  style={{ background: 'linear-gradient(135deg, #1FB6D5 0%, #0F9BB8 100%)', boxShadow: '0 3px 10px rgba(31,182,213,0.35)' }}
+                  style={{ background: 'linear-gradient(135deg, #1684F2 0%, #0B57C2 100%)', boxShadow: '0 3px 10px rgba(22,132,242,0.35)' }}
                 >
                   <Camera className="w-6 h-6" />
                   <span className="text-sm">Kamera</span>
@@ -275,7 +275,7 @@ Jika tidak ditemukan, isi dengan null. Hanya return JSON tanpa penjelasan.`,
                 <button
                   onClick={() => fileInputRef.current?.click()}
                   className="flex-1 py-4 rounded-xl font-bold flex flex-col items-center gap-2 active:scale-95 transition-transform border-2"
-                  style={{ background: 'rgba(31,182,213,0.08)', borderColor: '#1FB6D5', color: '#0F9BB8' }}
+                  style={{ background: 'rgba(22,132,242,0.08)', borderColor: '#1684F2', color: '#0B57C2' }}
                 >
                   <Image className="w-6 h-6" />
                   <span className="text-sm">Galeri</span>
@@ -308,19 +308,19 @@ Jika tidak ditemukan, isi dengan null. Hanya return JSON tanpa penjelasan.`,
             <h3 className="font-bold text-slate-800 mb-3">How it works</h3>
             <ul className="space-y-2 text-sm text-slate-600">
               <li className="flex gap-2">
-                <span className="font-bold text-teal-600 flex-shrink-0">1</span>
+                <span className="font-bold text-blue-600 flex-shrink-0">1</span>
                 <span>Make a purchase at any participating merchant</span>
               </li>
               <li className="flex gap-2">
-                <span className="font-bold text-teal-600 flex-shrink-0">2</span>
+                <span className="font-bold text-blue-600 flex-shrink-0">2</span>
                 <span>Get your paid bill receipt with QR code</span>
               </li>
               <li className="flex gap-2">
-                <span className="font-bold text-teal-600 flex-shrink-0">3</span>
+                <span className="font-bold text-blue-600 flex-shrink-0">3</span>
                 <span>Scan the QR code here to earn points</span>
               </li>
               <li className="flex gap-2">
-                <span className="font-bold text-teal-600 flex-shrink-0">4</span>
+                <span className="font-bold text-blue-600 flex-shrink-0">4</span>
                 <span>Points added instantly to your account</span>
               </li>
             </ul>
@@ -377,7 +377,7 @@ Jika tidak ditemukan, isi dengan null. Hanya return JSON tanpa penjelasan.`,
               onClick={confirmPoints}
               disabled={saveMutation.isPending}
               className="w-full py-3 rounded-xl font-bold text-white transition-all active:scale-95 mb-3"
-              style={{ background: saveMutation.isPending ? '#cbd5e1' : 'linear-gradient(135deg, #1FB6D5 0%, #0F9BB8 100%)', boxShadow: '0 3px 10px rgba(31,182,213,0.35)' }}
+              style={{ background: saveMutation.isPending ? '#cbd5e1' : 'linear-gradient(135deg, #1684F2 0%, #0B57C2 100%)', boxShadow: '0 3px 10px rgba(22,132,242,0.35)' }}
             >
               {saveMutation.isPending ? 'Menyimpan...' : 'Confirm & Add Points'}
             </button>
@@ -427,7 +427,7 @@ Jika tidak ditemukan, isi dengan null. Hanya return JSON tanpa penjelasan.`,
             <button
               onClick={resetScan}
               className="w-full py-3 rounded-xl font-bold text-white transition-all active:scale-95"
-              style={{ background: 'linear-gradient(135deg, #1FB6D5 0%, #0F9BB8 100%)' }}
+              style={{ background: 'linear-gradient(135deg, #1684F2 0%, #0B57C2 100%)' }}
             >
               Scan Struk Lain
             </button>

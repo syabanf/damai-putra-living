@@ -135,9 +135,9 @@ export default function RefundRequest() {
   const canProceedStep3 = formData.bank_name && formData.bank_account_number && formData.bank_account_holder_name;
 
   return (
-    <div className="flex flex-col h-screen overflow-hidden" style={{ background: '#F5F4F2' }}>
+    <div className="flex flex-col h-screen overflow-hidden" style={{ background: '#F6F9FC' }}>
       {/* Header */}
-      <div className="flex-shrink-0 px-5 pt-5 pb-4 rounded-b-3xl" style={{ background: 'linear-gradient(150deg, #1a5068 0%, #0F3D4C 55%, #0a2d38 100%)' }}>
+      <div className="flex-shrink-0 px-5 pt-5 pb-4 rounded-b-3xl" style={{ background: 'linear-gradient(150deg, #231F20 0%, #231F20 55%, #111214 100%)' }}>
         <div className="flex items-center gap-3 mb-3">
           <button onClick={() => step > 1 ? setStep(s => s - 1) : navigate(-1)}
             className="w-9 h-9 rounded-xl bg-white/20 border border-white/20 flex items-center justify-center">
@@ -163,7 +163,7 @@ export default function RefundRequest() {
           {step === 1 && (
             <motion.div key="s1" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-4">
               <div className="text-center mb-2">
-                <div className="w-12 h-12 rounded-2xl flex items-center justify-center mx-auto mb-2" style={{ background: 'linear-gradient(135deg, #1a5068, #0F3D4C)' }}>
+                <div className="w-12 h-12 rounded-2xl flex items-center justify-center mx-auto mb-2" style={{ background: 'linear-gradient(135deg, #231F20, #231F20)' }}>
                   <Banknote className="w-6 h-6 text-white" />
                 </div>
                 <h2 className="text-base font-bold text-slate-800">Data Pemohon</h2>
@@ -214,7 +214,7 @@ export default function RefundRequest() {
                     {['Renovation Deposit', 'Rental Deposit', 'Other'].map(type => (
                       <button key={type} type="button"
                         onClick={() => setFormData(p => ({ ...p, refund_type: type }))}
-                        className={`p-2.5 rounded-xl border-2 text-xs font-semibold transition-all ${formData.refund_type === type ? 'border-teal-500 bg-teal-50 text-teal-700' : 'border-slate-200 bg-white text-slate-600'}`}>
+                        className={`p-2.5 rounded-xl border-2 text-xs font-semibold transition-all ${formData.refund_type === type ? 'border-blue-500 bg-blue-50 text-blue-700' : 'border-slate-200 bg-white text-slate-600'}`}>
                         {type}
                       </button>
                     ))}
@@ -242,7 +242,7 @@ export default function RefundRequest() {
           {step === 2 && (
             <motion.div key="s2" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-4">
               <div className="text-center mb-2">
-                <div className="w-12 h-12 rounded-2xl flex items-center justify-center mx-auto mb-2" style={{ background: 'linear-gradient(135deg, #1a5068, #0F3D4C)' }}>
+                <div className="w-12 h-12 rounded-2xl flex items-center justify-center mx-auto mb-2" style={{ background: 'linear-gradient(135deg, #231F20, #231F20)' }}>
                   <FileText className="w-6 h-6 text-white" />
                 </div>
                 <h2 className="text-base font-bold text-slate-800">Checklist Dokumen</h2>
@@ -300,7 +300,7 @@ export default function RefundRequest() {
           {step === 3 && (
             <motion.div key="s3" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-4">
               <div className="text-center mb-2">
-                <div className="w-12 h-12 rounded-2xl flex items-center justify-center mx-auto mb-2" style={{ background: 'linear-gradient(135deg, #1a5068, #0F3D4C)' }}>
+                <div className="w-12 h-12 rounded-2xl flex items-center justify-center mx-auto mb-2" style={{ background: 'linear-gradient(135deg, #231F20, #231F20)' }}>
                   <Banknote className="w-6 h-6 text-white" />
                 </div>
                 <h2 className="text-base font-bold text-slate-800">Rekening Tujuan</h2>
@@ -323,8 +323,8 @@ export default function RefundRequest() {
               </div>
 
               {/* Summary */}
-              <div className="rounded-xl border border-teal-200 bg-teal-50/60 p-4 space-y-2">
-                <p className="text-xs font-bold text-teal-700 uppercase tracking-wide mb-2">Ringkasan Pengajuan</p>
+              <div className="rounded-xl border border-blue-200 bg-blue-50/60 p-4 space-y-2">
+                <p className="text-xs font-bold text-blue-700 uppercase tracking-wide mb-2">Ringkasan Pengajuan</p>
                 {[
                   ['Pemohon', formData.applicant_name],
                   ['Unit', `${formData.cluster_name} ${formData.block_number} ${formData.unit_number}`.trim()],
@@ -333,8 +333,8 @@ export default function RefundRequest() {
                   ['Dokumen Terupload', `${Object.keys(uploadedFiles).length} / ${CHECKLIST_ITEMS.length}`],
                 ].map(([l, v]) => (
                   <div key={l} className="flex justify-between text-xs">
-                    <span className="text-teal-600">{l}</span>
-                    <span className="font-semibold text-teal-800">{v}</span>
+                    <span className="text-blue-600">{l}</span>
+                    <span className="font-semibold text-blue-800">{v}</span>
                   </div>
                 ))}
               </div>
@@ -352,7 +352,7 @@ export default function RefundRequest() {
           }}
           disabled={loading || (step === 1 && !canProceedStep1) || (step === 2 && !canProceedStep2) || (step === 3 && !canProceedStep3)}
           className="w-full h-[52px] text-white rounded-2xl font-semibold text-base"
-          style={{ background: 'linear-gradient(135deg, #1FB6D5, #169ab5)', boxShadow: '0 6px 20px rgba(31,182,213,0.3)' }}>
+          style={{ background: 'linear-gradient(135deg, #1684F2, #0B57C2)', boxShadow: '0 6px 20px rgba(22,132,242,0.3)' }}>
           {loading ? 'Memproses...' : step === 3 ? 'Kirim Pengajuan' : 'Lanjutkan'}
         </Button>
       </div>

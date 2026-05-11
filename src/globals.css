@@ -4,25 +4,25 @@
 
 @layer base {
   :root {
-    --background: 40 11% 96%;        /* #F5F4F2 warm off-white */
-    --foreground: 0 0% 18%;          /* #2F2F2F dark charcoal */
+    --background: 210 45% 98%;       /* #F6F9FC cool app background */
+    --foreground: 0 6% 13%;          /* #231F20 ION ink */
     --card: 0 0% 100%;               /* #FFFFFF */
     --card-foreground: 0 0% 18%;
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 18%;
-    --primary: 26 8% 51%;            /* #8E8478 warm taupe */
+    --primary: 210 89% 52%;          /* #1684F2 ION blue */
     --primary-foreground: 0 0% 100%;
-    --secondary: 193 62% 17%;        /* #0F3D4C deep teal */
+    --secondary: 0 6% 13%;           /* #231F20 ION ink */
     --secondary-foreground: 0 0% 100%;
-    --muted: 40 11% 96%;
+    --muted: 212 74% 96%;
     --muted-foreground: 0 0% 46%;
-    --accent: 190 75% 47%;           /* #1FB6D5 soft cyan */
+    --accent: 210 89% 52%;           /* #1684F2 ION blue */
     --accent-foreground: 0 0% 100%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
     --border: 0 0% 88%;
     --input: 0 0% 88%;
-    --ring: 26 8% 51%;
+    --ring: 210 89% 52%;
     --radius: 0.75rem;
   }
 }

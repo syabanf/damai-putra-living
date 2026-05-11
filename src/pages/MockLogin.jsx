@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { User, Shield, Eye, EyeOff, ArrowRight, ChevronLeft } from 'lucide-react';
+import IonLogo from '@/components/brand/IonLogo';
 
 const MOCK_ACCOUNTS = [
   {
@@ -11,8 +12,8 @@ const MOCK_ACCOUNTS = [
     email: 'resident@damaiputra.com',
     password: 'demo1234',
     unit: 'Tower A - Unit 15',
-    color: '#1FB6D5',
-    gradient: 'linear-gradient(135deg, #1FB6D5 0%, #0F9BB8 100%)',
+    color: '#1684F2',
+    gradient: 'linear-gradient(135deg, #1684F2 0%, #0B57C2 100%)',
     icon: User,
     description: 'Akses fitur resident: tiket, permit, rewards, dan undian',
   },
@@ -23,8 +24,8 @@ const MOCK_ACCOUNTS = [
     email: 'admin@damaiputra.com',
     password: 'admin1234',
     unit: 'Management Office',
-    color: '#0F3D4C',
-    gradient: 'linear-gradient(135deg, #1a5068 0%, #0F3D4C 100%)',
+    color: '#231F20',
+    gradient: 'linear-gradient(135deg, #231F20 0%, #231F20 100%)',
     icon: Shield,
     description: 'Akses panel admin: permit, refund, undian, dan manajemen',
   },
@@ -65,13 +66,13 @@ export default function MockLogin() {
 
   return (
     <div className="min-h-screen relative overflow-hidden flex flex-col"
-      style={{ background: 'linear-gradient(160deg, #0F3D4C 0%, #0a2d38 60%, #091f28 100%)' }}>
+      style={{ background: 'linear-gradient(160deg, #231F20 0%, #111214 60%, #091f28 100%)' }}>
 
       {/* BG decoration */}
       <div className="absolute -top-20 -right-20 w-80 h-80 rounded-full opacity-10"
-        style={{ background: 'radial-gradient(circle, #1FB6D5, transparent)' }} />
+        style={{ background: 'radial-gradient(circle, #1684F2, transparent)' }} />
       <div className="absolute -bottom-16 -left-16 w-64 h-64 rounded-full opacity-10"
-        style={{ background: 'radial-gradient(circle, #1FB6D5, transparent)' }} />
+        style={{ background: 'radial-gradient(circle, #1684F2, transparent)' }} />
 
       {/* Back button */}
       <div className="relative z-10 px-5 pt-12">
@@ -85,10 +86,14 @@ export default function MockLogin() {
       {/* Header */}
       <div className="relative z-10 px-6 pt-6 pb-8">
         <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+          <div className="w-36 rounded-2xl px-3 py-2 mb-5 border border-white/15"
+            style={{ background: 'rgba(255,255,255,0.92)', backdropFilter: 'blur(12px)' }}>
+            <IonLogo className="w-full h-auto" />
+          </div>
           <p className="text-white/50 text-[10px] tracking-widest uppercase mb-1">Demo Mode</p>
           <h1 className="text-3xl font-bold text-white leading-tight">
             Pilih Akun<br />
-            <span style={{ color: '#1FB6D5' }}>Demo Login</span>
+            <span style={{ color: '#1684F2' }}>Demo Login</span>
           </h1>
           <p className="text-white/50 text-sm mt-2">Gunakan akun mock untuk mencoba fitur aplikasi</p>
         </motion.div>
@@ -116,7 +121,7 @@ export default function MockLogin() {
               }}
               className="w-full text-left rounded-2xl border-2 p-4 transition-all duration-200"
               style={{
-                background: isSelected ? 'rgba(31,182,213,0.12)' : 'rgba(255,255,255,0.06)',
+                background: isSelected ? 'rgba(22,132,242,0.12)' : 'rgba(255,255,255,0.06)',
                 borderColor: isSelected ? acc.color : 'rgba(255,255,255,0.1)',
               }}>
               <div className="flex items-center gap-3">
@@ -182,7 +187,7 @@ export default function MockLogin() {
             background: account
               ? account.gradient
               : 'rgba(255,255,255,0.15)',
-            boxShadow: account ? '0 8px 28px rgba(31,182,213,0.35)' : 'none',
+            boxShadow: account ? '0 8px 28px rgba(22,132,242,0.35)' : 'none',
           }}>
           {loading ? (
             <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />

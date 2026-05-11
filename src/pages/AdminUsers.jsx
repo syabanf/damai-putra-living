@@ -38,7 +38,7 @@ export default function AdminUsers() {
       {/* Stats */}
       <div className="grid grid-cols-3 gap-4 mb-6">
         {[
-          { label: 'Total Users', value: users.length, icon: User, color: 'text-teal-600', bg: 'bg-teal-50' },
+          { label: 'Total Users', value: users.length, icon: User, color: 'text-blue-600', bg: 'bg-blue-50' },
           { label: 'Admin', value: adminCount, icon: Shield, color: 'text-purple-600', bg: 'bg-purple-50' },
           { label: 'Regular User', value: userCount, icon: UserCheck, color: 'text-blue-600', bg: 'bg-blue-50' },
         ].map(s => (
@@ -60,7 +60,7 @@ export default function AdminUsers() {
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
           <input value={search} onChange={e => setSearch(e.target.value)}
             placeholder="Cari nama atau email..."
-            className="w-full pl-9 pr-3 py-2 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/30" />
+            className="w-full pl-9 pr-3 py-2 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/30" />
         </div>
         <select value={roleFilter} onChange={e => setRoleFilter(e.target.value)}
           className="px-3 py-2 rounded-xl border border-slate-200 text-sm text-slate-600 focus:outline-none">
@@ -116,7 +116,7 @@ export default function AdminUsers() {
                     </td>
                     <td className="px-4 py-3">
                       <button onClick={() => setSelected(u)}
-                        className="text-teal-600 hover:text-teal-800 flex items-center gap-1 text-xs font-semibold">
+                        className="text-blue-600 hover:text-blue-800 flex items-center gap-1 text-xs font-semibold">
                         Detail <ChevronRight className="w-3 h-3" />
                       </button>
                     </td>
@@ -136,8 +136,8 @@ export default function AdminUsers() {
             onClick={e => e.stopPropagation()}>
             <div className="flex items-start justify-between mb-5">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-full bg-teal-100 flex items-center justify-center">
-                  <User className="w-6 h-6 text-teal-600" />
+                <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center">
+                  <User className="w-6 h-6 text-blue-600" />
                 </div>
                 <div>
                   <h2 className="font-bold text-lg text-slate-800">{selected.full_name || 'No Name'}</h2>

@@ -32,11 +32,11 @@ const DESTINATION_PINS = [
 
 const LEGEND_ITEMS = {
   transport: [
-    { type: 'hub', label: 'Major Hub', color: '#1FB6D5' },
-    { type: 'stop', label: 'Bus Stop', color: '#8E8478' },
+    { type: 'hub', label: 'Major Hub', color: '#1684F2' },
+    { type: 'stop', label: 'Bus Stop', color: '#1684F2' },
   ],
   explore: [
-    { type: 'commercial', label: 'Shopping', color: '#1FB6D5' },
+    { type: 'commercial', label: 'Shopping', color: '#1684F2' },
     { type: 'culinary', label: 'F&B', color: '#ef4444' },
     { type: 'retail', label: 'Retail', color: '#f97316' },
     { type: 'entertainment', label: 'Entertainment', color: '#f59e0b' },
@@ -48,10 +48,10 @@ const LEGEND_ITEMS = {
 
 const MapIcon = (type, isTransport) => {
   const colors = isTransport ? {
-    hub: '#1FB6D5',
-    stop: '#8E8478',
+    hub: '#1684F2',
+    stop: '#1684F2',
   } : {
-    commercial: '#1FB6D5',
+    commercial: '#1684F2',
     retail: '#f97316',
     culinary: '#ef4444',
     attraction: '#8b5cf6',
@@ -61,7 +61,7 @@ const MapIcon = (type, isTransport) => {
   };
   
   return L.divIcon({
-    html: `<div style="background-color: ${colors[type] || '#1FB6D5'}; width: 36px; height: 36px; border-radius: 50%; border: 3px solid white; display: flex; align-items: center; justify-content: center; font-weight: bold; color: white; font-size: 14px; box-shadow: 0 3px 10px rgba(0,0,0,0.25);"></div>`,
+    html: `<div style="background-color: ${colors[type] || '#1684F2'}; width: 36px; height: 36px; border-radius: 50%; border: 3px solid white; display: flex; align-items: center; justify-content: center; font-weight: bold; color: white; font-size: 14px; box-shadow: 0 3px 10px rgba(0,0,0,0.25);"></div>`,
     iconSize: [36, 36],
     className: 'custom-icon-hover',
   });
@@ -83,7 +83,7 @@ export default function ExploreMap({ mode: initialMode = 'transport', onBack }) 
   }, [data, filterType]);
 
   return (
-    <div className="min-h-screen pb-24" style={{ background: 'linear-gradient(160deg, #F5F4F2 0%, #edecea 55%, #e7e5e2 100%)' }}>
+    <div className="min-h-screen pb-24" style={{ background: 'linear-gradient(160deg, #F6F9FC 0%, #EEF5FF 55%, #E7F0FF 100%)' }}>
       {/* Header */}
       <div className="sticky top-0 z-20 pt-4 px-4 pb-4" style={{ background: 'rgba(245,244,242,0.9)', backdropFilter: 'blur(12px)', borderBottom: '1px solid rgba(255,255,255,0.5)' }}>
         <div className="flex items-center justify-between">
@@ -96,7 +96,7 @@ export default function ExploreMap({ mode: initialMode = 'transport', onBack }) 
       </div>
 
       {/* Map */}
-      <div className="mx-4 mt-4 rounded-2xl overflow-hidden h-96" style={{ boxShadow: '0 4px 20px rgba(31,182,213,0.2)' }}>
+      <div className="mx-4 mt-4 rounded-2xl overflow-hidden h-96" style={{ boxShadow: '0 4px 20px rgba(22,132,242,0.2)' }}>
         <MapContainer center={[3.1200, 101.5600]} zoom={12} style={{ height: '100%', width: '100%' }}>
           <TileLayer
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -125,9 +125,9 @@ export default function ExploreMap({ mode: initialMode = 'transport', onBack }) 
           <p className="text-xs text-slate-500 font-semibold">Total Available</p>
           <p className="text-2xl font-bold text-slate-800 mt-1">{filteredData.length}</p>
         </div>
-        <div className="flex-1 rounded-2xl p-4" style={{ background: 'rgba(31,182,213,0.1)', backdropFilter: 'blur(12px)' }}>
+        <div className="flex-1 rounded-2xl p-4" style={{ background: 'rgba(22,132,242,0.1)', backdropFilter: 'blur(12px)' }}>
           <p className="text-xs text-slate-600 font-semibold">{mode === 'transport' ? 'Routes' : 'Categories'}</p>
-          <p className="text-2xl font-bold" style={{ color: '#1FB6D5' }}>
+          <p className="text-2xl font-bold" style={{ color: '#1684F2' }}>
             {mode === 'transport' ? filteredData.reduce((sum, i) => sum + i.routes, 0) : new Set(filteredData.map(i => i.type)).size}
           </p>
         </div>
@@ -140,9 +140,9 @@ export default function ExploreMap({ mode: initialMode = 'transport', onBack }) 
           whileTap={{ scale: 0.95 }}
           className="flex-1 py-3 rounded-xl font-semibold flex items-center justify-center gap-2 transition-all"
           style={mode === 'transport' ? {
-            background: 'linear-gradient(135deg, #1FB6D5 0%, #0F9BB8 100%)',
+            background: 'linear-gradient(135deg, #1684F2 0%, #0B57C2 100%)',
             color: '#fff',
-            boxShadow: '0 3px 10px rgba(31,182,213,0.35)',
+            boxShadow: '0 3px 10px rgba(22,132,242,0.35)',
           } : {
             background: 'rgba(255,255,255,0.75)',
             backdropFilter: 'blur(12px)',
@@ -159,9 +159,9 @@ export default function ExploreMap({ mode: initialMode = 'transport', onBack }) 
           whileTap={{ scale: 0.95 }}
           className="flex-1 py-3 rounded-xl font-semibold flex items-center justify-center gap-2 transition-all"
           style={mode === 'explore' ? {
-            background: 'linear-gradient(135deg, #1FB6D5 0%, #0F9BB8 100%)',
+            background: 'linear-gradient(135deg, #1684F2 0%, #0B57C2 100%)',
             color: '#fff',
-            boxShadow: '0 3px 10px rgba(31,182,213,0.35)',
+            boxShadow: '0 3px 10px rgba(22,132,242,0.35)',
           } : {
             background: 'rgba(255,255,255,0.75)',
             backdropFilter: 'blur(12px)',
@@ -265,7 +265,7 @@ export default function ExploreMap({ mode: initialMode = 'transport', onBack }) 
          onClick={() => setShowList(!showList)}
          className="w-full py-2.5 rounded-xl font-semibold text-sm transition-all"
          style={{
-           background: showList ? 'linear-gradient(135deg, #1FB6D5 0%, #0F9BB8 100%)' : 'rgba(255,255,255,0.75)',
+           background: showList ? 'linear-gradient(135deg, #1684F2 0%, #0B57C2 100%)' : 'rgba(255,255,255,0.75)',
            color: showList ? '#fff' : '#64748b',
            border: showList ? 'none' : '1px solid rgba(255,255,255,0.85)'
          }}
@@ -310,7 +310,7 @@ export default function ExploreMap({ mode: initialMode = 'transport', onBack }) 
                    </p>
                  </div>
                  <div className="text-right">
-                   <div className="w-8 h-8 rounded-full flex items-center justify-center" style={{ background: `${mode === 'transport' ? (item.type === 'hub' ? '#1FB6D5' : '#8E8478') : item.type === 'commercial' ? '#1FB6D5' : item.type === 'culinary' ? '#ef4444' : item.type === 'retail' ? '#f97316' : item.type === 'entertainment' ? '#f59e0b' : item.type === 'community' ? '#10b981' : item.type === 'attraction' ? '#8b5cf6' : '#ec4899'}` }}>
+                   <div className="w-8 h-8 rounded-full flex items-center justify-center" style={{ background: `${mode === 'transport' ? (item.type === 'hub' ? '#1684F2' : '#1684F2') : item.type === 'commercial' ? '#1684F2' : item.type === 'culinary' ? '#ef4444' : item.type === 'retail' ? '#f97316' : item.type === 'entertainment' ? '#f59e0b' : item.type === 'community' ? '#10b981' : item.type === 'attraction' ? '#8b5cf6' : '#ec4899'}` }}>
                      <span className="text-white text-xs font-bold">→</span>
                    </div>
                  </div>

@@ -30,7 +30,7 @@ export default function DealsPromoDetail() {
   };
 
   return (
-    <div className="min-h-screen pb-10" style={{ background: 'linear-gradient(160deg, #F5F4F2 0%, #edecea 55%, #e7e5e2 100%)' }}>
+    <div className="min-h-screen pb-10" style={{ background: 'linear-gradient(160deg, #F6F9FC 0%, #EEF5FF 55%, #E7F0FF 100%)' }}>
       {/* Header */}
       <div className="px-5 pt-12 pb-5 flex items-center justify-between" style={{ background: 'rgba(255,255,255,0.85)', backdropFilter: 'blur(20px)', borderBottom: '1px solid rgba(255,255,255,0.9)' }}>
         <div className="flex items-center gap-3">
@@ -56,7 +56,7 @@ export default function DealsPromoDetail() {
         <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 }}
           className="space-y-2">
           <div className="flex items-center gap-2">
-            <span className="text-xs font-bold px-3 py-1 rounded-full text-white" style={{ background: tagColors[deal.tag] || '#1FB6D5' }}>
+            <span className="text-xs font-bold px-3 py-1 rounded-full text-white" style={{ background: tagColors[deal.tag] || '#1684F2' }}>
               {deal.tag}
             </span>
           </div>
@@ -77,7 +77,7 @@ export default function DealsPromoDetail() {
         {/* CTA */}
         <motion.button initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }}
           className="w-full py-4 rounded-2xl font-bold text-white flex items-center justify-center gap-2 shadow-md active:scale-95 transition-transform"
-          style={{ background: 'linear-gradient(135deg, #1FB6D5, #169ab5)' }}>
+          style={{ background: 'linear-gradient(135deg, #1684F2, #0B57C2)' }}>
           Learn More
         </motion.button>
       </div>

@@ -42,7 +42,7 @@ const STATUS_COLORS = {
   rejected: 'bg-red-50 border-red-200 text-red-700 hover:bg-red-100',
   inspection_required: 'bg-amber-50 border-amber-200 text-amber-700 hover:bg-amber-100',
   completed: 'bg-emerald-50 border-emerald-200 text-emerald-700 hover:bg-emerald-100',
-  deposit_returned: 'bg-teal-50 border-teal-200 text-teal-700 hover:bg-teal-100',
+  deposit_returned: 'bg-blue-50 border-blue-200 text-blue-700 hover:bg-blue-100',
   closed: 'bg-slate-50 border-slate-200 text-slate-600 hover:bg-slate-100',
   open: 'bg-blue-50 border-blue-200 text-blue-700 hover:bg-blue-100',
 };

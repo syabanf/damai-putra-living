@@ -37,7 +37,7 @@ export default function ForgotPassword() {
   if (sent) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center px-6"
-        style={{ background: 'linear-gradient(160deg, #f5f3f0 0%, #ece8e3 50%, #e8e2db 100%)' }}>
+        style={{ background: 'linear-gradient(160deg, #EEF5FF 0%, #ece8e3 50%, #e8e2db 100%)' }}>
         <motion.div
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
@@ -72,14 +72,14 @@ export default function ForgotPassword() {
           <Button
             onClick={() => appClient.auth.redirectToLogin(createPageUrl('Home'))}
             className="w-full h-14 text-white rounded-2xl font-semibold text-base"
-            style={{ background: 'linear-gradient(135deg, #8A8076, #6e6560)', boxShadow: '0 8px 24px rgba(138,128,118,0.35)' }}
+            style={{ background: 'linear-gradient(135deg, #1684F2, #0B57C2)', boxShadow: '0 8px 24px rgba(138,128,118,0.35)' }}
           >
             Back to Login
           </Button>
 
           <p className="text-center text-slate-400 text-sm mt-6">
             Didn't receive the email?{' '}
-            <button onClick={() => setSent(false)} className="text-teal-600 font-medium">
+            <button onClick={() => setSent(false)} className="text-blue-600 font-medium">
               Try again
             </button>
           </p>
@@ -141,7 +141,7 @@ export default function ForgotPassword() {
           <Button
             type="submit"
             disabled={loading}
-            className="w-full h-14 bg-gradient-to-r from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 text-white rounded-2xl font-semibold text-base shadow-lg shadow-teal-200/50 mt-4"
+            className="w-full h-14 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-2xl font-semibold text-base shadow-lg shadow-teal-200/50 mt-4"
           >
             {loading ? (
               <motion.div
@@ -157,7 +157,7 @@ export default function ForgotPassword() {
 
         <p className="text-center text-slate-500 mt-8">
           Remember your password?{' '}
-          <button onClick={() => appClient.auth.redirectToLogin(createPageUrl('Home'))} className="font-semibold" style={{ color: '#8A8076' }}>
+          <button onClick={() => appClient.auth.redirectToLogin(createPageUrl('Home'))} className="font-semibold" style={{ color: '#1684F2' }}>
             Sign In
           </button>
         </p>

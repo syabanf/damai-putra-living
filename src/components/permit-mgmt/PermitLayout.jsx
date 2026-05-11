@@ -25,7 +25,7 @@ export default function PermitLayout({ children }) {
             <Menu className="w-5 h-5 text-slate-600" />
           </button>
           <div className="flex-1">
-            <p className="text-xs text-slate-400 hidden sm:block">Damai Putra Living — Permit Management</p>
+            <p className="text-xs text-slate-400 hidden sm:block">ION — Permit Management</p>
           </div>
           <Link to="/PermitSubmission"
             className="bg-blue-600 text-white text-sm font-semibold px-4 py-2 rounded-xl hover:bg-blue-700 transition-colors">

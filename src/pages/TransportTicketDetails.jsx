@@ -59,7 +59,7 @@ export default function TransportTicketDetails() {
   };
 
   return (
-    <div className="min-h-screen pb-24" style={{ background: 'linear-gradient(160deg, #F5F4F2 0%, #edecea 55%, #e7e5e2 100%)' }}>
+    <div className="min-h-screen pb-24" style={{ background: 'linear-gradient(160deg, #F6F9FC 0%, #EEF5FF 55%, #E7F0FF 100%)' }}>
       {/* Header */}
       <div className="px-5 pt-12 pb-5 flex items-center gap-3 sticky top-0 z-20" style={{ background: 'rgba(255,255,255,0.82)', backdropFilter: 'blur(28px)', WebkitBackdropFilter: 'blur(28px)', borderBottom: '1px solid rgba(255,255,255,0.75)' }}>
         <button onClick={() => navigate(-1)} className="w-9 h-9 rounded-xl flex items-center justify-center transition-all" style={{ background: 'rgba(255,255,255,0.72)', backdropFilter: 'blur(12px)' }}>
@@ -71,7 +71,7 @@ export default function TransportTicketDetails() {
       {bookingStep === 'details' ? (
         <>
           {/* Route & Date Summary */}
-          <div className="mx-4 mt-5 rounded-2xl p-4" style={{ background: 'rgba(31,182,213,0.08)', border: '1px solid rgba(31,182,213,0.2)' }}>
+          <div className="mx-4 mt-5 rounded-2xl p-4" style={{ background: 'rgba(22,132,242,0.08)', border: '1px solid rgba(22,132,242,0.2)' }}>
             <div className="flex items-center gap-2 mb-3">
               <MapPin className="w-4 h-4 text-slate-600" />
               <p className="text-sm font-semibold text-slate-700">{fromName} → {toName}</p>
@@ -99,7 +99,7 @@ export default function TransportTicketDetails() {
                     <button
                       onClick={() => handleQuantityChange(p.key, -1)}
                       className="w-8 h-8 rounded-lg flex items-center justify-center transition-all"
-                      style={{ background: 'rgba(31,182,213,0.1)' }}
+                      style={{ background: 'rgba(22,132,242,0.1)' }}
                     >
                       −
                     </button>
@@ -107,7 +107,7 @@ export default function TransportTicketDetails() {
                     <button
                       onClick={() => handleQuantityChange(p.key, 1)}
                       className="w-8 h-8 rounded-lg flex items-center justify-center transition-all"
-                      style={{ background: 'linear-gradient(135deg, #1FB6D5 0%, #0F9BB8 100%)' }}
+                      style={{ background: 'linear-gradient(135deg, #1684F2 0%, #0B57C2 100%)' }}
                     >
                       <span className="text-white font-semibold">+</span>
                     </button>
@@ -129,7 +129,7 @@ export default function TransportTicketDetails() {
             </div>
             <div className="border-t border-slate-200 pt-2 flex justify-between text-base">
               <span className="font-bold text-slate-800">Total</span>
-              <span className="font-bold" style={{ color: '#1FB6D5' }}>${(total + 2.5).toFixed(2)}</span>
+              <span className="font-bold" style={{ color: '#1684F2' }}>${(total + 2.5).toFixed(2)}</span>
             </div>
           </div>
 
@@ -140,8 +140,8 @@ export default function TransportTicketDetails() {
               disabled={totalPassengers === 0}
               className="w-full py-4 rounded-xl font-bold text-white transition-all disabled:opacity-50 disabled:cursor-not-allowed"
               style={{
-                background: totalPassengers > 0 ? 'linear-gradient(135deg, #1FB6D5, #1098b8)' : 'linear-gradient(135deg, #cbd5e1, #b0bac3)',
-                boxShadow: totalPassengers > 0 ? '0 4px 16px rgba(31,182,213,0.35)' : 'none'
+                background: totalPassengers > 0 ? 'linear-gradient(135deg, #1684F2, #1098b8)' : 'linear-gradient(135deg, #cbd5e1, #b0bac3)',
+                boxShadow: totalPassengers > 0 ? '0 4px 16px rgba(22,132,242,0.35)' : 'none'
               }}
             >
               Continue to Payment
@@ -185,14 +185,14 @@ export default function TransportTicketDetails() {
               </div>
               <div className="flex justify-between text-sm border-t border-slate-200 pt-3">
                 <span className="text-slate-600">Total Amount</span>
-                <span className="font-bold" style={{ color: '#1FB6D5' }}>${(total + 2.5).toFixed(2)}</span>
+                <span className="font-bold" style={{ color: '#1684F2' }}>${(total + 2.5).toFixed(2)}</span>
               </div>
             </div>
 
             <button
               onClick={handleConfirm}
               className="w-full py-3 rounded-xl font-bold text-white transition-all"
-              style={{ background: 'linear-gradient(135deg, #1FB6D5, #1098b8)' }}
+              style={{ background: 'linear-gradient(135deg, #1684F2, #1098b8)' }}
             >
               Back to Results
             </button>

@@ -33,25 +33,25 @@ export default function Layout({ children, currentPageName }) {
 
   return (
     <DarkModeContext.Provider value={isDark}>
-    <div className="min-h-screen bg-stone-200">
+    <div className="min-h-screen bg-slate-100">
       <style>{`
         :root {
-          --brand:        #8E8478;
-          --brand-dark:   #0F3D4C;
-          --brand-darker: #0a2d38;
-          --brand-light:  #b0aba5;
-          --action:       #1FB6D5;
-          --action-dark:  #169ab5;
-          --action-light: #e6f8fb;
+          --brand:        #1684F2;
+          --brand-dark:   #231F20;
+          --brand-darker: #111214;
+          --brand-light:  #8DBEFF;
+          --action:       #1684F2;
+          --action-dark:  #0B57C2;
+          --action-light: #EAF3FF;
         }
 
         /* Custom scrollbar */
         ::-webkit-scrollbar { width: 4px; }
         ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: rgba(138,127,115,0.3); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb { background: rgba(22,132,242,0.28); border-radius: 4px; }
 
         @media (min-width: 640px) {
-          body { background: linear-gradient(135deg, #8A7F73 0%, #2E2E2E 100%); }
+          body { background: linear-gradient(135deg, #1684F2 0%, #111214 100%); }
         }
 
         /* Smooth page entrance */
@@ -69,7 +69,7 @@ export default function Layout({ children, currentPageName }) {
         className="max-w-md mx-auto min-h-screen shadow-2xl relative page-wrap"
         style={{ 
           paddingTop: 'max(0px, env(safe-area-inset-top))',
-          background: 'linear-gradient(160deg, #F5F4F2 0%, #edecea 55%, #e7e5e2 100%)' 
+          background: 'linear-gradient(160deg, #F6F9FC 0%, #EEF5FF 55%, #E7F0FF 100%)'
         }}
       >
         <div style={{ paddingBottom: hideNav ? 0 : 'calc(6rem + env(safe-area-inset-bottom))' }}>

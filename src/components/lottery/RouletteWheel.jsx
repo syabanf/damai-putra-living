@@ -78,7 +78,7 @@ export default function RouletteWheel({ prizes = [], onSpinEnd, disabled = false
     // Center star
     ctx.beginPath();
     ctx.arc(cx, cy, 10, 0, 2 * Math.PI);
-    ctx.fillStyle = '#1FB6D5';
+    ctx.fillStyle = '#1684F2';
     ctx.fill();
   };
 
@@ -131,7 +131,7 @@ export default function RouletteWheel({ prizes = [], onSpinEnd, disabled = false
           style={{
             borderLeft: '10px solid transparent',
             borderRight: '10px solid transparent',
-            borderTop: '20px solid #0F3D4C',
+            borderTop: '20px solid #231F20',
             filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.3))',
           }} />
         <canvas
@@ -150,8 +150,8 @@ export default function RouletteWheel({ prizes = [], onSpinEnd, disabled = false
         style={{
           background: spinning || disabled
             ? '#94a3b8'
-            : 'linear-gradient(135deg, #1FB6D5 0%, #0F3D4C 100%)',
-          boxShadow: spinning || disabled ? 'none' : '0 4px 16px rgba(31,182,213,0.4)',
+            : 'linear-gradient(135deg, #1684F2 0%, #231F20 100%)',
+          boxShadow: spinning || disabled ? 'none' : '0 4px 16px rgba(22,132,242,0.4)',
         }}
       >
         {spinning ? '🎰 Memutar...' : '🎡 PUTAR!'}

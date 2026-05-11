@@ -42,19 +42,19 @@ export default function Explore() {
   }, [destinations, activeCategory, search]);
 
   return (
-    <div className="min-h-screen pb-40" style={{ background: 'linear-gradient(160deg, #F5F4F2 0%, #edecea 55%, #e7e5e2 100%)' }}>
+    <div className="min-h-screen pb-40" style={{ background: 'linear-gradient(160deg, #F6F9FC 0%, #EEF5FF 55%, #E7F0FF 100%)' }}>
       {/* Header */}
-      <div className="px-5 pt-14 pb-5 rounded-b-[2rem] relative overflow-hidden" style={{ background: 'linear-gradient(150deg, #1a5068 0%, #0F3D4C 55%, #0a2d38 100%)' }}>
+      <div className="px-5 pt-14 pb-5 rounded-b-[2rem] relative overflow-hidden" style={{ background: 'linear-gradient(150deg, #231F20 0%, #231F20 55%, #111214 100%)' }}>
         <div className="absolute -top-8 -right-8 w-40 h-40 rounded-full opacity-10 bg-white pointer-events-none" />
         <div className="flex items-center justify-between mb-4 relative">
           <div>
-            <p className="text-white/50 text-[10px] font-semibold uppercase tracking-widest">Damai Putra Living</p>
+            <p className="text-white/50 text-[10px] font-semibold uppercase tracking-widest">ION</p>
             <h1 className="font-bold text-2xl text-white">Explore</h1>
           </div>
           <button
            onClick={() => navigate(createPageUrl('TransportExploreMap?mode=explore'))}
            className="w-10 h-10 rounded-2xl flex items-center justify-center transition-all active:scale-95"
-           style={{ background: 'linear-gradient(135deg, #1FB6D5 0%, #0F9BB8 100%)', boxShadow: '0 2px 8px rgba(31,182,213,0.2)' }}
+           style={{ background: 'linear-gradient(135deg, #1684F2 0%, #0B57C2 100%)', boxShadow: '0 2px 8px rgba(22,132,242,0.2)' }}
            title="View on Map"
           >
             <Map className="w-5 h-5 text-white" />
@@ -75,7 +75,7 @@ export default function Explore() {
             <button key={cat.value} onClick={() => setActiveCategory(cat.value)}
               className="px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all active:scale-95"
               style={activeCategory === cat.value
-                ? { background: 'linear-gradient(135deg, #1F86C7, #1669a0)', color: '#fff', boxShadow: '0 3px 10px rgba(31,134,199,0.35)' }
+                ? { background: 'linear-gradient(135deg, #1684F2, #0B57C2)', color: '#fff', boxShadow: '0 3px 10px rgba(22,132,242,0.35)' }
                 : { background: 'rgba(255,255,255,0.75)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.85)', color: '#64748b' }
               }>{cat.label}</button>
           ))}
@@ -86,7 +86,7 @@ export default function Explore() {
       {activeCategory === 'all' && !search && featured.length > 0 && (
         <div className="pt-5 pb-1">
           <div className="flex items-center justify-between px-5 mb-3">
-            <p className="text-xs font-bold uppercase tracking-widest" style={{ color: '#8A7F73' }}>Featured</p>
+            <p className="text-xs font-bold uppercase tracking-widest" style={{ color: '#1684F2' }}>Featured</p>
           </div>
           <div className="px-4 flex gap-3 overflow-x-auto hide-scrollbar pb-1">
             {featured.map((dest, i) => (
@@ -110,12 +110,12 @@ export default function Explore() {
       {/* All Destinations Grid */}
       <div className="px-4 pt-5">
         {(activeCategory !== 'all' || search) && (
-          <p className="text-xs font-bold uppercase tracking-widest mb-3 px-1" style={{ color: '#8A7F73' }}>
+          <p className="text-xs font-bold uppercase tracking-widest mb-3 px-1" style={{ color: '#1684F2' }}>
             {filtered.length} Result{filtered.length !== 1 ? 's' : ''}
           </p>
         )}
         {!search && activeCategory === 'all' && (
-          <p className="text-xs font-bold uppercase tracking-widest mb-3 px-1" style={{ color: '#8A7F73' }}>All Destinations</p>
+          <p className="text-xs font-bold uppercase tracking-widest mb-3 px-1" style={{ color: '#1684F2' }}>All Destinations</p>
         )}
         {isLoading ? (
           <div className="grid grid-cols-2 gap-3">

@@ -154,9 +154,9 @@ export default function AddUnit() {
   };
 
   return (
-    <div className="flex flex-col h-screen overflow-hidden" style={{ background: '#F5F4F2' }}>
+    <div className="flex flex-col h-screen overflow-hidden" style={{ background: '#F6F9FC' }}>
       {/* Header */}
-      <div className="flex-shrink-0 px-5 pt-5 pb-4 rounded-b-3xl" style={{ background: 'linear-gradient(150deg, #1a5068 0%, #0F3D4C 55%, #0a2d38 100%)' }}>
+      <div className="flex-shrink-0 px-5 pt-5 pb-4 rounded-b-3xl" style={{ background: 'linear-gradient(150deg, #231F20 0%, #231F20 55%, #111214 100%)' }}>
         <div className="flex items-center gap-3 mb-3">
           <button
             onClick={() => step > 1 ? setStep(step - 1) : navigate(-1)}
@@ -193,7 +193,7 @@ export default function AddUnit() {
               className="space-y-5"
             >
               <div className="text-center mb-4">
-                <div className="w-12 h-12 rounded-2xl flex items-center justify-center mx-auto mb-2" style={{ background: 'linear-gradient(135deg, #1a5068, #0F3D4C)' }}>
+                <div className="w-12 h-12 rounded-2xl flex items-center justify-center mx-auto mb-2" style={{ background: 'linear-gradient(135deg, #231F20, #231F20)' }}>
                   <Building2 className="w-6 h-6 text-white" />
                 </div>
                 <h2 className="text-base font-bold text-slate-800">Unit Information</h2>
@@ -212,7 +212,7 @@ export default function AddUnit() {
               className="space-y-5"
             >
               <div className="text-center mb-4">
-                <div className="w-12 h-12 rounded-2xl flex items-center justify-center mx-auto mb-2" style={{ background: 'linear-gradient(135deg, #1a5068, #0F3D4C)' }}>
+                <div className="w-12 h-12 rounded-2xl flex items-center justify-center mx-auto mb-2" style={{ background: 'linear-gradient(135deg, #231F20, #231F20)' }}>
                   <User className="w-6 h-6 text-white" />
                 </div>
                 <h2 className="text-base font-bold text-slate-800">Ownership Details</h2>
@@ -273,7 +273,7 @@ export default function AddUnit() {
                     <p className="text-sm text-slate-500">I own this unit</p>
                   </div>
                   {formData.ownership_status === 'owner' && (
-                    <Check className="w-5 h-5" style={{ color: '#8A8076' }} />
+                    <Check className="w-5 h-5" style={{ color: '#1684F2' }} />
                   )}
                 </button>
 
@@ -298,7 +298,7 @@ export default function AddUnit() {
                     <p className="text-sm text-slate-500">I am renting this unit</p>
                   </div>
                   {formData.ownership_status === 'tenant' && (
-                    <Check className="w-5 h-5" style={{ color: '#8A8076' }} />
+                    <Check className="w-5 h-5" style={{ color: '#1684F2' }} />
                   )}
                 </button>
                 
@@ -407,7 +407,7 @@ export default function AddUnit() {
               className="space-y-5"
             >
               <div className="text-center mb-4">
-                <div className="w-12 h-12 rounded-2xl flex items-center justify-center mx-auto mb-2" style={{ background: 'linear-gradient(135deg, #1a5068, #0F3D4C)' }}>
+                <div className="w-12 h-12 rounded-2xl flex items-center justify-center mx-auto mb-2" style={{ background: 'linear-gradient(135deg, #231F20, #231F20)' }}>
                   <FileText className="w-6 h-6 text-white" />
                 </div>
                 <h2 className="text-base font-bold text-slate-800">Supporting Document</h2>
@@ -418,8 +418,8 @@ export default function AddUnit() {
                 {uploadedFile ? (
                   <div className="p-4 bg-white/70 rounded-xl border border-white/80 backdrop-blur-sm flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#f5f3f1' }}>
-                        <FileText className="w-5 h-5 text-teal-600" />
+                      <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#EEF5FF' }}>
+                        <FileText className="w-5 h-5 text-blue-600" />
                       </div>
                       <div>
                         <p className="text-sm font-medium text-slate-800">{uploadedFile.name}</p>
@@ -472,8 +472,8 @@ export default function AddUnit() {
                   />
                   <label htmlFor="terms" className="text-sm text-slate-600 leading-relaxed">
                     I confirm that the information provided is accurate and I agree to the{' '}
-                    <span className="font-medium" style={{ color: '#8A8076' }}>Terms of Service</span> and{' '}
-                    <span className="font-medium" style={{ color: '#8A8076' }}>Privacy Policy</span>
+                    <span className="font-medium" style={{ color: '#1684F2' }}>Terms of Service</span> and{' '}
+                    <span className="font-medium" style={{ color: '#1684F2' }}>Privacy Policy</span>
                   </label>
                 </div>
                 {errors.agree_terms && <p className="text-red-500 text-xs">{errors.agree_terms}</p>}
@@ -489,7 +489,7 @@ export default function AddUnit() {
           onClick={handleNext}
           disabled={loading}
           className="w-full h-13 text-white rounded-2xl font-semibold text-base"
-          style={{ height: 52, background: 'linear-gradient(135deg, #1FB6D5, #169ab5)', boxShadow: '0 6px 20px rgba(31,182,213,0.3)' }}
+          style={{ height: 52, background: 'linear-gradient(135deg, #1684F2, #0B57C2)', boxShadow: '0 6px 20px rgba(22,132,242,0.3)' }}
         >
           {loading ? (
             <motion.div
@@ -521,8 +521,8 @@ export default function AddUnit() {
               className="rounded-2xl p-6 w-full max-w-md border border-white/80" style={{ background: 'rgba(255,255,255,0.85)', backdropFilter: 'blur(24px)' }}
             >
               <div className="text-center mb-6">
-                <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4" style={{ backgroundColor: '#f5f3f1' }}>
-                  <AlertCircle className="w-8 h-8" style={{ color: '#8A8076' }} />
+                <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4" style={{ backgroundColor: '#EEF5FF' }}>
+                  <AlertCircle className="w-8 h-8" style={{ color: '#1684F2' }} />
                 </div>
                 <h3 className="text-lg font-bold text-slate-800">Confirm Submission</h3>
                 <p className="text-slate-500 text-sm mt-2">
@@ -559,7 +559,7 @@ export default function AddUnit() {
                   onClick={handleSubmit}
                   disabled={loading}
                   className="flex-1 h-12 rounded-xl text-white"
-                  style={{ background: 'linear-gradient(135deg, #1FB6D5, #169ab5)' }}
+                  style={{ background: 'linear-gradient(135deg, #1684F2, #0B57C2)' }}
                 >
                   {loading ? 'Submitting...' : 'Confirm'}
                 </Button>

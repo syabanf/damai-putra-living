@@ -75,7 +75,7 @@ export default function NameRouletteWheel({ names = [], onSpinEnd }) {
 
     ctx.beginPath();
     ctx.arc(cx, cy, 11, 0, 2 * Math.PI);
-    ctx.fillStyle = '#0F3D4C';
+    ctx.fillStyle = '#231F20';
     ctx.fill();
   };
 
@@ -125,7 +125,7 @@ export default function NameRouletteWheel({ names = [], onSpinEnd }) {
           style={{
             borderLeft: '10px solid transparent',
             borderRight: '10px solid transparent',
-            borderTop: '22px solid #0F3D4C',
+            borderTop: '22px solid #231F20',
             filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.35))',
           }} />
         <canvas
@@ -143,8 +143,8 @@ export default function NameRouletteWheel({ names = [], onSpinEnd }) {
         style={{
           background: spinning
             ? '#94a3b8'
-            : 'linear-gradient(135deg, #1FB6D5 0%, #0F3D4C 100%)',
-          boxShadow: spinning ? 'none' : '0 4px 16px rgba(31,182,213,0.4)',
+            : 'linear-gradient(135deg, #1684F2 0%, #231F20 100%)',
+          boxShadow: spinning ? 'none' : '0 4px 16px rgba(22,132,242,0.4)',
         }}
       >
         {spinning ? '🎰 Memutar...' : '🎡 PUTAR NAMA!'}

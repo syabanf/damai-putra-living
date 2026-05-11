@@ -47,7 +47,7 @@ export default function ActiveTicket() {
   const [showQR, setShowQR] = useState(true);
 
   return (
-    <div className="min-h-screen" style={{ background: 'linear-gradient(160deg, #F5F4F2 0%, #edecea 55%, #e7e5e2 100%)' }}>
+    <div className="min-h-screen" style={{ background: 'linear-gradient(160deg, #F6F9FC 0%, #EEF5FF 55%, #E7F0FF 100%)' }}>
       {/* Header */}
       <div className="px-5 pt-12 pb-5 flex items-center gap-3 sticky top-0 z-20" style={{ background: 'rgba(255,255,255,0.82)', backdropFilter: 'blur(28px)', WebkitBackdropFilter: 'blur(28px)', borderBottom: '1px solid rgba(255,255,255,0.75)', boxShadow: '0 2px 8px rgba(90,80,70,0.10)' }}>
         <button onClick={() => navigate(-1)} className="w-9 h-9 rounded-xl flex items-center justify-center transition-all" style={{ background: 'rgba(255,255,255,0.72)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.85)' }}>
@@ -63,8 +63,8 @@ export default function ActiveTicket() {
           animate={{ opacity: 1, y: 0 }}
           className="rounded-2xl overflow-hidden"
           style={{
-            background: 'linear-gradient(135deg, #1FB6D5 0%, #0F9BB8 100%)',
-            boxShadow: '0 8px 24px rgba(31,182,213,0.3)',
+            background: 'linear-gradient(135deg, #1684F2 0%, #0B57C2 100%)',
+            boxShadow: '0 8px 24px rgba(22,132,242,0.3)',
           }}
         >
           {/* Ticket Header */}
@@ -137,7 +137,7 @@ export default function ActiveTicket() {
         </motion.div>
 
         {/* Info Card */}
-        <div className="rounded-2xl p-4" style={{ background: 'rgba(31,182,213,0.08)', border: '1px solid rgba(31,182,213,0.2)' }}>
+        <div className="rounded-2xl p-4" style={{ background: 'rgba(22,132,242,0.08)', border: '1px solid rgba(22,132,242,0.2)' }}>
           <div className="grid grid-cols-2 gap-4">
             <div>
               <p className="text-xs text-slate-600 font-semibold mb-1">Date</p>

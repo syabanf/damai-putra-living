@@ -38,7 +38,7 @@ function RefundCard({ request, onOpen }) {
       style={{ boxShadow: '0 2px 16px rgba(15,61,76,0.08)', border: '1px solid rgba(15,61,76,0.06)' }}>
       <div className="flex items-start gap-3">
         <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: '#f0f4f6' }}>
-          <Banknote className="w-5 h-5" style={{ color: '#0F3D4C' }} />
+          <Banknote className="w-5 h-5" style={{ color: '#231F20' }} />
         </div>
         <div className="flex-1 min-w-0">
           <p className="font-bold text-slate-800 text-sm">{request.applicant_name}</p>
@@ -189,14 +189,14 @@ function RequestDetail({ request, onClose }) {
           <label className="text-xs text-slate-600 font-medium">Jumlah Disetujui (IDR)</label>
           <input type="number" placeholder="Jumlah refund yang disetujui" value={approvedAmount}
             onChange={e => setApprovedAmount(e.target.value)}
-            className="w-full h-11 px-3 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-teal-400" />
+            className="w-full h-11 px-3 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400" />
         </div>
 
         <div className="space-y-1.5">
           <label className="text-xs text-slate-600 font-medium">Catatan Verifikator</label>
           <textarea value={verifierNotes} onChange={e => setVerifierNotes(e.target.value)}
             placeholder="Catatan internal..."
-            className="w-full h-20 px-3 py-2 rounded-xl border border-slate-200 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-teal-400" />
+            className="w-full h-20 px-3 py-2 rounded-xl border border-slate-200 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-blue-400" />
         </div>
 
         {nextStatuses.length > 0 && (
@@ -241,9 +241,9 @@ export default function RefundAdmin() {
   const filtered = filterStatus === 'all' ? requests : requests.filter(r => r.refund_status === filterStatus);
 
   return (
-    <div className="min-h-screen" style={{ background: 'linear-gradient(160deg, #F5F4F2 0%, #edecea 55%, #e7e5e2 100%)' }}>
+    <div className="min-h-screen" style={{ background: 'linear-gradient(160deg, #F6F9FC 0%, #EEF5FF 55%, #E7F0FF 100%)' }}>
       {/* Header */}
-      <div className="px-5 pt-12 pb-5 rounded-b-3xl" style={{ background: 'linear-gradient(150deg, #1a5068 0%, #0F3D4C 55%, #0a2d38 100%)' }}>
+      <div className="px-5 pt-12 pb-5 rounded-b-3xl" style={{ background: 'linear-gradient(150deg, #231F20 0%, #231F20 55%, #111214 100%)' }}>
         <div className="flex items-center gap-3 mb-4">
           <button onClick={() => navigate(-1)} className="w-9 h-9 bg-white/20 rounded-xl flex items-center justify-center border border-white/20">
             <ArrowLeft className="w-4 h-4 text-white" />
@@ -260,7 +260,7 @@ export default function RefundAdmin() {
               onClick={() => setFilterStatus(s)}
               className="flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-semibold transition-all whitespace-nowrap"
               style={filterStatus === s
-                ? { background: '#ffffff', color: '#0F3D4C' }
+                ? { background: '#ffffff', color: '#231F20' }
                 : { background: 'rgba(255,255,255,0.15)', color: 'rgba(255,255,255,0.7)' }}>
               {s === 'all' ? 'Semua' : s}
             </button>

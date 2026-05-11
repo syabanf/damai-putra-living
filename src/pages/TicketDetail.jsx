@@ -119,7 +119,7 @@ export default function TicketDetail() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ background: 'linear-gradient(160deg, #f0ede9 0%, #e8e4df 100%)' }}>
+      <div className="min-h-screen flex items-center justify-center" style={{ background: 'linear-gradient(160deg, #F6F9FC 0%, #EEF5FF 100%)' }}>
         <div className="w-8 h-8 border-2 border-stone-400 border-t-transparent rounded-full animate-spin" />
       </div>
     );
@@ -127,7 +127,7 @@ export default function TicketDetail() {
 
   if (!ticket) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center px-5" style={{ background: 'linear-gradient(160deg, #f0ede9 0%, #e8e4df 100%)' }}>
+      <div className="min-h-screen flex flex-col items-center justify-center px-5" style={{ background: 'linear-gradient(160deg, #F6F9FC 0%, #EEF5FF 100%)' }}>
         <AlertCircle className="w-12 h-12 text-slate-300 mb-3" />
         <p className="text-slate-500 font-medium">Permit not found</p>
         <Button onClick={() => navigate(createPageUrl('Tickets'))} className="mt-4" variant="outline">Back to Permits</Button>
@@ -145,16 +145,16 @@ export default function TicketDetail() {
   const currency = (n) => n ? `IDR ${Number(n).toLocaleString('id-ID')}` : null;
 
   return (
-    <div className="min-h-screen pb-10" style={{ background: 'linear-gradient(160deg, #F5F4F2 0%, #edecea 55%, #e7e5e2 100%)' }}>
+    <div className="min-h-screen pb-10" style={{ background: 'linear-gradient(160deg, #F6F9FC 0%, #EEF5FF 55%, #E7F0FF 100%)' }}>
       {/* Header */}
-      <div className="px-5 pt-14 pb-4 rounded-b-3xl" style={{ background: 'linear-gradient(150deg, #1a5068 0%, #0F3D4C 55%, #0a2d38 100%)' }}>
+      <div className="px-5 pt-14 pb-4 rounded-b-3xl" style={{ background: 'linear-gradient(150deg, #231F20 0%, #231F20 55%, #111214 100%)' }}>
         <div className="flex items-start gap-3 mb-4">
           <button onClick={() => navigate(createPageUrl('Tickets'))}
             className="w-9 h-9 bg-white/15 rounded-xl flex items-center justify-center border border-white/20 flex-shrink-0 mt-0.5">
             <ArrowLeft className="w-5 h-5 text-white" />
           </button>
           <div className="flex-1">
-            <p className="text-white/50 text-xs">Damai Putra Living</p>
+            <p className="text-white/50 text-xs">ION</p>
             <h1 className="text-xl font-bold text-white">{permitLabel}</h1>
             {ticket.reference_number && <p className="text-white/50 text-xs mt-0.5">{ticket.reference_number}</p>}
           </div>
@@ -295,7 +295,7 @@ export default function TicketDetail() {
               return (
                 <div key={stage.key} className="flex items-center gap-3 py-2">
                   <div className={`w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 border-2 ${isDone ? 'bg-emerald-500 border-emerald-500' : isCurrent ? 'border-sky-400' : 'bg-white border-slate-200'}`}
-                    style={isCurrent ? { background: '#1FB6D5', borderColor: '#1FB6D5' } : {}}>
+                    style={isCurrent ? { background: '#1684F2', borderColor: '#1684F2' } : {}}>
                     {isDone
                       ? <CheckCircle className="w-4 h-4 text-white" />
                       : <span className={`text-[10px] font-bold ${isCurrent ? 'text-white' : 'text-slate-400'}`}>{i + 1}</span>}
@@ -305,7 +305,7 @@ export default function TicketDetail() {
                     {stage.dept && <p className={`text-[10px] ${isDone ? 'text-emerald-500' : isCurrent ? 'text-blue-600' : 'text-slate-300'}`}>{stage.dept}</p>}
                   </div>
                   {isCurrent && (
-                    <span className="text-[10px] px-2 py-0.5 rounded-full font-semibold" style={{ background: '#e8f4fb', color: '#1F86C7' }}>Current</span>
+                    <span className="text-[10px] px-2 py-0.5 rounded-full font-semibold" style={{ background: '#e8f4fb', color: '#1684F2' }}>Current</span>
                   )}
                 </div>
               );

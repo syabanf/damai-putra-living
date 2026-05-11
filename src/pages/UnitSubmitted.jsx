@@ -10,14 +10,14 @@ export default function UnitSubmitted() {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center px-6"
-      style={{ background: 'linear-gradient(160deg, #f5f3f0 0%, #ece8e3 50%, #e8e2db 100%)' }}>
+      style={{ background: 'linear-gradient(160deg, #EEF5FF 0%, #ece8e3 50%, #e8e2db 100%)' }}>
       <motion.div
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
         transition={{ type: "spring", duration: 0.6 }}
         className="relative"
       >
-        <div className="w-28 h-28 bg-gradient-to-br from-teal-400 to-teal-500 rounded-full flex items-center justify-center shadow-lg shadow-teal-200/50">
+        <div className="w-28 h-28 bg-gradient-to-br from-blue-400 to-blue-500 rounded-full flex items-center justify-center shadow-lg shadow-teal-200/50">
           <CheckCircle className="w-14 h-14 text-white" />
         </div>
         
@@ -83,7 +83,7 @@ export default function UnitSubmitted() {
         <Button
           onClick={() => navigate(createPageUrl('MyUnit'))}
           className="w-full h-14 text-white rounded-2xl font-semibold text-base mt-4"
-          style={{ background: 'linear-gradient(135deg, #8A8076, #6e6560)', boxShadow: '0 8px 24px rgba(138,128,118,0.35)' }}
+          style={{ background: 'linear-gradient(135deg, #1684F2, #0B57C2)', boxShadow: '0 8px 24px rgba(138,128,118,0.35)' }}
         >
           View My Units
           <ArrowRight className="w-5 h-5 ml-2" />

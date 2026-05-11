@@ -43,9 +43,9 @@ export default function PropertyListing() {
   }, [properties, activeCategory, search]);
 
   return (
-    <div className="min-h-screen pb-28" style={{ background: 'linear-gradient(160deg, #F5F4F2 0%, #edecea 55%, #e7e5e2 100%)' }}>
+    <div className="min-h-screen pb-28" style={{ background: 'linear-gradient(160deg, #F6F9FC 0%, #EEF5FF 55%, #E7F0FF 100%)' }}>
       {/* Header */}
-      <div className="px-5 pt-14 pb-5 rounded-b-[2rem] relative overflow-hidden" style={{ background: 'linear-gradient(150deg, #1a5068 0%, #0F3D4C 55%, #0a2d38 100%)' }}>
+      <div className="px-5 pt-14 pb-5 rounded-b-[2rem] relative overflow-hidden" style={{ background: 'linear-gradient(150deg, #231F20 0%, #231F20 55%, #111214 100%)' }}>
         <div className="absolute -top-8 -right-8 w-40 h-40 rounded-full opacity-10 bg-white pointer-events-none" />
         <div className="flex items-center gap-3 mb-4 relative">
           <button onClick={() => navigate(-1)}
@@ -54,7 +54,7 @@ export default function PropertyListing() {
             <ArrowLeft className="w-5 h-5 text-white" />
           </button>
           <div>
-            <p className="text-white/50 text-[10px] font-semibold uppercase tracking-widest">Damai Putra Living</p>
+            <p className="text-white/50 text-[10px] font-semibold uppercase tracking-widest">ION</p>
             <h1 className="font-bold text-xl text-white">Property</h1>
           </div>
         </div>
@@ -73,7 +73,7 @@ export default function PropertyListing() {
             <button key={cat.value} onClick={() => setActiveCategory(cat.value)}
               className="px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all active:scale-95"
               style={activeCategory === cat.value
-                ? { background: 'linear-gradient(135deg, #1FB6D5, #169ab5)', color: '#fff', boxShadow: '0 3px 10px rgba(31,182,213,0.35)' }
+                ? { background: 'linear-gradient(135deg, #1684F2, #0B57C2)', color: '#fff', boxShadow: '0 3px 10px rgba(22,132,242,0.35)' }
                 : { background: 'rgba(255,255,255,0.75)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.85)', color: '#64748b' }
               }>{cat.label}</button>
           ))}

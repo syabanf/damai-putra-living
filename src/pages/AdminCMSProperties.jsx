@@ -69,7 +69,7 @@ export default function AdminCMSProperties() {
           <p className="text-slate-500 text-sm mt-1">Kelola data properti yang ditampilkan di aplikasi</p>
         </div>
         <button onClick={openNew}
-          className="flex items-center gap-2 bg-teal-600 text-white px-4 py-2.5 rounded-xl text-sm font-semibold hover:bg-teal-700 transition-colors">
+          className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2.5 rounded-xl text-sm font-semibold hover:bg-blue-700 transition-colors">
           <Plus className="w-4 h-4" /> Tambah Properti
         </button>
       </div>
@@ -80,7 +80,7 @@ export default function AdminCMSProperties() {
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
           <input value={search} onChange={e => setSearch(e.target.value)}
             placeholder="Cari nama, lokasi, tipe..."
-            className="w-full pl-9 pr-3 py-2 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/30" />
+            className="w-full pl-9 pr-3 py-2 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/30" />
         </div>
       </div>
 
@@ -101,8 +101,8 @@ export default function AdminCMSProperties() {
                   <img src={p.image_url} alt={p.name} className="w-full h-full object-cover" />
                 </div>
               ) : (
-                <div className="h-36 bg-gradient-to-br from-teal-50 to-slate-100 flex items-center justify-center">
-                  <Building2 className="w-12 h-12 text-teal-200" />
+                <div className="h-36 bg-gradient-to-br from-blue-50 to-slate-100 flex items-center justify-center">
+                  <Building2 className="w-12 h-12 text-blue-200" />
                 </div>
               )}
               <div className="p-4">
@@ -113,11 +113,11 @@ export default function AdminCMSProperties() {
                   </span>
                 </div>
                 {p.location && <p className="text-xs text-slate-400 mb-1">{p.location}</p>}
-                {p.type && <p className="text-xs text-teal-600 font-semibold mb-2">{p.type}</p>}
+                {p.type && <p className="text-xs text-blue-600 font-semibold mb-2">{p.type}</p>}
                 {p.description && <p className="text-xs text-slate-500 line-clamp-2 mb-3">{p.description}</p>}
                 <div className="flex gap-2 pt-2 border-t border-slate-50">
                   <button onClick={() => openEdit(p)}
-                    className="flex items-center gap-1.5 text-xs font-semibold text-teal-600 hover:text-teal-800 px-3 py-1.5 rounded-lg hover:bg-teal-50 transition-colors">
+                    className="flex items-center gap-1.5 text-xs font-semibold text-blue-600 hover:text-blue-800 px-3 py-1.5 rounded-lg hover:bg-blue-50 transition-colors">
                     <Edit2 className="w-3.5 h-3.5" /> Edit
                   </button>
                   <button onClick={() => handleDelete(p)}
@@ -155,14 +155,14 @@ export default function AdminCMSProperties() {
                   <label className="text-xs font-semibold text-slate-600 mb-1 block">{f.label}</label>
                   <input type={f.type} value={form[f.key] || ''} placeholder={f.placeholder}
                     onChange={e => setForm(prev => ({ ...prev, [f.key]: e.target.value }))}
-                    className="w-full px-3 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/30" />
+                    className="w-full px-3 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/30" />
                 </div>
               ))}
               <div>
                 <label className="text-xs font-semibold text-slate-600 mb-1 block">Deskripsi</label>
                 <textarea value={form.description || ''} rows={3} placeholder="Deskripsi singkat properti..."
                   onChange={e => setForm(prev => ({ ...prev, description: e.target.value }))}
-                  className="w-full px-3 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/30 resize-none" />
+                  className="w-full px-3 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/30 resize-none" />
               </div>
               <div>
                 <label className="text-xs font-semibold text-slate-600 mb-1 block">Status</label>
@@ -180,7 +180,7 @@ export default function AdminCMSProperties() {
               </button>
               <button onClick={() => saveMutation.mutate(form)}
                 disabled={!form.name || saveMutation.isPending}
-                className="flex-1 py-2.5 rounded-xl bg-teal-600 text-white text-sm font-semibold hover:bg-teal-700 disabled:opacity-50 flex items-center justify-center gap-2">
+                className="flex-1 py-2.5 rounded-xl bg-blue-600 text-white text-sm font-semibold hover:bg-blue-700 disabled:opacity-50 flex items-center justify-center gap-2">
                 <Save className="w-4 h-4" />
                 {saveMutation.isPending ? 'Menyimpan...' : 'Simpan'}
               </button>

@@ -100,13 +100,13 @@ export default function Rewards() {
   }, [rewards, activeCategory, search]);
 
   return (
-    <div className="min-h-screen pb-28" style={{ background: 'linear-gradient(160deg, #F5F4F2 0%, #edecea 55%, #e7e5e2 100%)' }}>
+    <div className="min-h-screen pb-28" style={{ background: 'linear-gradient(160deg, #F6F9FC 0%, #EEF5FF 55%, #E7F0FF 100%)' }}>
       {/* Header */}
-      <div className="px-5 pt-14 pb-5 rounded-b-[2rem] relative overflow-hidden" style={{ background: 'linear-gradient(150deg, #1a5068 0%, #0F3D4C 55%, #0a2d38 100%)' }}>
+      <div className="px-5 pt-14 pb-5 rounded-b-[2rem] relative overflow-hidden" style={{ background: 'linear-gradient(150deg, #231F20 0%, #231F20 55%, #111214 100%)' }}>
         <div className="absolute -top-8 -right-8 w-40 h-40 rounded-full opacity-10 bg-white pointer-events-none" />
         <div className="flex items-center justify-between mb-4 relative">
           <div>
-            <p className="text-white/50 text-[10px] font-semibold uppercase tracking-widest">Damai Putra Living</p>
+            <p className="text-white/50 text-[10px] font-semibold uppercase tracking-widest">ION</p>
             <h1 className="font-bold text-2xl text-white">Rewards</h1>
           </div>
           <button onClick={() => navigate(createPageUrl('MyClaims'))}
@@ -174,7 +174,7 @@ export default function Rewards() {
                 <button key={c.value} onClick={() => setActiveCategory(c.value)}
                   className="px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all active:scale-95"
                   style={activeCategory === c.value
-                    ? { background: 'linear-gradient(135deg, #1FB6D5, #169ab5)', color: '#fff', boxShadow: '0 3px 10px rgba(31,182,213,0.35)' }
+                    ? { background: 'linear-gradient(135deg, #1684F2, #0B57C2)', color: '#fff', boxShadow: '0 3px 10px rgba(22,132,242,0.35)' }
                     : { background: 'rgba(255,255,255,0.75)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.85)', color: '#64748b' }
                   }>{c.label}</button>
               ))}
@@ -216,7 +216,7 @@ export default function Rewards() {
                         <Star className="w-3 h-3 text-amber-400 fill-amber-400" />
                         <span className="text-xs font-bold text-slate-700">{reward.points_required?.toLocaleString()}</span>
                       </div>
-                      <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${myPoints >= reward.points_required ? 'bg-[#e6f8fb] text-[#1FB6D5]' : 'bg-slate-100 text-slate-400'}`}>
+                      <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${myPoints >= reward.points_required ? 'bg-[#EAF3FF] text-[#1684F2]' : 'bg-slate-100 text-slate-400'}`}>
                         {myPoints >= reward.points_required ? 'Claim' : 'Not enough'}
                       </span>
                     </div>
@@ -242,8 +242,8 @@ export default function Rewards() {
                 className="rounded-2xl p-8 text-center"
                 style={{ background: 'rgba(255,255,255,0.75)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.85)' }}
               >
-                <div className="w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center" style={{ background: '#e6f8fb' }}>
-                  <Camera className="w-8 h-8" style={{ color: '#1FB6D5' }} />
+                <div className="w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center" style={{ background: '#EAF3FF' }}>
+                  <Camera className="w-8 h-8" style={{ color: '#1684F2' }} />
                 </div>
                 <h2 className="font-bold text-lg text-slate-800 mb-2">Scan Your Bill</h2>
                 <p className="text-sm text-slate-500 mb-6">Take a photo of your paid bill QR code to add points to your account.</p>
@@ -251,7 +251,7 @@ export default function Rewards() {
                 <button
                   onClick={() => fileInputRef.current?.click()}
                   className="w-full py-3 rounded-xl font-bold text-white transition-all active:scale-95 mb-3"
-                  style={{ background: 'linear-gradient(135deg, #1FB6D5 0%, #0F9BB8 100%)', boxShadow: '0 3px 10px rgba(31,182,213,0.35)' }}
+                  style={{ background: 'linear-gradient(135deg, #1684F2 0%, #0B57C2 100%)', boxShadow: '0 3px 10px rgba(22,132,242,0.35)' }}
                 >
                   Choose Photo from Gallery
                 </button>
@@ -271,19 +271,19 @@ export default function Rewards() {
                 <h3 className="font-bold text-slate-800 mb-3">How it works</h3>
                 <ul className="space-y-2 text-sm text-slate-600">
                   <li className="flex gap-2">
-                    <span className="font-bold text-teal-600 flex-shrink-0">1</span>
+                    <span className="font-bold text-blue-600 flex-shrink-0">1</span>
                     <span>Make a purchase at any participating merchant</span>
                   </li>
                   <li className="flex gap-2">
-                    <span className="font-bold text-teal-600 flex-shrink-0">2</span>
+                    <span className="font-bold text-blue-600 flex-shrink-0">2</span>
                     <span>Get your paid bill receipt with QR code</span>
                   </li>
                   <li className="flex gap-2">
-                    <span className="font-bold text-teal-600 flex-shrink-0">3</span>
+                    <span className="font-bold text-blue-600 flex-shrink-0">3</span>
                     <span>Scan the QR code here to earn points</span>
                   </li>
                   <li className="flex gap-2">
-                    <span className="font-bold text-teal-600 flex-shrink-0">4</span>
+                    <span className="font-bold text-blue-600 flex-shrink-0">4</span>
                     <span>Points added instantly to your account</span>
                   </li>
                 </ul>
@@ -330,7 +330,7 @@ export default function Rewards() {
                   onClick={confirmPoints}
                   disabled={addPointsMutation.isPending}
                   className="w-full py-3 rounded-xl font-bold text-white transition-all active:scale-95 mb-3"
-                  style={{ background: addPointsMutation.isPending ? '#cbd5e1' : 'linear-gradient(135deg, #1FB6D5 0%, #0F9BB8 100%)', boxShadow: '0 3px 10px rgba(31,182,213,0.35)' }}
+                  style={{ background: addPointsMutation.isPending ? '#cbd5e1' : 'linear-gradient(135deg, #1684F2 0%, #0B57C2 100%)', boxShadow: '0 3px 10px rgba(22,132,242,0.35)' }}
                 >
                   {addPointsMutation.isPending ? 'Adding Points...' : 'Confirm & Add Points'}
                 </button>
@@ -358,7 +358,7 @@ export default function Rewards() {
                 <button
                   onClick={resetScan}
                   className="w-full py-3 rounded-xl font-bold text-white transition-all active:scale-95"
-                  style={{ background: 'linear-gradient(135deg, #1FB6D5 0%, #0F9BB8 100%)' }}
+                  style={{ background: 'linear-gradient(135deg, #1684F2 0%, #0B57C2 100%)' }}
                 >
                   Try Again
                 </button>
@@ -384,7 +384,7 @@ function LotteryPreview({ user, myPoints, navigate }) {
         <h3 className="font-bold text-slate-800">Undian Aktif</h3>
         <button onClick={() => navigate(createPageUrl('LotteryPage'))}
           className="text-xs font-semibold px-3 py-1.5 rounded-xl"
-          style={{ background: 'linear-gradient(135deg, #1FB6D5, #0F3D4C)', color: '#fff' }}>
+          style={{ background: 'linear-gradient(135deg, #1684F2, #231F20)', color: '#fff' }}>
           Lihat Semua
         </button>
       </div>
@@ -401,7 +401,7 @@ function LotteryPreview({ user, myPoints, navigate }) {
           style={{ background: 'rgba(255,255,255,0.8)', border: '1px solid rgba(255,255,255,0.9)', boxShadow: '0 2px 8px rgba(138,127,115,0.1)' }}>
           <div className="p-4">
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-teal-400 to-teal-600 flex items-center justify-center flex-shrink-0">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center flex-shrink-0">
                 <Gift className="w-6 h-6 text-white" />
               </div>
               <div className="flex-1 min-w-0">
@@ -409,7 +409,7 @@ function LotteryPreview({ user, myPoints, navigate }) {
                 <p className="text-xs text-slate-500">{lottery.prizes?.length || 0} hadiah · {lottery.points_per_entry} poin/spin</p>
               </div>
               {myPoints >= (lottery.points_per_entry || 100) ? (
-                <span className="text-xs font-bold px-2.5 py-1 rounded-full" style={{ background: '#e6f8fb', color: '#1FB6D5' }}>Ikut</span>
+                <span className="text-xs font-bold px-2.5 py-1 rounded-full" style={{ background: '#EAF3FF', color: '#1684F2' }}>Ikut</span>
               ) : (
                 <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-slate-100 text-slate-400">Poin kurang</span>
               )}
@@ -420,7 +420,7 @@ function LotteryPreview({ user, myPoints, navigate }) {
       {lotteries.length > 0 && (
         <button onClick={() => navigate(createPageUrl('LotteryPage'))}
           className="w-full mt-2 py-3 rounded-2xl text-sm font-bold text-center"
-          style={{ background: 'linear-gradient(135deg, #0F3D4C, #1a5068)', color: '#fff' }}>
+          style={{ background: 'linear-gradient(135deg, #231F20, #231F20)', color: '#fff' }}>
           🎡 Buka Roulette Undian
         </button>
       )}

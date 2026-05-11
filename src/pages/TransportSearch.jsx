@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import { ArrowLeft, ArrowRight, Plane, Bus, Train, Car, Package, Map } from 'lucide-react';
 
 const TRANSPORT_TYPES = [
-  { id: 'shuttle', label: 'Shuttle', icon: Plane, color: '#1FB6D5' },
+  { id: 'shuttle', label: 'Shuttle', icon: Plane, color: '#1684F2' },
   { id: 'bus', label: 'Bus', icon: Bus, color: '#ef4444' },
   { id: 'train', label: 'Train', icon: Train, color: '#2563eb' },
   { id: 'car', label: 'Car Rental', icon: Car, color: '#f97316' },
@@ -41,7 +41,7 @@ export default function TransportSearch() {
   };
 
   return (
-    <div className="min-h-screen pb-24" style={{ background: 'linear-gradient(160deg, #F5F4F2 0%, #edecea 55%, #e7e5e2 100%)' }}>
+    <div className="min-h-screen pb-24" style={{ background: 'linear-gradient(160deg, #F6F9FC 0%, #EEF5FF 55%, #E7F0FF 100%)' }}>
       {/* Header */}
       <div className="px-5 pt-12 pb-5 flex items-center justify-between sticky top-0 z-20" style={{ background: 'rgba(255,255,255,0.82)', backdropFilter: 'blur(28px)', WebkitBackdropFilter: 'blur(28px)', borderBottom: '1px solid rgba(255,255,255,0.75)', boxShadow: '0 2px 8px rgba(90,80,70,0.10)' }}>
          <div className="flex items-center gap-3">
@@ -53,7 +53,7 @@ export default function TransportSearch() {
          <button
           onClick={() => navigate(createPageUrl('TransportExploreMap?mode=transport'))}
           className="w-8 h-8 rounded-lg flex items-center justify-center transition-all active:scale-90"
-          style={{ background: 'linear-gradient(135deg, #1FB6D5 0%, #0F9BB8 100%)', boxShadow: '0 2px 6px rgba(31,182,213,0.2)' }}
+          style={{ background: 'linear-gradient(135deg, #1684F2 0%, #0B57C2 100%)', boxShadow: '0 2px 6px rgba(22,132,242,0.2)' }}
           title="View on Map"
         >
           <Map className="w-3.5 h-3.5 text-white" />
@@ -172,7 +172,7 @@ export default function TransportSearch() {
             setToLocation(temp);
           }}
           className="absolute left-1/2 -translate-x-1/2 mt-[-45px] w-10 h-10 rounded-full flex items-center justify-center transition-all active:scale-95"
-          style={{ background: 'rgba(255,255,255,0.9)', boxShadow: '0 4px 12px rgba(31,182,213,0.2)' }}
+          style={{ background: 'rgba(255,255,255,0.9)', boxShadow: '0 4px 12px rgba(22,132,242,0.2)' }}
         >
           <ArrowRight className="w-4 h-4 text-slate-600 rotate-90" />
         </button>
@@ -225,10 +225,10 @@ export default function TransportSearch() {
           className="w-full py-4 rounded-xl font-bold text-white transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
           style={{
             background: fromLocation && toLocation && departDate 
-              ? 'linear-gradient(135deg, #1FB6D5, #1098b8)' 
+              ? 'linear-gradient(135deg, #1684F2, #1098b8)' 
               : 'linear-gradient(135deg, #cbd5e1, #b0bac3)',
             boxShadow: fromLocation && toLocation && departDate 
-              ? '0 4px 16px rgba(31,182,213,0.35)' 
+              ? '0 4px 16px rgba(22,132,242,0.35)' 
               : 'none'
           }}
         >

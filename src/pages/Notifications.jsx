@@ -61,9 +61,9 @@ export default function Notifications() {
   const unreadCount = notifications.filter(n => !n.read).length;
 
   return (
-    <div className="min-h-screen pb-28" style={{ background: 'linear-gradient(160deg, #F5F4F2 0%, #edecea 55%, #e7e5e2 100%)' }}>
+    <div className="min-h-screen pb-28" style={{ background: 'linear-gradient(160deg, #F6F9FC 0%, #EEF5FF 55%, #E7F0FF 100%)' }}>
       {/* Header */}
-      <div className="px-5 pt-14 pb-6 rounded-b-[2rem]" style={{ background: 'linear-gradient(150deg, #1a5068 0%, #0F3D4C 55%, #0a2d38 100%)' }}>
+      <div className="px-5 pt-14 pb-6 rounded-b-[2rem]" style={{ background: 'linear-gradient(150deg, #231F20 0%, #231F20 55%, #111214 100%)' }}>
         <div className="absolute -top-8 -right-8 w-40 h-40 rounded-full opacity-10 bg-white pointer-events-none" />
         <div className="flex items-center justify-between relative">
           <div className="flex items-center gap-3">
@@ -73,7 +73,7 @@ export default function Notifications() {
               <ArrowLeft className="w-5 h-5 text-white" />
             </button>
             <div>
-              <p className="text-white/50 text-[10px] font-semibold uppercase tracking-widest">Damai Putra Living</p>
+              <p className="text-white/50 text-[10px] font-semibold uppercase tracking-widest">ION</p>
               <h1 className="text-lg font-bold text-white">Notifications</h1>
               {unreadCount > 0 && <p className="text-white/55 text-xs">{unreadCount} unread</p>}
             </div>
@@ -123,7 +123,7 @@ export default function Notifications() {
                   <motion.div key={notification.id}
                     initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, x: -100 }} transition={{ delay: index * 0.04 }}>
                     <GlassCard className={`p-4 ${!notification.read ? 'border-l-4' : ''}`}
-                      style={!notification.read ? { borderLeftColor: '#1FB6D5' } : {}}
+                      style={!notification.read ? { borderLeftColor: '#1684F2' } : {}}
                       onClick={() => handleNotificationClick(notification)}>
                       <div className="flex items-start gap-3">
                         <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${config.color}`}>
@@ -143,7 +143,7 @@ export default function Notifications() {
                           <p className="text-[10px] text-slate-400 mt-2">{new Date(notification.created_date).toLocaleString()}</p>
                         </div>
                         {!notification.read && (
-                          <div className="w-2 h-2 rounded-full flex-shrink-0 mt-2" style={{ backgroundColor: '#1FB6D5' }} />
+                          <div className="w-2 h-2 rounded-full flex-shrink-0 mt-2" style={{ backgroundColor: '#1684F2' }} />
                         )}
                       </div>
                     </GlassCard>

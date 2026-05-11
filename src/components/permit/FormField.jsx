@@ -49,11 +49,11 @@ export const Select = ({ value, onChange, options, placeholder = 'Select...' }) 
                 onClick={() => { onChange(o.value); setOpen(false); }}
                 className="w-full flex items-center justify-between px-4 py-3.5 rounded-xl text-sm font-medium transition-colors"
                 style={o.value === value
-                  ? { background: '#e8f4f7', color: '#0F3D4C' }
+                  ? { background: '#e8f4f7', color: '#231F20' }
                   : { background: 'transparent', color: '#334155' }}
               >
                 {o.label}
-                {o.value === value && <Check className="w-4 h-4 text-teal-600" />}
+                {o.value === value && <Check className="w-4 h-4 text-blue-600" />}
               </button>
             ))}
           </div>

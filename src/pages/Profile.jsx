@@ -47,10 +47,10 @@ export default function Profile() {
   ];
 
   return (
-    <div className="min-h-screen pb-28" style={{ background: 'linear-gradient(160deg, #F5F4F2 0%, #edecea 55%, #e7e5e2 100%)' }}>
+    <div className="min-h-screen pb-28" style={{ background: 'linear-gradient(160deg, #F6F9FC 0%, #EEF5FF 55%, #E7F0FF 100%)' }}>
       {/* Header */}
       <div className="relative overflow-hidden px-5 pt-14 pb-24 rounded-b-[2.5rem]"
-        style={{ background: 'linear-gradient(150deg, #1a5068 0%, #0F3D4C 55%, #0a2d38 100%)' }}>
+        style={{ background: 'linear-gradient(150deg, #231F20 0%, #231F20 55%, #111214 100%)' }}>
         <div className="absolute -top-10 -right-10 w-48 h-48 rounded-full opacity-10 bg-white" />
         <h1 className="text-2xl font-bold text-white mb-8 relative">Profile</h1>
         <div className="flex items-center gap-4 relative">
@@ -96,14 +96,14 @@ export default function Profile() {
               onClick={item.action}
               className={`w-full p-4 flex items-center justify-between hover:bg-white/60 transition-colors active:bg-white/80 ${index < menuItems.length - 1 ? 'border-b border-white/60' : ''}`}>
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: '#f5f3f118' }}>
-                  <item.icon className="w-5 h-5" style={{ color: '#8E8478' }} />
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: '#EEF5FF18' }}>
+                  <item.icon className="w-5 h-5" style={{ color: '#1684F2' }} />
                 </div>
                 <span className="font-medium text-slate-700">{item.label}</span>
               </div>
               <div className="flex items-center gap-2">
                 {item.count !== undefined && (
-                  <span className="px-2 py-0.5 text-xs font-semibold rounded-full" style={{ backgroundColor: '#f5f3f1', color: '#8E8478' }}>
+                  <span className="px-2 py-0.5 text-xs font-semibold rounded-full" style={{ backgroundColor: '#EEF5FF', color: '#1684F2' }}>
                     {item.count}
                   </span>
                 )}
@@ -124,7 +124,7 @@ export default function Profile() {
       </div>
 
       <div className="text-center mt-8">
-        <p className="text-slate-400 text-xs">Damai Putra Apps v1.0.0</p>
+        <p className="text-slate-400 text-xs">ION Apps v1.0.0</p>
       </div>
 
     </div>

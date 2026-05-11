@@ -49,7 +49,7 @@ export default function AdminResidents() {
       {/* Stats */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
         {[
-          { label: 'Total Units', value: stats.total, icon: Home, color: 'text-teal-600', bg: 'bg-teal-50' },
+          { label: 'Total Units', value: stats.total, icon: Home, color: 'text-blue-600', bg: 'bg-blue-50' },
           { label: 'Approved', value: stats.approved, icon: CheckCircle, color: 'text-emerald-600', bg: 'bg-emerald-50' },
           { label: 'Pending', value: stats.pending, icon: Clock, color: 'text-amber-600', bg: 'bg-amber-50' },
           { label: 'Rejected', value: stats.rejected, icon: XCircle, color: 'text-red-600', bg: 'bg-red-50' },
@@ -72,7 +72,7 @@ export default function AdminResidents() {
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
           <input value={search} onChange={e => setSearch(e.target.value)}
             placeholder="Cari nama, email, unit..."
-            className="w-full pl-9 pr-3 py-2 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/30" />
+            className="w-full pl-9 pr-3 py-2 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/30" />
         </div>
         <select value={statusFilter} onChange={e => setStatusFilter(e.target.value)}
           className="px-3 py-2 rounded-xl border border-slate-200 text-sm text-slate-600 focus:outline-none">
@@ -104,8 +104,8 @@ export default function AdminResidents() {
                   <tr key={u.id} className="hover:bg-slate-50 transition-colors">
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-full bg-teal-100 flex items-center justify-center">
-                          <User className="w-4 h-4 text-teal-600" />
+                        <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
+                          <User className="w-4 h-4 text-blue-600" />
                         </div>
                         <div>
                           <p className="font-semibold text-slate-800 text-sm">{u.user_name || '-'}</p>
@@ -129,7 +129,7 @@ export default function AdminResidents() {
                     </td>
                     <td className="px-4 py-3">
                       <button onClick={() => setSelected(u)}
-                        className="text-teal-600 hover:text-teal-800 flex items-center gap-1 text-xs font-semibold">
+                        className="text-blue-600 hover:text-blue-800 flex items-center gap-1 text-xs font-semibold">
                         Detail <ChevronRight className="w-3 h-3" />
                       </button>
                     </td>

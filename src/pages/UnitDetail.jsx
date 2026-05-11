@@ -47,17 +47,17 @@ export default function UnitDetail() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ background: 'linear-gradient(160deg, #F5F4F2 0%, #edecea 100%)' }}>
+      <div className="min-h-screen flex items-center justify-center" style={{ background: 'linear-gradient(160deg, #F6F9FC 0%, #EEF5FF 100%)' }}>
         <motion.div animate={{ rotate: 360 }} transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
           className="w-8 h-8 border-[3px] rounded-full"
-          style={{ borderColor: '#8A8076', borderTopColor: 'transparent' }} />
+          style={{ borderColor: '#1684F2', borderTopColor: 'transparent' }} />
       </div>
     );
   }
 
   if (!unit) {
     return (
-      <div className="min-h-screen flex items-center justify-center p-6" style={{ background: 'linear-gradient(160deg, #F5F4F2 0%, #edecea 100%)' }}>
+      <div className="min-h-screen flex items-center justify-center p-6" style={{ background: 'linear-gradient(160deg, #F6F9FC 0%, #EEF5FF 100%)' }}>
         <div className="text-center">
           <AlertCircle className="w-12 h-12 text-slate-400 mx-auto mb-4" />
           <p className="text-slate-600">Unit not found</p>
@@ -75,7 +75,7 @@ export default function UnitDetail() {
   const StatusIcon = unit.status === 'approved' ? CheckCircle : unit.status === 'rejected' ? XCircle : Clock;
 
   return (
-    <div className="min-h-screen pb-8" style={{ background: 'linear-gradient(160deg, #F5F4F2 0%, #edecea 55%, #e7e5e2 100%)' }}>
+    <div className="min-h-screen pb-8" style={{ background: 'linear-gradient(160deg, #F6F9FC 0%, #EEF5FF 55%, #E7F0FF 100%)' }}>
       {/* Header */}
       <div className="px-5 pt-6 pb-16 rounded-b-3xl" style={{ background: headerGradient }}>
         <div className="flex items-center gap-4 mb-8">
@@ -168,8 +168,8 @@ export default function UnitDetail() {
           </div>
           <div className={`p-4 ${unit.document_url ? 'border-b border-white/60' : ''}`}>
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ backgroundColor: '#f5f3f1' }}>
-                <Calendar className="w-5 h-5" style={{ color: '#8A8076' }} />
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ backgroundColor: '#EEF5FF' }}>
+                <Calendar className="w-5 h-5" style={{ color: '#1684F2' }} />
               </div>
               <div>
                 <p className="text-xs text-slate-400">Registered On</p>
@@ -183,8 +183,8 @@ export default function UnitDetail() {
             <div className="p-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ backgroundColor: '#f5f3f1' }}>
-                    <FileText className="w-5 h-5" style={{ color: '#8A8076' }} />
+                  <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ backgroundColor: '#EEF5FF' }}>
+                    <FileText className="w-5 h-5" style={{ color: '#1684F2' }} />
                   </div>
                   <div>
                     <p className="text-xs text-slate-400">Supporting Document</p>
@@ -192,7 +192,7 @@ export default function UnitDetail() {
                   </div>
                 </div>
                 <a href={unit.document_url} target="_blank" rel="noopener noreferrer"
-                  className="text-xs font-semibold px-3 py-1.5 rounded-xl" style={{ color: '#8A8076', backgroundColor: '#f5f3f1' }}>
+                  className="text-xs font-semibold px-3 py-1.5 rounded-xl" style={{ color: '#1684F2', backgroundColor: '#EEF5FF' }}>
                   View
                 </a>
               </div>
@@ -302,7 +302,7 @@ export default function UnitDetail() {
         {unit.status === 'approved' && (
           <button onClick={() => navigate(createPageUrl('Tickets'))}
             className="w-full h-14 rounded-2xl text-white font-semibold flex items-center justify-center gap-2 shadow-lg active:scale-[0.98] transition-transform"
-            style={{ background: 'linear-gradient(135deg, #1FB6D5, #169ab5)', boxShadow: '0 4px 20px rgba(31,182,213,0.35)' }}>
+            style={{ background: 'linear-gradient(135deg, #1684F2, #0B57C2)', boxShadow: '0 4px 20px rgba(22,132,242,0.35)' }}>
              <Ticket className="w-5 h-5" /> Create Support Ticket
           </button>
         )}
@@ -310,7 +310,7 @@ export default function UnitDetail() {
         {unit.status === 'rejected' && (
           <button onClick={() => navigate(createPageUrl('AddUnit') + `?resubmit=${unit.id}`)}
             className="w-full h-14 rounded-2xl text-white font-semibold flex items-center justify-center gap-2 active:scale-[0.98] transition-transform"
-            style={{ background: 'linear-gradient(135deg, #1FB6D5, #169ab5)', boxShadow: '0 4px 20px rgba(31,182,213,0.35)' }}>
+            style={{ background: 'linear-gradient(135deg, #1684F2, #0B57C2)', boxShadow: '0 4px 20px rgba(22,132,242,0.35)' }}>
              <RefreshCw className="w-5 h-5" /> Resubmit Application
           </button>
         )}
@@ -372,8 +372,8 @@ export default function UnitDetail() {
                       className="w-full p-4 flex items-center justify-between hover:bg-white/40 active:bg-white/60 transition-colors text-left"
                     >
                       <div className="flex items-center gap-3">
-                        <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ backgroundColor: '#f5f3f1' }}>
-                          <Ticket className="w-4 h-4" style={{ color: '#8A8076' }} />
+                        <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ backgroundColor: '#EEF5FF' }}>
+                          <Ticket className="w-4 h-4" style={{ color: '#1684F2' }} />
                         </div>
                         <div>
                           <p className="text-sm font-semibold text-slate-800 capitalize">

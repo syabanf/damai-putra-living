@@ -78,7 +78,7 @@ const TransportCard = ({ transport, onSelect }) => (
       </div>
       <div className="text-right">
         <p className="text-xs text-slate-500 uppercase font-semibold tracking-wide">Price</p>
-        <p className="font-bold text-lg" style={{ color: '#1FB6D5' }}>${transport.price}</p>
+        <p className="font-bold text-lg" style={{ color: '#1684F2' }}>${transport.price}</p>
       </div>
     </div>
 
@@ -90,9 +90,9 @@ const TransportCard = ({ transport, onSelect }) => (
       </div>
 
       <div className="flex flex-col items-center gap-1">
-        <div className="w-2 h-2 rounded-full" style={{ background: '#1FB6D5' }} />
-        <div className="w-0.5 h-6" style={{ background: 'rgba(31,182,213,0.3)' }} />
-        <div className="w-2 h-2 rounded-full" style={{ background: '#1FB6D5' }} />
+        <div className="w-2 h-2 rounded-full" style={{ background: '#1684F2' }} />
+        <div className="w-0.5 h-6" style={{ background: 'rgba(22,132,242,0.3)' }} />
+        <div className="w-2 h-2 rounded-full" style={{ background: '#1684F2' }} />
       </div>
 
       <div className="flex-1 text-right">
@@ -134,7 +134,7 @@ export default function TransportResult() {
   };
 
   return (
-    <div className="min-h-screen pb-24" style={{ background: 'linear-gradient(160deg, #F5F4F2 0%, #edecea 55%, #e7e5e2 100%)' }}>
+    <div className="min-h-screen pb-24" style={{ background: 'linear-gradient(160deg, #F6F9FC 0%, #EEF5FF 55%, #E7F0FF 100%)' }}>
       {/* Header */}
       <div className="px-5 pt-12 pb-5 flex items-center gap-3 sticky top-0 z-20" style={{ background: 'rgba(255,255,255,0.82)', backdropFilter: 'blur(28px)', WebkitBackdropFilter: 'blur(28px)', borderBottom: '1px solid rgba(255,255,255,0.75)', boxShadow: '0 2px 8px rgba(90,80,70,0.10)' }}>
         <button onClick={() => navigate(-1)} className="w-9 h-9 rounded-xl flex items-center justify-center transition-all" style={{ background: 'rgba(255,255,255,0.72)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.85)' }}>
@@ -144,7 +144,7 @@ export default function TransportResult() {
       </div>
 
       {/* Route Summary */}
-      <div className="mx-4 mt-5 rounded-2xl p-4" style={{ background: 'rgba(31,182,213,0.08)', border: '1px solid rgba(31,182,213,0.2)' }}>
+      <div className="mx-4 mt-5 rounded-2xl p-4" style={{ background: 'rgba(22,132,242,0.08)', border: '1px solid rgba(22,132,242,0.2)' }}>
         <div className="flex items-center gap-2">
           <MapPin className="w-4 h-4 text-slate-600" />
           <p className="text-sm font-semibold text-slate-700">

@@ -4,6 +4,7 @@ import { createPageUrl } from '@/utils';
 import { motion, AnimatePresence } from 'framer-motion';
 import { appClient } from '@/api/appClient';
 import { ArrowRight, ChevronRight, Globe } from 'lucide-react';
+import IonLogo from '@/components/brand/IonLogo';
 
 const SLIDES = [
   {
@@ -67,10 +68,9 @@ export default function Onboarding() {
 
       {/* TOP BAR */}
       <div className="relative z-10 flex items-center justify-between px-6 pt-12 pb-2">
-        {/* Logo */}
-        <div>
-          <p className="text-white/70 text-[10px] tracking-widest uppercase">Damai Putra</p>
-          <p className="text-white font-bold text-base leading-tight" style={{ letterSpacing: '-0.01em' }}>Living</p>
+        <div className="rounded-2xl px-3 py-2 border border-white/25"
+          style={{ background: 'rgba(255,255,255,0.92)', backdropFilter: 'blur(12px)' }}>
+          <IonLogo className="w-32 h-auto" />
         </div>
 
         {/* Language selector */}
@@ -130,7 +130,7 @@ export default function Onboarding() {
               className="h-1.5 rounded-full transition-all duration-400"
               style={{
                 width: i === slide ? 28 : 6,
-                background: i === slide ? '#1F86C7' : 'rgba(255,255,255,0.3)',
+                background: i === slide ? '#1684F2' : 'rgba(255,255,255,0.3)',
               }}
             />
           ))}
@@ -140,7 +140,7 @@ export default function Onboarding() {
         <button
           onClick={handleNext}
           className="w-full h-14 rounded-2xl font-semibold text-base text-white flex items-center justify-center gap-2 mb-3"
-          style={{ background: '#1F86C7', boxShadow: '0 8px 28px rgba(31,134,199,0.40)' }}
+          style={{ background: '#1684F2', boxShadow: '0 8px 28px rgba(22,132,242,0.40)' }}
         >
           {slide === SLIDES.length - 1 ? (
             <> Get Started <ArrowRight className="w-5 h-5" /> </>

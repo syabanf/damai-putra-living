@@ -72,7 +72,7 @@ const TicketCard = ({ ticket, onClick }) => {
     >
       <div className="flex items-start gap-3">
         <div className="w-11 h-11 rounded-2xl flex items-center justify-center flex-shrink-0" style={{ background: '#f0f4f6' }}>
-          <Icon className="w-5 h-5" style={{ color: '#0F3D4C' }} />
+          <Icon className="w-5 h-5" style={{ color: '#231F20' }} />
         </div>
         <div className="flex-1 min-w-0">
           <p className="font-bold text-slate-800 text-sm capitalize">
@@ -177,11 +177,11 @@ export default function Tickets() {
 
   if (!hasApprovedUnit) {
     return (
-      <div ref={containerRef} className="min-h-screen pb-40 overflow-y-auto" style={{ background: 'linear-gradient(160deg, #F5F4F2 0%, #edecea 55%, #e7e5e2 100%)' }}>
+      <div ref={containerRef} className="min-h-screen pb-40 overflow-y-auto" style={{ background: 'linear-gradient(160deg, #F6F9FC 0%, #EEF5FF 55%, #E7F0FF 100%)' }}>
         <PullToRefreshIndicator isRefreshing={isRefreshing} />
-        <div className="px-5 pt-14 pb-6 rounded-b-[2rem] relative overflow-hidden" style={{ background: 'linear-gradient(150deg, #1a5068 0%, #0F3D4C 55%, #0a2d38 100%)' }}>
+        <div className="px-5 pt-14 pb-6 rounded-b-[2rem] relative overflow-hidden" style={{ background: 'linear-gradient(150deg, #231F20 0%, #231F20 55%, #111214 100%)' }}>
           <div className="absolute -top-8 -right-8 w-40 h-40 rounded-full opacity-10 bg-white pointer-events-none" />
-          <p className="text-white/50 text-[10px] font-semibold uppercase tracking-widest mb-1">Damai Putra Living</p>
+          <p className="text-white/50 text-[10px] font-semibold uppercase tracking-widest mb-1">ION</p>
           <h1 className="text-2xl font-bold text-white">Digital Permits</h1>
           <p className="text-white/50 text-sm mt-1">Permit & activity management</p>
         </div>
@@ -197,7 +197,7 @@ export default function Tickets() {
               </p>
               <Button onClick={() => navigate(createPageUrl('MyUnit'))}
                 className="text-white rounded-xl h-12 px-6"
-                style={{ background: 'linear-gradient(135deg, #1a5068, #0F3D4C)' }}>
+                style={{ background: 'linear-gradient(135deg, #231F20, #231F20)' }}>
                 Register Your Unit
               </Button>
             </GlassCard>
@@ -208,14 +208,14 @@ export default function Tickets() {
   }
 
   return (
-    <div ref={containerRef} className="min-h-screen pb-40 overflow-y-auto" style={{ background: 'linear-gradient(160deg, #F5F4F2 0%, #edecea 55%, #e7e5e2 100%)' }}>
+    <div ref={containerRef} className="min-h-screen pb-40 overflow-y-auto" style={{ background: 'linear-gradient(160deg, #F6F9FC 0%, #EEF5FF 55%, #E7F0FF 100%)' }}>
       <PullToRefreshIndicator isRefreshing={isRefreshing} />
-      <div className="px-5 pt-14 pb-6 rounded-b-[2.5rem] relative overflow-hidden" style={{ background: 'linear-gradient(150deg, #1e6080 0%, #0F3D4C 55%, #092a38 100%)' }}>
+      <div className="px-5 pt-14 pb-6 rounded-b-[2.5rem] relative overflow-hidden" style={{ background: 'linear-gradient(150deg, #1e6080 0%, #231F20 55%, #092a38 100%)' }}>
         <div className="absolute -top-10 -right-10 w-48 h-48 rounded-full opacity-[0.07] bg-white pointer-events-none" />
         <div className="absolute -bottom-6 -left-6 w-32 h-32 rounded-full opacity-[0.05] bg-white pointer-events-none" />
         <div className="flex justify-between items-start mb-5 relative">
           <div>
-            <p className="text-white/40 text-[10px] font-bold uppercase tracking-widest mb-1">Damai Putra Living</p>
+            <p className="text-white/40 text-[10px] font-bold uppercase tracking-widest mb-1">ION</p>
             <h1 className="text-[26px] font-bold text-white leading-tight">Digital Permits</h1>
             <p className="text-white/45 text-sm mt-0.5">Permit & activity management</p>
           </div>
@@ -237,7 +237,7 @@ export default function Tickets() {
           {TABS.map(tab => (
             <button key={tab.key} onClick={() => setActiveTab(tab.key)}
               className={`flex-shrink-0 px-3.5 py-2 rounded-xl text-xs font-semibold transition-all whitespace-nowrap ${activeTab === tab.key ? 'shadow-sm' : 'text-white/55 hover:text-white/80'}`}
-              style={activeTab === tab.key ? { background: '#ffffff', color: '#0F3D4C' } : {}}>
+              style={activeTab === tab.key ? { background: '#ffffff', color: '#231F20' } : {}}>
               {tab.label}
             </button>
           ))}
@@ -253,7 +253,7 @@ export default function Tickets() {
               onClick={() => setActiveCategory(cat.key)}
               className="flex-shrink-0 px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all whitespace-nowrap"
               style={activeCategory === cat.key
-                ? { background: '#0F3D4C', color: '#ffffff' }
+                ? { background: '#231F20', color: '#ffffff' }
                 : { background: '#ffffff', color: '#4a6272', border: '1px solid #dde4e8' }}
             >
               {cat.label}
@@ -281,7 +281,7 @@ export default function Tickets() {
               </p>
               {activeTab === 'all' && (
                 <Button onClick={() => navigate(createPageUrl('CreateTicket'))}
-                  className="mt-5 text-white rounded-2xl h-11 px-6" style={{ background: 'linear-gradient(135deg, #1e6080, #0F3D4C)' }}>
+                  className="mt-5 text-white rounded-2xl h-11 px-6" style={{ background: 'linear-gradient(135deg, #1e6080, #231F20)' }}>
                   <Plus className="w-4 h-4 mr-2" /> New Application
                 </Button>
               )}

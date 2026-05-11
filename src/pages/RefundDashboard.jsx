@@ -8,7 +8,7 @@ import RefundStatusBadge from '@/components/refund/RefundStatusBadge';
 
 const currency = (n) => `IDR ${Number(n || 0).toLocaleString('id-ID')}`;
 
-const StatCard = ({ label, value, sub, color = '#1FB6D5', icon: Icon }) => (
+const StatCard = ({ label, value, sub, color = '#1684F2', icon: Icon }) => (
   <div className="rounded-2xl p-4 bg-white border border-slate-100 shadow-sm flex items-start gap-3">
     <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: color + '18' }}>
       <Icon className="w-5 h-5" style={{ color }} />

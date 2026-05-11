@@ -83,7 +83,7 @@ export default function LotteryPage() {
 
   if (selectedLottery) {
     return (
-      <div className="min-h-screen pb-28" style={{ background: 'linear-gradient(160deg, #0F3D4C 0%, #0a2d38 55%, #091f28 100%)' }}>
+      <div className="min-h-screen pb-28" style={{ background: 'linear-gradient(160deg, #231F20 0%, #111214 55%, #091f28 100%)' }}>
         {/* Header */}
         <div className="px-5 pt-14 pb-4 flex items-center gap-3">
           <button onClick={() => { setSelectedLottery(null); setSpinResult(null); setShowResult(false); }}
@@ -154,7 +154,7 @@ export default function LotteryPage() {
                 transition={{ type: 'spring', stiffness: 280 }}
                 className="bg-white rounded-3xl p-8 text-center max-w-xs w-full">
                 <div className="w-20 h-20 rounded-full mx-auto mb-4 flex items-center justify-center"
-                  style={{ background: spinResult.color || '#1FB6D5' }}>
+                  style={{ background: spinResult.color || '#1684F2' }}>
                   <Gift className="w-10 h-10 text-white" />
                 </div>
                 <p className="text-slate-500 text-sm mb-1">Kamu mendapatkan...</p>
@@ -165,7 +165,7 @@ export default function LotteryPage() {
                 </div>
                 <button onClick={() => { setShowResult(false); setSpinResult(null); }}
                   className="w-full py-3 rounded-xl font-bold text-white text-base"
-                  style={{ background: 'linear-gradient(135deg, #1FB6D5, #0F3D4C)' }}>
+                  style={{ background: 'linear-gradient(135deg, #1684F2, #231F20)' }}>
                   Tutup
                 </button>
               </motion.div>
@@ -180,7 +180,7 @@ export default function LotteryPage() {
             <div className="grid grid-cols-2 gap-2">
               {selectedLottery.prizes.map((p, i) => (
                 <div key={i} className="flex items-center gap-2.5 p-3 rounded-xl" style={{ background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.1)' }}>
-                  <div className="w-4 h-4 rounded-full flex-shrink-0" style={{ background: p.color || '#1FB6D5' }} />
+                  <div className="w-4 h-4 rounded-full flex-shrink-0" style={{ background: p.color || '#1684F2' }} />
                   <div className="min-w-0">
                     <p className="text-white text-xs font-semibold truncate">{p.label}</p>
                     {p.description && <p className="text-white/40 text-[10px] truncate">{p.description}</p>}
@@ -196,14 +196,14 @@ export default function LotteryPage() {
 
   // List of lotteries
   return (
-    <div className="min-h-screen pb-28" style={{ background: 'linear-gradient(160deg, #F5F4F2 0%, #edecea 55%, #e7e5e2 100%)' }}>
-      <div className="px-5 pt-14 pb-5 rounded-b-[2rem]" style={{ background: 'linear-gradient(150deg, #1a5068 0%, #0F3D4C 55%, #0a2d38 100%)' }}>
+    <div className="min-h-screen pb-28" style={{ background: 'linear-gradient(160deg, #F6F9FC 0%, #EEF5FF 55%, #E7F0FF 100%)' }}>
+      <div className="px-5 pt-14 pb-5 rounded-b-[2rem]" style={{ background: 'linear-gradient(150deg, #231F20 0%, #231F20 55%, #111214 100%)' }}>
         <div className="flex items-center gap-3 mb-4">
           <button onClick={() => navigate(createPageUrl('Rewards'))} className="p-2 bg-white/10 rounded-xl text-white">
             <ChevronLeft className="w-5 h-5" />
           </button>
           <div>
-            <p className="text-white/50 text-[10px] font-semibold uppercase tracking-widest">Damai Putra Living</p>
+            <p className="text-white/50 text-[10px] font-semibold uppercase tracking-widest">ION</p>
             <h1 className="font-bold text-2xl text-white">Undian & Hadiah</h1>
           </div>
         </div>
@@ -254,7 +254,7 @@ export default function LotteryPage() {
               {lottery.description && <p className="text-xs text-slate-500 mb-3 line-clamp-2">{lottery.description}</p>}
               <div className="flex flex-wrap gap-3 text-xs text-slate-500">
                 <span className="flex items-center gap-1"><Star className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />{lottery.points_per_entry} poin/spin</span>
-                <span className="flex items-center gap-1"><Gift className="w-3.5 h-3.5 text-teal-500" />{lottery.prizes?.length || 0} hadiah</span>
+                <span className="flex items-center gap-1"><Gift className="w-3.5 h-3.5 text-blue-500" />{lottery.prizes?.length || 0} hadiah</span>
                 <span className="flex items-center gap-1"><Users className="w-3.5 h-3.5 text-slate-400" />{lottery.total_entries || 0} peserta</span>
                 {lottery.end_date && <span className="flex items-center gap-1"><Calendar className="w-3.5 h-3.5 text-slate-400" />s/d {new Date(lottery.end_date).toLocaleDateString('id-ID')}</span>}
               </div>

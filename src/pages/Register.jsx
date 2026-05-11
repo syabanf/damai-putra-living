@@ -7,10 +7,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Building2, Mail, Phone, Lock, Eye, EyeOff, User, ArrowLeft, Check } from 'lucide-react';
+import { Mail, Phone, Lock, Eye, EyeOff, User, ArrowLeft, Check } from 'lucide-react';
+import IonLogo from '@/components/brand/IonLogo';
 
-const BRAND = '#8A8076';
-const BRAND_DARK = '#6e6560';
+const BRAND = '#1684F2';
+const BRAND_DARK = '#0B57C2';
 
 export default function Register() {
   const navigate = useNavigate();
@@ -77,10 +78,10 @@ export default function Register() {
 
       <div className="px-6 pt-6 pb-8">
         <div className="flex items-center gap-3 mb-2">
-          <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ backgroundColor: '#f5f3f1' }}>
-            <Building2 className="w-5 h-5" style={{ color: BRAND }} />
+          <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-white border border-blue-100">
+            <IonLogo variant="mark" className="w-8 h-8" />
           </div>
-          <span className="text-sm font-medium" style={{ color: BRAND }}>Damai Putra</span>
+          <span className="text-sm font-medium" style={{ color: BRAND }}>ION</span>
         </div>
         <h1 className="text-2xl font-bold text-slate-800 mt-4">Create Account</h1>
         <p className="text-slate-500 mt-2">Join our community of residents</p>
@@ -154,7 +155,7 @@ export default function Register() {
                   <div key={level} className={`h-1 flex-1 rounded-full transition-colors ${
                     passwordStrength() >= level
                       ? level <= 1 ? 'bg-red-400' : level <= 2 ? 'bg-amber-400' : level <= 3 ? 'bg-stone-400' : 'bg-emerald-500'
-                      : 'bg-stone-200'
+                      : 'bg-slate-100'
                   }`} />
                 ))}
               </div>

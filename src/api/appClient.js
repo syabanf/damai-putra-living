@@ -217,7 +217,7 @@ const seedData = {
     {
       id: 'notification_001',
       user_email: 'resident@damaiputra.com',
-      title: 'Welcome to Damai Putra Living',
+      title: 'Welcome to ION',
       message: 'Your resident app is ready to use.',
       read: false,
       created_date: '2026-03-01T08:00:00.000Z',

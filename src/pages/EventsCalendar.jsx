@@ -88,7 +88,7 @@ export default function EventsCalendar() {
           {/* Day headers */}
           <div className="grid grid-cols-7 px-3 pt-3 pb-1">
             {DAYS.map(d => (
-              <div key={d} className="text-center text-[10px] font-bold py-1" style={{ color: '#8A7F73' }}>{d}</div>
+              <div key={d} className="text-center text-[10px] font-bold py-1" style={{ color: '#1684F2' }}>{d}</div>
             ))}
           </div>
 
@@ -103,9 +103,9 @@ export default function EventsCalendar() {
               return (
                 <button key={dateStr} onClick={() => setSelectedDate(dateStr)}
                   className="flex flex-col items-center py-1.5 rounded-xl transition-all"
-                  style={isSelected ? { background: '#1F86C7' } : isToday ? { background: 'rgba(31,134,199,0.12)' } : {}}>
-                  <span className={`text-sm font-semibold ${isSelected ? 'text-white' : isToday ? 'text-[#1F86C7]' : 'text-slate-700'}`}>{day}</span>
-                  {hasEvent && <div className={`w-1 h-1 rounded-full mt-0.5 ${isSelected ? 'bg-white' : 'bg-[#1F86C7]'}`} />}
+                  style={isSelected ? { background: '#1684F2' } : isToday ? { background: 'rgba(22,132,242,0.12)' } : {}}>
+                  <span className={`text-sm font-semibold ${isSelected ? 'text-white' : isToday ? 'text-[#1684F2]' : 'text-slate-700'}`}>{day}</span>
+                  {hasEvent && <div className={`w-1 h-1 rounded-full mt-0.5 ${isSelected ? 'bg-white' : 'bg-[#1684F2]'}`} />}
                 </button>
               );
             })}
@@ -115,7 +115,7 @@ export default function EventsCalendar() {
 
       {/* Events for selected date */}
       <div className="px-4 mt-5">
-        <p className="text-xs font-bold uppercase tracking-widest mb-3 px-1" style={{ color: '#8A7F73' }}>
+        <p className="text-xs font-bold uppercase tracking-widest mb-3 px-1" style={{ color: '#1684F2' }}>
           {selectedDate === today.toISOString().slice(0, 10) ? 'Today' : formatDateRange(selectedDate, selectedDate)}
         </p>
 

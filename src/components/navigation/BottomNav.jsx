@@ -71,7 +71,7 @@ export default function BottomNav({ currentPage }) {
                 <div
                   className={cn("w-10 h-10 rounded-xl flex items-center justify-center transition-all")}
                   style={isActive
-                    ? { background: 'linear-gradient(135deg, #1F86C7, #1669a0)', boxShadow: '0 4px 12px rgba(31,134,199,0.35)' }
+                    ? { background: 'linear-gradient(135deg, #1684F2, #0B57C2)', boxShadow: '0 4px 12px rgba(22,132,242,0.35)' }
                     : { background: 'transparent' }
                   }
                 >
@@ -82,7 +82,7 @@ export default function BottomNav({ currentPage }) {
                 </div>
                 <span
                   className={cn("text-[9px] font-semibold tracking-wide")}
-                  style={isActive ? { color: '#1F86C7' } : { color: '#94a3b8' }}
+                  style={isActive ? { color: '#1684F2' } : { color: '#94a3b8' }}
                 >
                   {item.label}
                 </span>

@@ -43,7 +43,7 @@ export default function PropertyCard({ property }) {
         )}
         {property.promo_badge && (
           <span className="absolute top-3 left-3 text-[10px] font-bold text-white px-2.5 py-1 rounded-full"
-            style={{ background: '#1F86C7' }}>
+            style={{ background: '#1684F2' }}>
             {property.promo_badge}
           </span>
         )}
@@ -56,7 +56,7 @@ export default function PropertyCard({ property }) {
 
       {/* Body */}
       <div className="p-4">
-        <span className="text-[11px] font-semibold uppercase tracking-wider" style={{ color: '#1F86C7' }}>
+        <span className="text-[11px] font-semibold uppercase tracking-wider" style={{ color: '#1684F2' }}>
           {CATEGORY_LABEL[property.category] || property.category}
         </span>
         <h3 className="font-bold text-slate-800 text-base mt-0.5 mb-2 leading-snug">{property.name}</h3>

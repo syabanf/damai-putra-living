@@ -28,7 +28,7 @@ export default function CulinaryDetail() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen pb-20" style={{ background: 'linear-gradient(160deg, #F5F4F2 0%, #edecea 55%, #e7e5e2 100%)' }}>
+      <div className="min-h-screen pb-20" style={{ background: 'linear-gradient(160deg, #F6F9FC 0%, #EEF5FF 55%, #E7F0FF 100%)' }}>
         <div className="flex items-center justify-center h-screen">
           <p className="text-slate-500">Loading...</p>
         </div>
@@ -38,7 +38,7 @@ export default function CulinaryDetail() {
 
   if (!tenant) {
     return (
-      <div className="min-h-screen pb-20" style={{ background: 'linear-gradient(160deg, #F5F4F2 0%, #edecea 55%, #e7e5e2 100%)' }}>
+      <div className="min-h-screen pb-20" style={{ background: 'linear-gradient(160deg, #F6F9FC 0%, #EEF5FF 55%, #E7F0FF 100%)' }}>
         <div className="px-5 pt-12 pb-5 flex items-center gap-3" style={{ background: 'rgba(255,255,255,0.85)', backdropFilter: 'blur(20px)', borderBottom: '1px solid rgba(255,255,255,0.9)' }}>
           <button onClick={() => navigate(-1)} className="w-9 h-9 rounded-xl flex items-center justify-center border border-slate-200 bg-slate-50">
             <ArrowLeft className="w-4 h-4 text-slate-600" />
@@ -53,7 +53,7 @@ export default function CulinaryDetail() {
   }
 
   return (
-    <div className="min-h-screen pb-20" style={{ background: 'linear-gradient(160deg, #F5F4F2 0%, #edecea 55%, #e7e5e2 100%)' }}>
+    <div className="min-h-screen pb-20" style={{ background: 'linear-gradient(160deg, #F6F9FC 0%, #EEF5FF 55%, #E7F0FF 100%)' }}>
       {/* Header */}
       <div className="px-5 pt-12 pb-5 flex items-center justify-between" style={{ background: 'rgba(255,255,255,0.85)', backdropFilter: 'blur(20px)', borderBottom: '1px solid rgba(255,255,255,0.9)' }}>
         <div className="flex items-center gap-3">
@@ -132,7 +132,7 @@ export default function CulinaryDetail() {
           <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }}>
             <a href={`https://wa.me/${tenant.contact.replace(/\D/g, '')}`} target="_blank" rel="noopener noreferrer"
               className="w-full py-3 px-4 rounded-2xl font-semibold text-white text-center transition-all active:scale-95"
-              style={{ background: 'linear-gradient(135deg, #1FB6D5 0%, #169ab5 100%)', boxShadow: '0 4px 12px rgba(31,182,213,0.3)' }}>
+              style={{ background: 'linear-gradient(135deg, #1684F2 0%, #0B57C2 100%)', boxShadow: '0 4px 12px rgba(22,132,242,0.3)' }}>
               Message on WhatsApp
             </a>
           </motion.div>

@@ -39,17 +39,17 @@ export default function PropertyDetail() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ background: 'linear-gradient(160deg, #F5F4F2 0%, #edecea 55%, #e7e5e2 100%)' }}>
-        <div className="w-8 h-8 border-2 border-[#1FB6D5] border-t-transparent rounded-full animate-spin" />
+      <div className="min-h-screen flex items-center justify-center" style={{ background: 'linear-gradient(160deg, #F6F9FC 0%, #EEF5FF 55%, #E7F0FF 100%)' }}>
+        <div className="w-8 h-8 border-2 border-[#1684F2] border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
 
   if (!property) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center px-6" style={{ background: 'linear-gradient(160deg, #F5F4F2 0%, #edecea 55%, #e7e5e2 100%)' }}>
+      <div className="min-h-screen flex flex-col items-center justify-center px-6" style={{ background: 'linear-gradient(160deg, #F6F9FC 0%, #EEF5FF 55%, #E7F0FF 100%)' }}>
         <p className="text-slate-500 font-medium">Property not found</p>
-        <button onClick={() => navigate(-1)} className="mt-4 text-sm text-[#1FB6D5] font-semibold">Go Back</button>
+        <button onClick={() => navigate(-1)} className="mt-4 text-sm text-[#1684F2] font-semibold">Go Back</button>
       </div>
     );
   }
@@ -71,7 +71,7 @@ export default function PropertyDetail() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col pb-28" style={{ background: 'linear-gradient(160deg, #F5F4F2 0%, #edecea 55%, #e7e5e2 100%)' }}>
+    <div className="min-h-screen flex flex-col pb-28" style={{ background: 'linear-gradient(160deg, #F6F9FC 0%, #EEF5FF 55%, #E7F0FF 100%)' }}>
 
       {/* Hero Gallery */}
       <div className="relative w-full aspect-video bg-slate-200 overflow-hidden">
@@ -95,7 +95,7 @@ export default function PropertyDetail() {
         {/* Promo badge */}
         {property.promo_badge && (
          <span className="absolute top-12 right-4 text-[10px] font-bold text-white px-2.5 py-1 rounded-full"
-           style={{ background: 'linear-gradient(135deg, #1FB6D5, #169ab5)' }}>
+           style={{ background: 'linear-gradient(135deg, #1684F2, #0B57C2)' }}>
            {property.promo_badge}
          </span>
         )}
@@ -117,7 +117,7 @@ export default function PropertyDetail() {
 
         {/* Basic info */}
         <div>
-          <span className="text-xs font-bold uppercase tracking-wider" style={{ color: '#1FB6D5' }}>
+          <span className="text-xs font-bold uppercase tracking-wider" style={{ color: '#1684F2' }}>
             {CATEGORY_LABEL[property.category] || property.category}
           </span>
           <h1 className="text-2xl font-bold text-slate-800 mt-0.5 leading-tight">{property.name}</h1>
@@ -164,7 +164,7 @@ export default function PropertyDetail() {
           <div className="flex items-center justify-between mb-3">
             <h2 className="font-bold text-slate-800 text-base">Information</h2>
             <button onClick={() => setShowAllInfo(!showAllInfo)}
-              className="text-sm font-semibold flex items-center gap-0.5" style={{ color: '#1FB6D5' }}>
+              className="text-sm font-semibold flex items-center gap-0.5" style={{ color: '#1684F2' }}>
               {showAllInfo ? 'Show Less' : 'View All'} <ChevronRight className="w-4 h-4" />
             </button>
           </div>
@@ -186,8 +186,8 @@ export default function PropertyDetail() {
               <h2 className="font-bold text-slate-800 text-base mb-3">Facilities</h2>
               <div className="grid grid-cols-2 gap-2">
                 {property.facilities.map((f, i) => (
-                  <div key={i} className="flex items-center gap-2 px-3 py-2.5 rounded-xl" style={{ background: 'rgba(31,182,213,0.1)', border: '1px solid rgba(31,182,213,0.2)' }}>
-                    <Zap className="w-4 h-4 flex-shrink-0" style={{ color: '#1FB6D5' }} />
+                  <div key={i} className="flex items-center gap-2 px-3 py-2.5 rounded-xl" style={{ background: 'rgba(22,132,242,0.1)', border: '1px solid rgba(22,132,242,0.2)' }}>
+                    <Zap className="w-4 h-4 flex-shrink-0" style={{ color: '#1684F2' }} />
                     <span className="text-sm text-slate-700 font-medium">{f}</span>
                   </div>
                 ))}
@@ -198,7 +198,7 @@ export default function PropertyDetail() {
 
         {/* Price */}
         {property.price_start && (
-          <div className="rounded-2xl p-4" style={{ background: 'rgba(31,182,213,0.15)', backdropFilter: 'blur(12px)', border: '1px solid rgba(31,182,213,0.3)', boxShadow: '0 2px 12px rgba(31,182,213,0.08)' }}>
+          <div className="rounded-2xl p-4" style={{ background: 'rgba(22,132,242,0.15)', backdropFilter: 'blur(12px)', border: '1px solid rgba(22,132,242,0.3)', boxShadow: '0 2px 12px rgba(22,132,242,0.08)' }}>
             <p className="text-xs text-slate-500 uppercase tracking-wider mb-1">Start From</p>
             <p className="text-3xl font-bold text-slate-800 leading-tight">
               IDR {formatPrice(property.price_start)}
@@ -213,7 +213,7 @@ export default function PropertyDetail() {
           <button
             onClick={handleContact}
             className="flex-1 h-13 rounded-2xl font-bold text-white text-base flex items-center justify-center gap-2 py-3"
-            style={{ background: 'linear-gradient(135deg, #1FB6D5, #169ab5)', boxShadow: '0 8px 24px rgba(31,182,213,0.35)' }}>
+            style={{ background: 'linear-gradient(135deg, #1684F2, #0B57C2)', boxShadow: '0 8px 24px rgba(22,132,242,0.35)' }}>
             <MessageCircle className="w-5 h-5" />
             Contact Us
           </button>

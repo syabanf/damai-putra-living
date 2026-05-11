@@ -83,13 +83,13 @@ export default function RewardDetail() {
   };
 
   if (!reward) return (
-    <div className="min-h-screen flex items-center justify-center" style={{ background: 'linear-gradient(160deg, #f0ede9 0%, #e8e4df 100%)' }}>
-      <div className="w-8 h-8 border-2 border-[#1F86C7] border-t-transparent rounded-full animate-spin" />
+    <div className="min-h-screen flex items-center justify-center" style={{ background: 'linear-gradient(160deg, #F6F9FC 0%, #EEF5FF 100%)' }}>
+      <div className="w-8 h-8 border-2 border-[#1684F2] border-t-transparent rounded-full animate-spin" />
     </div>
   );
 
   return (
-    <div className="min-h-screen pb-40" style={{ background: 'linear-gradient(160deg, #f0ede9 0%, #e8e4df 50%, #e2ddd8 100%)' }}>
+    <div className="min-h-screen pb-40" style={{ background: 'linear-gradient(160deg, #F6F9FC 0%, #EEF5FF 50%, #E7F0FF 100%)' }}>
       {/* Hero */}
       <div className="relative h-64 bg-slate-200 overflow-hidden">
         <img src={reward.image_url || 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=800&q=80'}
@@ -112,7 +112,7 @@ export default function RewardDetail() {
             <Star className="w-5 h-5 text-amber-400 fill-amber-400" />
             <span className="font-bold text-slate-800 text-lg">{reward.points_required?.toLocaleString()} Points</span>
           </div>
-          <span className={`text-xs font-bold px-3 py-1 rounded-full ${canClaim ? 'bg-[#e8f4fb] text-[#1F86C7]' : 'bg-red-50 text-red-500'}`}>
+          <span className={`text-xs font-bold px-3 py-1 rounded-full ${canClaim ? 'bg-[#e8f4fb] text-[#1684F2]' : 'bg-red-50 text-red-500'}`}>
             {canClaim ? 'You have enough points' : `You need ${(reward.points_required - myPoints).toLocaleString()} more`}
           </span>
         </div>
@@ -148,7 +148,7 @@ export default function RewardDetail() {
             <ul className="space-y-2">
               {reward.terms.map((t, i) => (
                 <li key={i} className="flex items-start gap-2">
-                  <CheckCircle className="w-3.5 h-3.5 text-[#1F86C7] flex-shrink-0 mt-0.5" />
+                  <CheckCircle className="w-3.5 h-3.5 text-[#1684F2] flex-shrink-0 mt-0.5" />
                   <span className="text-xs text-slate-500">{t}</span>
                 </li>
               ))}
@@ -159,7 +159,7 @@ export default function RewardDetail() {
         {/* CTA */}
         <button onClick={() => setShowModal(true)} disabled={!canClaim}
           className="w-full py-4 rounded-2xl font-bold text-white flex items-center justify-center gap-2 shadow-md active:scale-95 transition-transform disabled:opacity-40"
-          style={{ background: canClaim ? 'linear-gradient(135deg, #1F86C7, #1669a0)' : '#94a3b8' }}>
+          style={{ background: canClaim ? 'linear-gradient(135deg, #1684F2, #0B57C2)' : '#94a3b8' }}>
           <Star className="w-4 h-4" />
           Claim Reward
         </button>
@@ -187,7 +187,7 @@ export default function RewardDetail() {
                 <button onClick={() => setShowModal(false)} className="flex-1 py-3 rounded-2xl font-semibold border border-slate-200 text-slate-700 text-sm">Cancel</button>
                 <button onClick={handleClaim} disabled={claiming}
                   className="flex-1 py-3 rounded-2xl font-semibold text-white text-sm disabled:opacity-60"
-                  style={{ background: '#1F86C7' }}>
+                  style={{ background: '#1684F2' }}>
                   {claiming ? 'Processing...' : 'Confirm Claim'}
                 </button>
               </div>

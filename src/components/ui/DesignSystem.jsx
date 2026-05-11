@@ -1,9 +1,9 @@
 /**
- * Shared Design System — Damai Putra Living
+ * Shared Design System - ION
  * Color Palette:
- *   Brand Taupe: #8A7F73 / dark #5a524e
- *   Action Blue: #1F86C7 / dark #1669a0
- *   Bg: #F0EDE9 (warm off-white)
+ *   ION Blue: #1684F2 / dark #0B57C2
+ *   Action Blue: #1684F2 / dark #0B57C2
+ *   Bg: #F6F9FC (cool off-white)
  *   Surface: rgba(255,255,255,0.75) + backdrop-blur
  */
 
@@ -11,7 +11,7 @@ import React from 'react';
 import { cn } from '@/lib/utils';
 
 // Page background - theme responsive
-const getLightPageBg = () => 'linear-gradient(160deg, #f0ede9 0%, #e8e4df 50%, #e2ddd8 100%)';
+const getLightPageBg = () => 'linear-gradient(160deg, #F6F9FC 0%, #EEF5FF 50%, #E7F0FF 100%)';
 const getDarkPageBg = () => 'linear-gradient(160deg, #1a1a1a 0%, #2a2a2a 50%, #3a3a3a 100%)';
 export const PAGE_BG = typeof window !== 'undefined' && window.matchMedia('(prefers-color-scheme: dark)').matches ? getDarkPageBg() : getLightPageBg();
 
@@ -57,11 +57,11 @@ export const GlassHeader = ({ children, className = '' }) => {
   );
 };
 
-// Brand gradient header (taupe→dark)
+// Brand gradient header (blue to ink)
 export const BrandHeader = ({ children, className = '' }) => (
   <div
     className={cn('px-5 rounded-b-3xl', className)}
-    style={{ background: 'linear-gradient(150deg, #8A7F73 0%, #6e6560 45%, #3d3733 100%)' }}
+    style={{ background: 'linear-gradient(150deg, #1684F2 0%, #0B57C2 45%, #111214 100%)' }}
   >
     {children}
   </div>
@@ -76,7 +76,7 @@ export const PrimaryButton = ({ children, onClick, disabled, className = '' }) =
       'py-4 rounded-2xl font-bold text-white flex items-center justify-center gap-2 shadow-md active:scale-95 transition-transform disabled:opacity-40',
       className
     )}
-    style={{ background: disabled ? '#94a3b8' : 'linear-gradient(135deg, #1F86C7, #1669a0)' }}
+    style={{ background: disabled ? '#94a3b8' : 'linear-gradient(135deg, #1684F2, #0B57C2)' }}
   >
     {children}
   </button>
@@ -88,7 +88,7 @@ export const Chip = ({ label, active, onClick }) => (
     onClick={onClick}
     className="px-4 py-1.5 rounded-full text-sm font-semibold whitespace-nowrap transition-all"
     style={active
-      ? { background: '#1F86C7', color: '#fff', boxShadow: '0 2px 8px rgba(31,134,199,0.35)' }
+      ? { background: '#1684F2', color: '#fff', boxShadow: '0 2px 8px rgba(22,132,242,0.35)' }
       : { background: 'rgba(255,255,255,0.65)', color: '#6b7280', border: '1px solid rgba(255,255,255,0.8)' }}
   >
     {label}

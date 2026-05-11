@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import { motion } from 'framer-motion';
 import { FlaskConical } from 'lucide-react';
+import IonLogo from '@/components/brand/IonLogo';
 
 export default function Splash() {
   const navigate = useNavigate();
@@ -16,15 +17,14 @@ export default function Splash() {
 
   return (
     <div className="min-h-screen relative overflow-hidden flex flex-col items-center justify-center">
-      {/* Background lifestyle image */}
+      {/* Background image */}
       <div
         className="absolute inset-0 bg-cover bg-center"
         style={{
-          backgroundImage: `url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=90')`,
+          backgroundImage: `url('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=900&q=90')`,
         }}
       />
-      {/* Dark gradient overlay */}
-      <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.55) 60%, rgba(0,0,0,0.85) 100%)' }} />
+      <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, rgba(0,0,0,0.30) 0%, rgba(7,20,34,0.62) 56%, rgba(0,0,0,0.92) 100%)' }} />
 
       {/* Content */}
       <div className="relative z-10 flex flex-col items-center justify-center flex-1 px-8">
@@ -34,14 +34,9 @@ export default function Splash() {
           transition={{ duration: 0.8, ease: 'easeOut' }}
           className="flex flex-col items-center"
         >
-          {/* Logo mark */}
-          <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-6 border border-white/30"
-            style={{ background: 'rgba(255,255,255,0.12)', backdropFilter: 'blur(12px)' }}>
-            <img
-              src="https://images.unsplash.com/photo-1560179707-f14e90ef3623?w=80&q=80"
-              alt="DP"
-              className="w-10 h-10 rounded-xl object-cover"
-            />
+          <div className="w-64 rounded-3xl flex items-center justify-center mb-7 px-6 py-5 border border-white/40"
+            style={{ background: 'rgba(255,255,255,0.94)', backdropFilter: 'blur(16px)', boxShadow: '0 18px 60px rgba(0,0,0,0.28)' }}>
+            <IonLogo variant="stacked" className="w-full h-auto" />
           </div>
 
           <motion.p
@@ -50,7 +45,7 @@ export default function Splash() {
             transition={{ delay: 0.3, duration: 0.6 }}
             className="text-white/60 text-xs tracking-[0.25em] uppercase mb-1"
           >
-            Damai Putra Group
+            Integrity On Network
           </motion.p>
 
           <motion.h1
@@ -59,9 +54,7 @@ export default function Splash() {
             transition={{ delay: 0.45, duration: 0.6 }}
             className="text-4xl font-bold text-white tracking-tight text-center leading-tight"
           >
-            Damai Putra
-            <br />
-            <span style={{ color: '#1FB6D5' }}>Living</span>
+            ION
           </motion.h1>
 
           <motion.p
@@ -70,7 +63,7 @@ export default function Splash() {
             transition={{ delay: 0.7, duration: 0.6 }}
             className="text-white/50 text-sm mt-3 tracking-wider text-center"
           >
-            Your Premium Lifestyle Companion
+            Connected service experience
           </motion.p>
         </motion.div>
       </div>

@@ -7,7 +7,7 @@ import { ArrowLeft, Share2, CheckCircle2, Copy, MapPin, Star } from 'lucide-reac
 import { motion } from 'framer-motion';
 
 const STATUS_CFG = {
-  unused:    { label: 'Unused',    bg: '#e6f8fb', color: '#1FB6D5' },
+  unused:    { label: 'Unused',    bg: '#EAF3FF', color: '#1684F2' },
   used:      { label: 'Used',      bg: '#f1f5f9', color: '#94a3b8' },
   expired:   { label: 'Expired',   bg: '#fef2f2', color: '#ef4444' },
   cancelled: { label: 'Cancelled', bg: '#fef2f2', color: '#ef4444' },
@@ -67,15 +67,15 @@ export default function RewardReceipt() {
   };
 
   if (!claim) return (
-    <div className="min-h-screen flex items-center justify-center" style={{ background: 'linear-gradient(160deg, #F5F4F2 0%, #edecea 100%)' }}>
-      <div className="w-8 h-8 border-2 border-[#1FB6D5] border-t-transparent rounded-full animate-spin" />
+    <div className="min-h-screen flex items-center justify-center" style={{ background: 'linear-gradient(160deg, #F6F9FC 0%, #EEF5FF 100%)' }}>
+      <div className="w-8 h-8 border-2 border-[#1684F2] border-t-transparent rounded-full animate-spin" />
     </div>
   );
 
   const statusCfg = STATUS_CFG[claim.status] || STATUS_CFG.unused;
 
   return (
-    <div className="min-h-screen pb-10" style={{ background: 'linear-gradient(160deg, #F5F4F2 0%, #edecea 55%, #e7e5e2 100%)' }}>
+    <div className="min-h-screen pb-10" style={{ background: 'linear-gradient(160deg, #F6F9FC 0%, #EEF5FF 55%, #E7F0FF 100%)' }}>
       {/* Header */}
       <div className="px-5 pt-12 pb-5 flex items-center justify-between" style={{ background: 'rgba(255,255,255,0.85)', backdropFilter: 'blur(20px)', borderBottom: '1px solid rgba(255,255,255,0.9)' }}>
         <div className="flex items-center gap-3">
@@ -176,7 +176,7 @@ export default function RewardReceipt() {
             <ul className="space-y-1.5">
               {claim.terms.map((t, i) => (
                 <li key={i} className="flex items-start gap-2">
-                  <div className="w-1.5 h-1.5 rounded-full bg-[#1FB6D5] flex-shrink-0 mt-1.5" />
+                  <div className="w-1.5 h-1.5 rounded-full bg-[#1684F2] flex-shrink-0 mt-1.5" />
                   <span className="text-xs text-slate-500">{t}</span>
                 </li>
               ))}
@@ -190,7 +190,7 @@ export default function RewardReceipt() {
             className="flex gap-3">
             <button onClick={() => useMutation_.mutate()} disabled={using}
               className="flex-1 py-4 rounded-2xl font-bold text-white flex items-center justify-center gap-2 shadow-md active:scale-95 transition-transform disabled:opacity-60"
-              style={{ background: 'linear-gradient(135deg, #1F86C7, #1669a0)' }}>
+              style={{ background: 'linear-gradient(135deg, #1684F2, #0B57C2)' }}>
               <CheckCircle2 className="w-4 h-4" />
               {using ? 'Processing...' : 'Mark as Used'}
             </button>

@@ -256,16 +256,16 @@ export default function CreateTicket() {
   const back = () => step > 1 ? setStep(s => s - 1) : navigate(-1);
 
   return (
-    <div className="min-h-screen pb-40" style={{ background: 'linear-gradient(160deg, #F5F4F2 0%, #edecea 55%, #e7e5e2 100%)' }}>
+    <div className="min-h-screen pb-40" style={{ background: 'linear-gradient(160deg, #F6F9FC 0%, #EEF5FF 55%, #E7F0FF 100%)' }}>
       {/* Header */}
-      <div className="px-5 pt-14 pb-5 rounded-b-3xl" style={{ background: 'linear-gradient(150deg, #1a5068 0%, #0F3D4C 55%, #0a2d38 100%)' }}>
+      <div className="px-5 pt-14 pb-5 rounded-b-3xl" style={{ background: 'linear-gradient(150deg, #231F20 0%, #231F20 55%, #111214 100%)' }}>
         <div className="flex items-center gap-3 mb-4">
           <button onClick={back}
             className="w-9 h-9 bg-white/15 rounded-xl flex items-center justify-center border border-white/20 flex-shrink-0">
             <ArrowLeft className="w-5 h-5 text-white" />
           </button>
           <div className="flex-1 min-w-0">
-            <p className="text-white/50 text-xs">Damai Putra Living</p>
+            <p className="text-white/50 text-xs">ION</p>
             <h1 className="text-xl font-bold text-white truncate">
               {step === 1 ? 'New Permit Application' : selectedPermit?.label || 'New Permit'}
             </h1>
@@ -305,7 +305,7 @@ export default function CreateTicket() {
                 <StepApplicant form={form} set={set} approvedUnits={approvedUnits} />
                 <Button onClick={next} disabled={!canProceed()}
                   className="w-full py-3 text-white rounded-2xl font-semibold"
-                  style={{ background: 'linear-gradient(135deg, #1FB6D5, #169ab5)' }}>
+                  style={{ background: 'linear-gradient(135deg, #1684F2, #0B57C2)' }}>
                   Continue <ChevronRight className="w-5 h-5 ml-1" />
                 </Button>
               </div>
@@ -355,7 +355,7 @@ export default function CreateTicket() {
                 )}
                 <Button onClick={next}
                   className="w-full py-3 text-white rounded-2xl font-semibold"
-                  style={{ background: 'linear-gradient(135deg, #1FB6D5, #169ab5)' }}>
+                  style={{ background: 'linear-gradient(135deg, #1684F2, #0B57C2)' }}>
                   Lanjut ke Detail Aktivitas <ChevronRight className="w-5 h-5 ml-1" />
                 </Button>
               </div>
@@ -372,7 +372,7 @@ export default function CreateTicket() {
                 />
                 <Button onClick={next} disabled={!canProceed()}
                   className="w-full py-3 text-white rounded-2xl font-semibold"
-                  style={{ background: 'linear-gradient(135deg, #1FB6D5, #169ab5)' }}>
+                  style={{ background: 'linear-gradient(135deg, #1684F2, #0B57C2)' }}>
                   Lanjut ke Dokumen <ChevronRight className="w-5 h-5 ml-1" />
                 </Button>
               </div>
@@ -392,7 +392,7 @@ export default function CreateTicket() {
                 />
                 <Button onClick={handleSubmit} disabled={mutation.isPending}
                   className="w-full py-3 text-white rounded-2xl font-semibold"
-                  style={{ background: 'linear-gradient(135deg, #1FB6D5, #169ab5)' }}>
+                  style={{ background: 'linear-gradient(135deg, #1684F2, #0B57C2)' }}>
                   {mutation.isPending ? (
                     <div className="flex items-center gap-2 justify-center">
                       <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />

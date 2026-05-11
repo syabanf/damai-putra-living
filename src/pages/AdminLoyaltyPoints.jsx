@@ -63,7 +63,7 @@ export default function AdminLoyaltyPoints() {
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
         {[
           { label: 'Total Poin Beredar', value: totalPoints.toLocaleString(), icon: Star, color: 'text-amber-500', bg: 'bg-amber-50' },
-          { label: 'Total Member', value: totalMembers, icon: Users, color: 'text-teal-600', bg: 'bg-teal-50' },
+          { label: 'Total Member', value: totalMembers, icon: Users, color: 'text-blue-600', bg: 'bg-blue-50' },
           { label: 'Scan Struk', value: totalReceipts, icon: TrendingUp, color: 'text-blue-600', bg: 'bg-blue-50' },
           { label: 'Reward Diklaim', value: totalClaims, icon: Award, color: 'text-purple-600', bg: 'bg-purple-50' },
         ].map(s => (
@@ -85,7 +85,7 @@ export default function AdminLoyaltyPoints() {
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
           <input value={search} onChange={e => setSearch(e.target.value)}
             placeholder="Cari nama atau email member..."
-            className="w-full pl-9 pr-3 py-2 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/30" />
+            className="w-full pl-9 pr-3 py-2 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/30" />
         </div>
       </div>
 
@@ -125,7 +125,7 @@ export default function AdminLoyaltyPoints() {
                     <td className="px-4 py-3 text-slate-600">{(r.total_redeemed || 0).toLocaleString()}</td>
                     <td className="px-4 py-3">
                       <button onClick={() => { setSelected(r); setShowAdjust(true); }}
-                        className="text-teal-600 hover:text-teal-800 flex items-center gap-1 text-xs font-semibold">
+                        className="text-blue-600 hover:text-blue-800 flex items-center gap-1 text-xs font-semibold">
                         Adjust <Plus className="w-3 h-3" />
                       </button>
                     </td>
@@ -190,19 +190,19 @@ export default function AdminLoyaltyPoints() {
               <input type="number" value={adjustPoints}
                 onChange={e => setAdjustPoints(e.target.value)}
                 placeholder="e.g. 100 atau -50"
-                className="w-full px-3 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/30" />
+                className="w-full px-3 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/30" />
             </div>
             <div className="mb-5">
               <label className="text-xs font-semibold text-slate-600 mb-1 block">Catatan (opsional)</label>
               <input type="text" value={adjustNote}
                 onChange={e => setAdjustNote(e.target.value)}
                 placeholder="Alasan penyesuaian..."
-                className="w-full px-3 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/30" />
+                className="w-full px-3 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/30" />
             </div>
             <button
               onClick={() => adjustMutation.mutate({ record: selected, delta: parseInt(adjustPoints) || 0 })}
               disabled={!adjustPoints || adjustMutation.isPending}
-              className="w-full py-2.5 rounded-xl bg-teal-600 text-white text-sm font-semibold hover:bg-teal-700 disabled:opacity-50 flex items-center justify-center gap-2">
+              className="w-full py-2.5 rounded-xl bg-blue-600 text-white text-sm font-semibold hover:bg-blue-700 disabled:opacity-50 flex items-center justify-center gap-2">
               <Save className="w-4 h-4" />
               {adjustMutation.isPending ? 'Menyimpan...' : 'Simpan Perubahan'}
             </button>

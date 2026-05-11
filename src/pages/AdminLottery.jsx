@@ -19,16 +19,16 @@ function PrizeEditor({ prizes, onChange }) {
     <div className="space-y-2">
       {prizes.map((p, i) => (
         <div key={i} className="flex items-center gap-2 p-2 bg-slate-50 rounded-xl">
-          <input type="color" value={p.color || '#1FB6D5'} onChange={e => update(i, 'color', e.target.value)}
+          <input type="color" value={p.color || '#1684F2'} onChange={e => update(i, 'color', e.target.value)}
             className="w-8 h-8 rounded-lg cursor-pointer border-0 p-0.5 bg-white" />
           <input value={p.label} onChange={e => update(i, 'label', e.target.value)}
-            placeholder="Nama hadiah" className="flex-1 h-8 px-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-400" />
+            placeholder="Nama hadiah" className="flex-1 h-8 px-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" />
           <input value={p.description} onChange={e => update(i, 'description', e.target.value)}
-            placeholder="Keterangan" className="flex-1 h-8 px-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-400" />
+            placeholder="Keterangan" className="flex-1 h-8 px-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" />
           <button onClick={() => remove(i)} className="p-1.5 text-red-400 hover:bg-red-50 rounded-lg"><Trash2 className="w-3.5 h-3.5" /></button>
         </div>
       ))}
-      <button onClick={add} className="w-full py-2 border-2 border-dashed border-slate-300 rounded-xl text-sm text-slate-500 hover:border-teal-400 hover:text-teal-600 transition-colors flex items-center justify-center gap-2">
+      <button onClick={add} className="w-full py-2 border-2 border-dashed border-slate-300 rounded-xl text-sm text-slate-500 hover:border-blue-400 hover:text-blue-600 transition-colors flex items-center justify-center gap-2">
         <Plus className="w-4 h-4" /> Tambah Hadiah
       </button>
     </div>
@@ -51,44 +51,44 @@ function LotteryForm({ initial, onSave, onCancel }) {
         <div className="space-y-1.5">
           <label className="text-xs font-semibold text-slate-600">Judul Undian *</label>
           <input value={form.title} onChange={e => setForm(f => ({ ...f, title: e.target.value }))}
-            placeholder="Misal: Lucky Draw Agustus 2026" className="w-full h-10 px-3 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-400" />
+            placeholder="Misal: Lucky Draw Agustus 2026" className="w-full h-10 px-3 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-400" />
         </div>
         <div className="space-y-1.5">
           <label className="text-xs font-semibold text-slate-600">Poin Per Undian</label>
           <input type="number" value={form.points_per_entry} onChange={e => setForm(f => ({ ...f, points_per_entry: Number(e.target.value) }))}
-            className="w-full h-10 px-3 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-400" />
+            className="w-full h-10 px-3 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-400" />
         </div>
         <div className="space-y-1.5">
           <label className="text-xs font-semibold text-slate-600">Maks. Undian Per User</label>
           <input type="number" value={form.max_entries_per_user} onChange={e => setForm(f => ({ ...f, max_entries_per_user: Number(e.target.value) }))}
-            className="w-full h-10 px-3 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-400" />
+            className="w-full h-10 px-3 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-400" />
         </div>
         <div className="space-y-1.5">
           <label className="text-xs font-semibold text-slate-600">Image URL (opsional)</label>
           <input value={form.image_url} onChange={e => setForm(f => ({ ...f, image_url: e.target.value }))}
-            placeholder="https://..." className="w-full h-10 px-3 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-400" />
+            placeholder="https://..." className="w-full h-10 px-3 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-400" />
         </div>
         <div className="space-y-1.5">
           <label className="text-xs font-semibold text-slate-600">Tanggal Mulai</label>
           <input type="date" value={form.start_date} onChange={e => setForm(f => ({ ...f, start_date: e.target.value }))}
-            className="w-full h-10 px-3 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-400" />
+            className="w-full h-10 px-3 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-400" />
         </div>
         <div className="space-y-1.5">
           <label className="text-xs font-semibold text-slate-600">Tanggal Selesai</label>
           <input type="date" value={form.end_date} onChange={e => setForm(f => ({ ...f, end_date: e.target.value }))}
-            className="w-full h-10 px-3 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-400" />
+            className="w-full h-10 px-3 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-400" />
         </div>
       </div>
       <div className="space-y-1.5">
         <label className="text-xs font-semibold text-slate-600">Deskripsi</label>
         <textarea value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))}
           rows={2} placeholder="Deskripsi undian..."
-          className="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm resize-none focus:outline-none focus:ring-2 focus:ring-teal-400" />
+          className="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm resize-none focus:outline-none focus:ring-2 focus:ring-blue-400" />
       </div>
       <div className="flex items-center gap-3">
         <label className="text-xs font-semibold text-slate-600">Status Aktif</label>
         <button onClick={() => setForm(f => ({ ...f, is_active: !f.is_active }))}
-          className={`relative w-11 h-6 rounded-full transition-colors ${form.is_active ? 'bg-teal-500' : 'bg-slate-300'}`}>
+          className={`relative w-11 h-6 rounded-full transition-colors ${form.is_active ? 'bg-blue-500' : 'bg-slate-300'}`}>
           <div className={`absolute top-1 w-4 h-4 bg-white rounded-full shadow transition-transform ${form.is_active ? 'translate-x-6' : 'translate-x-1'}`} />
         </button>
       </div>
@@ -108,7 +108,7 @@ function LotteryForm({ initial, onSave, onCancel }) {
       <div className="flex gap-3 pt-2">
         <button onClick={onCancel} className="flex-1 py-2.5 border border-slate-200 rounded-xl text-sm font-semibold text-slate-600 hover:bg-slate-50">Batal</button>
         <button onClick={() => onSave(form)} disabled={!form.title}
-          className="flex-1 py-2.5 bg-teal-600 text-white rounded-xl text-sm font-semibold hover:bg-teal-700 disabled:opacity-50">Simpan</button>
+          className="flex-1 py-2.5 bg-blue-600 text-white rounded-xl text-sm font-semibold hover:bg-blue-700 disabled:opacity-50">Simpan</button>
       </div>
     </div>
   );
@@ -146,7 +146,7 @@ function EntriesPanel({ lottery }) {
       <div className="space-y-2 max-h-72 overflow-y-auto">
         {entries.map((e, i) => (
           <div key={e.id} className="flex items-center gap-3 p-3 bg-slate-50 rounded-xl">
-            <span className="w-6 h-6 rounded-full bg-teal-100 text-teal-700 text-xs font-bold flex items-center justify-center flex-shrink-0">{i + 1}</span>
+            <span className="w-6 h-6 rounded-full bg-blue-100 text-blue-700 text-xs font-bold flex items-center justify-center flex-shrink-0">{i + 1}</span>
             <div className="flex-1 min-w-0">
               <p className="text-sm font-semibold text-slate-800 truncate">{e.user_name || e.user_email}</p>
               <p className="text-xs text-slate-400">{e.points_spent} poin</p>
@@ -217,10 +217,10 @@ function NameRoulettePanel({ lottery }) {
       </div>
 
       {winner && (
-        <div className="p-4 bg-teal-50 border border-teal-200 rounded-2xl space-y-3">
+        <div className="p-4 bg-blue-50 border border-blue-200 rounded-2xl space-y-3">
           <div className="flex items-center gap-2">
-            <Trophy className="w-5 h-5 text-teal-600" />
-            <p className="text-sm font-bold text-teal-800">Terpilih: <span className="text-teal-700">{winner.name}</span></p>
+            <Trophy className="w-5 h-5 text-blue-600" />
+            <p className="text-sm font-bold text-blue-800">Terpilih: <span className="text-blue-700">{winner.name}</span></p>
           </div>
           <div className="space-y-1.5">
             <label className="text-xs font-semibold text-slate-600">Hadiah yang Diterima *</label>
@@ -228,7 +228,7 @@ function NameRoulettePanel({ lottery }) {
               value={prize}
               onChange={e => setPrize(e.target.value)}
               placeholder="Contoh: Smart TV 43&quot;, Voucher Rp 1.000.000, dll"
-              className="w-full h-10 px-3 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-400"
+              className="w-full h-10 px-3 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
             />
           </div>
           <button
@@ -283,7 +283,7 @@ export default function AdminLottery() {
           <p className="text-slate-500 text-sm">{lotteries.length} undian terdaftar</p>
         </div>
         <button onClick={() => { setShowForm(true); setEditItem(null); }}
-          className="flex items-center gap-2 bg-teal-600 text-white px-5 py-2.5 rounded-xl text-sm font-semibold hover:bg-teal-700 transition-colors">
+          className="flex items-center gap-2 bg-blue-600 text-white px-5 py-2.5 rounded-xl text-sm font-semibold hover:bg-blue-700 transition-colors">
           <Plus className="w-4 h-4" /> Buat Undian
         </button>
       </div>
@@ -319,7 +319,7 @@ export default function AdminLottery() {
                 {lottery.image_url ? (
                   <img src={lottery.image_url} alt={lottery.title} className="w-16 h-16 rounded-xl object-cover flex-shrink-0" />
                 ) : (
-                  <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-teal-400 to-teal-600 flex items-center justify-center flex-shrink-0">
+                  <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center flex-shrink-0">
                     <Gift className="w-7 h-7 text-white" />
                   </div>
                 )}
@@ -343,7 +343,7 @@ export default function AdminLottery() {
                 </div>
                 <div className="flex items-center gap-2 flex-shrink-0">
                   <button onClick={() => toggleActive(lottery)}
-                    className={`px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all ${lottery.is_active ? 'border-slate-200 text-slate-600 hover:bg-slate-50' : 'border-teal-200 text-teal-600 hover:bg-teal-50'}`}>
+                    className={`px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all ${lottery.is_active ? 'border-slate-200 text-slate-600 hover:bg-slate-50' : 'border-blue-200 text-blue-600 hover:bg-blue-50'}`}>
                     {lottery.is_active ? 'Nonaktifkan' : 'Aktifkan'}
                   </button>
                   <button onClick={() => setEditItem(lottery)} className="p-2 hover:bg-slate-100 rounded-xl"><Edit2 className="w-4 h-4 text-slate-500" /></button>
@@ -362,7 +362,7 @@ export default function AdminLottery() {
                 <div className="flex border-b border-slate-100">
                   {['prizes', 'entries', 'roulette'].map(tab => (
                     <button key={tab} onClick={() => setActivePanel(p => ({ ...p, [lottery.id]: tab }))}
-                      className={`flex-1 py-2.5 text-xs font-semibold transition-colors capitalize ${(activePanel[lottery.id] || 'prizes') === tab ? 'text-teal-600 border-b-2 border-teal-600' : 'text-slate-500 hover:text-slate-700'}`}>
+                      className={`flex-1 py-2.5 text-xs font-semibold transition-colors capitalize ${(activePanel[lottery.id] || 'prizes') === tab ? 'text-blue-600 border-b-2 border-blue-600' : 'text-slate-500 hover:text-slate-700'}`}>
                       {tab === 'prizes' ? '🎁 Hadiah' : tab === 'entries' ? '👥 Peserta' : '🎡 Roulette'}
                     </button>
                   ))}
@@ -376,7 +376,7 @@ export default function AdminLottery() {
                         <div className="space-y-2">
                           {(lottery.prizes || []).map((p, i) => (
                             <div key={i} className="flex items-center gap-3 p-3 bg-slate-50 rounded-xl">
-                              <div className="w-5 h-5 rounded-full flex-shrink-0" style={{ background: p.color || '#1FB6D5' }} />
+                              <div className="w-5 h-5 rounded-full flex-shrink-0" style={{ background: p.color || '#1684F2' }} />
                               <div>
                                 <p className="text-sm font-semibold text-slate-800">{p.label}</p>
                                 {p.description && <p className="text-xs text-slate-400">{p.description}</p>}

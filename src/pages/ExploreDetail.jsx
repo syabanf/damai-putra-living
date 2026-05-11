@@ -27,15 +27,15 @@ export default function ExploreDetail() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ background: 'linear-gradient(160deg, #f0ede9 0%, #e8e4df 100%)' }}>
-        <div className="w-8 h-8 border-2 border-[#1F86C7] border-t-transparent rounded-full animate-spin" />
+      <div className="min-h-screen flex items-center justify-center" style={{ background: 'linear-gradient(160deg, #F6F9FC 0%, #EEF5FF 100%)' }}>
+        <div className="w-8 h-8 border-2 border-[#1684F2] border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
 
   if (!destination) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ background: 'linear-gradient(160deg, #f0ede9 0%, #e8e4df 100%)' }}>
+      <div className="min-h-screen flex items-center justify-center" style={{ background: 'linear-gradient(160deg, #F6F9FC 0%, #EEF5FF 100%)' }}>
         <p className="text-slate-500">Destination not found.</p>
       </div>
     );
@@ -44,7 +44,7 @@ export default function ExploreDetail() {
   const allImages = [destination.hero_image, ...(destination.gallery || [])].filter(Boolean);
 
   return (
-    <div className="min-h-screen pb-10" style={{ background: 'linear-gradient(160deg, #f0ede9 0%, #e8e4df 50%, #e2ddd8 100%)' }}>
+    <div className="min-h-screen pb-10" style={{ background: 'linear-gradient(160deg, #F6F9FC 0%, #EEF5FF 50%, #E7F0FF 100%)' }}>
       {/* Hero */}
       <div className="relative h-72 overflow-hidden bg-slate-200">
         {allImages.length > 0 ? (
@@ -99,7 +99,7 @@ export default function ExploreDetail() {
           {destination.opening_hours && (
             <div className="flex items-center gap-3 px-4 py-3.5">
               <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: '#e8f4fb' }}>
-                <Clock className="w-4.5 h-4.5" style={{ color: '#1F86C7', width: 18, height: 18 }} />
+                <Clock className="w-4.5 h-4.5" style={{ color: '#1684F2', width: 18, height: 18 }} />
               </div>
               <div className="flex-1">
                 <p className="text-xs text-slate-400 font-semibold">Opening Hours</p>
@@ -109,8 +109,8 @@ export default function ExploreDetail() {
           )}
           {destination.location && (
             <div className="flex items-center gap-3 px-4 py-3.5">
-              <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: '#f5f3f0' }}>
-                <MapPin className="w-4.5 h-4.5" style={{ color: '#8A7F73', width: 18, height: 18 }} />
+              <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: '#EEF5FF' }}>
+                <MapPin className="w-4.5 h-4.5" style={{ color: '#1684F2', width: 18, height: 18 }} />
               </div>
               <div className="flex-1">
                 <p className="text-xs text-slate-400 font-semibold">Location</p>
@@ -126,7 +126,7 @@ export default function ExploreDetail() {
             <div className="flex items-center justify-between mb-3">
               <h2 className="font-bold text-slate-800">Tenants</h2>
               <button onClick={() => navigate(createPageUrl('TenantList') + `?destination_id=${id}&destination_name=${encodeURIComponent(destination.name)}`)}
-                className="text-xs font-semibold flex items-center gap-0.5" style={{ color: '#1F86C7' }}>
+                className="text-xs font-semibold flex items-center gap-0.5" style={{ color: '#1684F2' }}>
                 See All <ChevronRight className="w-3.5 h-3.5" />
               </button>
             </div>

@@ -10,7 +10,7 @@ export default function TicketSubmitted() {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center px-6"
-      style={{ background: 'linear-gradient(160deg, #f5f3f0 0%, #ece8e3 50%, #e8e2db 100%)' }}>
+      style={{ background: 'linear-gradient(160deg, #EEF5FF 0%, #ece8e3 50%, #e8e2db 100%)' }}>
       <motion.div
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
@@ -83,7 +83,7 @@ export default function TicketSubmitted() {
         <Button
           onClick={() => navigate(createPageUrl('Tickets'))}
           className="w-full h-14 text-white rounded-2xl font-semibold text-base mt-4"
-          style={{ background: 'linear-gradient(135deg, #8A8076, #6e6560)', boxShadow: '0 8px 24px rgba(138,128,118,0.35)' }}
+          style={{ background: 'linear-gradient(135deg, #1684F2, #0B57C2)', boxShadow: '0 8px 24px rgba(138,128,118,0.35)' }}
         >
           View My Tickets
           <ArrowRight className="w-5 h-5 ml-2" />

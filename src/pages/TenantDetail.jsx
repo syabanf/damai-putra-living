@@ -31,15 +31,15 @@ export default function TenantDetail() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ background: 'linear-gradient(160deg, #f0ede9 0%, #e8e4df 100%)' }}>
-        <div className="w-8 h-8 border-2 border-[#1F86C7] border-t-transparent rounded-full animate-spin" />
+      <div className="min-h-screen flex items-center justify-center" style={{ background: 'linear-gradient(160deg, #F6F9FC 0%, #EEF5FF 100%)' }}>
+        <div className="w-8 h-8 border-2 border-[#1684F2] border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
 
   if (!tenant) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ background: 'linear-gradient(160deg, #f0ede9 0%, #e8e4df 100%)' }}>
+      <div className="min-h-screen flex items-center justify-center" style={{ background: 'linear-gradient(160deg, #F6F9FC 0%, #EEF5FF 100%)' }}>
         <p className="text-slate-500">Tenant not found.</p>
       </div>
     );
@@ -53,9 +53,9 @@ export default function TenantDetail() {
   };
 
   return (
-    <div className="min-h-screen pb-10" style={{ background: 'linear-gradient(160deg, #f0ede9 0%, #e8e4df 55%, #e2ddd8 100%)' }}>
+    <div className="min-h-screen pb-10" style={{ background: 'linear-gradient(160deg, #F6F9FC 0%, #EEF5FF 55%, #E7F0FF 100%)' }}>
       {/* Header area */}
-      <div className="pb-8 rounded-b-[2rem] relative overflow-hidden" style={{ background: 'linear-gradient(150deg, #8A8076 0%, #6e6560 45%, #3d3733 100%)' }}>
+      <div className="pb-8 rounded-b-[2rem] relative overflow-hidden" style={{ background: 'linear-gradient(150deg, #1684F2 0%, #0B57C2 45%, #111214 100%)' }}>
         <div className="absolute -top-8 -right-8 w-40 h-40 rounded-full opacity-10 bg-white pointer-events-none" />
         <div className="px-5 pt-14 pb-4 relative">
           <button onClick={() => navigate(-1)}
@@ -105,7 +105,7 @@ export default function TenantDetail() {
           {tenant.opening_hours && (
             <div className="flex items-center gap-3 px-4 py-3.5">
               <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: '#e8f4fb' }}>
-                <Clock style={{ color: '#1F86C7', width: 18, height: 18 }} />
+                <Clock style={{ color: '#1684F2', width: 18, height: 18 }} />
               </div>
               <div>
                 <p className="text-xs text-slate-400 font-semibold">Opening Hours</p>
@@ -115,8 +115,8 @@ export default function TenantDetail() {
           )}
           {tenant.location_detail && (
             <div className="flex items-center gap-3 px-4 py-3.5">
-              <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: '#f5f3f0' }}>
-                <MapPin style={{ color: '#8A7F73', width: 18, height: 18 }} />
+              <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: '#EEF5FF' }}>
+                <MapPin style={{ color: '#1684F2', width: 18, height: 18 }} />
               </div>
               <div>
                 <p className="text-xs text-slate-400 font-semibold">Location</p>
@@ -142,7 +142,7 @@ export default function TenantDetail() {
           <motion.button initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
             onClick={handleContact}
             className="w-full py-4 rounded-2xl font-bold text-white flex items-center justify-center gap-2 shadow-md active:scale-95 transition-transform"
-            style={{ background: 'linear-gradient(135deg, #1F86C7, #1669a0)' }}>
+            style={{ background: 'linear-gradient(135deg, #1684F2, #0B57C2)' }}>
             <Phone className="w-4 h-4" />
             Contact via WhatsApp
           </motion.button>

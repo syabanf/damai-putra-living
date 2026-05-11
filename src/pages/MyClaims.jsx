@@ -8,7 +8,7 @@ import { motion } from 'framer-motion';
 import { PAGE_BG, GlassHeader, GlassCard, Chip } from '@/components/ui/DesignSystem';
 
 const STATUS_CFG = {
-  unused:    { label: 'Unused',    bg: '#e6f8fb', color: '#1FB6D5' },
+  unused:    { label: 'Unused',    bg: '#EAF3FF', color: '#1684F2' },
   used:      { label: 'Used',      bg: '#f1f5f9', color: '#94a3b8' },
   expired:   { label: 'Expired',   bg: '#fef2f2', color: '#ef4444' },
   cancelled: { label: 'Cancelled', bg: '#fef2f2', color: '#ef4444' },
@@ -68,7 +68,7 @@ export default function MyClaims() {
             <p className="text-slate-500 font-medium">No claims yet</p>
             <button onClick={() => navigate(createPageUrl('Rewards'))}
               className="mt-4 px-6 py-2.5 rounded-2xl font-semibold text-white text-sm"
-              style={{ background: 'linear-gradient(135deg, #1FB6D5, #169ab5)' }}>
+              style={{ background: 'linear-gradient(135deg, #1684F2, #0B57C2)' }}>
               Browse Rewards
             </button>
           </GlassCard>
