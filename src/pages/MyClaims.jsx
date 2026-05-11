@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
-import { base44 } from '@/api/base44Client';
+import { appClient } from '@/api/appClient';
 import { useQuery } from '@tanstack/react-query';
 import { ArrowLeft, Gift, CalendarDays, Star } from 'lucide-react';
 import { motion } from 'framer-motion';
@@ -28,11 +28,11 @@ export default function MyClaims() {
   const [user, setUser] = useState(null);
   const [activeTab, setActiveTab] = useState('All');
 
-  useEffect(() => { base44.auth.me().then(setUser).catch(() => {}); }, []);
+  useEffect(() => { appClient.auth.me().then(setUser).catch(() => {}); }, []);
 
   const { data: claims = [], isLoading } = useQuery({
     queryKey: ['myClaims', user?.email],
-    queryFn: () => base44.entities.RewardClaim.filter({ user_email: user.email }, '-claim_date'),
+    queryFn: () => appClient.entities.RewardClaim.filter({ user_email: user.email }, '-claim_date'),
     enabled: !!user?.email,
   });
 

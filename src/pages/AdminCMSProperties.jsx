@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { base44 } from '@/api/base44Client';
+import { appClient } from '@/api/appClient';
 import AdminPermitLayout from '@/components/admin/AdminPermitLayout';
-import { Plus, Search, Building2, Edit2, Trash2, X, Save, Eye } from 'lucide-react';
+import { Plus, Search, Building2, Edit2, Trash2, X, Save } from 'lucide-react';
 
 const EMPTY_FORM = {
   name: '', location: '', description: '', type: '', status: 'active',
@@ -18,13 +18,13 @@ export default function AdminCMSProperties() {
 
   const { data: properties = [], isLoading } = useQuery({
     queryKey: ['admin-properties'],
-    queryFn: () => base44.entities.Property.list('-created_date', 200),
+    queryFn: () => appClient.entities.Property.list('-created_date', 200),
   });
 
   const saveMutation = useMutation({
     mutationFn: async (data) => {
-      if (editing) return base44.entities.Property.update(editing.id, data);
-      return base44.entities.Property.create(data);
+      if (editing) return appClient.entities.Property.update(editing.id, data);
+      return appClient.entities.Property.create(data);
     },
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ['admin-properties'] });
@@ -35,7 +35,7 @@ export default function AdminCMSProperties() {
   });
 
   const deleteMutation = useMutation({
-    mutationFn: (id) => base44.entities.Property.delete(id),
+    mutationFn: (id) => appClient.entities.Property.delete(id),
     onSuccess: () => qc.invalidateQueries({ queryKey: ['admin-properties'] }),
   });
 

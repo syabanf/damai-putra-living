@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { base44 } from '@/api/base44Client';
+import { appClient } from '@/api/appClient';
 import { useQuery } from '@tanstack/react-query';
 import { ArrowLeft, CalendarDays, MapPin, Share2, Clock, ExternalLink } from 'lucide-react';
 import { motion } from 'framer-motion';
@@ -24,7 +24,7 @@ export default function EventDetail() {
 
   const { data: event, isLoading } = useQuery({
     queryKey: ['event', id],
-    queryFn: () => base44.entities.Event.filter({ id }),
+    queryFn: () => appClient.entities.Event.filter({ id }),
     select: data => data?.[0],
     enabled: !!id,
   });

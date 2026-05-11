@@ -1,8 +1,8 @@
 import React, { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { base44 } from '@/api/base44Client';
-import { Search, Filter, Plus, Eye, Download } from 'lucide-react';
+import { appClient } from '@/api/appClient';
+import { Search, Plus, Eye } from 'lucide-react';
 import PermitLayout from '@/components/permit-mgmt/PermitLayout';
 import PermitStatusBadge from '@/components/permit-mgmt/PermitStatusBadge';
 import { createPageUrl } from '@/utils';
@@ -18,7 +18,7 @@ export default function PermitList() {
 
   const { data: permits = [], isLoading } = useQuery({
     queryKey: ['permits-list'],
-    queryFn: () => base44.entities.PermitApplication.list('-created_date', 200),
+    queryFn: () => appClient.entities.PermitApplication.list('-created_date', 200),
   });
 
   const filtered = useMemo(() => {

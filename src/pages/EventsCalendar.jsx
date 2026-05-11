@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
-import { base44 } from '@/api/base44Client';
+import { appClient } from '@/api/appClient';
 import { useQuery } from '@tanstack/react-query';
 import { ArrowLeft, ChevronLeft, ChevronRight, CalendarDays } from 'lucide-react';
 import { motion } from 'framer-motion';
@@ -28,7 +28,7 @@ export default function EventsCalendar() {
 
   const { data: events = [] } = useQuery({
     queryKey: ['events'],
-    queryFn: () => base44.entities.Event.list('-start_date'),
+    queryFn: () => appClient.entities.Event.list('-start_date'),
   });
 
   const year = viewDate.getFullYear();

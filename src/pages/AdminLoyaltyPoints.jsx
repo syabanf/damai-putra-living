@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { base44 } from '@/api/base44Client';
+import { appClient } from '@/api/appClient';
 import AdminPermitLayout from '@/components/admin/AdminPermitLayout';
-import { Search, Star, TrendingUp, Users, Award, ChevronRight, Plus, X, Save } from 'lucide-react';
+import { Search, Star, TrendingUp, Users, Award, Plus, X, Save } from 'lucide-react';
 
 export default function AdminLoyaltyPoints() {
   const qc = useQueryClient();
@@ -14,23 +14,23 @@ export default function AdminLoyaltyPoints() {
 
   const { data: pointsRecords = [], isLoading } = useQuery({
     queryKey: ['admin-loyalty-points'],
-    queryFn: () => base44.entities.UserPoints.list('-balance', 500),
+    queryFn: () => appClient.entities.UserPoints.list('-balance', 500),
   });
 
   const { data: scannedReceipts = [] } = useQuery({
     queryKey: ['admin-receipts'],
-    queryFn: () => base44.entities.ScannedReceipt.list('-created_date', 100),
+    queryFn: () => appClient.entities.ScannedReceipt.list('-created_date', 100),
   });
 
   const { data: rewardClaims = [] } = useQuery({
     queryKey: ['admin-reward-claims'],
-    queryFn: () => base44.entities.RewardClaim.list('-created_date', 100),
+    queryFn: () => appClient.entities.RewardClaim.list('-created_date', 100),
   });
 
   const adjustMutation = useMutation({
     mutationFn: async ({ record, delta }) => {
       const newBalance = Math.max(0, (record.balance || 0) + delta);
-      return base44.entities.UserPoints.update(record.id, {
+      return appClient.entities.UserPoints.update(record.id, {
         balance: newBalance,
         total_earned: delta > 0 ? (record.total_earned || 0) + delta : record.total_earned,
       });

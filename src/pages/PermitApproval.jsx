@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { base44 } from '@/api/base44Client';
-import { CheckCircle, XCircle, AlertCircle, Eye, ChevronDown, ChevronUp } from 'lucide-react';
+import { appClient } from '@/api/appClient';
+import { CheckCircle, Eye, ChevronDown, ChevronUp } from 'lucide-react';
 import PermitLayout from '@/components/permit-mgmt/PermitLayout';
 import PermitStatusBadge from '@/components/permit-mgmt/PermitStatusBadge';
 import ApprovalTimeline from '@/components/permit-mgmt/ApprovalTimeline';
@@ -26,14 +26,14 @@ function ApprovalModal({ permit, approvals, onClose }) {
     mutationFn: async () => {
       const existing = approvals.find(a => a.approval_stage === role);
       if (existing) {
-        await base44.entities.ApprovalWorkflow.update(existing.id, {
+        await appClient.entities.ApprovalWorkflow.update(existing.id, {
           approver_name: approverName,
           approval_status: decision,
           approval_notes: notes,
           approval_date: new Date().toISOString(),
         });
       } else {
-        await base44.entities.ApprovalWorkflow.create({
+        await appClient.entities.ApprovalWorkflow.create({
           application_id: permit.id,
           approval_stage: role,
           approver_role: role,
@@ -47,11 +47,11 @@ function ApprovalModal({ permit, approvals, onClose }) {
       // Update permit status
       const newStatus = decision === 'Approved' ? 'Under Review' : decision === 'Rejected' ? 'Rejected' : 'Revision Needed';
       if (role === 'Head Township Management' && decision === 'Approved') {
-        await base44.entities.PermitApplication.update(permit.id, { application_status: 'Approved' });
+        await appClient.entities.PermitApplication.update(permit.id, { application_status: 'Approved' });
       } else {
-        await base44.entities.PermitApplication.update(permit.id, { application_status: newStatus, current_approval_stage: role });
+        await appClient.entities.PermitApplication.update(permit.id, { application_status: newStatus, current_approval_stage: role });
       }
-      await base44.entities.ActivityLog.create({
+      await appClient.entities.ActivityLog.create({
         application_id: permit.id,
         activity_type: decision === 'Approved' ? 'Approved' : 'Rejected',
         activity_description: `${role} ${decision.toLowerCase()} the application. Notes: ${notes}`,
@@ -118,22 +118,22 @@ export default function PermitApproval() {
 
   const { data: permits = [], isLoading } = useQuery({
     queryKey: ['permits-approval'],
-    queryFn: () => base44.entities.PermitApplication.filter({ application_status: 'Under Review' }, '-created_date'),
+    queryFn: () => appClient.entities.PermitApplication.filter({ application_status: 'Under Review' }, '-created_date'),
   });
   const { data: pendingRevision = [] } = useQuery({
     queryKey: ['permits-revision'],
-    queryFn: () => base44.entities.PermitApplication.filter({ application_status: 'Revision Needed' }, '-created_date'),
+    queryFn: () => appClient.entities.PermitApplication.filter({ application_status: 'Revision Needed' }, '-created_date'),
   });
   const { data: submitted = [] } = useQuery({
     queryKey: ['permits-submitted'],
-    queryFn: () => base44.entities.PermitApplication.filter({ application_status: 'Submitted' }, '-created_date'),
+    queryFn: () => appClient.entities.PermitApplication.filter({ application_status: 'Submitted' }, '-created_date'),
   });
 
   const allPending = [...submitted, ...permits, ...pendingRevision];
 
   const { data: allApprovals = [] } = useQuery({
     queryKey: ['all-approvals'],
-    queryFn: () => base44.entities.ApprovalWorkflow.list('-created_date', 200),
+    queryFn: () => appClient.entities.ApprovalWorkflow.list('-created_date', 200),
   });
 
   const getApprovals = (pid) => allApprovals.filter(a => a.application_id === pid);

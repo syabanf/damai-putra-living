@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { base44 } from '@/api/base44Client';
-import { ArrowLeft, CheckCircle, XCircle, Clock, FileText, Banknote, Camera, ClipboardList, History, Shield, User } from 'lucide-react';
+import { appClient } from '@/api/appClient';
+import { ArrowLeft, CheckCircle, XCircle, Clock, FileText, Banknote, ClipboardList, History, Shield, User } from 'lucide-react';
 import RefundLayout from '@/components/refund/RefundLayout';
 import RefundStatusBadge from '@/components/refund/RefundStatusBadge';
 
@@ -50,32 +50,32 @@ export default function RefundDetail() {
 
   const { data: req, isLoading } = useQuery({
     queryKey: ['refund-req', id],
-    queryFn: () => base44.entities.DepositRefundRequest.filter({ id }).then(r => r[0]),
+    queryFn: () => appClient.entities.DepositRefundRequest.filter({ id }).then(r => r[0] ?? null),
     enabled: !!id,
   });
   const { data: docs = [] } = useQuery({
     queryKey: ['refund-docs', id],
-    queryFn: () => base44.entities.RefundDocumentChecklist.filter({ refund_request_id: id }),
+    queryFn: () => appClient.entities.RefundDocumentChecklist.filter({ refund_request_id: id }),
     enabled: !!id,
   });
   const { data: inspection } = useQuery({
     queryKey: ['refund-inspection', id],
-    queryFn: () => base44.entities.DepositInspectionClearance.filter({ refund_request_id: id }).then(r => r[0]),
+    queryFn: () => appClient.entities.DepositInspectionClearance.filter({ refund_request_id: id }).then(r => r[0] ?? null),
     enabled: !!id,
   });
   const { data: approvals = [] } = useQuery({
     queryKey: ['refund-approvals', id],
-    queryFn: () => base44.entities.RefundApprovalWorkflow.filter({ refund_request_id: id }),
+    queryFn: () => appClient.entities.RefundApprovalWorkflow.filter({ refund_request_id: id }),
     enabled: !!id,
   });
   const { data: ledger } = useQuery({
     queryKey: ['refund-ledger', id],
-    queryFn: () => base44.entities.RefundLedger.filter({ refund_request_id: id }).then(r => r[0]),
+    queryFn: () => appClient.entities.RefundLedger.filter({ refund_request_id: id }).then(r => r[0] ?? null),
     enabled: !!id,
   });
   const { data: logs = [] } = useQuery({
     queryKey: ['refund-logs', id],
-    queryFn: () => base44.entities.RefundActivityLog.filter({ refund_request_id: id }),
+    queryFn: () => appClient.entities.RefundActivityLog.filter({ refund_request_id: id }),
     enabled: !!id,
   });
 

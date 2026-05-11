@@ -1,15 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
-import { base44 } from '@/api/base44Client';
+import { appClient } from '@/api/appClient';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { usePullToRefresh } from '@/components/hooks/usePullToRefresh';
 import PullToRefreshIndicator from '@/components/ui/PullToRefreshIndicator';
 import { restoreScroll } from '@/components/navigation/BottomNav';
 import { motion } from 'framer-motion';
 import {
-  Bell, ChevronRight, Building2, Phone, CalendarDays, Bus,
-  Compass, UtensilsCrossed, Sparkles, Heart, Globe,
+  Bell, ChevronRight, Building2, Phone, CalendarDays, Bus, UtensilsCrossed, Sparkles, Globe,
   ChevronLeft, ArrowRight, Tag, Newspaper, FileText, Home as HomeIcon, MapPin, ShieldCheck
 } from 'lucide-react';
 
@@ -107,7 +106,7 @@ export default function Home() {
   );
 
   useEffect(() => { restoreScroll('Home'); }, []);
-  useEffect(() => { base44.auth.me().then(setUser).catch(() => {}); }, []);
+  useEffect(() => { appClient.auth.me().then(setUser).catch(() => {}); }, []);
 
   /* auto-advance carousel */
   useEffect(() => {
@@ -123,7 +122,7 @@ export default function Home() {
 
   const { data: notifications = [] } = useQuery({
     queryKey: ['notifications', user?.email],
-    queryFn: () => base44.entities.Notification.filter({ user_email: user?.email, read: false }),
+    queryFn: () => appClient.entities.Notification.filter({ user_email: user?.email, read: false }),
     enabled: !!user?.email,
   });
 

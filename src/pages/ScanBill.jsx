@@ -1,9 +1,9 @@
 import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
-import { base44 } from '@/api/base44Client';
+import { appClient } from '@/api/appClient';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { toast } from 'sonner';
 import { ArrowLeft, Camera, CheckCircle2, X, Receipt, Clock, XCircle, AlertCircle, Image } from 'lucide-react';
 
@@ -18,18 +18,18 @@ export default function ScanBill() {
   const cameraInputRef = useRef(null);
 
   React.useEffect(() => {
-    base44.auth.me().then(setUser).catch(() => {});
+    appClient.auth.me().then(setUser).catch(() => {});
   }, []);
 
   const { data: userPoints } = useQuery({
     queryKey: ['userPoints', user?.email],
-    queryFn: () => base44.entities.UserPoints.filter({ user_email: user?.email }),
+    queryFn: () => appClient.entities.UserPoints.filter({ user_email: user?.email }),
     enabled: !!user?.email,
   });
 
   const { data: scannedReceipts = [] } = useQuery({
     queryKey: ['scannedReceipts', user?.email],
-    queryFn: () => base44.entities.ScannedReceipt.filter({ user_email: user?.email }),
+    queryFn: () => appClient.entities.ScannedReceipt.filter({ user_email: user?.email }),
     enabled: !!user?.email,
   });
 
@@ -37,7 +37,7 @@ export default function ScanBill() {
     mutationFn: async (points) => {
       const current = userPoints?.[0];
       if (current) {
-        await base44.entities.UserPoints.update(current.id, {
+        await appClient.entities.UserPoints.update(current.id, {
           balance: (current.balance || 0) + points,
           total_earned: (current.total_earned || 0) + points,
         });
@@ -56,10 +56,10 @@ export default function ScanBill() {
     
     try {
       // Upload image
-      const { file_url } = await base44.integrations.Core.UploadFile({ file });
+      const { file_url } = await appClient.integrations.Core.UploadFile({ file });
       
       // Extract text using OCR
-      const ocrResult = await base44.integrations.Core.InvokeLLM({
+      const ocrResult = await appClient.integrations.Core.InvokeLLM({
         prompt: `Ekstrak informasi berikut dari struk/invoice ini dalam format JSON:
 - receipt_number: nomor resi/invoice (biasanya di bagian atas atau header, format angka/huruf)
 - merchant_address: alamat lengkap merchant/toko
@@ -84,7 +84,7 @@ Jika tidak ditemukan, isi dengan null. Hanya return JSON tanpa penjelasan.`,
         setScannedData({ success: false, error: errMsg });
         toast.error('Scan Gagal', { description: errMsg });
         // Save failed scan to history
-        await base44.entities.ScannedReceipt.create({
+        await appClient.entities.ScannedReceipt.create({
           receipt_number: ocrResult.receipt_number || `FAIL-${Date.now()}`,
           merchant_address: ocrResult.merchant_address || null,
           total_amount: null,
@@ -103,7 +103,7 @@ Jika tidak ditemukan, isi dengan null. Hanya return JSON tanpa penjelasan.`,
       }
 
       // Check for duplicate receipt number
-      const existingReceipts = await base44.entities.ScannedReceipt.filter({ 
+      const existingReceipts = await appClient.entities.ScannedReceipt.filter({ 
         receipt_number: ocrResult.receipt_number 
       });
 
@@ -117,7 +117,7 @@ Jika tidak ditemukan, isi dengan null. Hanya return JSON tanpa penjelasan.`,
         });
         toast.error('Scan Gagal - Duplikat', { description: `Nomor resi ${ocrResult.receipt_number} sudah pernah digunakan.` });
         // Save duplicate scan to history
-        await base44.entities.ScannedReceipt.create({
+        await appClient.entities.ScannedReceipt.create({
           receipt_number: `DUP-${ocrResult.receipt_number}-${Date.now()}`,
           merchant_address: ocrResult.merchant_address || null,
           total_amount: ocrResult.total_amount,
@@ -152,7 +152,7 @@ Jika tidak ditemukan, isi dengan null. Hanya return JSON tanpa penjelasan.`,
       setScannedData({ success: false, error: 'Gagal memproses struk. Silakan coba lagi.' });
       toast.error('Gagal Scan', { description: 'Terjadi kesalahan saat memproses struk.' });
       try {
-        await base44.entities.ScannedReceipt.create({
+        await appClient.entities.ScannedReceipt.create({
           receipt_number: `ERR-${Date.now()}`,
           points_earned: 0,
           status: 'rejected',
@@ -171,7 +171,7 @@ Jika tidak ditemukan, isi dengan null. Hanya return JSON tanpa penjelasan.`,
   const saveMutation = useMutation({
     mutationFn: async (data) => {
       // Save to database
-      await base44.entities.ScannedReceipt.create({
+      await appClient.entities.ScannedReceipt.create({
         receipt_number: data.receipt_number,
         merchant_address: data.merchant_address,
         total_amount: data.total_amount,
@@ -187,7 +187,7 @@ Jika tidak ditemukan, isi dengan null. Hanya return JSON tanpa penjelasan.`,
       // Add points to user
       const current = userPoints?.[0];
       if (current) {
-        await base44.entities.UserPoints.update(current.id, {
+        await appClient.entities.UserPoints.update(current.id, {
           balance: (current.balance || 0) + data.points,
           total_earned: (current.total_earned || 0) + data.points,
         });

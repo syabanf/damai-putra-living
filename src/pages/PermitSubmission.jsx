@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
-import { base44 } from '@/api/base44Client';
+import { appClient } from '@/api/appClient';
 import { ChevronRight, ChevronLeft, Check, Upload, AlertCircle, ShieldCheck } from 'lucide-react';
 import PermitLayout from '@/components/permit-mgmt/PermitLayout';
-import { createPageUrl } from '@/utils';
 
 const STEPS = ['Applicant', 'Property', 'Work Scope', 'Schedule', 'Documents', 'Compliance', 'Review'];
 
@@ -88,7 +87,7 @@ export default function PermitSubmission() {
 
   // Auto-prefill user profile on mount
   useEffect(() => {
-    base44.auth.me().then(u => {
+    appClient.auth.me().then(u => {
       setUser(u);
       setForm(f => ({
         ...f,
@@ -100,7 +99,7 @@ export default function PermitSubmission() {
 
   const { data: allUnits = [] } = useQuery({
     queryKey: ['units-permit-submission'],
-    queryFn: () => base44.entities.Unit.list(),
+    queryFn: () => appClient.entities.Unit.list(),
   });
   const approvedUnits = user ? allUnits.filter(u => u.status === 'approved' && u.user_email === user.email) : [];
   const selectedUnit = approvedUnits.find(u => u.id === selectedUnitId);
@@ -132,9 +131,9 @@ export default function PermitSubmission() {
 
   const mutation = useMutation({
     mutationFn: async () => {
-      const existing = await base44.entities.PermitApplication.list('-created_date', 1);
+      const existing = await appClient.entities.PermitApplication.list('-created_date', 1);
       const permit_number = genPermitNumber(effectiveType, existing.length);
-      const application = await base44.entities.PermitApplication.create({
+      const application = await appClient.entities.PermitApplication.create({
         permit_number,
         permit_type: effectiveType,
         application_status: 'Submitted',
@@ -165,9 +164,9 @@ export default function PermitSubmission() {
         ...form.selected_minor.map(name => ({ application_id: application.id, work_item_name: name, work_item_type: 'Minor', selected_by_applicant: true, review_status: 'Pending' })),
         ...form.selected_major.map(name => ({ application_id: application.id, work_item_name: name, work_item_type: 'Major', selected_by_applicant: true, review_status: 'Pending' })),
       ];
-      if (allItems.length) await base44.entities.WorkItem.bulkCreate(allItems);
+      if (allItems.length) await appClient.entities.WorkItem.bulkCreate(allItems);
       // Activity log
-      await base44.entities.ActivityLog.create({
+      await appClient.entities.ActivityLog.create({
         application_id: application.id,
         activity_type: 'Submitted',
         activity_description: `Permit application ${permit_number} submitted`,

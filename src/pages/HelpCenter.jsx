@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, HelpCircle, ChevronDown, ChevronUp, MessageCircle, Phone, Mail } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { PAGE_BG, GlassHeader, GlassCard } from '@/components/ui/DesignSystem';
+import { GlassHeader, GlassCard } from '@/components/ui/DesignSystem';
 
 const faqs = [
   {

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { LayoutDashboard, List, PlusCircle, ShieldCheck, Search, Banknote, Menu, X, ArrowLeft } from 'lucide-react';
+import { LayoutDashboard, List, PlusCircle, ShieldCheck, Search, Banknote, Menu, ArrowLeft } from 'lucide-react';
 
 const NAV = [
   { path: '/RefundDashboard', label: 'Dashboard', icon: LayoutDashboard },

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Clock, Users, MapPin, CreditCard, AlertCircle, CheckCircle2 } from 'lucide-react';
+import { ArrowLeft, MapPin, CheckCircle2 } from 'lucide-react';
 
 const LOCATION_MAP = {
   '221': 'Damai Putra',

@@ -100,12 +100,20 @@ export default function MockLogin() {
           const Icon = acc.icon;
           const isSelected = selected === i;
           return (
-            <motion.button
+            <motion.div
               key={acc.role}
+              role="button"
+              tabIndex={0}
               initial={{ opacity: 0, x: -16 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: i * 0.1 + 0.2 }}
               onClick={() => setSelected(isSelected ? null : i)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  setSelected(isSelected ? null : i);
+                }
+              }}
               className="w-full text-left rounded-2xl border-2 p-4 transition-all duration-200"
               style={{
                 background: isSelected ? 'rgba(31,182,213,0.12)' : 'rgba(255,255,255,0.06)',
@@ -156,7 +164,7 @@ export default function MockLogin() {
                   </div>
                 </motion.div>
               )}
-            </motion.button>
+            </motion.div>
           );
         })}
       </div>

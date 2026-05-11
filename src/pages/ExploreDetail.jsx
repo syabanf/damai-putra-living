@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
-import { base44 } from '@/api/base44Client';
+import { appClient } from '@/api/appClient';
 import { useQuery } from '@tanstack/react-query';
 import { ArrowLeft, Clock, MapPin, ExternalLink, ChevronRight, Users } from 'lucide-react';
 import { motion } from 'framer-motion';
@@ -14,14 +14,14 @@ export default function ExploreDetail() {
 
   const { data: destination, isLoading } = useQuery({
     queryKey: ['destination', id],
-    queryFn: () => base44.entities.Destination.filter({ id }),
+    queryFn: () => appClient.entities.Destination.filter({ id }),
     select: data => data?.[0],
     enabled: !!id,
   });
 
   const { data: tenants = [] } = useQuery({
     queryKey: ['tenants', id],
-    queryFn: () => base44.entities.Tenant.filter({ destination_id: id }),
+    queryFn: () => appClient.entities.Tenant.filter({ destination_id: id }),
     enabled: !!id,
   });
 

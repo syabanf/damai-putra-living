@@ -1,9 +1,9 @@
 import React, { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { base44 } from '@/api/base44Client';
+import { appClient } from '@/api/appClient';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend } from 'recharts';
-import { FileText, CheckCircle, Clock, AlertTriangle, Plus, ArrowRight, TrendingUp, Building2 } from 'lucide-react';
+import { FileText, CheckCircle, Clock, AlertTriangle, ArrowRight } from 'lucide-react';
 import PermitLayout from '@/components/permit-mgmt/PermitLayout';
 import PermitStatusBadge from '@/components/permit-mgmt/PermitStatusBadge';
 import { createPageUrl } from '@/utils';
@@ -35,11 +35,11 @@ export default function PermitDashboard() {
   const navigate = useNavigate();
   const { data: permits = [], isLoading } = useQuery({
     queryKey: ['permits-dashboard'],
-    queryFn: () => base44.entities.PermitApplication.list('-created_date', 200),
+    queryFn: () => appClient.entities.PermitApplication.list('-created_date', 200),
   });
   const { data: inspections = [] } = useQuery({
     queryKey: ['inspections-dash'],
-    queryFn: () => base44.entities.Inspection.list('-created_date', 50),
+    queryFn: () => appClient.entities.Inspection.list('-created_date', 50),
   });
 
   const stats = useMemo(() => {

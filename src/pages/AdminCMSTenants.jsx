@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { base44 } from '@/api/base44Client';
+import { appClient } from '@/api/appClient';
 import AdminPermitLayout from '@/components/admin/AdminPermitLayout';
 import { Plus, Search, Store, Edit2, Trash2, X, Save } from 'lucide-react';
 
@@ -19,16 +19,16 @@ export default function AdminCMSTenants() {
 
   const { data: tenants = [], isLoading } = useQuery({
     queryKey: ['admin-tenants'],
-    queryFn: () => base44.entities.Tenant.list('-created_date', 300),
+    queryFn: () => appClient.entities.Tenant.list('-created_date', 300),
   });
 
   const saveMutation = useMutation({
-    mutationFn: (data) => editing ? base44.entities.Tenant.update(editing.id, data) : base44.entities.Tenant.create(data),
+    mutationFn: (data) => editing ? appClient.entities.Tenant.update(editing.id, data) : appClient.entities.Tenant.create(data),
     onSuccess: () => { qc.invalidateQueries({ queryKey: ['admin-tenants'] }); setShowForm(false); setEditing(null); setForm(EMPTY); },
   });
 
   const deleteMutation = useMutation({
-    mutationFn: (id) => base44.entities.Tenant.delete(id),
+    mutationFn: (id) => appClient.entities.Tenant.delete(id),
     onSuccess: () => qc.invalidateQueries({ queryKey: ['admin-tenants'] }),
   });
 

@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { base44 } from '@/api/base44Client';
+import { appClient } from '@/api/appClient';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import AdminPermitLayout from '@/components/admin/AdminPermitLayout';
 import {
   Search, Eye, FileText, Check, X, AlertCircle, ArrowLeft,
-  Banknote, User, ChevronRight, Send, Clock, CheckCircle, XCircle
+  Banknote, User, CheckCircle
 } from 'lucide-react';
 
 const STATUS_STYLE = {
@@ -40,11 +39,11 @@ function ChecklistPanel({ requestId }) {
   const qc = useQueryClient();
   const { data: items = [] } = useQuery({
     queryKey: ['refund-checklist', requestId],
-    queryFn: () => base44.entities.RefundDocumentChecklist.filter({ refund_request_id: requestId }),
+    queryFn: () => appClient.entities.RefundDocumentChecklist.filter({ refund_request_id: requestId }),
     enabled: !!requestId,
   });
   const updateMutation = useMutation({
-    mutationFn: ({ id, data }) => base44.entities.RefundDocumentChecklist.update(id, data),
+    mutationFn: ({ id, data }) => appClient.entities.RefundDocumentChecklist.update(id, data),
     onSuccess: () => qc.invalidateQueries({ queryKey: ['refund-checklist', requestId] }),
   });
 
@@ -105,10 +104,10 @@ function RequestDetail({ request, onClose }) {
   const [deductionAmount, setDeductionAmount] = useState(request.deduction_amount || '');
 
   const updateMutation = useMutation({
-    mutationFn: (data) => base44.entities.DepositRefundRequest.update(request.id, data),
+    mutationFn: (data) => appClient.entities.DepositRefundRequest.update(request.id, data),
     onSuccess: async (_, vars) => {
       // Log activity
-      await base44.entities.RefundActivityLog.create({
+      await appClient.entities.RefundActivityLog.create({
         refund_request_id: request.id,
         activity_type: 'Status Changed',
         activity_description: `Status diubah ke ${vars.refund_status || request.refund_status} oleh admin. ${verifierNotes ? 'Catatan: ' + verifierNotes : ''}`,
@@ -121,7 +120,7 @@ function RequestDetail({ request, onClose }) {
   });
 
   const saveNotesMutation = useMutation({
-    mutationFn: () => base44.entities.DepositRefundRequest.update(request.id, {
+    mutationFn: () => appClient.entities.DepositRefundRequest.update(request.id, {
       verifier_notes: verifierNotes,
       approved_refund_amount: approvedAmount ? Number(approvedAmount) : undefined,
       deduction_amount: deductionAmount ? Number(deductionAmount) : undefined,
@@ -279,7 +278,7 @@ export default function RefundAdminProcess() {
 
   const { data: requests = [], isLoading } = useQuery({
     queryKey: ['refund-requests-admin'],
-    queryFn: () => base44.entities.DepositRefundRequest.list('-created_date', 200),
+    queryFn: () => appClient.entities.DepositRefundRequest.list('-created_date', 200),
   });
 
   const statuses = ['All', 'Submitted', 'Under Verification', 'Waiting Inspection Result', 'Waiting Finance Validation', 'Approved', 'Partially Approved', 'Paid', 'Rejected', 'Closed'];

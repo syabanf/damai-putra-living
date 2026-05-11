@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
-import { base44 } from '@/api/base44Client';
+import { appClient } from '@/api/appClient';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
@@ -60,7 +60,7 @@ export default function AddUnit() {
   useEffect(() => {
     const loadUser = async () => {
       try {
-        const currentUser = await base44.auth.me();
+        const currentUser = await appClient.auth.me();
         setUser(currentUser);
       } catch (e) {
         // Not logged in
@@ -70,7 +70,7 @@ export default function AddUnit() {
   }, []);
 
   const createUnitMutation = useMutation({
-    mutationFn: (data) => base44.entities.Unit.create(data),
+    mutationFn: (data) => appClient.entities.Unit.create(data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['units'] });
       navigate(createPageUrl('UnitSubmitted'));
@@ -83,7 +83,7 @@ export default function AddUnit() {
 
     setLoading(true);
     try {
-      const { file_url } = await base44.integrations.Core.UploadFile({ file });
+      const { file_url } = await appClient.integrations.Core.UploadFile({ file });
       setUploadedFile({ name: file.name, url: file_url });
       setFormData({ ...formData, document_url: file_url });
     } catch (error) {

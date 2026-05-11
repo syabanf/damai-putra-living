@@ -1,7 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { createPageUrl } from '@/utils';
-import { base44 } from '@/api/base44Client';
+import { appClient } from '@/api/appClient';
 import { useQuery } from '@tanstack/react-query';
 import { ArrowLeft, Search, X } from 'lucide-react';
 import PropertyCard from '../components/property/PropertyCard';
@@ -24,7 +23,7 @@ export default function PropertyListing() {
 
   const { data: properties = [], isLoading } = useQuery({
     queryKey: ['properties'],
-    queryFn: () => base44.entities.Property.list(),
+    queryFn: () => appClient.entities.Property.list(),
   });
 
   const filtered = useMemo(() => {

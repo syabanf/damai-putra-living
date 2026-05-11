@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
-import { base44 } from '@/api/base44Client';
+import { appClient } from '@/api/appClient';
 import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, Upload, X, FileText, Banknote, CheckCircle, Info, ChevronDown } from 'lucide-react';
@@ -48,7 +48,7 @@ export default function RefundRequest() {
 
   const { data: userUnits = [] } = useQuery({
     queryKey: ['my-units', user?.email],
-    queryFn: () => base44.entities.Unit.filter({ user_email: user?.email, status: 'approved' }),
+    queryFn: () => appClient.entities.Unit.filter({ user_email: user?.email, status: 'approved' }),
     enabled: !!user?.email,
   });
 
@@ -67,7 +67,7 @@ export default function RefundRequest() {
   };
 
   useEffect(() => {
-    base44.auth.me().then(u => {
+    appClient.auth.me().then(u => {
       setUser(u);
       setFormData(prev => ({ ...prev, applicant_name: u.full_name || '' }));
     }).catch(() => {});
@@ -75,10 +75,10 @@ export default function RefundRequest() {
 
   const createMutation = useMutation({
     mutationFn: async (data) => {
-      const refReq = await base44.entities.DepositRefundRequest.create(data);
+      const refReq = await appClient.entities.DepositRefundRequest.create(data);
       // Create checklist entries
       const checklistPromises = CHECKLIST_ITEMS.map(item =>
-        base44.entities.RefundDocumentChecklist.create({
+        appClient.entities.RefundDocumentChecklist.create({
           refund_request_id: refReq.id,
           checklist_item_code: `DOC-${String(item.id).padStart(2, '0')}`,
           checklist_item_name: item.label,
@@ -89,7 +89,7 @@ export default function RefundRequest() {
       );
       await Promise.all(checklistPromises);
       // Activity log
-      await base44.entities.RefundActivityLog.create({
+      await appClient.entities.RefundActivityLog.create({
         refund_request_id: refReq.id,
         activity_type: 'Submitted',
         activity_description: 'Refund request submitted by applicant',
@@ -108,7 +108,7 @@ export default function RefundRequest() {
     if (!file) return;
     setLoading(true);
     try {
-      const { file_url } = await base44.integrations.Core.UploadFile({ file });
+      const { file_url } = await appClient.integrations.Core.UploadFile({ file });
       setUploadedFiles(prev => ({ ...prev, [itemId]: { name: file.name, url: file_url } }));
     } catch (e) {
       console.error(e);

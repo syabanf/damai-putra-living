@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { MapContainer, TileLayer, Polyline, Popup, CircleMarker, Marker } from 'react-leaflet';
+import { MapContainer, TileLayer, Polyline, Popup, CircleMarker } from 'react-leaflet';
 import { ArrowLeft, Bus, Train } from 'lucide-react';
-import L from 'leaflet';
 
 // Sample route data for demo
 const BUS_ROUTES = [

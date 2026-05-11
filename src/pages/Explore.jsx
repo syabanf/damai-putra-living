@@ -1,9 +1,9 @@
 import React, { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
-import { base44 } from '@/api/base44Client';
+import { appClient } from '@/api/appClient';
 import { useQuery } from '@tanstack/react-query';
-import { Search, X, MapPin, Compass, Map } from 'lucide-react';
+import { Search, X, MapPin, Map } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const CATEGORIES = [
@@ -23,7 +23,7 @@ export default function Explore() {
 
   const { data: destinations = [], isLoading } = useQuery({
     queryKey: ['destinations'],
-    queryFn: () => base44.entities.Destination.list(),
+    queryFn: () => appClient.entities.Destination.list(),
   });
 
   const featured = destinations.filter(d => d.is_featured);

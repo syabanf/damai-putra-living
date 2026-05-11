@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
-import { base44 } from '@/api/base44Client';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { appClient } from '@/api/appClient';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { ArrowLeft, Star, MapPin, Clock, CheckCircle, AlertTriangle } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -26,18 +26,18 @@ export default function RewardDetail() {
   const [showModal, setShowModal] = useState(false);
   const [claiming, setClaiming] = useState(false);
 
-  useEffect(() => { base44.auth.me().then(setUser).catch(() => {}); }, []);
+  useEffect(() => { appClient.auth.me().then(setUser).catch(() => {}); }, []);
 
   const { data: reward } = useQuery({
     queryKey: ['reward', id],
-    queryFn: () => base44.entities.Reward.filter({ id }),
+    queryFn: () => appClient.entities.Reward.filter({ id }),
     select: d => d?.[0],
     enabled: !!id,
   });
 
   const { data: pointsRecords = [] } = useQuery({
     queryKey: ['userPoints', user?.email],
-    queryFn: () => base44.entities.UserPoints.filter({ user_email: user.email }),
+    queryFn: () => appClient.entities.UserPoints.filter({ user_email: user.email }),
     enabled: !!user?.email,
   });
 
@@ -51,7 +51,7 @@ export default function RewardDetail() {
     const expiryDate = addDays(reward.valid_days || 30);
 
     // Create claim record
-    const claim = await base44.entities.RewardClaim.create({
+    const claim = await appClient.entities.RewardClaim.create({
       reward_id: reward.id,
       reward_title: reward.title,
       merchant_name: reward.merchant_name,
@@ -70,7 +70,7 @@ export default function RewardDetail() {
     // Deduct points
     const pRec = pointsRecords[0];
     if (pRec) {
-      await base44.entities.UserPoints.update(pRec.id, {
+      await appClient.entities.UserPoints.update(pRec.id, {
         balance: (pRec.balance || 0) - reward.points_required,
         total_spent: (pRec.total_spent || 0) + reward.points_required,
       });

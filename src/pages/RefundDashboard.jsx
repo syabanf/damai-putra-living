@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { base44 } from '@/api/base44Client';
+import { appClient } from '@/api/appClient';
 import { PlusCircle, TrendingDown, Clock, CheckCircle2, Banknote, AlertCircle, FileCheck, BarChart3 } from 'lucide-react';
 import RefundLayout from '@/components/refund/RefundLayout';
 import RefundStatusBadge from '@/components/refund/RefundStatusBadge';
@@ -24,7 +24,7 @@ const StatCard = ({ label, value, sub, color = '#1FB6D5', icon: Icon }) => (
 export default function RefundDashboard() {
   const { data: requests = [], isLoading } = useQuery({
     queryKey: ['deposit-refunds'],
-    queryFn: () => base44.entities.DepositRefundRequest.list('-created_date', 200),
+    queryFn: () => appClient.entities.DepositRefundRequest.list('-created_date', 200),
   });
 
   const total = requests.length;

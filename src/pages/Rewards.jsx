@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useEffect, useRef } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
-import { base44 } from '@/api/base44Client';
+import { appClient } from '@/api/appClient';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Gift, Star, Search, X, Camera, CheckCircle2, Ticket } from 'lucide-react';
 import { motion } from 'framer-motion';
@@ -26,16 +26,16 @@ export default function Rewards() {
   const [scannedData, setScannedData] = useState(null);
   const [activeTab, setActiveTab] = useState('rewards'); // 'rewards', 'scan', or 'lottery'
 
-  useEffect(() => { base44.auth.me().then(setUser).catch(() => {}); }, []);
+  useEffect(() => { appClient.auth.me().then(setUser).catch(() => {}); }, []);
 
   const { data: rewards = [], isLoading } = useQuery({
     queryKey: ['rewards'],
-    queryFn: () => base44.entities.Reward.filter({ is_active: true }),
+    queryFn: () => appClient.entities.Reward.filter({ is_active: true }),
   });
 
   const { data: pointsRecords = [] } = useQuery({
     queryKey: ['userPoints', user?.email],
-    queryFn: () => base44.entities.UserPoints.filter({ user_email: user.email }),
+    queryFn: () => appClient.entities.UserPoints.filter({ user_email: user.email }),
     enabled: !!user?.email,
   });
 
@@ -43,7 +43,7 @@ export default function Rewards() {
     mutationFn: async (points) => {
       const current = pointsRecords?.[0];
       if (current) {
-        await base44.entities.UserPoints.update(current.id, {
+        await appClient.entities.UserPoints.update(current.id, {
           balance: (current.balance || 0) + points,
           total_earned: (current.total_earned || 0) + points,
         });
@@ -69,7 +69,7 @@ export default function Rewards() {
     const file = e.target.files?.[0];
     if (!file) return;
     try {
-      await base44.integrations.Core.UploadFile({ file });
+      await appClient.integrations.Core.UploadFile({ file });
       const mockPoints = Math.floor(Math.random() * 50) + 100;
       setScannedData({ success: true, points: mockPoints, reference: `BILL-${Date.now()}` });
     } catch (error) {
@@ -375,7 +375,7 @@ export default function Rewards() {
 function LotteryPreview({ user, myPoints, navigate }) {
   const { data: lotteries = [], isLoading } = useQuery({
     queryKey: ['lotteries-active'],
-    queryFn: () => base44.entities.Lottery.filter({ is_active: true }),
+    queryFn: () => appClient.entities.Lottery.filter({ is_active: true }),
   });
 
   return (

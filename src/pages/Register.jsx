@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import { motion } from 'framer-motion';
-import { base44 } from '@/api/base44Client';
+import { appClient } from '@/api/appClient';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -50,7 +50,7 @@ export default function Register() {
     if (!validateForm()) return;
     setLoading(true);
     await new Promise(resolve => setTimeout(resolve, 1500));
-    base44.auth.redirectToLogin(createPageUrl('Home'));
+    appClient.auth.redirectToLogin(createPageUrl('Home'));
   };
 
   const passwordStrength = () => {
@@ -198,7 +198,7 @@ export default function Register() {
 
         <p className="text-center text-slate-500 mt-8 pb-8">
           Already have an account?{' '}
-          <button onClick={() => base44.auth.redirectToLogin(createPageUrl('Home'))} className="font-semibold" style={{ color: BRAND }}>Sign In</button>
+          <button onClick={() => appClient.auth.redirectToLogin(createPageUrl('Home'))} className="font-semibold" style={{ color: BRAND }}>Sign In</button>
         </p>
       </div>
     </div>

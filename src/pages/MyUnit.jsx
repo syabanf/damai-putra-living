@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
-import { base44 } from '@/api/base44Client';
+import { appClient } from '@/api/appClient';
 import { useQuery } from '@tanstack/react-query';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Building2, Plus, ChevronRight, Clock, CheckCircle,
+import { Plus, ChevronRight, Clock, CheckCircle,
   AlertCircle, RefreshCw, Home, KeyRound, CreditCard, CalendarRange
 } from 'lucide-react';
 import { Button } from "@/components/ui/button";
@@ -144,12 +143,12 @@ export default function MyUnit() {
   const [activeTab, setActiveTab] = useState('owner');
 
   useEffect(() => {
-    base44.auth.me().then(setUser).catch(() => {});
+    appClient.auth.me().then(setUser).catch(() => {});
   }, []);
 
   const { data: units = [], isLoading } = useQuery({
     queryKey: ['units'],
-    queryFn: () => base44.entities.Unit.list(),
+    queryFn: () => appClient.entities.Unit.list(),
   });
 
   const userUnits = user ? units.filter(u => u.user_email === user.email) : units;

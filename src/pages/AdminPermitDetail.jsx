@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { base44 } from '@/api/base44Client';
+import { appClient } from '@/api/appClient';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import {
   ArrowLeft, CheckCircle, XCircle, AlertCircle, FileText,
-  Building2, User, Truck, Wrench, Banknote, Shield, Clock,
-  ChevronRight, Send
+  Building2, User, Truck, Wrench, Banknote, Shield, Send
 } from 'lucide-react';
 import AdminPermitLayout from '@/components/admin/AdminPermitLayout';
 
@@ -86,7 +85,7 @@ export default function AdminPermitDetail() {
 
   const { data: ticket, isLoading } = useQuery({
     queryKey: ['admin-ticket', ticketId],
-    queryFn: () => base44.entities.Ticket.filter({ id: ticketId }).then(r => r[0]),
+    queryFn: () => appClient.entities.Ticket.filter({ id: ticketId }).then(r => r[0] ?? null),
     enabled: !!ticketId,
     onSuccess: (t) => {
       if (t?.management_notes) setAdminNotes(t.management_notes);
@@ -111,7 +110,7 @@ export default function AdminPermitDetail() {
         setPermitId(generatedPermitId);
         // Send notification to user
         if (ticket?.user_email) {
-          await base44.entities.Notification.create({
+          await appClient.entities.Notification.create({
             user_email: ticket.user_email,
             title: 'Permit Approved',
             message: `Your ${PERMIT_LABELS[ticket.permit_type] || 'permit'} request has been approved. Permit No: ${generatedPermitId}`,
@@ -124,7 +123,7 @@ export default function AdminPermitDetail() {
         updates.workflow_stage = 'document_check';
         // Send notification to user
         if (ticket?.user_email) {
-          await base44.entities.Notification.create({
+          await appClient.entities.Notification.create({
             user_email: ticket.user_email,
             title: 'Permit Request Rejected',
             message: `Your ${PERMIT_LABELS[ticket.permit_type] || 'permit'} request has been rejected. Reason: ${rejectionNote || 'Please contact management.'}`,
@@ -140,9 +139,9 @@ export default function AdminPermitDetail() {
         updates.workflow_stage = 'building_infrastructure_review';
       }
 
-      await base44.entities.Ticket.update(ticketId, updates);
+      await appClient.entities.Ticket.update(ticketId, updates);
       // Log
-      await base44.entities.ActivityLog.create({
+      await appClient.entities.ActivityLog.create({
         application_id: ticketId,
         activity_type: 'Status Changed',
         activity_description: `Status changed to ${newStatus} by admin. ${adminNotes ? 'Notes: ' + adminNotes : ''}`,

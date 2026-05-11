@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { base44 } from '@/api/base44Client';
-import { CheckCircle2, XCircle, AlertCircle, Search, ChevronDown } from 'lucide-react';
+import { appClient } from '@/api/appClient';
+import { AlertCircle, Search, ChevronDown } from 'lucide-react';
 import RefundLayout from '@/components/refund/RefundLayout';
 import RefundStatusBadge from '@/components/refund/RefundStatusBadge';
 
@@ -12,11 +12,11 @@ export default function RefundVerification() {
 
   const { data: requests = [] } = useQuery({
     queryKey: ['refund-verification-list'],
-    queryFn: () => base44.entities.DepositRefundRequest.filter({ refund_status: 'Submitted' }),
+    queryFn: () => appClient.entities.DepositRefundRequest.filter({ refund_status: 'Submitted' }),
   });
   const { data: underVerif = [] } = useQuery({
     queryKey: ['refund-under-verif'],
-    queryFn: () => base44.entities.DepositRefundRequest.filter({ refund_status: 'Under Verification' }),
+    queryFn: () => appClient.entities.DepositRefundRequest.filter({ refund_status: 'Under Verification' }),
   });
 
   const allRequests = [...requests, ...underVerif].filter(r =>
@@ -25,7 +25,7 @@ export default function RefundVerification() {
 
   const { data: docs = [], refetch: refetchDocs } = useQuery({
     queryKey: ['verif-docs', selectedId],
-    queryFn: () => base44.entities.RefundDocumentChecklist.filter({ refund_request_id: selectedId }),
+    queryFn: () => appClient.entities.RefundDocumentChecklist.filter({ refund_request_id: selectedId }),
     enabled: !!selectedId,
   });
 
@@ -33,14 +33,14 @@ export default function RefundVerification() {
 
   const updateDocMutation = useMutation({
     mutationFn: ({ docId, status, notes }) =>
-      base44.entities.RefundDocumentChecklist.update(docId, { verification_status: status, verifier_notes: notes }),
+      appClient.entities.RefundDocumentChecklist.update(docId, { verification_status: status, verifier_notes: notes }),
     onSuccess: () => refetchDocs(),
   });
 
   const moveToInspection = useMutation({
     mutationFn: async () => {
-      await base44.entities.DepositRefundRequest.update(selectedId, { refund_status: 'Waiting Inspection Result' });
-      await base44.entities.RefundActivityLog.create({
+      await appClient.entities.DepositRefundRequest.update(selectedId, { refund_status: 'Waiting Inspection Result' });
+      await appClient.entities.RefundActivityLog.create({
         refund_request_id: selectedId,
         activity_type: 'Status Changed',
         activity_description: `Documents verified. Moved to Waiting Inspection Result.`,
@@ -56,7 +56,7 @@ export default function RefundVerification() {
   });
 
   const markUnderVerification = useMutation({
-    mutationFn: () => base44.entities.DepositRefundRequest.update(selectedId, { refund_status: 'Under Verification' }),
+    mutationFn: () => appClient.entities.DepositRefundRequest.update(selectedId, { refund_status: 'Under Verification' }),
     onSuccess: () => qc.invalidateQueries({ queryKey: ['refund-verification-list'] }),
   });
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
-import { base44 } from '@/api/base44Client';
+import { appClient } from '@/api/appClient';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { usePullToRefresh } from '@/components/hooks/usePullToRefresh';
 import PullToRefreshIndicator from '@/components/ui/PullToRefreshIndicator';
@@ -9,7 +9,7 @@ import { restoreScroll } from '@/components/navigation/BottomNav';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Plus, FileCheck, Wrench, Truck, Calendar, Users, Lock,
-  ChevronRight, ClipboardList, Building2, Shovel, Banknote, RefreshCw, Shield
+  ChevronRight, ClipboardList, Building2, Shovel, Banknote, RefreshCw
 } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 
@@ -129,12 +129,12 @@ export default function Tickets() {
   );
 
   useEffect(() => { restoreScroll('Tickets'); }, []);
-  useEffect(() => { base44.auth.me().then(setUser).catch(() => {}); }, []);
+  useEffect(() => { appClient.auth.me().then(setUser).catch(() => {}); }, []);
 
   const { data: units = [] } = useQuery({
     queryKey: ['units', user?.email],
     queryFn: () => user?.email
-      ? base44.entities.Unit.filter({ user_email: user.email })
+      ? appClient.entities.Unit.filter({ user_email: user.email })
       : [],
     enabled: !!user,
   });
@@ -142,7 +142,7 @@ export default function Tickets() {
   const { data: tickets = [], isLoading } = useQuery({
     queryKey: ['tickets', user?.email],
     queryFn: () => user?.email
-      ? base44.entities.Ticket.filter({ user_email: user.email }, '-created_date')
+      ? appClient.entities.Ticket.filter({ user_email: user.email }, '-created_date')
       : [],
     enabled: !!user,
   });

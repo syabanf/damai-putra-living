@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { base44 } from '@/api/base44Client';
+import { appClient } from '@/api/appClient';
 import { Save, ArrowLeft } from 'lucide-react';
 import RefundLayout from '@/components/refund/RefundLayout';
 
@@ -28,13 +28,13 @@ export default function RefundInspectionPage() {
 
   const { data: req } = useQuery({
     queryKey: ['refund-req-inspect', refundId],
-    queryFn: () => base44.entities.DepositRefundRequest.filter({ id: refundId }).then(r => r[0]),
+    queryFn: () => appClient.entities.DepositRefundRequest.filter({ id: refundId }).then(r => r[0] ?? null),
     enabled: !!refundId,
   });
 
   const { data: existing } = useQuery({
     queryKey: ['inspect-existing', refundId],
-    queryFn: () => base44.entities.DepositInspectionClearance.filter({ refund_request_id: refundId }).then(r => r[0]),
+    queryFn: () => appClient.entities.DepositInspectionClearance.filter({ refund_request_id: refundId }).then(r => r[0] ?? null),
     enabled: !!refundId,
   });
 
@@ -67,17 +67,17 @@ export default function RefundInspectionPage() {
         final_refund_amount: finalRefund,
       };
       if (existing?.id) {
-        await base44.entities.DepositInspectionClearance.update(existing.id, data);
+        await appClient.entities.DepositInspectionClearance.update(existing.id, data);
       } else {
-        await base44.entities.DepositInspectionClearance.create(data);
+        await appClient.entities.DepositInspectionClearance.create(data);
       }
       // Update refund request with deduction and move to next stage
-      await base44.entities.DepositRefundRequest.update(refundId, {
+      await appClient.entities.DepositRefundRequest.update(refundId, {
         deduction_amount: parseFloat(form.deduction_amount) || 0,
         approved_refund_amount: finalRefund,
         refund_status: 'Waiting Finance Validation',
       });
-      await base44.entities.RefundActivityLog.create({
+      await appClient.entities.RefundActivityLog.create({
         refund_request_id: refundId,
         activity_type: 'Status Changed',
         activity_description: `Inspection completed by ${form.inspector_name}. Result: ${form.inspection_result}. Deduction: IDR ${Number(form.deduction_amount || 0).toLocaleString('id-ID')}`,

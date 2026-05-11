@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import { motion, AnimatePresence } from 'framer-motion';
-import { base44 } from '@/api/base44Client';
+import { appClient } from '@/api/appClient';
 import { ArrowRight, ChevronRight, Globe } from 'lucide-react';
 
 const SLIDES = [
@@ -35,12 +35,12 @@ export default function Onboarding() {
     if (slide < SLIDES.length - 1) {
       setSlide(slide + 1);
     } else {
-      base44.auth.redirectToLogin(createPageUrl('Home'));
+      appClient.auth.redirectToLogin(createPageUrl('Home'));
     }
   };
 
   const handleSkip = () => {
-    base44.auth.redirectToLogin(createPageUrl('Home'));
+    appClient.auth.redirectToLogin(createPageUrl('Home'));
   };
 
   const current = SLIDES[slide];

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
-import { base44 } from '@/api/base44Client';
+import { appClient } from '@/api/appClient';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, CheckCircle, ChevronRight, AlertCircle } from 'lucide-react';
+import { ArrowLeft, CheckCircle, ChevronRight } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 
 import PermitTypeSelector, { PERMIT_TYPES } from '@/components/permit/PermitTypeSelector';
@@ -88,7 +88,7 @@ export default function CreateTicket() {
   const [form, setForm] = useState({ ...EMPTY_FORM, permit_type: preType || '', selected_work_items: [] });
 
   useEffect(() => {
-    base44.auth.me().then(u => {
+    appClient.auth.me().then(u => {
       setUser(u);
       setForm(f => ({ ...f, applicant_name: u.full_name || '', applicant_email: u.email || '' }));
     }).catch(() => {});
@@ -96,7 +96,7 @@ export default function CreateTicket() {
 
   const { data: units = [] } = useQuery({
     queryKey: ['units'],
-    queryFn: () => base44.entities.Unit.list(),
+    queryFn: () => appClient.entities.Unit.list(),
   });
 
   const approvedUnits = user ? units.filter(u => u.status === 'approved' && u.user_email === user.email) : [];
@@ -122,12 +122,12 @@ export default function CreateTicket() {
       if (ctx?.prev) qc.setQueryData(['tickets', user?.email], ctx.prev);
     },
     mutationFn: async (data) => {
-      const ticket = await base44.entities.Ticket.create(data);
+      const ticket = await appClient.entities.Ticket.create(data);
       // If renovation type, create linked PermitApplication + WorkItems + ActivityLog
       if (isRenovation) {
-        const existingPermits = await base44.entities.PermitApplication.list('-created_date', 1);
+        const existingPermits = await appClient.entities.PermitApplication.list('-created_date', 1);
         const permitNum = `DP/RNV-${form.permit_type === 'renovasi_minor' ? 'MIN' : 'MAJ'}/${new Date().getFullYear()}/${String(existingPermits.length + 1).padStart(3, '0')}`;
-        await base44.entities.PermitApplication.create({
+        await appClient.entities.PermitApplication.create({
           permit_number: permitNum,
           permit_type: form.permit_type === 'renovasi_minor' ? 'Minor Renovation' : 'Major Renovation',
           application_status: 'Submitted',
@@ -152,7 +152,7 @@ export default function CreateTicket() {
         });
         // Create work items
         if (form.selected_work_items.length > 0) {
-          await base44.entities.WorkItem.bulkCreate(
+          await appClient.entities.WorkItem.bulkCreate(
             form.selected_work_items.map(item => ({
               application_id: ticket.id,
               work_item_name: item.name,
@@ -164,7 +164,7 @@ export default function CreateTicket() {
           );
         }
         // Activity log
-        await base44.entities.ActivityLog.create({
+        await appClient.entities.ActivityLog.create({
           application_id: ticket.id,
           activity_type: 'Submitted',
           activity_description: `Permit ${permitNum} submitted via mobile app`,
@@ -187,7 +187,7 @@ export default function CreateTicket() {
     const file = e.target.files[0];
     if (!file) return;
     setUploading(u => ({ ...u, [uploadKey]: true }));
-    const { file_url } = await base44.integrations.Core.UploadFile({ file });
+    const { file_url } = await appClient.integrations.Core.UploadFile({ file });
     setForm(f => ({ ...f, [formField]: file_url }));
     setUploading(u => ({ ...u, [uploadKey]: false }));
   };
@@ -197,7 +197,7 @@ export default function CreateTicket() {
     const file = e.target.files[0];
     if (!file) return;
     setUploading(u => ({ ...u, [key]: true }));
-    const { file_url } = await base44.integrations.Core.UploadFile({ file });
+    const { file_url } = await appClient.integrations.Core.UploadFile({ file });
     setForm(f => ({
       ...f,
       named_docs: { ...f.named_docs, [key]: file_url },

@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
-import { base44 } from '@/api/base44Client';
+import { appClient } from '@/api/appClient';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { ArrowLeft, Share2, CheckCircle2, Copy, MapPin, Star, QrCode } from 'lucide-react';
+import { ArrowLeft, Share2, CheckCircle2, Copy, MapPin, Star } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const STATUS_CFG = {
@@ -37,13 +37,13 @@ export default function RewardReceipt() {
 
   const { data: claim } = useQuery({
     queryKey: ['rewardClaim', id],
-    queryFn: () => base44.entities.RewardClaim.filter({ id }),
+    queryFn: () => appClient.entities.RewardClaim.filter({ id }),
     select: d => d?.[0],
     enabled: !!id,
   });
 
   const useMutation_ = useMutation({
-    mutationFn: () => base44.entities.RewardClaim.update(id, {
+    mutationFn: () => appClient.entities.RewardClaim.update(id, {
       status: 'used',
       used_date: new Date().toISOString(),
     }),

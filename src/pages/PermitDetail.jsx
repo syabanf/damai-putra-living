@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { base44 } from '@/api/base44Client';
+import { appClient } from '@/api/appClient';
 import { ArrowLeft, FileText, CheckCircle2, ClipboardList, History, Upload, Search, Edit2 } from 'lucide-react';
 import PermitLayout from '@/components/permit-mgmt/PermitLayout';
 import PermitStatusBadge from '@/components/permit-mgmt/PermitStatusBadge';
@@ -35,45 +35,45 @@ export default function PermitDetail() {
 
   const { data: permit, isLoading } = useQuery({
     queryKey: ['permit', id],
-    queryFn: () => base44.entities.PermitApplication.filter({ id }),
+    queryFn: () => appClient.entities.PermitApplication.filter({ id }),
     select: data => data[0],
     enabled: !!id,
   });
 
   const { data: workItems = [] } = useQuery({
     queryKey: ['work-items', id],
-    queryFn: () => base44.entities.WorkItem.filter({ application_id: id }),
+    queryFn: () => appClient.entities.WorkItem.filter({ application_id: id }),
     enabled: !!id,
   });
 
   const { data: approvals = [] } = useQuery({
     queryKey: ['approvals', id],
-    queryFn: () => base44.entities.ApprovalWorkflow.filter({ application_id: id }),
+    queryFn: () => appClient.entities.ApprovalWorkflow.filter({ application_id: id }),
     enabled: !!id,
   });
 
   const { data: inspections = [] } = useQuery({
     queryKey: ['inspections', id],
-    queryFn: () => base44.entities.Inspection.filter({ application_id: id }),
+    queryFn: () => appClient.entities.Inspection.filter({ application_id: id }),
     enabled: !!id,
   });
 
   const { data: documents = [] } = useQuery({
     queryKey: ['documents', id],
-    queryFn: () => base44.entities.PermitDocument.filter({ application_id: id }),
+    queryFn: () => appClient.entities.PermitDocument.filter({ application_id: id }),
     enabled: !!id,
   });
 
   const { data: logs = [] } = useQuery({
     queryKey: ['logs', id],
-    queryFn: () => base44.entities.ActivityLog.filter({ application_id: id }),
+    queryFn: () => appClient.entities.ActivityLog.filter({ application_id: id }),
     enabled: !!id,
   });
 
   const statusMutation = useMutation({
     mutationFn: async (status) => {
-      await base44.entities.PermitApplication.update(id, { application_status: status });
-      await base44.entities.ActivityLog.create({
+      await appClient.entities.PermitApplication.update(id, { application_status: status });
+      await appClient.entities.ActivityLog.create({
         application_id: id,
         activity_type: 'Status Changed',
         activity_description: `Status changed to ${status}`,

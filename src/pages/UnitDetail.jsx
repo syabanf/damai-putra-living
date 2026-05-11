@@ -1,11 +1,11 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
-import { base44 } from '@/api/base44Client';
+import { appClient } from '@/api/appClient';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 import { 
-  ArrowLeft, Building2, User, FileText, Calendar, CheckCircle,
+  ArrowLeft, User, FileText, Calendar, CheckCircle,
   Clock, XCircle, AlertCircle, Ticket, ChevronRight, RefreshCw, Video,
   Home, KeyRound, CreditCard, Phone, Mail, CalendarRange
 } from 'lucide-react';
@@ -25,7 +25,7 @@ export default function UnitDetail() {
   const { data: unit, isLoading } = useQuery({
     queryKey: ['unit', unitId],
     queryFn: async () => {
-      const units = await base44.entities.Unit.filter({ id: unitId });
+      const units = await appClient.entities.Unit.filter({ id: unitId });
       return units[0];
     },
     enabled: !!unitId,
@@ -33,12 +33,12 @@ export default function UnitDetail() {
 
   const { data: tickets = [] } = useQuery({
     queryKey: ['tickets', unitId],
-    queryFn: () => base44.entities.Ticket.filter({ unit_id: unitId }),
+    queryFn: () => appClient.entities.Ticket.filter({ unit_id: unitId }),
     enabled: !!unitId,
   });
 
   const updateStatusMutation = useMutation({
-    mutationFn: ({ status, note }) => base44.entities.Unit.update(unitId, { status, rejection_note: note || null }),
+    mutationFn: ({ status, note }) => appClient.entities.Unit.update(unitId, { status, rejection_note: note || null }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['unit', unitId] });
       queryClient.invalidateQueries({ queryKey: ['units'] });

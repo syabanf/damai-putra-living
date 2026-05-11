@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { base44 } from '@/api/base44Client';
+import { appClient } from '@/api/appClient';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import AdminPermitLayout from '@/components/admin/AdminPermitLayout';
 import RouletteWheel from '@/components/lottery/RouletteWheel';
 import NameRouletteWheel from '@/components/lottery/NameRouletteWheel';
 import {
-  Plus, Trash2, Edit2, Gift, Users, Trophy, ChevronDown, ChevronUp, X
+  Plus, Trash2, Edit2, Gift, Trophy, ChevronDown, ChevronUp, X
 } from 'lucide-react';
 
 const DEFAULT_COLORS = ['#FF6B6B','#4ECDC4','#FFE66D','#A8E6CF','#FF8B94','#6C5CE7','#FD79A8','#00CEC9','#FDCB6E','#E17055','#74B9FF','#55EFC4'];
@@ -117,13 +117,13 @@ function LotteryForm({ initial, onSave, onCancel }) {
 function EntriesPanel({ lottery }) {
   const { data: entries = [] } = useQuery({
     queryKey: ['lottery-entries', lottery.id],
-    queryFn: () => base44.entities.LotteryEntry.filter({ lottery_id: lottery.id }),
+    queryFn: () => appClient.entities.LotteryEntry.filter({ lottery_id: lottery.id }),
     enabled: !!lottery.id,
   });
   const qc = useQueryClient();
   const announceMutation = useMutation({
     mutationFn: ({ winnerId, winnerName, winnerEmail, winnerPrize }) =>
-      base44.entities.Lottery.update(lottery.id, {
+      appClient.entities.Lottery.update(lottery.id, {
         winner_announced: true, winner_name: winnerName, winner_email: winnerEmail, winner_prize: winnerPrize,
       }),
     onSuccess: () => qc.invalidateQueries({ queryKey: ['lotteries-admin'] }),
@@ -168,13 +168,13 @@ function NameRoulettePanel({ lottery }) {
 
   const { data: entries = [] } = useQuery({
     queryKey: ['lottery-entries', lottery.id],
-    queryFn: () => base44.entities.LotteryEntry.filter({ lottery_id: lottery.id }),
+    queryFn: () => appClient.entities.LotteryEntry.filter({ lottery_id: lottery.id }),
     enabled: !!lottery.id,
   });
 
   const announceMutation = useMutation({
     mutationFn: ({ winnerName, winnerEmail, winnerPrize }) =>
-      base44.entities.Lottery.update(lottery.id, {
+      appClient.entities.Lottery.update(lottery.id, {
         winner_announced: true,
         winner_name: winnerName,
         winner_email: winnerEmail,
@@ -254,21 +254,21 @@ export default function AdminLottery() {
 
   const { data: lotteries = [], isLoading } = useQuery({
     queryKey: ['lotteries-admin'],
-    queryFn: () => base44.entities.Lottery.list('-created_date', 50),
+    queryFn: () => appClient.entities.Lottery.list('-created_date', 50),
   });
 
   const createMutation = useMutation({
-    mutationFn: (data) => base44.entities.Lottery.create(data),
+    mutationFn: (data) => appClient.entities.Lottery.create(data),
     onSuccess: () => { qc.invalidateQueries({ queryKey: ['lotteries-admin'] }); setShowForm(false); },
   });
 
   const updateMutation = useMutation({
-    mutationFn: ({ id, data }) => base44.entities.Lottery.update(id, data),
+    mutationFn: ({ id, data }) => appClient.entities.Lottery.update(id, data),
     onSuccess: () => { qc.invalidateQueries({ queryKey: ['lotteries-admin'] }); setEditItem(null); },
   });
 
   const deleteMutation = useMutation({
-    mutationFn: (id) => base44.entities.Lottery.delete(id),
+    mutationFn: (id) => appClient.entities.Lottery.delete(id),
     onSuccess: () => qc.invalidateQueries({ queryKey: ['lotteries-admin'] }),
   });
 

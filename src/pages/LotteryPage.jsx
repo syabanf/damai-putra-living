@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { base44 } from '@/api/base44Client';
+import { appClient } from '@/api/appClient';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import RouletteWheel from '@/components/lottery/RouletteWheel';
-import { Gift, Star, Trophy, ChevronLeft, Calendar, Users, Ticket, CheckCircle, ArrowRight } from 'lucide-react';
+import { Gift, Star, Trophy, ChevronLeft, Calendar, Users, Ticket, ArrowRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function LotteryPage() {
@@ -15,22 +15,22 @@ export default function LotteryPage() {
   const [spinResult, setSpinResult] = useState(null);
   const [showResult, setShowResult] = useState(false);
 
-  useEffect(() => { base44.auth.me().then(setUser).catch(() => {}); }, []);
+  useEffect(() => { appClient.auth.me().then(setUser).catch(() => {}); }, []);
 
   const { data: lotteries = [], isLoading } = useQuery({
     queryKey: ['lotteries-active'],
-    queryFn: () => base44.entities.Lottery.filter({ is_active: true }),
+    queryFn: () => appClient.entities.Lottery.filter({ is_active: true }),
   });
 
   const { data: pointsRecords = [] } = useQuery({
     queryKey: ['userPoints', user?.email],
-    queryFn: () => base44.entities.UserPoints.filter({ user_email: user.email }),
+    queryFn: () => appClient.entities.UserPoints.filter({ user_email: user.email }),
     enabled: !!user?.email,
   });
 
   const { data: myEntries = [] } = useQuery({
     queryKey: ['my-lottery-entries', user?.email, selectedLottery?.id],
-    queryFn: () => base44.entities.LotteryEntry.filter({ lottery_id: selectedLottery?.id, user_email: user?.email }),
+    queryFn: () => appClient.entities.LotteryEntry.filter({ lottery_id: selectedLottery?.id, user_email: user?.email }),
     enabled: !!user?.email && !!selectedLottery?.id,
   });
 
@@ -41,12 +41,12 @@ export default function LotteryPage() {
       // Deduct points
       const current = pointsRecords?.[0];
       if (current) {
-        await base44.entities.UserPoints.update(current.id, {
+        await appClient.entities.UserPoints.update(current.id, {
           balance: Math.max(0, (current.balance || 0) - selectedLottery.points_per_entry),
         });
       }
       // Record entry
-      await base44.entities.LotteryEntry.create({
+      await appClient.entities.LotteryEntry.create({
         lottery_id: selectedLottery.id,
         lottery_title: selectedLottery.title,
         user_email: user.email,
@@ -56,7 +56,7 @@ export default function LotteryPage() {
         entry_date: new Date().toISOString(),
       });
       // Update total_entries
-      await base44.entities.Lottery.update(selectedLottery.id, {
+      await appClient.entities.Lottery.update(selectedLottery.id, {
         total_entries: (selectedLottery.total_entries || 0) + 1,
       });
     },

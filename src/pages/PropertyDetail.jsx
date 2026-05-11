@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { base44 } from '@/api/base44Client';
+import { appClient } from '@/api/appClient';
 import { useQuery } from '@tanstack/react-query';
 import { ArrowLeft, BedDouble, Bath, Car, Maximize2, MapPin, ChevronRight, Phone, MessageCircle, Zap, Trees, Building2 } from 'lucide-react';
 
@@ -33,7 +33,7 @@ export default function PropertyDetail() {
 
   const { data: property, isLoading } = useQuery({
     queryKey: ['property', id],
-    queryFn: () => base44.entities.Property.filter({ id }).then(r => r[0]),
+    queryFn: () => appClient.entities.Property.filter({ id }).then(r => r[0] ?? null),
     enabled: !!id,
   });
 

@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { base44 } from '@/api/base44Client';
+import { appClient } from '@/api/appClient';
 import { Search, PlusCircle, Filter } from 'lucide-react';
 import RefundLayout from '@/components/refund/RefundLayout';
 import RefundStatusBadge from '@/components/refund/RefundStatusBadge';
@@ -16,7 +16,7 @@ export default function RefundList() {
 
   const { data: requests = [], isLoading } = useQuery({
     queryKey: ['deposit-refunds-list'],
-    queryFn: () => base44.entities.DepositRefundRequest.list('-created_date', 500),
+    queryFn: () => appClient.entities.DepositRefundRequest.list('-created_date', 500),
   });
 
   const filtered = useMemo(() => {

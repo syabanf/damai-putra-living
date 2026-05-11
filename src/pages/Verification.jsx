@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import { motion } from 'framer-motion';
-import { base44 } from '@/api/base44Client';
+import { appClient } from '@/api/appClient';
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Mail, Phone, RefreshCw } from 'lucide-react';
 
@@ -71,7 +71,7 @@ export default function Verification() {
     await new Promise(resolve => setTimeout(resolve, 1500));
     
     if (code === '123456') {
-      base44.auth.redirectToLogin(createPageUrl('Home'));
+      appClient.auth.redirectToLogin(createPageUrl('Home'));
     } else {
       setError('Invalid verification code. Try 123456 for demo.');
       setLoading(false);

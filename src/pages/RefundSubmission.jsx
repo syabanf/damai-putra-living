@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { base44 } from '@/api/base44Client';
-import { ChevronRight, ChevronLeft, CheckCircle2, Upload, FileText, ChevronDown, Check, Loader2, ShieldCheck } from 'lucide-react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { appClient } from '@/api/appClient';
+import { ChevronRight, ChevronLeft, CheckCircle2, ChevronDown, Check, Loader2, ShieldCheck } from 'lucide-react';
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle } from '@/components/ui/drawer';
 import RefundLayout from '@/components/refund/RefundLayout';
 import ReadOnlyField from '@/components/ui/ReadOnlyField';
@@ -99,7 +99,7 @@ export default function RefundSubmission() {
     setLookingUp(true);
     try {
       // Search in Tickets first
-      const tickets = await base44.entities.Ticket.list();
+      const tickets = await appClient.entities.Ticket.list();
       const ticket = tickets.find(t => t.reference_number === permitNumber || t.permit_id === permitNumber);
       if (ticket) {
         setLinkedRecord({ type: 'ticket', data: ticket });
@@ -115,7 +115,7 @@ export default function RefundSubmission() {
         return;
       }
       // Fallback: search PermitApplications
-      const permits = await base44.entities.PermitApplication.list();
+      const permits = await appClient.entities.PermitApplication.list();
       const permit = permits.find(p => p.permit_number === permitNumber);
       if (permit) {
         setLinkedRecord({ type: 'permit', data: permit });
@@ -138,7 +138,7 @@ export default function RefundSubmission() {
 
   // Auto-prefill user info on mount
   useEffect(() => {
-    base44.auth.me().then(u => {
+    appClient.auth.me().then(u => {
       if (u) setForm(f => ({
         ...f,
         applicant_name: f.applicant_name || u.full_name || '',
@@ -157,17 +157,17 @@ export default function RefundSubmission() {
     },
     mutationFn: async () => {
       const num = `RFD/${new Date().getFullYear()}/${String(Date.now()).slice(-5)}`;
-      const req = await base44.entities.DepositRefundRequest.create({
+      const req = await appClient.entities.DepositRefundRequest.create({
         ...form,
         refund_request_number: num,
         refund_status: 'Submitted',
         original_deposit_amount: parseFloat(form.original_deposit_amount) || 0,
         deduction_amount: 0,
-        user_email: (await base44.auth.me())?.email,
+        user_email: (await appClient.auth.me())?.email,
       });
       // Create checklist records
       await Promise.all(CHECKLIST_ITEMS.map(item =>
-        base44.entities.RefundDocumentChecklist.create({
+        appClient.entities.RefundDocumentChecklist.create({
           refund_request_id: req.id,
           checklist_item_code: item.code,
           checklist_item_name: item.name,
@@ -186,7 +186,7 @@ export default function RefundSubmission() {
         { stage: 'Payment Confirmation', role: 'Finance', order: 6, status: 'Pending' },
       ];
       await Promise.all(stages.map(s =>
-        base44.entities.RefundApprovalWorkflow.create({
+        appClient.entities.RefundApprovalWorkflow.create({
           refund_request_id: req.id,
           approval_stage: s.stage,
           approver_role: s.role,
@@ -195,7 +195,7 @@ export default function RefundSubmission() {
         })
       ));
       // Log
-      await base44.entities.RefundActivityLog.create({
+      await appClient.entities.RefundActivityLog.create({
         refund_request_id: req.id,
         activity_type: 'Submitted',
         activity_description: `Refund request ${num} submitted by ${form.applicant_name}`,

@@ -1,9 +1,9 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
-import { base44 } from '@/api/base44Client';
+import { appClient } from '@/api/appClient';
 import { useQuery } from '@tanstack/react-query';
-import { ArrowLeft, MapPin, Clock, Phone, Globe, Share2 } from 'lucide-react';
+import { ArrowLeft, MapPin, Clock, Phone, Share2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export default function CulinaryDetail() {
@@ -13,7 +13,7 @@ export default function CulinaryDetail() {
 
   const { data: tenant, isLoading } = useQuery({
     queryKey: ['tenant', tenantId],
-    queryFn: () => base44.entities.Tenant.list().then(tenants => 
+    queryFn: () => appClient.entities.Tenant.list().then(tenants => 
       tenants.find(t => t.id === tenantId)
     ),
   });

@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
-import { base44 } from '@/api/base44Client';
+import { appClient } from '@/api/appClient';
 import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 import { 
   User, Mail, Building2, HelpCircle, 
   FileText, LogOut, ChevronRight, Shield, Bell, Globe
 } from 'lucide-react';
-import { Button } from "@/components/ui/button";
 
 const GlassCard = ({ children, className = '' }) => (
   <div className={`rounded-2xl ${className}`} style={{ background: 'rgba(255,255,255,0.75)', backdropFilter: 'blur(16px)', border: '1px solid rgba(255,255,255,0.85)', boxShadow: '0 2px 12px rgba(138,127,115,0.1)' }}>
@@ -24,18 +23,18 @@ export default function Profile() {
 
   useEffect(() => { restoreScroll('Profile'); }, []);
   useEffect(() => {
-    base44.auth.me().then(setUser).catch(() => {});
+    appClient.auth.me().then(setUser).catch(() => {});
   }, []);
 
   const { data: units = [] } = useQuery({
     queryKey: ['units'],
-    queryFn: () => base44.entities.Unit.list(),
+    queryFn: () => appClient.entities.Unit.list(),
   });
 
   const approvedUnits = units.filter(u => u.status === 'approved');
 
   const handleLogout = async () => {
-    await base44.auth.logout(createPageUrl('Splash'));
+    await appClient.auth.logout(createPageUrl('Splash'));
   };
 
   const menuItems = [

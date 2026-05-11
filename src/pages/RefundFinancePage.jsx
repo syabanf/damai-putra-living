@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { base44 } from '@/api/base44Client';
+import { appClient } from '@/api/appClient';
 import { Save, ArrowLeft, CheckCircle2 } from 'lucide-react';
 import RefundLayout from '@/components/refund/RefundLayout';
 
@@ -23,13 +23,13 @@ export default function RefundFinancePage() {
 
   const { data: req } = useQuery({
     queryKey: ['refund-finance-req', refundId],
-    queryFn: () => base44.entities.DepositRefundRequest.filter({ id: refundId }).then(r => r[0]),
+    queryFn: () => appClient.entities.DepositRefundRequest.filter({ id: refundId }).then(r => r[0] ?? null),
     enabled: !!refundId,
   });
 
   const { data: inspection } = useQuery({
     queryKey: ['refund-finance-inspection', refundId],
-    queryFn: () => base44.entities.DepositInspectionClearance.filter({ refund_request_id: refundId }).then(r => r[0]),
+    queryFn: () => appClient.entities.DepositInspectionClearance.filter({ refund_request_id: refundId }).then(r => r[0] ?? null),
     enabled: !!refundId,
   });
 
@@ -48,7 +48,7 @@ export default function RefundFinancePage() {
     mutationFn: async (markAsPaid) => {
       const approvedAmt = parseFloat(form.final_approved_amount) || req?.approved_refund_amount || 0;
       // Create/update ledger record
-      await base44.entities.RefundLedger.create({
+      await appClient.entities.RefundLedger.create({
         refund_request_id: refundId,
         ledger_reference_number: form.ledger_reference_number,
         customer_name: req?.applicant_name,
@@ -63,14 +63,14 @@ export default function RefundFinancePage() {
       });
 
       const newStatus = markAsPaid ? 'Paid' : 'Approved';
-      await base44.entities.DepositRefundRequest.update(refundId, {
+      await appClient.entities.DepositRefundRequest.update(refundId, {
         refund_status: newStatus,
         approved_refund_amount: approvedAmt,
         finance_notes: form.finance_notes,
         payout_date: form.payout_date || null,
       });
 
-      await base44.entities.RefundActivityLog.create({
+      await appClient.entities.RefundActivityLog.create({
         refund_request_id: refundId,
         activity_type: 'Status Changed',
         activity_description: `Finance validation completed. Status: ${newStatus}. Approved refund: IDR ${Number(approvedAmt).toLocaleString('id-ID')}`,

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
-import { base44 } from '@/api/base44Client';
+import { appClient } from '@/api/appClient';
 import { useQuery } from '@tanstack/react-query';
 import {
   ArrowLeft, CheckCircle, XCircle, AlertCircle,
@@ -87,7 +87,7 @@ export default function TicketDetail() {
 
   const { data: ticket, isLoading } = useQuery({
     queryKey: ['ticket', ticketId],
-    queryFn: () => base44.entities.Ticket.filter({ id: ticketId }).then(r => r[0]),
+    queryFn: () => appClient.entities.Ticket.filter({ id: ticketId }).then(r => r[0] ?? null),
     enabled: !!ticketId,
   });
 
@@ -95,25 +95,25 @@ export default function TicketDetail() {
 
   const { data: workItems = [] } = useQuery({
     queryKey: ['ticket-workitems', ticketId],
-    queryFn: () => base44.entities.WorkItem.filter({ application_id: ticketId }),
+    queryFn: () => appClient.entities.WorkItem.filter({ application_id: ticketId }),
     enabled: !!ticketId && isRenovation,
   });
 
   const { data: approvals = [] } = useQuery({
     queryKey: ['ticket-approvals', ticketId],
-    queryFn: () => base44.entities.ApprovalWorkflow.filter({ application_id: ticketId }),
+    queryFn: () => appClient.entities.ApprovalWorkflow.filter({ application_id: ticketId }),
     enabled: !!ticketId && isRenovation,
   });
 
   const { data: inspections = [] } = useQuery({
     queryKey: ['ticket-inspections', ticketId],
-    queryFn: () => base44.entities.Inspection.filter({ application_id: ticketId }),
+    queryFn: () => appClient.entities.Inspection.filter({ application_id: ticketId }),
     enabled: !!ticketId && isRenovation,
   });
 
   const { data: activityLogs = [] } = useQuery({
     queryKey: ['ticket-logs', ticketId],
-    queryFn: () => base44.entities.ActivityLog.filter({ application_id: ticketId }),
+    queryFn: () => appClient.entities.ActivityLog.filter({ application_id: ticketId }),
     enabled: !!ticketId && isRenovation,
   });
 

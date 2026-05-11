@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { base44 } from '@/api/base44Client';
+import { appClient } from '@/api/appClient';
 import AdminPermitLayout from '@/components/admin/AdminPermitLayout';
-import { Search, Home, User, CheckCircle, XCircle, Clock, Building2, ChevronRight } from 'lucide-react';
+import { Search, Home, User, CheckCircle, XCircle, Clock, ChevronRight } from 'lucide-react';
 
 const STATUS_STYLE = {
   approved: { bg: 'bg-emerald-50 text-emerald-700', label: 'Approved' },
@@ -22,7 +22,7 @@ export default function AdminResidents() {
 
   const { data: units = [], isLoading } = useQuery({
     queryKey: ['admin-units'],
-    queryFn: () => base44.entities.Unit.list('-created_date', 200),
+    queryFn: () => appClient.entities.Unit.list('-created_date', 200),
   });
 
   const filtered = units.filter(u => {

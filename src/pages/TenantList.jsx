@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
-import { base44 } from '@/api/base44Client';
+import { appClient } from '@/api/appClient';
 import { useQuery } from '@tanstack/react-query';
 import { ArrowLeft, Search, X, Users } from 'lucide-react';
 import { motion } from 'framer-motion';
@@ -27,7 +27,7 @@ export default function TenantList() {
 
   const { data: tenants = [], isLoading } = useQuery({
     queryKey: ['tenants', destinationId],
-    queryFn: () => base44.entities.Tenant.filter({ destination_id: destinationId }),
+    queryFn: () => appClient.entities.Tenant.filter({ destination_id: destinationId }),
     enabled: !!destinationId,
   });
 

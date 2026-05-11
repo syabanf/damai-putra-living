@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { base44 } from '@/api/base44Client';
+import { appClient } from '@/api/appClient';
 import AdminPermitLayout from '@/components/admin/AdminPermitLayout';
 import { Plus, Search, Calendar, Edit2, Trash2, X, Save } from 'lucide-react';
 
@@ -20,16 +20,16 @@ export default function AdminCMSEvents() {
 
   const { data: events = [], isLoading } = useQuery({
     queryKey: ['admin-events'],
-    queryFn: () => base44.entities.Event.list('-start_date', 300),
+    queryFn: () => appClient.entities.Event.list('-start_date', 300),
   });
 
   const saveMutation = useMutation({
-    mutationFn: (data) => editing ? base44.entities.Event.update(editing.id, data) : base44.entities.Event.create(data),
+    mutationFn: (data) => editing ? appClient.entities.Event.update(editing.id, data) : appClient.entities.Event.create(data),
     onSuccess: () => { qc.invalidateQueries({ queryKey: ['admin-events'] }); setShowForm(false); setEditing(null); setForm(EMPTY); },
   });
 
   const deleteMutation = useMutation({
-    mutationFn: (id) => base44.entities.Event.delete(id),
+    mutationFn: (id) => appClient.entities.Event.delete(id),
     onSuccess: () => qc.invalidateQueries({ queryKey: ['admin-events'] }),
   });
 

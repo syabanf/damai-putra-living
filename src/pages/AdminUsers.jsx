@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { base44 } from '@/api/base44Client';
+import { appClient } from '@/api/appClient';
 import AdminPermitLayout from '@/components/admin/AdminPermitLayout';
 import { Search, User, Shield, UserCheck, ChevronRight, Mail, Calendar } from 'lucide-react';
 
@@ -16,7 +16,7 @@ export default function AdminUsers() {
 
   const { data: users = [], isLoading } = useQuery({
     queryKey: ['admin-users'],
-    queryFn: () => base44.entities.User.list('-created_date', 500),
+    queryFn: () => appClient.entities.User.list('-created_date', 500),
   });
 
   const filtered = users.filter(u => {

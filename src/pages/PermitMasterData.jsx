@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { base44 } from '@/api/base44Client';
-import { Plus, Trash2, Settings, ClipboardList, Shield, FileText } from 'lucide-react';
+import { appClient } from '@/api/appClient';
+import { Plus, Trash2, ClipboardList, Shield, FileText } from 'lucide-react';
 import PermitLayout from '@/components/permit-mgmt/PermitLayout';
 import PermitStatusBadge from '@/components/permit-mgmt/PermitStatusBadge';
 
@@ -23,31 +23,31 @@ export default function PermitMasterData() {
 
   const { data: workItems = [], isLoading: loadingItems } = useQuery({
     queryKey: ['master-work-items'],
-    queryFn: () => base44.entities.WorkItem.filter({ is_master: true }),
+    queryFn: () => appClient.entities.WorkItem.filter({ is_master: true }),
   });
 
   const { data: rules = [], isLoading: loadingRules } = useQuery({
     queryKey: ['master-rules'],
-    queryFn: () => base44.entities.PermitRule.filter({ is_master: true }),
+    queryFn: () => appClient.entities.PermitRule.filter({ is_master: true }),
   });
 
   const addItemMutation = useMutation({
-    mutationFn: () => base44.entities.WorkItem.create({ work_item_name: newItem, work_category: newCategory, work_item_type: newItemType, is_master: true }),
+    mutationFn: () => appClient.entities.WorkItem.create({ work_item_name: newItem, work_category: newCategory, work_item_type: newItemType, is_master: true }),
     onSuccess: () => { qc.invalidateQueries({ queryKey: ['master-work-items'] }); setNewItem(''); },
   });
 
   const deleteItemMutation = useMutation({
-    mutationFn: (id) => base44.entities.WorkItem.delete(id),
+    mutationFn: (id) => appClient.entities.WorkItem.delete(id),
     onSuccess: () => qc.invalidateQueries({ queryKey: ['master-work-items'] }),
   });
 
   const addRuleMutation = useMutation({
-    mutationFn: () => base44.entities.PermitRule.create({ ...newRule, is_master: true, is_mandatory: true }),
+    mutationFn: () => appClient.entities.PermitRule.create({ ...newRule, is_master: true, is_mandatory: true }),
     onSuccess: () => { qc.invalidateQueries({ queryKey: ['master-rules'] }); setNewRule({ rule_code: '', rule_title: '', rule_description: '', applies_to: 'Both' }); },
   });
 
   const deleteRuleMutation = useMutation({
-    mutationFn: (id) => base44.entities.PermitRule.delete(id),
+    mutationFn: (id) => appClient.entities.PermitRule.delete(id),
     onSuccess: () => qc.invalidateQueries({ queryKey: ['master-rules'] }),
   });
 

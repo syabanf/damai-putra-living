@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { base44 } from '@/api/base44Client';
+import { appClient } from '@/api/appClient';
 import { useQuery } from '@tanstack/react-query';
 import { Search, Eye } from 'lucide-react';
 import AdminPermitLayout from '@/components/admin/AdminPermitLayout';
@@ -42,7 +42,7 @@ export default function AdminPermitList() {
 
   const { data: tickets = [], isLoading } = useQuery({
     queryKey: ['admin-tickets-list'],
-    queryFn: () => base44.entities.Ticket.list('-created_date', 300),
+    queryFn: () => appClient.entities.Ticket.list('-created_date', 300),
   });
 
   const filtered = useMemo(() => tickets.filter(t => {

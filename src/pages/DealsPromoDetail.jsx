@@ -1,7 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { createPageUrl } from '@/utils';
-import { ArrowLeft, Share2, Tag, Calendar } from 'lucide-react';
+import { ArrowLeft, Share2, Calendar } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const MOCK_DEALS = {

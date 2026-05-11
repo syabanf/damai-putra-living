@@ -1,11 +1,10 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
-import { base44 } from '@/api/base44Client';
+import { appClient } from '@/api/appClient';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, Bell, CheckCircle, XCircle, FileCheck, Trash2, Check } from 'lucide-react';
-import { Button } from "@/components/ui/button";
 
 const notificationConfig = {
   unit_approved:   { icon: CheckCircle, color: 'bg-emerald-100 text-emerald-600' },
@@ -32,22 +31,22 @@ export default function Notifications() {
 
   const { data: notifications = [], isLoading } = useQuery({
     queryKey: ['notifications'],
-    queryFn: () => base44.entities.Notification.list('-created_date'),
+    queryFn: () => appClient.entities.Notification.list('-created_date'),
   });
 
   const markAsReadMutation = useMutation({
-    mutationFn: (id) => base44.entities.Notification.update(id, { read: true }),
+    mutationFn: (id) => appClient.entities.Notification.update(id, { read: true }),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['notifications'] }),
   });
 
   const deleteNotificationMutation = useMutation({
-    mutationFn: (id) => base44.entities.Notification.delete(id),
+    mutationFn: (id) => appClient.entities.Notification.delete(id),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['notifications'] }),
   });
 
   const markAllAsRead = async () => {
     const unread = notifications.filter(n => !n.read);
-    for (const notif of unread) await base44.entities.Notification.update(notif.id, { read: true });
+    for (const notif of unread) await appClient.entities.Notification.update(notif.id, { read: true });
     queryClient.invalidateQueries({ queryKey: ['notifications'] });
   };
 

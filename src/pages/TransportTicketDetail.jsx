@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Clock, MapPin, Users, AlertCircle, ChevronRight } from 'lucide-react';
+import { ArrowLeft, Clock, Users, AlertCircle, ChevronRight } from 'lucide-react';
 
 // Mock transport data
 const MOCK_TRANSPORT = {

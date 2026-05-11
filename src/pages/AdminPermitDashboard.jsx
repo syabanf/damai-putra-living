@@ -1,6 +1,6 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { base44 } from '@/api/base44Client';
+import { appClient } from '@/api/appClient';
 import { useQuery } from '@tanstack/react-query';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import {
@@ -61,7 +61,7 @@ export default function AdminPermitDashboard() {
 
   const { data: tickets = [], isLoading } = useQuery({
     queryKey: ['admin-tickets'],
-    queryFn: () => base44.entities.Ticket.list('-created_date', 300),
+    queryFn: () => appClient.entities.Ticket.list('-created_date', 300),
   });
 
   const stats = useMemo(() => {

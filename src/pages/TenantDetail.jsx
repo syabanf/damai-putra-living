@@ -1,8 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { base44 } from '@/api/base44Client';
+import { appClient } from '@/api/appClient';
 import { useQuery } from '@tanstack/react-query';
-import { ArrowLeft, Clock, MapPin, Phone, Users, ChevronRight } from 'lucide-react';
+import { ArrowLeft, Clock, MapPin, Phone, Users } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const CATEGORY_LABELS = {
@@ -24,7 +24,7 @@ export default function TenantDetail() {
 
   const { data: tenant, isLoading } = useQuery({
     queryKey: ['tenant', id],
-    queryFn: () => base44.entities.Tenant.filter({ id }),
+    queryFn: () => appClient.entities.Tenant.filter({ id }),
     select: data => data?.[0],
     enabled: !!id,
   });

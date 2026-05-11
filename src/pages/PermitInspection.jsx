@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { base44 } from '@/api/base44Client';
+import { appClient } from '@/api/appClient';
 import { Plus, Search, Eye, AlertTriangle, CheckCircle, XCircle } from 'lucide-react';
 import PermitLayout from '@/components/permit-mgmt/PermitLayout';
-import PermitStatusBadge from '@/components/permit-mgmt/PermitStatusBadge';
 
 function InspectionModal({ onClose }) {
   const qc = useQueryClient();
@@ -19,11 +18,11 @@ function InspectionModal({ onClose }) {
 
   const { data: permits = [] } = useQuery({
     queryKey: ['permits-for-inspection'],
-    queryFn: () => base44.entities.PermitApplication.list('-created_date', 100),
+    queryFn: () => appClient.entities.PermitApplication.list('-created_date', 100),
   });
 
   const mutation = useMutation({
-    mutationFn: () => base44.entities.Inspection.create({ ...form }),
+    mutationFn: () => appClient.entities.Inspection.create({ ...form }),
     onSuccess: () => { qc.invalidateQueries({ queryKey: ['all-inspections'] }); onClose(); },
   });
 
@@ -95,12 +94,12 @@ export default function PermitInspection() {
 
   const { data: inspections = [], isLoading } = useQuery({
     queryKey: ['all-inspections'],
-    queryFn: () => base44.entities.Inspection.list('-created_date', 200),
+    queryFn: () => appClient.entities.Inspection.list('-created_date', 200),
   });
 
   const { data: permits = [] } = useQuery({
     queryKey: ['permits-for-insp'],
-    queryFn: () => base44.entities.PermitApplication.list('-created_date', 200),
+    queryFn: () => appClient.entities.PermitApplication.list('-created_date', 200),
   });
 
   const getPermit = (id) => permits.find(p => p.id === id);

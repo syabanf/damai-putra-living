@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Shield, Lock, Bell, Database, Trash2, ChevronRight, Loader2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { PAGE_BG, GlassHeader, GlassCard } from '@/components/ui/DesignSystem';
-import { base44 } from '@/api/base44Client';
+import { appClient } from '@/api/appClient';
 import { createPageUrl } from '@/utils';
 
 function Toggle({ value, onChange }) {
@@ -28,22 +28,22 @@ export default function PrivacySecurity() {
     setDeleting(true);
     try {
       // Delete all user data from entities
-      const user = await base44.auth.me();
+      const user = await appClient.auth.me();
       if (user?.email) {
         const [units, tickets] = await Promise.all([
-          base44.entities.Unit.filter({ user_email: user.email }),
-          base44.entities.Ticket.filter({ user_email: user.email }),
+          appClient.entities.Unit.filter({ user_email: user.email }),
+          appClient.entities.Ticket.filter({ user_email: user.email }),
         ]);
         await Promise.all([
-          ...units.map(u => base44.entities.Unit.delete(u.id)),
-          ...tickets.map(t => base44.entities.Ticket.delete(t.id)),
+          ...units.map(u => appClient.entities.Unit.delete(u.id)),
+          ...tickets.map(t => appClient.entities.Ticket.delete(t.id)),
         ]);
       }
       // Sign out and redirect to splash
-      base44.auth.logout(createPageUrl('Splash'));
+      appClient.auth.logout(createPageUrl('Splash'));
     } catch {
       // Even if cleanup fails, log out
-      base44.auth.logout(createPageUrl('Splash'));
+      appClient.auth.logout(createPageUrl('Splash'));
     }
   };
 
