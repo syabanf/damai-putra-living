@@ -102,7 +102,7 @@ export default function AdminPermitDetail() {
         management_notes: adminNotes,
       };
       if (newStatus === 'approved') {
-        const generatedPermitId = permitId || `DP/${ticket?.permit_type?.toUpperCase().slice(0, 3)}/${new Date().getFullYear()}/${String(Math.floor(Math.random() * 9000) + 1000)}`;
+        const generatedPermitId = permitId || `ION/${ticket?.permit_type?.toUpperCase().slice(0, 3)}/${new Date().getFullYear()}/${String(Math.floor(Math.random() * 9000) + 1000)}`;
         updates.approved_by = approverName || 'Admin';
         updates.approval_date = new Date().toISOString();
         updates.permit_id = generatedPermitId;
@@ -309,7 +309,7 @@ export default function AdminPermitDetail() {
               <div className="space-y-2">
                 <label className="text-xs font-semibold text-slate-500">Permit ID (auto-generated if empty)</label>
                 <input value={permitId} onChange={e => setPermitId(e.target.value)}
-                  placeholder="e.g. DP/RNV/2026/0001"
+                  placeholder="e.g. ION/RNV/2026/0001"
                   className="w-full border border-slate-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500" />
               </div>
             )}

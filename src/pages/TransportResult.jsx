@@ -9,7 +9,7 @@ const MOCK_RESULTS = [
   {
     id: 1,
     operator: 'City Bus Express',
-    from: 'Damai Putra',
+    from: 'Main Community',
     to: 'Central Station',
     departTime: '08:25',
     arrivalTime: '14:30',
@@ -21,7 +21,7 @@ const MOCK_RESULTS = [
   {
     id: 2,
     operator: 'Shuttle Plus',
-    from: 'Damai Putra',
+    from: 'Main Community',
     to: 'Central Station',
     departTime: '09:00',
     arrivalTime: '13:15',
@@ -33,7 +33,7 @@ const MOCK_RESULTS = [
   {
     id: 3,
     operator: 'Premium Coach',
-    from: 'Damai Putra',
+    from: 'Main Community',
     to: 'Central Station',
     departTime: '10:30',
     arrivalTime: '15:45',
@@ -45,7 +45,7 @@ const MOCK_RESULTS = [
   {
     id: 4,
     operator: 'Fast Track Shuttle',
-    from: 'Damai Putra',
+    from: 'Main Community',
     to: 'Central Station',
     departTime: '11:00',
     arrivalTime: '14:00',

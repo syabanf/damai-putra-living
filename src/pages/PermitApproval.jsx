@@ -12,7 +12,7 @@ const APPROVAL_ROLES = [
   'ASS TM / IPL',
   'Head Building & Infrastructure',
   'Head After Sales Service',
-  'Head Township Management',
+  'Community Management Head',
 ];
 
 function ApprovalModal({ permit, approvals, onClose }) {
@@ -46,7 +46,7 @@ function ApprovalModal({ permit, approvals, onClose }) {
       }
       // Update permit status
       const newStatus = decision === 'Approved' ? 'Under Review' : decision === 'Rejected' ? 'Rejected' : 'Revision Needed';
-      if (role === 'Head Township Management' && decision === 'Approved') {
+      if (role === 'Community Management Head' && decision === 'Approved') {
         await appClient.entities.PermitApplication.update(permit.id, { application_status: 'Approved' });
       } else {
         await appClient.entities.PermitApplication.update(permit.id, { application_status: newStatus, current_approval_stage: role });

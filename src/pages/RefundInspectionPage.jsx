@@ -50,7 +50,7 @@ export default function RefundInspectionPage() {
     inspection_notes: '',
     signed_by_customer: false,
     signed_by_inspector: false,
-    signed_by_township_head: false,
+    signed_by_community_head: false,
   });
 
   const set = (k, v) => setForm(f => ({ ...f, [k]: v }));
@@ -152,7 +152,7 @@ export default function RefundInspectionPage() {
           <div className="border-t border-slate-100 pt-4">
             <p className="text-sm font-semibold text-slate-700 mb-3">Signatures</p>
             <div className="space-y-2">
-              {[['signed_by_customer', 'Customer'], ['signed_by_inspector', 'Inspector'], ['signed_by_township_head', 'Township Head']].map(([key, label]) => (
+              {[['signed_by_customer', 'Customer'], ['signed_by_inspector', 'Inspector'], ['signed_by_community_head', 'Community Head']].map(([key, label]) => (
                 <label key={key} className="flex items-center gap-2 cursor-pointer">
                   <input type="checkbox" checked={form[key]} onChange={e => set(key, e.target.checked)} className="w-4 h-4 accent-blue-600" />
                   <span className="text-sm text-slate-700">Signed by {label}</span>

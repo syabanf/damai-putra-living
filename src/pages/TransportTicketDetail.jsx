@@ -9,7 +9,7 @@ const MOCK_TRANSPORT = {
   1: {
     id: 1,
     operator: 'City Bus Express',
-    from: 'Damai Putra Township',
+    from: 'Main Community',
     to: 'Central Station',
     departTime: '08:25',
     arrivalTime: '14:30',
@@ -18,12 +18,12 @@ const MOCK_TRANSPORT = {
     seats: 12,
     type: 'bus',
     date: '2026-02-26',
-    stops: ['Damai Putra', 'Jalan Utama', 'Jalan Merdeka', 'Terminal Kota', 'Central Station'],
+    stops: ['Main Community', 'Jalan Utama', 'Jalan Merdeka', 'Terminal Kota', 'Central Station'],
   },
   2: {
     id: 2,
     operator: 'Shuttle Plus',
-    from: 'Damai Putra Township',
+    from: 'Main Community',
     to: 'Central Station',
     departTime: '09:00',
     arrivalTime: '13:15',
@@ -32,7 +32,7 @@ const MOCK_TRANSPORT = {
     seats: 8,
     type: 'shuttle',
     date: '2026-02-26',
-    stops: ['Damai Putra', 'Terminal Kota', 'Central Station'],
+    stops: ['Main Community', 'Terminal Kota', 'Central Station'],
   },
 };
 

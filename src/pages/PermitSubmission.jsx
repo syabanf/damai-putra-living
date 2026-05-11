@@ -46,7 +46,7 @@ const RULES = [
   'Kanopi / pekerjaan tertentu harus mengikuti approval developer',
   'Penyimpangan pekerjaan dapat menyebabkan penahanan deposit dan sanksi',
   'Pencairan deposit harus melalui pengecekan developer',
-  'Permit efektif setelah disetujui Head of Township Management',
+  'Permit efektif setelah disetujui Head of Community Management',
 ];
 
 const Field = ({ label, required, children }) => (
@@ -63,7 +63,7 @@ const inputCls = "w-full border border-slate-200 rounded-xl px-3.5 py-2.5 text-s
 function genPermitNumber(type, count) {
   const code = type === 'Major Renovation' ? 'MAJ' : 'MIN';
   const year = new Date().getFullYear();
-  return `DP/RNV-${code}/${year}/${String(count + 1).padStart(3, '0')}`;
+  return `ION/RNV-${code}/${year}/${String(count + 1).padStart(3, '0')}`;
 }
 
 export default function PermitSubmission() {

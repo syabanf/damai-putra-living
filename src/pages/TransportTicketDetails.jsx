@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { ArrowLeft, MapPin, CheckCircle2 } from 'lucide-react';
 
 const LOCATION_MAP = {
-  '221': 'Damai Putra',
+  '221': 'Main Community',
   '213123': 'Central Station',
   '101': 'KL Airport',
   '102': 'Sentosa Terminal',

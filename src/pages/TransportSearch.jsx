@@ -13,7 +13,7 @@ const TRANSPORT_TYPES = [
 ];
 
 const LOCATIONS = [
-  { id: '221', name: 'Damai Putra' },
+  { id: '221', name: 'Main Community' },
   { id: '213123', name: 'Central Station' },
   { id: '101', name: 'Kl Airport' },
   { id: '102', name: 'Sentosa Terminal' },

@@ -134,10 +134,10 @@ export default function AdminCMSEvents() {
             </div>
             <div className="p-6 space-y-4">
               {[
-                { key:'title', label:'Judul Event *', placeholder:'e.g. Damai Run 2026' },
-                { key:'location', label:'Lokasi', placeholder:'e.g. Lapangan Damai Putra' },
+                { key:'title', label:'Judul Event *', placeholder:'e.g. Community Run 2026' },
+                { key:'location', label:'Lokasi', placeholder:'e.g. Community Field' },
                 { key:'address', label:'Alamat', placeholder:'Jl. ...' },
-                { key:'organizer', label:'Organizer', placeholder:'e.g. Damai Putra Management' },
+                { key:'organizer', label:'Organizer', placeholder:'e.g. Community Management' },
                 { key:'banner_image', label:'URL Banner', placeholder:'https://...' },
                 { key:'ticket_url', label:'URL Tiket/Registrasi', placeholder:'https://...' },
               ].map(f => (

@@ -39,7 +39,7 @@ const HERO_SLIDES = [
   {
     img: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=80',
     headline: 'The Future of the City\nComes to Life Here',
-    sub: 'Damai Putra Township',
+    sub: 'Main Community',
   },
   {
     img: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80',
@@ -73,8 +73,8 @@ const LANGUAGES = [
 ];
 
 const NEWS = [
-  { id: 1, title: 'ASG News February 2026', date: '13 Feb 2026', img: 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=400&q=80' },
-  { id: 2, title: 'Township Development Update Q1', date: '01 Feb 2026', img: 'https://images.unsplash.com/photo-1582407947304-fd86f028f716?w=400&q=80' },
+  { id: 1, title: 'Community News February 2026', date: '13 Feb 2026', img: 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=400&q=80' },
+  { id: 2, title: 'Community Development Update Q1', date: '01 Feb 2026', img: 'https://images.unsplash.com/photo-1582407947304-fd86f028f716?w=400&q=80' },
   { id: 3, title: 'New Amenities Opening Soon', date: '20 Jan 2026', img: 'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=400&q=80' },
 ];
 

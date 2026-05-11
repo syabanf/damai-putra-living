@@ -217,7 +217,7 @@ export default function RefundDetail() {
               <div className="mt-3 flex gap-4 text-xs text-slate-600">
                 <span className={inspection.signed_by_customer ? 'text-green-600 font-semibold' : 'text-slate-400'}>✓ Customer</span>
                 <span className={inspection.signed_by_inspector ? 'text-green-600 font-semibold' : 'text-slate-400'}>✓ Inspector</span>
-                <span className={inspection.signed_by_township_head ? 'text-green-600 font-semibold' : 'text-slate-400'}>✓ Township Head</span>
+                <span className={inspection.signed_by_community_head ? 'text-green-600 font-semibold' : 'text-slate-400'}>✓ Community Head</span>
               </div>
             </Section>
           ) : (

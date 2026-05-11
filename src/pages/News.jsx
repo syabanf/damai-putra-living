@@ -5,9 +5,9 @@ import { ArrowLeft, Search, Newspaper } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const MOCK_NEWS = [
-  { id: 1, title: 'ASG News February 2026', date: '13 Feb 2026', img: 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=400&q=80', content: 'Latest updates from ASG February 2026 covering community developments and new initiatives.' },
-  { id: 2, title: 'Township Development Update Q1', date: '01 Feb 2026', img: 'https://images.unsplash.com/photo-1582407947304-fd86f028f716?w=400&q=80', content: 'Comprehensive update on township development progress in Q1 2026 with new infrastructure announcements.' },
-  { id: 3, title: 'New Amenities Opening Soon', date: '20 Jan 2026', img: 'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=400&q=80', content: 'Exciting new amenities launching soon in the township including fitness centers and retail spaces.' },
+  { id: 1, title: 'Community News February 2026', date: '13 Feb 2026', img: 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=400&q=80', content: 'Latest updates from Community February 2026 covering community developments and new initiatives.' },
+  { id: 2, title: 'Community Development Update Q1', date: '01 Feb 2026', img: 'https://images.unsplash.com/photo-1582407947304-fd86f028f716?w=400&q=80', content: 'Comprehensive update on community development progress in Q1 2026 with new infrastructure announcements.' },
+  { id: 3, title: 'New Amenities Opening Soon', date: '20 Jan 2026', img: 'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=400&q=80', content: 'Exciting new amenities launching soon in the community including fitness centers and retail spaces.' },
   { id: 4, title: 'Community Events Schedule 2026', date: '15 Jan 2026', img: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&q=80', content: 'Full schedule of community events planned for 2026 with details on participation and registration.' },
 ];
 

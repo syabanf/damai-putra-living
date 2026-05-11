@@ -7,7 +7,7 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
 
 const TRANSPORT_STATIONS = [
-  { id: 1, name: 'Damai Putra Hub', lat: 3.1089, lng: 101.5180, type: 'hub', routes: 5, status: 'Active' },
+  { id: 1, name: 'Main Transit Hub', lat: 3.1089, lng: 101.5180, type: 'hub', routes: 5, status: 'Active' },
   { id: 2, name: 'KL Central Station', lat: 3.1466, lng: 101.6956, type: 'hub', routes: 12, status: 'Active' },
   { id: 3, name: 'Jalan Utama Terminal', lat: 3.1200, lng: 101.5500, type: 'stop', routes: 3, status: 'Active' },
   { id: 4, name: 'Terminal Kota', lat: 3.1350, lng: 101.5900, type: 'stop', routes: 4, status: 'Active' },

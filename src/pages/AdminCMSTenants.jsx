@@ -129,7 +129,7 @@ export default function AdminCMSTenants() {
               {[
                 { key:'name', label:'Nama Tenant *', placeholder:'e.g. Kopi Kenangan' },
                 { key:'destination_id', label:'ID Destinasi', placeholder:'ID destinasi parent' },
-                { key:'destination_name', label:'Nama Destinasi', placeholder:'e.g. Damai Square' },
+                { key:'destination_name', label:'Nama Destinasi', placeholder:'e.g. Community Square' },
                 { key:'location_detail', label:'Lokasi Detail', placeholder:'e.g. Lantai 1, Unit A1' },
                 { key:'opening_hours', label:'Jam Operasional', placeholder:'e.g. 10:00 - 22:00' },
                 { key:'contact', label:'Kontak / WA', placeholder:'e.g. 0812-xxxx-xxxx' },

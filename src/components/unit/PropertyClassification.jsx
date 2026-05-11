@@ -71,7 +71,7 @@ export const PROPERTIES = {
   ],
   residential: [
     {
-      id: 'damai-putra-1', name: 'Damai Putra Residence 1',
+      id: 'residence-one', name: 'Residence One',
       areaLabel: 'Cluster', unitLabel: 'Block',
       areas: [
         { id: 'cl-magnolia', name: 'Cluster Magnolia', units: ['Block A', 'Block B', 'Block C', 'Block D'] },
@@ -81,7 +81,7 @@ export const PROPERTIES = {
       classifications: ['Type 36', 'Type 45', 'Type 54', 'Type 60', 'Type 72', 'Type 90', 'Type 120'],
     },
     {
-      id: 'damai-putra-2', name: 'Damai Putra Residence 2',
+      id: 'residence-two', name: 'Residence Two',
       areaLabel: 'Cluster', unitLabel: 'Block',
       areas: [
         { id: 'cl-serenia', name: 'Cluster Serenia', units: ['Block A', 'Block B', 'Block C'] },
@@ -92,7 +92,7 @@ export const PROPERTIES = {
   ],
   commercial: [
     {
-      id: 'damai-bizpark', name: 'Damai Putra Business Park',
+      id: 'business-park', name: 'Business Park',
       areaLabel: 'Zone', unitLabel: 'Row',
       areas: [
         { id: 'zone-a', name: 'Zone A – Commercial Row', units: ['Row 1', 'Row 2', 'Row 3'] },
@@ -102,7 +102,7 @@ export const PROPERTIES = {
       classifications: ['Ruko 2 Lantai', 'Ruko 3 Lantai', 'Office Unit', 'F&B Space', 'Retail Space'],
     },
     {
-      id: 'dp-commercial', name: 'Damai Putra Commercial Hub',
+      id: 'commercial-hub', name: 'Commercial Hub',
       areaLabel: 'Zone', unitLabel: 'Row',
       areas: [
         { id: 'zone-main', name: 'Zone Main Street', units: ['Row 1', 'Row 2'] },
@@ -112,7 +112,7 @@ export const PROPERTIES = {
   ],
   kavling: [
     {
-      id: 'kavling-east', name: 'Damai Putra Kavling East',
+      id: 'kavling-east', name: 'East Land Lots',
       areaLabel: 'Section', unitLabel: 'Area',
       areas: [
         { id: 'sec-1', name: 'Section 1 – Standard', units: ['Area A', 'Area B', 'Area C'] },
@@ -121,7 +121,7 @@ export const PROPERTIES = {
       classifications: ['100–150 m²', '150–200 m²', '200–300 m²', '300–500 m²', '500 m²+'],
     },
     {
-      id: 'kavling-west', name: 'Damai Putra Kavling West',
+      id: 'kavling-west', name: 'West Land Lots',
       areaLabel: 'Section', unitLabel: 'Area',
       areas: [
         { id: 'sec-a', name: 'Section A – Lakeside', units: ['Area 1', 'Area 2', 'Area 3'] },

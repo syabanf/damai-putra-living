@@ -181,7 +181,7 @@ export default function RefundSubmission() {
         { stage: 'Applicant Submission', role: 'Applicant', order: 1, status: 'Approved' },
         { stage: 'Verificator / Admin Check', role: 'Verificator', order: 2, status: 'Pending' },
         { stage: 'Inspection Validation', role: 'Inspector', order: 3, status: 'Pending' },
-        { stage: 'Township / Head Approval', role: 'Township Head', order: 4, status: 'Pending' },
+        { stage: 'Community Head Approval', role: 'Community Head', order: 4, status: 'Pending' },
         { stage: 'Finance Validation', role: 'Finance', order: 5, status: 'Pending' },
         { stage: 'Payment Confirmation', role: 'Finance', order: 6, status: 'Pending' },
       ];
@@ -263,7 +263,7 @@ export default function RefundSubmission() {
                       set('related_permit_number', e.target.value);
                       lookupPermit(e.target.value.trim());
                     }}
-                    placeholder="DP/RNV-MIN/2026/001"
+                    placeholder="ION/RNV-MIN/2026/001"
                     className="w-full px-3 py-2.5 rounded-xl border border-slate-200 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-200 pr-9"
                   />
                   {lookingUp && (

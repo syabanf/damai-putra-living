@@ -18,7 +18,7 @@ const CHECKLIST_ITEMS = [
   { id: 6, label: 'Foto pekerjaan sebelum renovasi dalam bentuk geotag', required: true },
   { id: 7, label: 'Foto pekerjaan sesudah renovasi dalam bentuk geotag', required: true },
   { id: 8, label: 'Surat Kuasa ASLI + Copy KTP Pemberi & penerima kuasa (apabila penerima berbeda dengan nama konsumen)', required: false },
-  { id: 9, label: 'Copy Perjanjian Sewa (untuk Refund DP sewa)', required: false },
+  { id: 9, label: 'Copy Perjanjian Sewa (untuk refund deposit sewa)', required: false },
   { id: 10, label: 'Print out Kartu Kavling - system BITS (tidak ada outs IPL/Sewa)', required: true },
 ];
 

@@ -1,11 +1,11 @@
-const STORAGE_KEY = 'damai_putra_living_data_v1';
+const STORAGE_KEY = 'ion_community_app_data_v1';
 const USER_KEY = 'mock_user';
 
 const now = () => new Date().toISOString();
 
 const defaultUser = {
   id: 'user_resident_001',
-  email: 'resident@damaiputra.com',
+  email: 'resident@example.com',
   full_name: 'Budi Santoso',
   role: 'user',
   unit: 'Tower A - Unit 15',
@@ -17,8 +17,8 @@ const seedData = {
     defaultUser,
     {
       id: 'user_admin_001',
-      email: 'admin@damaiputra.com',
-      full_name: 'Admin Damai Putra',
+      email: 'admin@example.com',
+      full_name: 'Admin User',
       role: 'admin',
       unit: 'Management Office',
       mock: true,
@@ -28,8 +28,8 @@ const seedData = {
   Unit: [
     {
       id: 'unit_001',
-      user_email: 'resident@damaiputra.com',
-      property_name: 'Damai Putra Residence',
+      user_email: 'resident@example.com',
+      property_name: 'Main Residence',
       unit_number: 'A-1508',
       tower: 'A',
       status: 'approved',
@@ -39,7 +39,7 @@ const seedData = {
     },
     {
       id: 'unit_002',
-      user_email: 'resident@damaiputra.com',
+      user_email: 'resident@example.com',
       property_name: 'Sayana Apartments',
       unit_number: 'B-0902',
       tower: 'B',
@@ -55,10 +55,10 @@ const seedData = {
   Property: [
     {
       id: 'property_001',
-      name: 'Damai Putra Residence',
-      title: 'Damai Putra Residence',
+      name: 'Main Residence',
+      title: 'Main Residence',
       location: 'Bekasi',
-      description: 'Modern township living with family-friendly facilities.',
+      description: 'Modern community living with family-friendly facilities.',
       image_url: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=900&q=80',
       type: 'Apartment',
       price: 'Start from Rp 900M',
@@ -79,8 +79,8 @@ const seedData = {
   Destination: [
     {
       id: 'destination_001',
-      name: 'Central Park Damai',
-      title: 'Central Park Damai',
+      name: 'Central Park',
+      title: 'Central Park',
       category: 'Lifestyle',
       image_url: 'https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=900&q=80',
       description: 'Outdoor green space for dining, events, and family activities.',
@@ -100,7 +100,7 @@ const seedData = {
     {
       id: 'tenant_001',
       destination_id: 'destination_002',
-      name: 'Kopi Damai',
+      name: 'Kopi Network',
       category: 'Cafe',
       image_url: 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=900&q=80',
       description: 'Specialty coffee and daily pastries.',
@@ -123,7 +123,7 @@ const seedData = {
       name: 'Spring Garden Festival',
       start_date: '2026-06-01',
       end_date: '2026-06-15',
-      location: 'Central Park Damai',
+      location: 'Central Park',
       image_url: 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=900&q=80',
       description: 'Community bazaar, music, and weekend family activities.',
       created_date: '2026-02-01T08:00:00.000Z',
@@ -134,7 +134,7 @@ const seedData = {
       id: 'ticket_001',
       ticket_number: 'TCK-2026-0001',
       unit_id: 'unit_001',
-      user_email: 'resident@damaiputra.com',
+      user_email: 'resident@example.com',
       issue_type: 'Maintenance',
       title: 'AC service request',
       description: 'Air conditioner needs inspection.',
@@ -147,7 +147,7 @@ const seedData = {
       id: 'permit_001',
       application_number: 'PRM-2026-0001',
       unit_id: 'unit_001',
-      user_email: 'resident@damaiputra.com',
+      user_email: 'resident@example.com',
       permit_type: 'Renovation',
       application_status: 'Submitted',
       current_approval_stage: 'Admin',
@@ -196,7 +196,7 @@ const seedData = {
   UserPoints: [
     {
       id: 'points_001',
-      user_email: 'resident@damaiputra.com',
+      user_email: 'resident@example.com',
       balance: 500,
       lifetime_points: 500,
       created_date: '2026-01-20T08:00:00.000Z',
@@ -216,7 +216,7 @@ const seedData = {
   Notification: [
     {
       id: 'notification_001',
-      user_email: 'resident@damaiputra.com',
+      user_email: 'resident@example.com',
       title: 'Welcome to ION',
       message: 'Your resident app is ready to use.',
       read: false,

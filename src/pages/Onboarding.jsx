@@ -14,7 +14,7 @@ const SLIDES = [
   },
   {
     headline: 'Smart Living,\nSimplified',
-    subheadline: 'Access property services, permits, and\ntownship facilities in one app.',
+    subheadline: 'Access property services, permits, and\ncommunity facilities in one app.',
     image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=90',
   },
   {

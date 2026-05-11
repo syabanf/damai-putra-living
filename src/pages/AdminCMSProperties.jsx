@@ -143,7 +143,7 @@ export default function AdminCMSProperties() {
             </div>
             <div className="p-6 space-y-4">
               {[
-                { key: 'name', label: 'Nama Properti *', type: 'text', placeholder: 'e.g. Damai Putra Hunian' },
+                { key: 'name', label: 'Nama Properti *', type: 'text', placeholder: 'e.g. Residential Property' },
                 { key: 'type', label: 'Tipe', type: 'text', placeholder: 'e.g. Apartment, Townhouse' },
                 { key: 'location', label: 'Lokasi', type: 'text', placeholder: 'e.g. Bekasi, Jawa Barat' },
                 { key: 'address', label: 'Alamat Lengkap', type: 'text', placeholder: 'Jl. ...' },

@@ -126,7 +126,7 @@ export default function CreateTicket() {
       // If renovation type, create linked PermitApplication + WorkItems + ActivityLog
       if (isRenovation) {
         const existingPermits = await appClient.entities.PermitApplication.list('-created_date', 1);
-        const permitNum = `DP/RNV-${form.permit_type === 'renovasi_minor' ? 'MIN' : 'MAJ'}/${new Date().getFullYear()}/${String(existingPermits.length + 1).padStart(3, '0')}`;
+        const permitNum = `ION/RNV-${form.permit_type === 'renovasi_minor' ? 'MIN' : 'MAJ'}/${new Date().getFullYear()}/${String(existingPermits.length + 1).padStart(3, '0')}`;
         await appClient.entities.PermitApplication.create({
           permit_number: permitNum,
           permit_type: form.permit_type === 'renovasi_minor' ? 'Minor Renovation' : 'Major Renovation',

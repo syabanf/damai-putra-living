@@ -22,7 +22,7 @@ const BUS_ROUTES = [
     color: '#3b82f6',
     stops: [
       { name: 'West Terminal', lat: -6.1970, lng: 106.8250 },
-      { name: 'Damai Putra', lat: -6.1975, lng: 106.8272 },
+      { name: 'Main Community', lat: -6.1975, lng: 106.8272 },
       { name: 'Shopping Center', lat: -6.1980, lng: 106.8295 },
       { name: 'East Gate', lat: -6.1985, lng: 106.8340 },
     ]
@@ -37,7 +37,7 @@ const MRT_ROUTES = [
     stops: [
       { name: 'Station A', lat: -6.1960, lng: 106.8200 },
       { name: 'Station B', lat: -6.1970, lng: 106.8250 },
-      { name: 'Damai Putra Station', lat: -6.1975, lng: 106.8272 },
+      { name: 'Main Station', lat: -6.1975, lng: 106.8272 },
       { name: 'Station C', lat: -6.1990, lng: 106.8350 },
     ]
   },

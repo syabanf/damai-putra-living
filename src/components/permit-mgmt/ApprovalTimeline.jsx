@@ -20,7 +20,7 @@ const DEFAULT_STAGES_MAJOR = [
   { stage: 'ASS TM / IPL', role: 'Section Head Ass Building & Infrastructure' },
   { stage: 'Head Building & Infrastructure', role: 'Head of Building & Infrastructure Dept' },
   { stage: 'Head After Sales Service', role: 'Head of After Sales Service Dept' },
-  { stage: 'Head Township Management', role: 'Head of Township Management Division' },
+  { stage: 'Community Management Head', role: 'Community Management Division Head' },
 ];
 
 export default function ApprovalTimeline({ approvals = [], permitType }) {

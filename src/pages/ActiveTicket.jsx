@@ -9,7 +9,7 @@ const MOCK_TICKET = {
   claimCode: 'RW-TXP-A7K9M',
   operator: 'Shuttle Plus',
   status: 'active', // active, used, expired
-  from: 'Damai Putra Township',
+  from: 'Main Community',
   to: 'Central Station',
   departTime: '09:00',
   arrivalTime: '13:15',

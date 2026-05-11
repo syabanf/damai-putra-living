@@ -41,8 +41,8 @@ const WORKFLOW = [
   { key: 'document_check',               label: 'Document Verification',         dept: 'Admin' },
   { key: 'building_infrastructure_review', label: 'Building & Infrastructure Review', dept: 'Level 1' },
   { key: 'after_sales_review',            label: 'After Sales Review',           dept: 'Level 2' },
-  { key: 'township_management_review',    label: 'Township Management Review',   dept: 'Level 3' },
-  { key: 'head_approval',                 label: 'Head of Township Approval',    dept: 'Level 4' },
+  { key: 'community_management_review',    label: 'Community Management Review',   dept: 'Level 3' },
+  { key: 'head_approval',                 label: 'Community Head Approval',    dept: 'Level 4' },
   { key: 'completed',                     label: 'Permit Issued / Completed',    dept: '' },
 ];
 

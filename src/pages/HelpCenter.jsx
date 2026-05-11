@@ -112,14 +112,14 @@ export default function HelpCenter() {
               <p className="text-xs text-slate-400">0800-1234-567 (Free)</p>
             </div>
           </a>
-          <a href="mailto:support@damaiputra.com"
+          <a href="mailto:support@example.com"
             className="flex items-center gap-4 p-4 active:bg-white/50">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-amber-50">
               <Mail className="w-5 h-5 text-amber-600" />
             </div>
             <div>
               <p className="text-sm font-semibold text-slate-700">Email Support</p>
-              <p className="text-xs text-slate-400">support@damaiputra.com</p>
+              <p className="text-xs text-slate-400">support@example.com</p>
             </div>
           </a>
         </GlassCard>
