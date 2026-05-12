@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { User, Shield, Eye, EyeOff, ArrowRight, ChevronLeft } from 'lucide-react';
-import IonLogo from '@/components/brand/IonLogo';
 
 const MOCK_ACCOUNTS = [
   {
@@ -88,7 +87,7 @@ export default function MockLogin() {
         <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
           <div className="w-36 rounded-2xl px-3 py-2 mb-5 border border-white/15"
             style={{ background: 'rgba(255,255,255,0.92)', backdropFilter: 'blur(12px)' }}>
-            <IonLogo className="w-full h-auto" />
+            <img src="/ion-logo.png" alt="ION Network" className="w-full h-auto object-contain" />
           </div>
           <p className="text-white/50 text-[10px] tracking-widest uppercase mb-1">Demo Mode</p>
           <h1 className="text-3xl font-bold text-white leading-tight">
