@@ -9,13 +9,13 @@ export default function IonLogo({ variant = 'horizontal', className = '', light 
   const subTextColor = light ? 'rgba(255,255,255,0.78)' : '#323236';
   const showText = variant !== 'mark';
   const width = variant === 'stacked' ? 220 : showText ? 320 : 80;
-  const height = variant === 'stacked' ? 150 : 86;
+  const height = variant === 'stacked' ? 158 : 90;
 
   return (
     <svg
       viewBox={`0 0 ${width} ${height}`}
       role="img"
-      aria-label="ION Integrity On Network"
+      aria-label="ION Network"
       className={className}
       xmlns="http://www.w3.org/2000/svg"
     >
@@ -63,13 +63,14 @@ export default function IonLogo({ variant = 'horizontal', className = '', light 
           </text>
           <text
             x={variant === 'stacked' ? '2' : '0'}
-            y={variant === 'stacked' ? '58' : '70'}
-            fill={subTextColor}
-            fontFamily="Arial, sans-serif"
-            fontSize={variant === 'stacked' ? '17' : '21'}
-            letterSpacing="1.4"
+            y={variant === 'stacked' ? '60' : '72'}
+            fill={textColor}
+            fontFamily="Arial Black, Arial, sans-serif"
+            fontSize={variant === 'stacked' ? '20' : '24'}
+            fontWeight="900"
+            letterSpacing="3"
           >
-            Integrity On Network
+            NETWORK
           </text>
         </g>
       )}

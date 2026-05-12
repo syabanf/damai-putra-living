@@ -4,7 +4,6 @@ import { createPageUrl } from '@/utils';
 import { motion, AnimatePresence } from 'framer-motion';
 import { appClient } from '@/api/appClient';
 import { ArrowRight, ChevronRight, Globe } from 'lucide-react';
-import IonLogo from '@/components/brand/IonLogo';
 
 const SLIDES = [
   {
@@ -70,7 +69,7 @@ export default function Onboarding() {
       <div className="relative z-10 flex items-center justify-between px-6 pt-12 pb-2">
         <div className="rounded-2xl px-3 py-2 border border-white/25"
           style={{ background: 'rgba(255,255,255,0.92)', backdropFilter: 'blur(12px)' }}>
-          <IonLogo className="w-32 h-auto" />
+          <img src="/ion-logo.png" alt="ION Network" className="w-32 h-auto object-contain" />
         </div>
 
         {/* Language selector */}

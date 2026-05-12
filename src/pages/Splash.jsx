@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import { motion } from 'framer-motion';
 import { FlaskConical } from 'lucide-react';
-import IonLogo from '@/components/brand/IonLogo';
 
 export default function Splash() {
   const navigate = useNavigate();
@@ -36,7 +35,7 @@ export default function Splash() {
         >
           <div className="w-64 rounded-3xl flex items-center justify-center mb-7 px-6 py-5 border border-white/40"
             style={{ background: 'rgba(255,255,255,0.94)', backdropFilter: 'blur(16px)', boxShadow: '0 18px 60px rgba(0,0,0,0.28)' }}>
-            <IonLogo variant="stacked" className="w-full h-auto" />
+            <img src="/ion-logo.png" alt="ION Network" className="w-full h-auto object-contain" />
           </div>
 
           <motion.p
@@ -45,7 +44,7 @@ export default function Splash() {
             transition={{ delay: 0.3, duration: 0.6 }}
             className="text-white/60 text-xs tracking-[0.25em] uppercase mb-1"
           >
-            Integrity On Network
+            NETWORK
           </motion.p>
 
           <motion.h1

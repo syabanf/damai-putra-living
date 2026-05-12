@@ -98,7 +98,7 @@ export default function SharedAdminSidebar({ onClose }) {
           </div>
           <div>
             <p className="text-white font-bold text-sm leading-tight">ION</p>
-            <p className="text-slate-400 text-[10px]">Integrity On Network</p>
+            <p className="text-slate-400 text-[10px] font-bold tracking-widest">NETWORK</p>
           </div>
         </div>
       </div>
