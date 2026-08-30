@@ -1,0 +1,63 @@
+{
+  "name": "ScannedReceipt",
+  "type": "object",
+  "properties": {
+    "receipt_number": {
+      "type": "string",
+      "description": "Nomor resi/invoice dari struk (unique)"
+    },
+    "merchant_address": {
+      "type": "string",
+      "description": "Alamat merchant dari struk"
+    },
+    "total_amount": {
+      "type": "number",
+      "description": "Jumlah pembayaran total"
+    },
+    "receipt_image_url": {
+      "type": "string",
+      "description": "URL foto struk yang di-upload"
+    },
+    "ocr_raw_text": {
+      "type": "string",
+      "description": "Raw OCR text hasil ekstraksi"
+    },
+    "points_earned": {
+      "type": "number",
+      "description": "Poin yang didapat dari struk ini"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "verified",
+        "duplicate",
+        "rejected"
+      ],
+      "default": "pending",
+      "description": "Status verifikasi struk"
+    },
+    "user_email": {
+      "type": "string",
+      "description": "Email user yang scan"
+    },
+    "user_name": {
+      "type": "string",
+      "description": "Nama user yang scan"
+    },
+    "scan_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Tanggal scan"
+    },
+    "duplicate_reason": {
+      "type": "string",
+      "description": "Alasan jika status duplicate"
+    }
+  },
+  "required": [
+    "receipt_number",
+    "receipt_image_url",
+    "user_email"
+  ]
+}

@@ -1,0 +1,247 @@
+{
+  "name": "Ticket",
+  "type": "object",
+  "properties": {
+    "reference_number": {
+      "type": "string",
+      "description": "Official permit reference number e.g. DP/IZIN-01/2026/001"
+    },
+    "unit_id": {
+      "type": "string",
+      "description": "Reference to the unit"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "permit",
+        "complaint",
+        "general_service"
+      ],
+      "description": "Ticket category"
+    },
+    "permit_type": {
+      "type": "string",
+      "enum": [
+        "izin_kegiatan",
+        "renovasi_minor",
+        "renovasi_mayor",
+        "pembangunan_kavling",
+        "galian",
+        "pindah_masuk",
+        "pindah_keluar",
+        "pencairan_deposit",
+        "akses_kontraktor"
+      ],
+      "description": "Type of permit if category is permit"
+    },
+    "activity_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Date of the activity"
+    },
+    "activity_end_date": {
+      "type": "string",
+      "format": "date",
+      "description": "End date for multi-day activities"
+    },
+    "activity_time": {
+      "type": "string",
+      "description": "Start time of the activity"
+    },
+    "activity_end_time": {
+      "type": "string",
+      "description": "End time of the activity"
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the request"
+    },
+    "work_scope": {
+      "type": "string",
+      "description": "Detailed scope of work"
+    },
+    "work_type": {
+      "type": "string",
+      "description": "Type of work (e.g. struktural, non-struktural, MEP)"
+    },
+    "affected_area": {
+      "type": "string",
+      "description": "Area affected by the work"
+    },
+    "uses_heavy_equipment": {
+      "type": "boolean",
+      "description": "Whether heavy equipment will be used"
+    },
+    "noise_potential": {
+      "type": "boolean",
+      "description": "Whether the activity may generate noise"
+    },
+    "contractor_company": {
+      "type": "string",
+      "description": "Company name of the contractor"
+    },
+    "num_workers": {
+      "type": "number",
+      "description": "Number of workers/visitors"
+    },
+    "visitor_name": {
+      "type": "string",
+      "description": "Visitor/contractor name if applicable"
+    },
+    "visitor_phone": {
+      "type": "string",
+      "description": "Visitor/contractor phone"
+    },
+    "visitor_id": {
+      "type": "string",
+      "description": "Visitor ID number"
+    },
+    "vehicle_type": {
+      "type": "string",
+      "description": "Vehicle type (for moving permits)"
+    },
+    "vehicle_plate": {
+      "type": "string",
+      "description": "Vehicle plate number (for moving permits)"
+    },
+    "moving_company": {
+      "type": "string",
+      "description": "Moving company name"
+    },
+    "deposit_required": {
+      "type": "number",
+      "description": "Deposit amount required in IDR"
+    },
+    "deposit_paid": {
+      "type": "number",
+      "description": "Deposit amount paid in IDR"
+    },
+    "deposit_payment_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Date deposit was paid"
+    },
+    "deposit_payment_proof_url": {
+      "type": "string",
+      "description": "URL of deposit payment proof"
+    },
+    "deposit_returned": {
+      "type": "number",
+      "description": "Deposit amount returned after inspection"
+    },
+    "inspection_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Date of post-activity inspection"
+    },
+    "inspection_result": {
+      "type": "string",
+      "enum": [
+        "pass",
+        "fail",
+        "partial"
+      ],
+      "description": "Result of inspection"
+    },
+    "damage_found": {
+      "type": "boolean",
+      "description": "Whether damage was found during inspection"
+    },
+    "damage_description": {
+      "type": "string",
+      "description": "Description of damage found"
+    },
+    "repair_cost": {
+      "type": "number",
+      "description": "Cost of repairs if damage found"
+    },
+    "document_urls": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Supporting documents"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "open",
+        "under_review",
+        "waiting_approval",
+        "in_progress",
+        "approved",
+        "rejected",
+        "inspection_required",
+        "completed",
+        "deposit_returned",
+        "closed"
+      ],
+      "default": "open"
+    },
+    "workflow_stage": {
+      "type": "string",
+      "enum": [
+        "submitted",
+        "document_check",
+        "building_infrastructure_review",
+        "after_sales_review",
+        "township_management_review",
+        "head_approval",
+        "completed"
+      ],
+      "default": "submitted"
+    },
+    "rejection_note": {
+      "type": "string",
+      "description": "Reason for rejection"
+    },
+    "management_notes": {
+      "type": "string",
+      "description": "Internal notes from building management"
+    },
+    "permit_id": {
+      "type": "string",
+      "description": "Generated permit ID when approved"
+    },
+    "valid_from": {
+      "type": "string",
+      "format": "date"
+    },
+    "valid_until": {
+      "type": "string",
+      "format": "date"
+    },
+    "qr_code": {
+      "type": "string",
+      "description": "QR code data"
+    },
+    "approved_by": {
+      "type": "string",
+      "description": "Name of approving officer"
+    },
+    "approval_date": {
+      "type": "string",
+      "description": "Date and time of approval"
+    },
+    "user_email": {
+      "type": "string"
+    },
+    "user_name": {
+      "type": "string"
+    },
+    "unit_number": {
+      "type": "string"
+    },
+    "tower": {
+      "type": "string"
+    },
+    "property_name": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "unit_id",
+    "category"
+  ]
+}

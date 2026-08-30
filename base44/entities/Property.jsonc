@@ -1,0 +1,127 @@
+{
+  "name": "Property",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Property name"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "apartment",
+        "kavling",
+        "bizpark",
+        "residential",
+        "commercial"
+      ],
+      "description": "Property category"
+    },
+    "location": {
+      "type": "string",
+      "description": "Location / area"
+    },
+    "cluster": {
+      "type": "string",
+      "description": "Cluster name"
+    },
+    "address": {
+      "type": "string",
+      "description": "Full address"
+    },
+    "description": {
+      "type": "string",
+      "description": "Property description"
+    },
+    "price_start": {
+      "type": "number",
+      "description": "Starting price in IDR"
+    },
+    "land_size_min": {
+      "type": "number",
+      "description": "Min land size m2"
+    },
+    "land_size_max": {
+      "type": "number",
+      "description": "Max land size m2"
+    },
+    "building_size_min": {
+      "type": "number",
+      "description": "Min building size m2"
+    },
+    "building_size_max": {
+      "type": "number",
+      "description": "Max building size m2"
+    },
+    "bedroom_min": {
+      "type": "number"
+    },
+    "bedroom_max": {
+      "type": "number"
+    },
+    "bathroom_min": {
+      "type": "number"
+    },
+    "bathroom_max": {
+      "type": "number"
+    },
+    "parking_min": {
+      "type": "number"
+    },
+    "parking_max": {
+      "type": "number"
+    },
+    "image_url": {
+      "type": "string",
+      "description": "Main image URL"
+    },
+    "gallery_urls": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Gallery image URLs"
+    },
+    "facilities": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "List of facilities"
+    },
+    "tower_info": {
+      "type": "string"
+    },
+    "lift_count": {
+      "type": "number"
+    },
+    "facility_count": {
+      "type": "number"
+    },
+    "promo_badge": {
+      "type": "string",
+      "description": "e.g. Special Price, New Launch"
+    },
+    "is_featured": {
+      "type": "boolean",
+      "default": false
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "available",
+        "sold_out",
+        "coming_soon"
+      ],
+      "default": "available"
+    },
+    "whatsapp_number": {
+      "type": "string",
+      "description": "Sales WA number"
+    }
+  },
+  "required": [
+    "name",
+    "category"
+  ]
+}

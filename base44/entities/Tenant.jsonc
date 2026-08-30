@@ -1,0 +1,56 @@
+{
+  "name": "Tenant",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Tenant / store name"
+    },
+    "logo_url": {
+      "type": "string",
+      "description": "Logo image URL"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "food_beverage",
+        "fashion",
+        "beauty",
+        "entertainment",
+        "sport",
+        "services",
+        "retail",
+        "education",
+        "health"
+      ],
+      "description": "Tenant category"
+    },
+    "destination_id": {
+      "type": "string",
+      "description": "ID of parent destination"
+    },
+    "destination_name": {
+      "type": "string",
+      "description": "Name of parent destination"
+    },
+    "location_detail": {
+      "type": "string",
+      "description": "Floor / unit detail"
+    },
+    "opening_hours": {
+      "type": "string",
+      "description": "Operating hours"
+    },
+    "contact": {
+      "type": "string",
+      "description": "Phone or WA number"
+    },
+    "description": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "name",
+    "destination_id"
+  ]
+}

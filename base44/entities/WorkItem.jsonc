@@ -1,0 +1,58 @@
+{
+  "name": "WorkItem",
+  "type": "object",
+  "properties": {
+    "application_id": {
+      "type": "string"
+    },
+    "work_category": {
+      "type": "string"
+    },
+    "work_item_name": {
+      "type": "string"
+    },
+    "work_item_type": {
+      "type": "string",
+      "enum": [
+        "Minor",
+        "Major",
+        "Both"
+      ]
+    },
+    "selected_by_applicant": {
+      "type": "boolean",
+      "default": false
+    },
+    "review_status": {
+      "type": "string",
+      "enum": [
+        "Pending",
+        "Approved",
+        "Rejected",
+        "Need Clarification"
+      ],
+      "default": "Pending"
+    },
+    "reviewer_notes": {
+      "type": "string"
+    },
+    "is_master": {
+      "type": "boolean",
+      "default": false,
+      "description": "True = master data record, False = application-specific"
+    },
+    "quantity": {
+      "type": "string"
+    },
+    "unit": {
+      "type": "string"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "work_item_name",
+    "work_item_type"
+  ]
+}

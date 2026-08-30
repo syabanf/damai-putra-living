@@ -1,0 +1,60 @@
+{
+  "name": "Destination",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Destination name"
+    },
+    "description": {
+      "type": "string",
+      "description": "Descriptive text about the destination"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "commercial",
+        "retail",
+        "culinary",
+        "attraction",
+        "entertainment",
+        "community"
+      ],
+      "description": "Destination category"
+    },
+    "hero_image": {
+      "type": "string",
+      "description": "Main hero image URL"
+    },
+    "gallery": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Gallery image URLs"
+    },
+    "location": {
+      "type": "string",
+      "description": "Location text"
+    },
+    "opening_hours": {
+      "type": "string",
+      "description": "Operating hours e.g. 10:00 - 22:00"
+    },
+    "website_url": {
+      "type": "string",
+      "description": "External website URL"
+    },
+    "map_coordinates": {
+      "type": "string",
+      "description": "Lat,Lng coordinates"
+    },
+    "is_featured": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "required": [
+    "name"
+  ]
+}

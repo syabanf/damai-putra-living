@@ -1,0 +1,63 @@
+{
+  "name": "Reward",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Reward title"
+    },
+    "merchant_name": {
+      "type": "string",
+      "description": "Merchant / tenant name"
+    },
+    "merchant_location": {
+      "type": "string",
+      "description": "Merchant location"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "food_beverage",
+        "fashion",
+        "beauty",
+        "entertainment",
+        "sport",
+        "retail",
+        "health"
+      ],
+      "description": "Reward category"
+    },
+    "image_url": {
+      "type": "string",
+      "description": "Reward image URL"
+    },
+    "points_required": {
+      "type": "number",
+      "description": "Points needed to claim"
+    },
+    "description": {
+      "type": "string",
+      "description": "Reward description"
+    },
+    "terms": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Terms & conditions list"
+    },
+    "valid_days": {
+      "type": "number",
+      "description": "Days valid after claim",
+      "default": 30
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "title",
+    "points_required"
+  ]
+}

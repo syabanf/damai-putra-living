@@ -1,0 +1,138 @@
+{
+  "name": "Unit",
+  "type": "object",
+  "properties": {
+    "property_name": {
+      "type": "string",
+      "description": "Name of the property/complex"
+    },
+    "tower": {
+      "type": "string",
+      "description": "Tower name if applicable"
+    },
+    "unit_number": {
+      "type": "string",
+      "description": "Unit number"
+    },
+    "unit_type": {
+      "type": "string",
+      "enum": [
+        "apartment",
+        "house",
+        "kavling",
+        "commercial"
+      ],
+      "description": "Type of unit"
+    },
+    "bedroom_count": {
+      "type": "number",
+      "description": "Number of bedrooms (apartment/house)"
+    },
+    "bathroom_count": {
+      "type": "number",
+      "description": "Number of bathrooms (apartment/house)"
+    },
+    "floor_number": {
+      "type": "number",
+      "description": "Floor number (apartment)"
+    },
+    "area_size": {
+      "type": "number",
+      "description": "Area size in m2 (apartment/commercial)"
+    },
+    "land_size": {
+      "type": "number",
+      "description": "Land size in m2 (house/kavling)"
+    },
+    "building_size": {
+      "type": "number",
+      "description": "Building size in m2 (house)"
+    },
+    "garage_count": {
+      "type": "number",
+      "description": "Number of garage/parking (house)"
+    },
+    "business_type": {
+      "type": "string",
+      "description": "Type of business (commercial)"
+    },
+    "location_detail": {
+      "type": "string",
+      "description": "Location details/address"
+    },
+    "ownership_status": {
+      "type": "string",
+      "enum": [
+        "owner",
+        "tenant"
+      ],
+      "description": "Whether user is owner or tenant"
+    },
+    "document_url": {
+      "type": "string",
+      "description": "Supporting document URL"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "approved",
+        "rejected"
+      ],
+      "default": "pending"
+    },
+    "rejection_note": {
+      "type": "string",
+      "description": "Reason for rejection if rejected"
+    },
+    "user_email": {
+      "type": "string",
+      "description": "Email of the user who registered this unit"
+    },
+    "user_name": {
+      "type": "string",
+      "description": "Name of the unit owner/tenant"
+    },
+    "rent_start_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Date when renting started (tenants only)"
+    },
+    "rent_end_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Date when renting ends (tenants only)"
+    },
+    "monthly_rent": {
+      "type": "number",
+      "description": "Monthly rent amount in IDR (tenants only)"
+    },
+    "rent_payment_status": {
+      "type": "string",
+      "enum": [
+        "paid",
+        "due",
+        "overdue"
+      ],
+      "default": "due",
+      "description": "Current month rent payment status (tenants only)"
+    },
+    "owner_name": {
+      "type": "string",
+      "description": "Name of the unit owner (tenants only)"
+    },
+    "owner_phone": {
+      "type": "string",
+      "description": "Phone number of the unit owner (tenants only)"
+    },
+    "owner_email": {
+      "type": "string",
+      "description": "Email of the unit owner (tenants only)"
+    }
+  },
+  "required": [
+    "property_name",
+    "unit_number",
+    "ownership_status"
+  ]
+}

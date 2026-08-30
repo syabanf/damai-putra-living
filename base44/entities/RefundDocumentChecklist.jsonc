@@ -1,0 +1,47 @@
+{
+  "name": "RefundDocumentChecklist",
+  "type": "object",
+  "properties": {
+    "refund_request_id": {
+      "type": "string"
+    },
+    "checklist_item_code": {
+      "type": "string"
+    },
+    "checklist_item_name": {
+      "type": "string"
+    },
+    "is_required": {
+      "type": "boolean",
+      "default": true
+    },
+    "is_uploaded": {
+      "type": "boolean",
+      "default": false
+    },
+    "verification_status": {
+      "type": "string",
+      "enum": [
+        "Pending",
+        "Valid",
+        "Invalid",
+        "Need Revision"
+      ],
+      "default": "Pending"
+    },
+    "verifier_notes": {
+      "type": "string"
+    },
+    "uploaded_file": {
+      "type": "string"
+    },
+    "uploaded_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "refund_request_id",
+    "checklist_item_name"
+  ]
+}

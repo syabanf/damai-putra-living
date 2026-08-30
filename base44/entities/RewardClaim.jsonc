@@ -1,0 +1,67 @@
+{
+  "name": "RewardClaim",
+  "type": "object",
+  "properties": {
+    "reward_id": {
+      "type": "string",
+      "description": "Reference to Reward"
+    },
+    "reward_title": {
+      "type": "string"
+    },
+    "merchant_name": {
+      "type": "string"
+    },
+    "merchant_location": {
+      "type": "string"
+    },
+    "reward_image_url": {
+      "type": "string"
+    },
+    "points_used": {
+      "type": "number"
+    },
+    "terms": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "claim_code": {
+      "type": "string",
+      "description": "Unique claim code e.g. RW-PIK-XXXXX"
+    },
+    "claim_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "expiry_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "unused",
+        "used",
+        "expired",
+        "cancelled"
+      ],
+      "default": "unused"
+    },
+    "used_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "user_email": {
+      "type": "string"
+    },
+    "user_name": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "reward_id",
+    "claim_code"
+  ]
+}
